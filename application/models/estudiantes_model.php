@@ -25,8 +25,10 @@ class Estudiantes_model extends CI_Model {
 
 	public function buscar_estudiante($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('nombres',$id);
-		
+		$this->db->like('nombres',$id,'after');
+		$this->db->or_like('apellido1',$id,'after');
+		$this->db->or_like('apellido2',$id);
+		$this->db->or_like('identificacion',$id);
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
