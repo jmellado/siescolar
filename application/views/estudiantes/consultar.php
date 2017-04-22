@@ -215,6 +215,18 @@
 
 								  	</div>
 
+								  	<div class="form-group">
+								      <label for="departamento_expedicion">DEPARTAMENTO DE EXPEDICION</label>
+								      <input type="text" class="form-control" id="departamento_expedicionsele" name="departamento_expedicion" placeholder="Departamento de expedición">
+
+								  	</div>
+
+								  	<div class="form-group">
+								      <label for="municipio_expedicion">MUNICIPIO DE EXPEDICION</label>
+								      <input type="text" class="form-control" id="municipio_expedicionsele" name="municipio_expedicion" placeholder="Municipio de expedición">
+
+								  	</div>
+
 								  <div class="form-group">
 								    <label for="nombres">NOMBRES</label>
 								    <input type="text" class="form-control" id="nombressele" name="nombres"
@@ -268,6 +280,12 @@
 									<div class="form-group">
 									  <label for="eps">EPS</label>
 									  <input type="text" class="form-control" id="epssele" name="eps" placeholder="Eps">
+									  
+									</div>
+
+									<div class="form-group">
+									  <label for="poblacion">POBLACION</label>
+									  <input type="text" class="form-control" id="poblacionsele" name="poblacion" placeholder="Poblacion">
 									  
 									</div>
 

@@ -86,20 +86,23 @@ function inicio(){
 		id_personasele = $(this).parent().parent().children("td:eq(0)").text();
 		tipo_idsele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		fecha_expedicionsele = $(this).parent().parent().children("td:eq(3)").text();
-		nombressele = $(this).parent().parent().children("td:eq(4)").text();
-		apellido1sele = $(this).parent().parent().children("td:eq(5)").text();
-		apellido2sele = $(this).parent().parent().children("td:eq(6)").text();
-		sexosele = $(this).parent().parent().children("td:eq(7)").text();
-		fecha_nacimientosele = $(this).parent().parent().children("td:eq(8)").text();
-		lugar_nacimientosele = $(this).parent().parent().children("td:eq(9)").text();
-		tipo_sangresele = $(this).parent().parent().children("td:eq(10)").text();
-		epssele = $(this).parent().parent().children("td:eq(11)").text();
-		telefonosele = $(this).parent().parent().children("td:eq(12)").text();
-		correosele = $(this).parent().parent().children("td:eq(13)").text();
-		direccionsele = $(this).parent().parent().children("td:eq(14)").text();
-		barriosele = $(this).parent().parent().children("td:eq(15)").text();
-		institucion_procedenciasele = $(this).parent().parent().children("td:eq(16)").text();
-		discapacidadsele = $(this).parent().parent().children("td:eq(17)").text();
+		departamento_expedicionsele = $(this).parent().parent().children("td:eq(4)").text();
+		municipio_expedicionsele = $(this).parent().parent().children("td:eq(5)").text();
+		nombressele = $(this).parent().parent().children("td:eq(6)").text();
+		apellido1sele = $(this).parent().parent().children("td:eq(7)").text();
+		apellido2sele = $(this).parent().parent().children("td:eq(8)").text();
+		sexosele = $(this).parent().parent().children("td:eq(9)").text();
+		fecha_nacimientosele = $(this).parent().parent().children("td:eq(10)").text();
+		lugar_nacimientosele = $(this).parent().parent().children("td:eq(11)").text();
+		tipo_sangresele = $(this).parent().parent().children("td:eq(12)").text();
+		epssele = $(this).parent().parent().children("td:eq(13)").text();
+		poblacionsele = $(this).parent().parent().children("td:eq(14)").text();
+		telefonosele = $(this).parent().parent().children("td:eq(15)").text();
+		correosele = $(this).parent().parent().children("td:eq(16)").text();
+		direccionsele = $(this).parent().parent().children("td:eq(17)").text();
+		barriosele = $(this).parent().parent().children("td:eq(18)").text();
+		institucion_procedenciasele = $(this).parent().parent().children("td:eq(19)").text();
+		discapacidadsele = $(this).parent().parent().children("td:eq(20)").text();
 		//alert(nombresele);
 
 
@@ -107,6 +110,8 @@ function inicio(){
         $("#idsele").val(idsele);
         $("#tipo_idsele").val(tipo_idsele);
         $("#fecha_expedicionsele").val(fecha_expedicionsele);
+        $("#departamento_expedicionsele").val(departamento_expedicionsele);
+        $("#municipio_expedicionsele").val(municipio_expedicionsele);
         $("#nombressele").val(nombressele);
         $("#apellido1sele").val(apellido1sele);
         $("#apellido2sele").val(apellido2sele);
@@ -115,6 +120,7 @@ function inicio(){
         $("#lugar_nacimientosele").val(lugar_nacimientosele);
         $("#tipo_sangresele").val(tipo_sangresele);
         $("#epssele").val(epssele);
+        $("#poblacionsele").val(poblacionsele);
         $("#telefonosele").val(telefonosele);
         $("#correosele").val(correosele);
         $("#direccionsele").val(direccionsele);
@@ -189,6 +195,18 @@ function inicio(){
 				
 			},
 
+			departamento_expedicion:{
+				required: true
+				
+				
+			},
+
+			municipio_expedicion:{
+				required: true
+				
+				
+			},
+
 			nombres:{
 				required: true,
 				maxlength: 40,
@@ -236,6 +254,12 @@ function inicio(){
 			},
 
 			eps:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			poblacion:{
 				required: true,
 				maxlength: 50	
 
@@ -309,9 +333,9 @@ function mostrarestudiantes(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html="<table border='1' class='table table-bordered table-condensed table-hover table-striped'>";
-				html+="<tr><th>ID0</th><th>ID1</th><th>TIPO_ID</th><th style='display:none'>FECHA EXPEDICION</th><th>NOMBRES</th><th>APELLIDO1</th><th>APELLIDO2</th><th>SEXO</th><th>FECHA NACIMIENTO</th><th style='display:none'>LUGAR NACIMIENTO</th><th>TIPO SANGRE</th><th style='display:none'>EPS</th><th>TELEFONO</th><th>CORREO</th><th>DIRECCION</th><th>BARRIO</th><th style='display:none'>INSTITUCION PROCEDENCIA</th><th style='display:none'>DISCAPACIDAD</th><th></th><th>ACCIONES</th></tr>";
+				html+="<tr><th>ID0</th><th>ID1</th><th>TIPO_ID</th><th style='display:none'>FECHA EXPEDICION</th><th style='display:none'>DEPARTAMENTO EXPEDICION</th><th style='display:none'>MUNICIPIO EXPEDICION</th><th>NOMBRES</th><th>APELLIDO1</th><th>APELLIDO2</th><th>SEXO</th><th>FECHA NACIMIENTO</th><th style='display:none'>LUGAR NACIMIENTO</th><th>TIPO SANGRE</th><th style='display:none'>EPS</th><th style='display:none'>POBLACION</th><th>TELEFONO</th><th>CORREO</th><th>DIRECCION</th><th>BARRIO</th><th style='display:none'>INSTITUCION PROCEDENCIA</th><th style='display:none'>DISCAPACIDAD</th><th></th><th>ACCIONES</th></tr>";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td></td><td><a class='btn btn-success' href="+registros.estudiantes[i].identificacion+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].departamento_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].municipio_expedicion+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td></td><td><a class='btn btn-success' href="+registros.estudiantes[i].identificacion+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+">eliminar</button></td></tr>";
 				};
 				html +="</table>";
 				$("#lista_estudiantes").html(html);

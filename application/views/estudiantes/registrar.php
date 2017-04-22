@@ -2,6 +2,7 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
 	</style>
 <!--
 </body>
@@ -45,6 +46,18 @@
 								      <input type="date" class="form-control" id="fecha_expedicion" name="fecha_expedicion">
 
 								  	</div>
+
+								  	<div class="form-group">
+								      <label for="departamento_expedicion">DEPARTAMENTO DE EXPEDICION</label>
+								      <input type="text" class="form-control" id="departamento_expedicion" name="departamento_expedicion" placeholder="Departamento de expedición">
+
+								  	</div>
+
+								  	<div class="form-group">
+								      <label for="municipio_expedicion">MUNICIPIO DE EXPEDICION</label>
+								      <input type="text" class="form-control" id="municipio_expedicion" name="municipio_expedicion" placeholder="Municipio de expedición">
+
+								  	</div>
 							  	</div><!--primergrupo-->
 					  	   </div><!--primergrupo-->
 					  </div><!--primergrupo-->
@@ -76,6 +89,12 @@
 					  				   <option value="f">Femenino</option>
 									 </select>
 								   </div>
+								   <!--UTILIZO ESTE CAMPO PARA DEJAR LOS PANELES DEL MISMO TAMAÑO-->
+								   <div class="form-group">
+								    <label style="visibility:hidden" for="espacio">APELLIDO 1</label>
+								    <input type="text" class="form-control" id="espacio" name="espacio"
+								           placeholder="espacio" style="visibility:hidden">
+								  </div>
 								</div><!--2grupo-->
 							</div><!--p2grupo-->
 						</div><!--2grupo-->
@@ -111,6 +130,12 @@
 									  <input type="text" class="form-control" id="eps" name="eps" placeholder="Eps">
 									  
 									</div>
+
+									<div class="form-group">
+									  <label for="poblacion">POBLACION</label>
+									  <input type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Poblacion">
+									  
+									</div>
 								</div><!--3grupo-->
 							</div><!--3grupo-->
 						</div><!--3grupo-->
@@ -138,6 +163,12 @@
 								    <label for="barrio">BARRIO</label>
 								    <input type="text" class="form-control" id="barrio" name="barrio"
 								           placeholder="Barrio">
+								  </div>
+
+								  <div class="form-group">
+								    <label style="visibility:hidden" for="espacio">APELLIDO 1</label>
+								    <input type="text" class="form-control" id="espacio" name="espacio"
+								           placeholder="espacio" style="visibility:hidden">
 								  </div>
 					  			</div><!--4grupo-->
 							</div><!--4grupo-->
