@@ -238,6 +238,19 @@ class Estudiantes_controller extends CI_Controller {
         }
     }
 
+    public function llenarcombo_departamentos(){
+
+    	$consulta = $this->estudiantes_model->llenar_departamentos();
+    	echo json_encode($consulta);
+    }
+
+    public function llenarcombo_municipios(){
+
+    	$id =$this->input->post('id');
+    	$consulta = $this->estudiantes_model->llenar_municipios($id);
+    	echo json_encode($consulta);
+    }
+
 
 
 

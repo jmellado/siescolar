@@ -133,6 +133,20 @@ class Estudiantes_model extends CI_Model {
 	}
 
 
+	public function llenar_departamentos(){
+
+		$query = $this->db->get('departamentos');
+		return $query->result();
+	}
+
+	public function llenar_municipios($id){
+
+		$this->db->where('id_departamento',$id);
+		$query = $this->db->get('municipios');
+		return $query->result();
+	}
+
+
 
 
 	

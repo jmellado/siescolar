@@ -3,6 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 	mostrarestudiantes("",1,5);
+	llenarcombo_departamentos();
 
 	// body...
 	// este metodo permite enviar la inf del formulario
@@ -169,6 +170,11 @@ function inicio(){
     	valorcantidad = $(this).val();
     	buscar = $("#id_buscar").val();
     	mostrarestudiantes(buscar,1,valorcantidad);
+    });
+
+    $("#departamento_expedicion").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipios(id_departamento)
     });
 
 
@@ -465,6 +471,50 @@ function eliminar(valor){
 
 	});
 
+
+
+}
+
+function llenarcombo_departamentos(){
+
+	$.ajax({
+		url:base_url+"estudiantes_controller/llenarcombo_departamentos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre"]+"</option>";
+				};
+				
+				$("#departamento_expedicion1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_municipios(valor){
+
+	$.ajax({
+		url:base_url+"estudiantes_controller/llenarcombo_municipios",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "";
+				for (var i = 0; i < registros.length; i++) {
+
+					html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre"]+"</option>";
+				};
+				$("#municipio_expedicion1 select").html(html);
+		}
+
+	});
 
 
 }

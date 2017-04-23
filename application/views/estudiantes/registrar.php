@@ -48,16 +48,22 @@
 								  	</div>
 
 								  	<div class="form-group">
-								      <label for="departamento_expedicion">DEPARTAMENTO DE EXPEDICION</label>
-								      <input type="text" class="form-control" id="departamento_expedicion" name="departamento_expedicion" placeholder="Departamento de expedición">
-
-								  	</div>
+									  <label for="departamento_expedicion">DEPARTAMENTO DE EXPEDICION</label>
+									  <div id="departamento_expedicion1">
+									  <select class="form-control" id="departamento_expedicion" name="departamento_expedicion">
+									    
+									  </select>
+									  </div>
+									</div>
 
 								  	<div class="form-group">
-								      <label for="municipio_expedicion">MUNICIPIO DE EXPEDICION</label>
-								      <input type="text" class="form-control" id="municipio_expedicion" name="municipio_expedicion" placeholder="Municipio de expedición">
-
-								  	</div>
+									  <label for="municipio_expedicion">MUNICIPIO DE EXPEDICION</label>
+									  <div id="municipio_expedicion1">
+									  <select class="form-control" id="municipio_expedicion" name="municipio_expedicion">
+									    
+									  </select>
+									  </div>
+									</div>
 							  	</div><!--primergrupo-->
 					  	   </div><!--primergrupo-->
 					  </div><!--primergrupo-->
