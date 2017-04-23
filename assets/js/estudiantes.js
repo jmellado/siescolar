@@ -104,7 +104,7 @@ function inicio(){
 		barriosele = $(this).parent().parent().children("td:eq(18)").text();
 		institucion_procedenciasele = $(this).parent().parent().children("td:eq(19)").text();
 		discapacidadsele = $(this).parent().parent().children("td:eq(20)").text();
-		//alert(nombresele);
+		//alert(municipio_expedicionsele);
 
 
 		$("#id_personasele").val(id_personasele);
@@ -174,10 +174,15 @@ function inicio(){
 
     $("#departamento_expedicion").change(function(){
     	id_departamento = $(this).val();
-    	llenarcombo_municipios(id_departamento)
+    	llenarcombo_municipios(id_departamento);
     });
 
+    $("#departamento_expedicionsele").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipios(id_departamento);
+    });
 
+    
 	$("#form_estudiantes, #form_estudiantes_actualizar").validate({
 
     	rules:{
@@ -334,14 +339,14 @@ function mostrarestudiantes(valor,pagina,cantidad){
 		type:"post",
 		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad},
 		success:function(respuesta) {
-				
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html="<table border='1' class='table table-bordered table-condensed table-hover table-striped'>";
 				html+="<tr><th>ID0</th><th>ID1</th><th>TIPO_ID</th><th style='display:none'>FECHA EXPEDICION</th><th style='display:none'>DEPARTAMENTO EXPEDICION</th><th style='display:none'>MUNICIPIO EXPEDICION</th><th>NOMBRES</th><th>APELLIDO1</th><th>APELLIDO2</th><th>SEXO</th><th>FECHA NACIMIENTO</th><th style='display:none'>LUGAR NACIMIENTO</th><th>TIPO SANGRE</th><th style='display:none'>EPS</th><th style='display:none'>POBLACION</th><th>TELEFONO</th><th>CORREO</th><th>DIRECCION</th><th>BARRIO</th><th style='display:none'>INSTITUCION PROCEDENCIA</th><th style='display:none'>DISCAPACIDAD</th><th></th><th>ACCIONES</th></tr>";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].departamento_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].municipio_expedicion+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td></td><td><a class='btn btn-success' href="+registros.estudiantes[i].identificacion+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].id_departamento+"</td><td style='display:none'>"+registros.estudiantes[i].id_municipio+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td></td><td><a class='btn btn-success' href="+registros.estudiantes[i].identificacion+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+">eliminar</button></td></tr>";
 				};
 				html +="</table>";
 				$("#lista_estudiantes").html(html);
@@ -487,7 +492,7 @@ function llenarcombo_departamentos(){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
-					html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre"]+"</option>";
+					html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre_departamento"]+"</option>";
 				};
 				
 				$("#departamento_expedicion1 select").html(html);
@@ -509,7 +514,7 @@ function llenarcombo_municipios(valor){
 				html = "";
 				for (var i = 0; i < registros.length; i++) {
 
-					html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre"]+"</option>";
+					html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
 				};
 				$("#municipio_expedicion1 select").html(html);
 		}

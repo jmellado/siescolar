@@ -33,6 +33,8 @@ class Estudiantes_model extends CI_Model {
 			$this->db->limit($cantidad,$inicio);
 		}
 		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');  //nada mas add is line
+		$this->db->join('departamentos', 'personas.departamento_expedicion = departamentos.id_departamento');  //nada mas add is line
+		$this->db->join('municipios', 'personas.municipio_expedicion = municipios.id_municipio');  //nada mas add is line
 		$query = $this->db->get('personas');
 
 		//if ($query->num_rows() > 0) {
