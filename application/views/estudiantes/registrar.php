@@ -59,7 +59,7 @@
 								  	<div class="form-group">
 									  <label for="municipio_expedicion">MUNICIPIO DE EXPEDICION</label>
 									  <div id="municipio_expedicion1">
-									  <select class="form-control" id="municipio_expedicion" name="municipio_expedicion">
+									  <select class="form-control" id="municipio_expedicion" name="municipio_expedicion" disabled="disabled">
 									    
 									  </select>
 									  </div>

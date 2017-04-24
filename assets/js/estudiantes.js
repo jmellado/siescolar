@@ -106,7 +106,7 @@ function inicio(){
 		discapacidadsele = $(this).parent().parent().children("td:eq(20)").text();
 		//alert(municipio_expedicionsele);
 
-
+		llenarcombo_municipios(departamento_expedicionsele);
 		$("#id_personasele").val(id_personasele);
         $("#idsele").val(idsele);
         $("#tipo_idsele").val(tipo_idsele);
@@ -175,6 +175,7 @@ function inicio(){
     $("#departamento_expedicion").change(function(){
     	id_departamento = $(this).val();
     	llenarcombo_municipios(id_departamento);
+    	$("#municipio_expedicion").removeAttr("disabled");
     });
 
     $("#departamento_expedicionsele").change(function(){
