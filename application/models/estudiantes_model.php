@@ -2,8 +2,8 @@
 
 class Estudiantes_model extends CI_Model {
 
-	public function insertar_estudiante($estudiante,$estudiante2,$estudiante3){
-		if ($this->db->insert('personas', $estudiante) && $this->db->insert('estudiantes', $estudiante2) && $this->db->insert('usuarios', $estudiante3)) 
+	public function insertar_estudiante($estudiante,$estudiante2,$estudiante3,$padre,$madre){
+		if ($this->db->insert('personas', $estudiante) && $this->db->insert('estudiantes', $estudiante2) && $this->db->insert('usuarios', $estudiante3) && $this->db->insert('padres', $padre) && $this->db->insert('padres', $madre)) 
 			return true;
 		else
 			return false;
@@ -131,6 +131,16 @@ class Estudiantes_model extends CI_Model {
 
     	$row = $query->result_array();
         $data['query'] = 1 + $row[0]['id_persona'];
+        return $data['query'];
+	}
+
+	public function obtener_ultimo_id_padres(){
+
+		$this->db->select_max('id_padre');
+		$query = $this->db->get('padres');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['id_padre'];
         return $data['query'];
 	}
 

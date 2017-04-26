@@ -313,6 +313,100 @@ function inicio(){
 				required: true,
 				maxlength: 50	
 
+			},
+
+			identificacion_padre:{
+				required: true,
+				maxlength: 10,
+				digits: true
+
+			},
+
+			nombres_padre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			apellidos_padre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			ocupacion_padre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			telefono_padre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			telefono_trabajo_padre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			direccion_trabajo_padre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			identificacion_madre:{
+				required: true,
+				maxlength: 10,
+				digits: true
+
+			},
+
+			nombres_madre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			apellidos_madre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			ocupacion_madre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			telefono_madre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			telefono_trabajo_madre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			direccion_trabajo_madre:{
+				required: true,
+				maxlength: 50	
+
 			}
 
 

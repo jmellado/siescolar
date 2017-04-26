@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-04-2017 a las 05:49:14
+-- Tiempo de generación: 26-04-2017 a las 05:20:38
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.23
 
@@ -32,8 +32,9 @@ CREATE TABLE `acudientes` (
   `id_estudiante` int(11) NOT NULL,
   `parentesco` varchar(45) NOT NULL,
   `ocupacion` varchar(45) NOT NULL,
-  `direccion_trabajo` varchar(45) NOT NULL,
+  `telefono` varchar(10) NOT NULL,
   `telefono_trabajo` varchar(10) NOT NULL,
+  `direccion_trabajo` varchar(45) NOT NULL,
   `estado_acudiente` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -100,14 +101,14 @@ CREATE TABLE `cargas_academicas` (
 
 CREATE TABLE `departamentos` (
   `id_departamento` int(11) NOT NULL,
-  `nombre` varchar(45) NOT NULL
+  `nombre_departamento` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `departamentos`
 --
 
-INSERT INTO `departamentos` (`id_departamento`, `nombre`) VALUES
+INSERT INTO `departamentos` (`id_departamento`, `nombre_departamento`) VALUES
 (5, 'ANTIOQUIA'),
 (8, 'ATLANTICO'),
 (11, 'BOGOTA'),
@@ -250,7 +251,7 @@ CREATE TABLE `matriculas` (
 
 CREATE TABLE `municipios` (
   `id_municipio` int(11) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
+  `nombre_municipio` varchar(45) NOT NULL,
   `id_departamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -258,7 +259,7 @@ CREATE TABLE `municipios` (
 -- Volcado de datos para la tabla `municipios`
 --
 
-INSERT INTO `municipios` (`id_municipio`, `nombre`, `id_departamento`) VALUES
+INSERT INTO `municipios` (`id_municipio`, `nombre_municipio`, `id_departamento`) VALUES
 (1, 'MEDELLIN', 5),
 (2, 'ABEJORRAL', 5),
 (3, 'ABRIAQUI', 5),
@@ -1411,9 +1412,12 @@ CREATE TABLE `padres` (
   `id_padre` int(11) NOT NULL,
   `identificacion` varchar(10) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
   `ocupacion` varchar(45) NOT NULL,
-  `direccion_trabajo` varchar(45) NOT NULL,
+  `telefono` varchar(10) NOT NULL,
   `telefono_trabajo` varchar(10) NOT NULL,
+  `direccion_trabajo` varchar(45) NOT NULL,
   `estado_padre` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1443,8 +1447,8 @@ CREATE TABLE `personas` (
   `identificacion` varchar(10) NOT NULL,
   `tipo_id` varchar(2) NOT NULL,
   `fecha_expedicion` date DEFAULT NULL,
-  `departamento_expedicion` varchar(45) DEFAULT NULL,
-  `municipio_expedicion` varchar(45) DEFAULT NULL,
+  `departamento_expedicion` int(11) DEFAULT NULL,
+  `municipio_expedicion` int(11) DEFAULT NULL,
   `nombres` varchar(45) NOT NULL,
   `apellido1` varchar(45) NOT NULL,
   `apellido2` varchar(45) NOT NULL,
@@ -1465,7 +1469,7 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `lugar_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
-(1, '12345', 'cc', '2017-04-10', 'Cesar', 'Valledupar', 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza');
+(1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza');
 
 -- --------------------------------------------------------
 

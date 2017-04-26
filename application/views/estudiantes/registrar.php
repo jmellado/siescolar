@@ -204,6 +204,124 @@
 						  		</div><!--5grupo-->
 							</div><!--5grupo-->
 					  </div><!--5grupo-->
+
+					  <div class="col-md-6"><!--5.1grupo espacios*******************************************-->
+						  	<div class="panel panel-default" style="visibility:hidden"><!--5.1grupo-->
+			              		<div class="panel-body"><!--5grupo-->
+								  
+								  <div class="form-group">
+								    <label style="visibility:hidden" for="espacio">APELLIDO 1</label>
+								    <input type="text" class="form-control" id="espacio" name="espacio"
+								           placeholder="espacio" style="visibility:hidden">
+								  </div>
+								  <div class="form-group">
+								    <label style="visibility:hidden" for="espacio">APELLIDO 1</label>
+								    <input type="text" class="form-control" id="espacio" name="espacio"
+								           placeholder="espacio" style="visibility:hidden">
+								  </div>
+								  
+						  		</div><!--5.1grupo-->
+							</div><!--5.1grupo-->
+					  </div><!--5.1grupo-->
+
+					  <div class="col-md-6"><!--6grupo-->
+						  	<div class="panel panel-default"><!--6grupo-->
+			              		<div class="panel-body"><!--6grupo-->
+								  <div class="form-group">
+								    <label for="identificacion_padre">IDENTIFICACION DEL PADRE</label>
+								    <input type="text" class="form-control" id="identificacion_padre" name="identificacion_padre"
+								           placeholder="Identificacion del padre">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="nombres_padre">NOMBRES DEL PADRE</label>
+								    <input type="text" class="form-control" id="nombres_padre" name="nombres_padre"
+								           placeholder="Nombres">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="apellidos_padre">APELLIDOS DEL PADRE</label>
+								    <input type="text" class="form-control" id="apellidos_padre" name="apellidos_padre"
+								           placeholder="Apellidos">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="ocupacion_padre">OCUPACION DEL PADRE</label>
+								    <input type="text" class="form-control" id="ocupacion_padre" name="ocupacion_padre"
+								           placeholder="Ocupacion">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="telefono_padre">TELEFONO</label>
+								    <input type="text" class="form-control" id="telefono_padre" name="telefono_padre"
+								           placeholder="Telefono">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="telefono_trabajo_padre">TELEFONO TRABAJO</label>
+								    <input type="text" class="form-control" id="telefono_trabajo_padre" name="telefono_trabajo_padre"
+								           placeholder="Telefono Trabajo">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="direccion_trabajo_padre">DIRECCION TRABAJO</label>
+								    <input type="text" class="form-control" id="direccion_trabajo_padre" name="direccion_trabajo_padre"
+								           placeholder="Direccion Trabajo">
+								  </div>
+
+						  		</div><!--6grupo-->
+							</div><!--6grupo-->
+					  </div><!--6grupo-->
+
+					   <div class="col-md-6"><!--7grupo-->
+						  	<div class="panel panel-default"><!--7grupo-->
+			              		<div class="panel-body"><!--7grupo-->
+								  <div class="form-group">
+								    <label for="identificacion_madre">IDENTIFICACION DE LA MADRE</label>
+								    <input type="text" class="form-control" id="identificacion_madre" name="identificacion_madre"
+								           placeholder="Identificacion de la madre">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="nombres_madre">NOMBRES DE LA MADRE</label>
+								    <input type="text" class="form-control" id="nombres_madre" name="nombres_madre"
+								           placeholder="Nombres">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="apellidos_madre">APELLIDOS DE LA MADRE</label>
+								    <input type="text" class="form-control" id="apellidos_madre" name="apellidos_madre"
+								           placeholder="Apellidos">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="ocupacion_madre">OCUPACION DE LA MADRE</label>
+								    <input type="text" class="form-control" id="ocupacion_madre" name="ocupacion_madre"
+								           placeholder="Ocupacion">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="telefono_madre">TELEFONO</label>
+								    <input type="text" class="form-control" id="telefono_madre" name="telefono_madre"
+								           placeholder="Telefono">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="telefono_trabajo_madre">TELEFONO TRABAJO</label>
+								    <input type="text" class="form-control" id="telefono_trabajo_madre" name="telefono_trabajo_madre"
+								           placeholder="Telefono Trabajo">
+								  </div>
+
+								  <div class="form-group">
+								    <label for="direccion_trabajo_madre">DIRECCION TRABAJO</label>
+								    <input type="text" class="form-control" id="direccion_trabajo_madre" name="direccion_trabajo_madre"
+								           placeholder="Direccion Trabajo">
+								  </div>
+								  
+						  		</div><!--7grupo-->
+							</div><!--7grupo-->
+					  </div><!--7grupo-->
+					  
 					  <div class="col-md-7">
 					  <button type="submit" name="btn_registrar" id="btn_registrar" class="btn btn-primary btn-lg btn-block">Registrar</button>
 					  </div>
