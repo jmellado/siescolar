@@ -148,6 +148,9 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>grados_controller/index">GRADOS</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
