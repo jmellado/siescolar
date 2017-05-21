@@ -89,7 +89,7 @@
       <div class="modal-body">
         <p>Some text in the modal.</p>
 
-        <form role="form" id="form_grados">
+        <form role="form" action="<?php echo base_url(); ?>grados_controller/insertar" name="" method="post" id="form_grados">
 
         	<div class="form-group">
 				<label for="nombre_grado">NOMBRE</label>
@@ -110,16 +110,15 @@
 			<div class="form-group">
 				<label for="jornada">JORNADA</label>
 				<select class="form-control" id="jornada" name="jornada">
-						<option value="Preescolar">Preescolar</option>
-						<option value="Básica primaria">Básica-primaria</option>
-						<option value="Básica secundaria">Básica-secundaria</option>
-						<option value="Media">Media</option>
+						<option value="Mañana">Mañana</option>
+						<option value="Tarde">Tarde</option>
+						<option value="Noche">Noche</option>
 				</select>
 			</div>
 
 			<div class="form-group">
 				<label for="año_lectivo">AÑO LECTIVO</label>
-				<input type="text" class="form-control" id="año_lectivo" name="año_lectivo"
+				<input type="text" class="form-control" id="ano_lectivo" name="ano_lectivo"
 						 placeholder="Año lectivo">
 			</div>
 
