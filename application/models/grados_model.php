@@ -42,6 +42,32 @@ class Grados_model extends CI_Model {
 		
 	}
 
+	public function eliminar_grado($id){
+
+     	$this->db->where('id_grado',$id);
+		$consulta = $this->db->delete('grados');
+       	if($consulta==true){
+
+           return true;
+       	}
+       	else{
+
+           return false;
+       	}
+    }
+
+    public function modificar_grado($id,$grado){
+
+	
+		$this->db->where('id_grado',$id);
+
+		if ($this->db->update('grados', $grado))
+
+			return true;
+		else
+			return false;
+	}
+
 
 	public function obtener_ultimo_id(){
 

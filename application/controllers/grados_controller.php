@@ -42,7 +42,7 @@ class Grados_controller extends CI_Controller {
         	  //array para insertar en la tabla grados----------
         	$grado = array(
         	'id_grado' =>$ultimo_id,	
-			'nombre_grado' =>$this->input->post('nombre_grado'),
+			'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
 			'ciclo_grado' =>$this->input->post('ciclo_grado'),
 			'jornada' =>$this->input->post('jornada'),
 			'año_lectivo' =>$this->input->post('ano_lectivo'),
@@ -64,7 +64,7 @@ class Grados_controller extends CI_Controller {
 			}
 			else{
 
-				echo "estudiante ya existe";
+				echo "grado ya existe";
 			}
 
         }
@@ -92,5 +92,72 @@ class Grados_controller extends CI_Controller {
 
 
 	}
+
+	public function eliminar(){
+
+	  	$id =$this->input->post('id'); 
+
+        if(is_numeric($id)){
+
+			
+	        $respuesta=$this->grados_model->eliminar_grado($id);
+	        
+          	if($respuesta==true){
+              
+              	echo "eliminado correctamente";
+          	}else{
+              
+              	echo "no se pudo eliminar";
+          	}
+          
+        }else{
+          
+          	echo "digite valor numerico para identificar un grado";
+        }
+    }
+
+    public function modificar(){
+
+    	//array para insertar en la tabla grados----------
+        $grado = array(
+        'id_grado' =>$this->input->post('id_grado'),	
+		'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
+		'ciclo_grado' =>$this->input->post('ciclo_grado'),
+		'jornada' =>$this->input->post('jornada'),
+		'año_lectivo' =>$this->input->post('ano_lectivo'),
+		'estado_grado' =>$this->input->post('estado_grado'));
+
+		$id = $this->input->post('id_grado');
+        if(is_numeric($id)){
+
+        	//if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
+
+	        	$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
+
+				 if($respuesta==true){
+
+					echo "registro actualizado";
+
+	             }else{
+
+					echo "registro no se pudo actualizar, nombre de grado ya registrado";
+
+	             }
+	        //}
+	        /*else{
+
+				echo "grado ya existe";
+			}*/     
+                
+         
+        }else{
+            
+            echo "digite valor numerico para identificar un grado";
+        }
+
+
+
+
+    }
 
 }

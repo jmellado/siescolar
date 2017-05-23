@@ -38,8 +38,8 @@
     				<div class="panel-body">
 
     					<div class="form-group">
-						  <label for="cantidad">Mostrar Por:</label>
-						  <select class="selectpicker" id="cantidad" name="cantidad" >
+						  <label for="cantidad_grado">Mostrar Por:</label>
+						  <select class="selectpicker" id="cantidad_grado" name="cantidad_grado" >
 						    <option value="5">5</option>
 		  					<option value="10">10</option>
 		  					<option value="15">15</option>
@@ -47,7 +47,7 @@
 						  </select>
 						</div>
 
-						<table border='1' id="lista_grados" class="table-responsive table table-bordered table-condensed table-hover table-striped">
+						<table border='1' id="lista_grados" class="table table-responsive table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -56,13 +56,15 @@
 									<th>Jornada</th>
 									<th>Año lectivo</th>
 									<th>Estado</th>
+									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 							</tbody>
 						</table>
 
-						<div class="text-center paginacion">
+						<div class="text-center paginacion_grado">
 						
 						</div>
 
@@ -125,14 +127,87 @@
 			<div class="form-group">
 				<label for="estado_grado">ESTADO</label>
 				<select class="form-control" id="estado_grado" name="estado_grado">
-						<option value="activo">Activo</option>
-						<option value="inactivo">Inactivo</option>
+						<option value="Activo">Activo</option>
+						<option value="Inactivo">Inactivo</option>
 				</select>
 			</div>
 
 			<button type="submit" name="btn_registrar_grado" id="btn_registrar_grado" class="btn btn-primary btn-lg btn-block">Registrar</button>
 
         </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal  actualizar grado -->
+<div id="modal_actualizar_grado" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">ACTUALIZAR GRADOS</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+
+        <form role="form" id="form_grados_actualizar">
+
+        	<div class="form-group">
+								    
+				<input type="hidden" class="form-control" id="id_gradosele" name="id_grado">
+			</div>
+
+        	<div class="form-group">
+				<label for="nombre_grado">NOMBRE</label>
+				<input type="text" class="form-control" id="nombre_gradosele" name="nombre_grado"
+						 placeholder="Nombre">
+			</div>
+
+			<div class="form-group">
+				<label for="ciclo_grado">CICLO</label>
+				<select class="form-control" id="ciclo_gradosele" name="ciclo_grado">
+						<option value="Preescolar">Preescolar</option>
+						<option value="Básica primaria">Básica-primaria</option>
+						<option value="Básica secundaria">Básica-secundaria</option>
+						<option value="Media">Media</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="jornada">JORNADA</label>
+				<select class="form-control" id="jornadasele" name="jornada">
+						<option value="Mañana">Mañana</option>
+						<option value="Tarde">Tarde</option>
+						<option value="Noche">Noche</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="año_lectivo">AÑO LECTIVO</label>
+				<input type="text" class="form-control" id="ano_lectivosele" name="ano_lectivo"
+						 placeholder="Año lectivo">
+			</div>
+
+			<div class="form-group">
+				<label for="estado_grado">ESTADO</label>
+				<select class="form-control" id="estado_gradosele" name="estado_grado">
+						<option value="Activo">Activo</option>
+						<option value="Inactivo">Inactivo</option>
+				</select>
+			</div>
+
+			
+        </form>
+
+        <button type="submit" name="btn_actualizar_grado" id="btn_actualizar_grado" class="btn btn-primary btn-lg btn-block">Actualizar</button>
 
       </div>
       <div class="modal-footer">
