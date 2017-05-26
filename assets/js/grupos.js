@@ -2,25 +2,25 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 
-	mostrargrados("",1,5);
+	mostrargrupos("",1,5);
 	// este metodo permite enviar la inf del formulario
-	$("#form_grados").submit(function (event) {
+	$("#form_grupos").submit(function (event) {
 		//validar()
 		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
-		if($("#form_grados").valid()==true){
+		if($("#form_grupos").valid()==true){
 
 			$.ajax({
 
-				url:$("#form_grados").attr("action"),
-				type:$("#form_grados").attr("method"),
-				data:$("#form_grados").serialize(),   //captura la info de la cajas de texto
+				url:$("#form_grupos").attr("action"),
+				type:$("#form_grupos").attr("method"),
+				data:$("#form_grupos").serialize(),   //captura la info de la cajas de texto
 				success:function(respuesta) {
 
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
 						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
-						$("#form_grados")[0].reset();
+						$("#form_grupos")[0].reset();
 
 
 					}
@@ -30,7 +30,7 @@ function inicio(){
 						
 
 					}
-					else if(respuesta==="grado ya existe"){
+					else if(respuesta==="grupo ya existe"){
 						
 						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
 							
@@ -41,7 +41,7 @@ function inicio(){
 						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
-					mostrargrados("",1,5);
+					mostrargrupos("",1,5);
 
 						
 						
@@ -58,87 +58,81 @@ function inicio(){
 	});
 
 
-	$("#btn_agregar_grado").click(function(){
+	$("#btn_agregar_grupo").click(function(){
 
-		$("#modal_agregar_grado").modal();
+		$("#modal_agregar_grupo").modal();
        
     });
 
-    $("#btn_buscar_grado").click(function(event){
+    $("#btn_buscar_grupo").click(function(event){
 		
-       mostrargrados("",1,5);
+       mostrargrupos("",1,5);
     });
 
-    $("#buscar_grado").keyup(function(event){
+    $("#buscar_grupo").keyup(function(event){
 
-    	buscar = $("#buscar_grado").val();
-		valorcantidad = $("#cantidad_grado").val();
-		mostrargrados(buscar,1,valorcantidad);
+    	buscar = $("#buscar_grupo").val();
+		valorcantidad = $("#cantidad_grupo").val();
+		mostrargrupos(buscar,1,valorcantidad);
 		
     });
 
-    $("#cantidad_grado").change(function(){
+    $("#cantidad_grupo").change(function(){
     	valorcantidad = $(this).val();
-    	buscar = $("#buscar_grado").val();
-    	mostrargrados(buscar,1,valorcantidad);
+    	buscar = $("#buscar_grupo").val();
+    	mostrargrupos(buscar,1,valorcantidad);
     });
 
-    $("body").on("click", ".paginacion_grado li a", function(event){
+    $("body").on("click", ".paginacion_grupo li a", function(event){
     	event.preventDefault();
     	numero_pagina = $(this).attr("href");
-    	buscar = $("#buscar_grado").val();
-    	valorcantidad = $("#cantidad_grado").val();
-		mostrargrados(buscar,numero_pagina,valorcantidad);
+    	buscar = $("#buscar_grupo").val();
+    	valorcantidad = $("#cantidad_grupo").val();
+		mostrargrupos(buscar,numero_pagina,valorcantidad);
 
 
     });
 
-    $("body").on("click","#lista_grados button",function(event){
+    $("body").on("click","#lista_grupos button",function(event){
 		event.preventDefault();
 		idsele = $(this).attr("value");
-		alert("boton eliminar"+idsele);
+		//alert("boton eliminar"+idsele);
 		if(confirm("esta seguro de eliminar el registro?")){
-			eliminar_grado(idsele);
+			eliminar_grupo(idsele);
 
 		}
 
 	});
 
-	$("body").on("click","#lista_grados a",function(event){
+	$("body").on("click","#lista_grupos a",function(event){
 		event.preventDefault();
-		$("#modal_actualizar_grado").modal();
-		id_gradosele = $(this).attr("href");
-		nombre_gradosele = $(this).parent().parent().children("td:eq(1)").text();
-		ciclo_gradosele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		jornadasele = $(this).parent().parent().children("td:eq(3)").text();
-		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
-		estado_gradosele = $(this).parent().parent().children("td:eq(5)").text();
+		$("#modal_actualizar_grupo").modal();
+		id_gruposele = $(this).attr("href");
+		nombre_gruposele = $(this).parent().parent().children("td:eq(1)").text();
+		estado_gruposele = $(this).parent().parent().children("td:eq(2)").text();
 		
 		//alert(municipio_expedicionsele);
 
 		//llenarcombo_municipios(departamento_expedicionsele);
-		$("#id_gradosele").val(id_gradosele);
-        $("#nombre_gradosele").val(nombre_gradosele);
-        $("#ciclo_gradosele").val(ciclo_gradosele);
-        $("#jornadasele").val(jornadasele);
-        $("#ano_lectivosele").val(ano_lectivosele);
-        $("#estado_gradosele").val(estado_gradosele);
+		$("#id_gruposele").val(id_gruposele);
+        $("#nombre_gruposele").val(nombre_gruposele);
+        $("#estado_gruposele").val(estado_gruposele);
         
         //desbloquear_cajas_texto();
 
 	});
 
 	
-    $("#btn_actualizar_grado").click(function(event){
+    $("#btn_actualizar_grupo").click(function(event){
 
-    	if($("#form_grados_actualizar").valid()==true){
-       	actualizar_grado();
+    	if($("#form_grupos_actualizar").valid()==true){
+       	actualizar_grupo();
        	//bloquear_cajas_texto();
 
        }
        else{
 			alert("formulario incorrecto");
-			alert($("#form_estudiantes_actualizar").validate().numberOfInvalids()+"errores");
+			alert($("#form_grupos_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
@@ -149,39 +143,18 @@ function inicio(){
 
 
 
-	$("#form_grados, #form_grados_actualizar").validate({
+	$("#form_grupos, #form_grupos_actualizar").validate({
 
     	rules:{
 
-			nombre_grado:{
+			nombre_grupo:{
 				required: true,
 				maxlength: 15
 				//lettersonly: true	
 
 			},
 
-			ciclo_grado:{
-				required: true,
-				maxlength: 45,
-				//lettersonly: true	
-
-			},
-
-			jornada:{
-				required: true,
-				maxlength: 30,
-				//lettersonly: true	
-
-			},
-
-			ano_lectivo:{
-				required: true,
-				maxlength: 4,
-				digits: true	
-
-			},
-
-			estado_grado:{
+			estado_grupo:{
 				required: true,
 				maxlength: 8,
 				lettersonly: true
@@ -200,10 +173,10 @@ function inicio(){
 }
 
 
-function mostrargrados(valor,pagina,cantidad){
+function mostrargrupos(valor,pagina,cantidad){
 
 	$.ajax({
-		url:base_url+"grados_controller/mostrargrados",
+		url:base_url+"grupos_controller/mostrargrupos",
 		type:"post",
 		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad},
 		success:function(respuesta) {
@@ -212,11 +185,11 @@ function mostrargrados(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.grados.length; i++) {
-					html +="<tr><td>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td>"+registros.grados[i].ciclo_grado+"</td><td>"+registros.grados[i].jornada+"</td><td>"+registros.grados[i].año_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+">eliminar</button></td></tr>";
+				for (var i = 0; i < registros.grupos.length; i++) {
+					html +="<tr><td>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+">eliminar</button></td></tr>";
 				};
 				
-				$("#lista_grados tbody").html(html);
+				$("#lista_grupos tbody").html(html);
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -277,7 +250,7 @@ function mostrargrados(valor,pagina,cantidad){
 				}
 				
 				paginador +="</ul>";
-				$(".paginacion_grado").html(paginador);
+				$(".paginacion_grupo").html(paginador);
 
 			}
 
@@ -286,17 +259,17 @@ function mostrargrados(valor,pagina,cantidad){
 }
 
 
-function eliminar_grado(valor){
+function eliminar_grupo(valor){
 
 	$.ajax({
-		url:base_url+"grados_controller/eliminar",
+		url:base_url+"grupos_controller/eliminar",
 		type:"post",
         data:{id:valor},
 		success:function(respuesta) {
 				
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostrargrados("",1,5);
+				mostrargrupos("",1,5);
 
 		}
 
@@ -307,21 +280,21 @@ function eliminar_grado(valor){
 
 }
 
-function actualizar_grado(){
+function actualizar_grupo(){
 
 	$.ajax({
-		url:base_url+"grados_controller/modificar",
+		url:base_url+"grupos_controller/modificar",
 		type:"post",
-        data:$("#form_grados_actualizar").serialize(),
+        data:$("#form_grupos_actualizar").serialize(),
 		success:function(respuesta) {
 				
 				//alert(respuesta);
-				$("#modal_actualizar_grado").modal('hide');
+				$("#modal_actualizar_grupo").modal('hide');
 				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
 				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
-				$("#form_grados_actualizar")[0].reset();
+				$("#form_grupos_actualizar")[0].reset();
 
-				mostrargrados("",1,5);
+				mostrargrupos("",1,5);
 
 		}
 
