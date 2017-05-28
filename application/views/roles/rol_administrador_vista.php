@@ -18,6 +18,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
 
@@ -155,6 +156,9 @@
                             </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>grupos_controller/index">GRUPOS</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>salones_controller/index">SALONES</a>
                             </li>
                         </ul>
                     </li>

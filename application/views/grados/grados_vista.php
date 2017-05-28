@@ -47,7 +47,8 @@
 						  </select>
 						</div>
 
-						<table border='1' id="lista_grados" class="table table-responsive table-bordered table-condensed table-hover table-striped">
+						<div class="table-responsive">
+						<table border='1' id="lista_grados" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -63,6 +64,7 @@
 							<tbody>
 							</tbody>
 						</table>
+						</div>
 
 						<div class="text-center paginacion_grado">
 						
