@@ -311,3 +311,86 @@ function actualizar_salon(){
 	});
 
 }
+
+//------------------------------FUNCIONES PARA LA GESTION SALONES POR GRUPOS--------------------------------------------------------
+
+function inicio2(){
+
+	llenarcombo_salones();
+	llenarcombo_grados();
+	llenarcombo_grupos();
+
+
+	$("#btn_agregar_salon_grupo").click(function(){
+
+		$("#modal_agregar_salon_grupo").modal();
+       
+    });
+
+
+
+
+}
+
+function llenarcombo_salones(){
+
+	$.ajax({
+		url:base_url+"salones_grupos_controller/llenarcombo_salones",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_salon"]+">"+registros[i]["nombre_salon"]+"</option>";
+				};
+				
+				$("#salon1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_grados(){
+
+	$.ajax({
+		url:base_url+"salones_grupos_controller/llenarcombo_grados",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
+				};
+				
+				$("#grado1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_grupos(){
+
+	$.ajax({
+		url:base_url+"salones_grupos_controller/llenarcombo_grupos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_grupo"]+">"+registros[i]["nombre_grupo"]+"</option>";
+				};
+				
+				$("#grupo1 select").html(html);
+		}
+
+	});
+}

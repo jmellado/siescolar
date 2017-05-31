@@ -160,6 +160,9 @@
                             <li>
                                 <a href="<?php echo base_url(); ?>salones_controller/index">SALONES</a>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>salones_grupos_controller/index">SALONES POR GRUPOS</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
