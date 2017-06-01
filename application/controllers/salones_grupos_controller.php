@@ -23,9 +23,9 @@ class Salones_grupos_controller extends CI_Controller {
 
 	public function insertar(){
 
-        //$this->form_validation->set_rules('nombre_salon', 'nombre', 'required|alpha_spaces');
-        //$this->form_validation->set_rules('observacion', 'observacion', 'required|alpha_spaces');
-        //$this->form_validation->set_rules('estado_salon', 'estado', 'required|alpha_spaces');
+        $this->form_validation->set_rules('id_salon', 'salon', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('id_grado', 'grado', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('id_grupo', 'grupo', 'required|numeric|max_length[10]');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -40,7 +40,7 @@ class Salones_grupos_controller extends CI_Controller {
         	  //array para insertar en la tabla salones por grupos----------
         	$salon_grupo = array(
         	//'id_salon' =>$ultimo_id,	
-			'id_salon' =>ucwords($this->input->post('id_salon')),
+			'id_salon' =>$this->input->post('id_salon'),
 			'id_grado' =>$this->input->post('id_grado'),
 			'id_grupo' =>$this->input->post('id_grupo'));
 
@@ -60,7 +60,7 @@ class Salones_grupos_controller extends CI_Controller {
 			}
 			else{
 
-				echo "salon ya existe";
+				echo "salongrupo ya existe";
 			}
 
         }
@@ -117,7 +117,7 @@ class Salones_grupos_controller extends CI_Controller {
     	//array para insertar en la tabla salones por grupo----------
         $salon_grupo = array(
         //'id_salon' =>$this->input->post('id_salon'),	
-		'id_salon' =>ucwords($this->input->post('id_salon')),
+		'id_salon' =>$this->input->post('id_salon'),
 		'id_grado' =>$this->input->post('id_grado'),
 		'id_grupo' =>$this->input->post('id_grupo'));
 

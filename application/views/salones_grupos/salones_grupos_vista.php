@@ -51,7 +51,7 @@
 						<table border='1' id="lista_salones_grupos" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
+									<!--<th>#</th>-->
 									<th>Salon</th>
 									<th>Grado</th>
 									<th>Grupo</th>

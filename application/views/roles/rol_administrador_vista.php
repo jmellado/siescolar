@@ -19,6 +19,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones_grupos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
 
