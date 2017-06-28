@@ -200,7 +200,7 @@ function mostrarsalonesgrupos(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.salones_grupos.length; i++) {
-					html +="<tr><td>"+registros.salones_grupos[i].id_salon+"</td><td>"+registros.salones_grupos[i].id_grado+"</td><td>"+registros.salones_grupos[i].id_grupo+"</td><td><a class='btn btn-success' href="+registros.salones_grupos[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones_grupos[i].id_salon+">eliminar</button></td></tr>";
+					html +="<tr><td style='display:none'>"+registros.salones_grupos[i].id_salon+"</td><td style='display:none'>"+registros.salones_grupos[i].id_grado+"</td><td style='display:none'>"+registros.salones_grupos[i].id_grupo+"</td><td>"+registros.salones_grupos[i].nombre_salon+"</td><td>"+registros.salones_grupos[i].nombre_grado+"</td><td>"+registros.salones_grupos[i].nombre_grupo+"</td><td><a class='btn btn-success' href="+registros.salones_grupos[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones_grupos[i].id_salon+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_salones_grupos tbody").html(html);

@@ -26,14 +26,20 @@ class Salones_grupos_model extends CI_Model {
 
 	public function buscar_salon_grupo($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('id_salon',$id,'after');
-		$this->db->or_like('id_grado',$id,'after');
-		$this->db->or_like('id_grupo',$id);
+		$this->db->like('salones.nombre_salon',$id,'after');
+		$this->db->or_like('grados.nombre_grado',$id,'after');
+		$this->db->or_like('grupos.nombre_grupo',$id);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 		
+		$this->db->join('salones', 'salones_grupo.id_salon = salones.id_salon');  //nada mas add is line  relacion con tabla salones
+		$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');  //nada mas add is line    relacion con tabla grados
+		$this->db->join('grupos', 'salones_grupo.id_grupo = grupos.id_grupo');  //nada mas add is line    relacion con tabla grupos
+
+		$this->db->select('salones_grupo.id_salon,salones_grupo.id_grado,salones_grupo.id_grupo,salones.nombre_salon,grados.nombre_grado,grupos.nombre_grupo'); //---------------------------- seleccion solo de campos a utilizar
+
 		$query = $this->db->get('salones_grupo');
 
 		return $query->result();
