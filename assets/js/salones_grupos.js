@@ -36,7 +36,13 @@ function inicio(){
 					}
 					else if(respuesta==="salongrupo ya existe"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.success('Salon ya esta registrado', 'Success Alert', {timeOut: 5000});
+							
+
+					}
+					else if(respuesta==="gradogrupo ya existe"){
+						
+						toastr.success('grado y grupo ya registrados', 'Success Alert', {timeOut: 5000});
 							
 
 					}
@@ -132,7 +138,7 @@ function inicio(){
     $("#btn_actualizar_salon_grupo").click(function(event){
 
     	if($("#form_salones_grupos_actualizar").valid()==true){
-       	actualizar_salon();
+       	actualizar_salongrupo();
        	//bloquear_cajas_texto();
 
        }

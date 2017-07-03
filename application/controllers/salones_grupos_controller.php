@@ -129,6 +129,7 @@ class Salones_grupos_controller extends CI_Controller {
 		'id_grupo' =>$this->input->post('id_grupo'));
 
 		$id = $this->input->post('id_salon');
+		//$id = (int) $id;
         if(is_numeric($id)){
 
         	//if ($this->salones_model->validar_existencia($this->input->post('nombre_salon'))){
