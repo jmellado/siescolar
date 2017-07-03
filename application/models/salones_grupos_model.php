@@ -24,6 +24,21 @@ class Salones_grupos_model extends CI_Model {
 
 	}
 
+	public function validar_grado_grupo($id_grado,$id_grupo){
+
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_grupo',$id_grupo);
+		$query = $this->db->get('salones_grupo');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
 	public function buscar_salon_grupo($id,$inicio = FALSE,$cantidad = FALSE){
 
 		$this->db->like('salones.nombre_salon',$id,'after');

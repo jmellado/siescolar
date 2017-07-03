@@ -46,15 +46,22 @@ class Salones_grupos_controller extends CI_Controller {
 
 			if ($this->salones_grupos_model->validar_existencia($this->input->post('id_salon'))){
 
-				$respuesta=$this->salones_grupos_model->insertar_salon_grupo($salon_grupo);
+				if($this->salones_grupos_model->validar_grado_grupo($this->input->post('id_grado'),$this->input->post('id_grupo'))){
 
-				if($respuesta==true){
+					$respuesta=$this->salones_grupos_model->insertar_salon_grupo($salon_grupo);
 
-					echo "registroguardado";
+					if($respuesta==true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "gradogrupo ya existe";
 				}
 
 			}
@@ -126,17 +133,24 @@ class Salones_grupos_controller extends CI_Controller {
 
         	//if ($this->salones_model->validar_existencia($this->input->post('nombre_salon'))){
 
-	        	$respuesta=$this->salones_grupos_model->modificar_salon_grupo($this->input->post('id_salon'),$salon_grupo);
+        		if($this->salones_grupos_model->validar_grado_grupo($this->input->post('id_grado'),$this->input->post('id_grupo'))){
+		        	$respuesta=$this->salones_grupos_model->modificar_salon_grupo($this->input->post('id_salon'),$salon_grupo);
 
-				 if($respuesta==true){
+					 if($respuesta==true){
 
-					echo "registro actualizado";
+						echo "registro actualizado";
 
-	             }else{
+		             }else{
 
-					echo "registro no se pudo actualizar, nombre de salon ya registrado";
+						echo "registro no se pudo actualizar, nombre de salon ya registrado";
 
-	             }
+		             }
+        		}
+        		else{
+
+        			echo "grado y grupo ya registrados";
+        		}
+
 	        //}
 	        /*else{
 
