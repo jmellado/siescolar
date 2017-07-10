@@ -26,11 +26,16 @@ class Areas_model extends CI_Model {
 
 	public function buscar_area($id,$inicio = FALSE,$cantidad = FALSE){
 
+		$this->db->like('areas.nombre_area',$id,'after');
+		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('areas.estado_area',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
+		$this->db->join('anos_lectivos', 'areas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->select('areas.id_area,areas.nombre_area,areas.ano_lectivo,areas.estado_area,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('areas');
 
@@ -75,7 +80,9 @@ class Areas_model extends CI_Model {
         return $data['query'];
 	}
 
+	public function llenar_anos_lectivos(){
 
+		$query = $this->db->get('anos_lectivos');
 		return $query->result();
 	}
 

@@ -3,6 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarareas("",1,5);
+	llenarcombo_anos_lectivos();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_areas").submit(function (event) {
@@ -111,6 +112,7 @@ function inicio(){
 		id_areasele = $(this).attr("href");
 		nombre_areasele = $(this).parent().parent().children("td:eq(1)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(2)").text();
+		estado_areasele = $(this).parent().parent().children("td:eq(4)").text();
 		
 		//alert(municipio_expedicionsele);
 
@@ -151,6 +153,8 @@ function inicio(){
 
 			nombre_area:{
 				required: true,
+				maxlength: 50
+				//lettersonly: true	
 
 			},
 
@@ -187,11 +191,13 @@ function mostrarareas(valor,pagina,cantidad){
 		type:"post",
 		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad},
 		success:function(respuesta) {
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
 				for (var i = 0; i < registros.areas.length; i++) {
+					html +="<tr><td>"+registros.areas[i].id_area+"</td><td>"+registros.areas[i].nombre_area+"</td><td style='display:none'>"+registros.areas[i].ano_lectivo+"</td><td>"+registros.areas[i].nombre_ano_lectivo+"</td><td>"+registros.areas[i].estado_area+"</td><td><a class='btn btn-success' href="+registros.areas[i].id_area+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.areas[i].id_area+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_areas tbody").html(html);
@@ -308,6 +314,7 @@ function actualizar_area(){
 
 }
 
+function llenarcombo_anos_lectivos(){
 
 	$.ajax({
 		url:base_url+"areas_controller/llenarcombo_anos_lectivos",
@@ -315,9 +322,11 @@ function actualizar_area(){
 		success:function(respuesta) {
 
 				var registros = eval(respuesta);
+			
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
 				};
 				
 				$("#ano_lectivo1 select").html(html);
