@@ -3,6 +3,8 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarsalones("",1,5);
+	llenarcombo_anos_lectivos();
+
 	// este metodo permite enviar la inf del formulario
 	$("#form_salones").submit(function (event) {
 		//validar()
@@ -110,7 +112,8 @@ function inicio(){
 		id_salonsele = $(this).attr("href");
 		nombre_salonsele = $(this).parent().parent().children("td:eq(1)").text();
 		observacionsele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		estado_salonsele = $(this).parent().parent().children("td:eq(3)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
+		estado_salonsele = $(this).parent().parent().children("td:eq(5)").text();
 		
 		//alert(municipio_expedicionsele);
 
@@ -118,6 +121,7 @@ function inicio(){
 		$("#id_salonsele").val(id_salonsele);
         $("#nombre_salonsele").val(nombre_salonsele);
         $("#observacionsele").val(observacionsele);
+        $("#ano_lectivosele").val(ano_lectivosele);
         $("#estado_salonsele").val(estado_salonsele);
         
         //desbloquear_cajas_texto();
@@ -163,6 +167,13 @@ function inicio(){
 
 			},
 
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
 			estado_salon:{
 				required: true,
 				maxlength: 8,
@@ -195,7 +206,7 @@ function mostrarsalones(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.salones.length; i++) {
-					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_salones tbody").html(html);
@@ -390,6 +401,27 @@ function llenarcombo_grupos(){
 				};
 				
 				$("#grupo1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_anos_lectivos(){
+
+	$.ajax({
+		url:base_url+"salones_controller/llenarcombo_anos_lectivos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
+				};
+				
+				$("#ano_lectivo1 select").html(html);
 		}
 
 	});

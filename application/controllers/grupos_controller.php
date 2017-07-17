@@ -24,6 +24,7 @@ class Grupos_controller extends CI_Controller {
 	public function insertar(){
 
         $this->form_validation->set_rules('nombre_grupo', 'nombre', 'required|alpha_spaces');
+        $this->form_validation->set_rules('ano_lectivo', 'ano lectivo', 'required|min_length[1]|max_length[4]');
         $this->form_validation->set_rules('estado_grupo', 'estado', 'required|alpha_spaces');
 
         if ($this->form_validation->run() == FALSE){
@@ -40,6 +41,7 @@ class Grupos_controller extends CI_Controller {
         	$grupo = array(
         	'id_grupo' =>$ultimo_id,	
 			'nombre_grupo' =>ucwords($this->input->post('nombre_grupo')),
+			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_grupo' =>$this->input->post('estado_grupo'));
 
 			if ($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'))){
@@ -116,12 +118,15 @@ class Grupos_controller extends CI_Controller {
         $grupo = array(
         'id_grupo' =>$this->input->post('id_grupo'),	
 		'nombre_grupo' =>ucwords($this->input->post('nombre_grupo')),
+		'ano_lectivo' =>$this->input->post('ano_lectivo'),
 		'estado_grupo' =>$this->input->post('estado_grupo'));
 
 		$id = $this->input->post('id_grupo');
+		$nombre_buscado = $this->grupos_model->obtener_nombre_grupo($id);
+
         if(is_numeric($id)){
 
-        	//if ($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'))){
+        	if ($nombre_buscado == $this->input->post('nombre_grupo')){
 
 	        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
@@ -131,14 +136,32 @@ class Grupos_controller extends CI_Controller {
 
 	             }else{
 
-					echo "registro no se pudo actualizar, nombre de grupo ya registrado";
+					echo "registro no se pudo actualizar";
 
 	             }
-	        //}
-	        /*else{
+	        }
+	        else{
 
-				echo "grupo ya existe";
-			}*/     
+	        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'))){
+
+	        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+
+	        		if($respuesta==true){
+
+	        			echo "registro actualizado";
+	        		}else{
+
+	        			echo "registro no se pudo actualizar";
+	        		}
+
+
+	        	}else{
+
+	        		echo "grupo ya existe";
+	        	}
+
+				
+			}    
                 
          
         }else{
@@ -146,9 +169,13 @@ class Grupos_controller extends CI_Controller {
             echo "digite valor numerico para identificar un grupo";
         }
 
+    }
+    
 
+    public function llenarcombo_anos_lectivos(){
 
-
+    	$consulta = $this->grupos_model->llenar_anos_lectivos();
+    	echo json_encode($consulta);
     }
 
 }

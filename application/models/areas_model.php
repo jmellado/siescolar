@@ -86,6 +86,24 @@ class Areas_model extends CI_Model {
 		return $query->result();
 	}
 
+	public function obtener_nombre_area($id){
+
+		$this->db->where('id_area',$id);
+		$query = $this->db->get('areas');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['nombre_area'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+
 
 
 

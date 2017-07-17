@@ -122,8 +122,11 @@
 
 			<div class="form-group">
 				<label for="año_lectivo">AÑO LECTIVO</label>
-				<input type="text" class="form-control" id="ano_lectivo" name="ano_lectivo"
-						 placeholder="Año lectivo">
+				<div id="ano_lectivo1">
+					<select class="form-control" id="ano_lectivo" name="ano_lectivo">
+									    
+					</select>
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -194,8 +197,11 @@
 
 			<div class="form-group">
 				<label for="año_lectivo">AÑO LECTIVO</label>
-				<input type="text" class="form-control" id="ano_lectivosele" name="ano_lectivo"
-						 placeholder="Año lectivo">
+				<div id="ano_lectivo1">
+					<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
+									    
+					</select>
+				</div>
 			</div>
 
 			<div class="form-group">

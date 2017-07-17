@@ -53,6 +53,7 @@
 								<tr>
 									<th>#</th>
 									<th>Nombre</th>
+									<th>Año lectivo</th>
 									<th>Estado</th>
 									<th></th>
 									<th></th>
@@ -96,6 +97,15 @@
 				<label for="nombre_grupo">NOMBRE</label>
 				<input type="text" class="form-control" id="nombre_grupo" name="nombre_grupo"
 						 placeholder="Nombre">
+			</div>
+
+			<div class="form-group">
+				<label for="año_lectivo">AÑO LECTIVO</label>
+				<div id="ano_lectivo1">
+					<select class="form-control" id="ano_lectivo" name="ano_lectivo">
+									    
+					</select>
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -143,6 +153,15 @@
 				<label for="nombre_grupo">NOMBRE</label>
 				<input type="text" class="form-control" id="nombre_gruposele" name="nombre_grupo"
 						 placeholder="Nombre">
+			</div>
+
+			<div class="form-group">
+				<label for="año_lectivo">AÑO LECTIVO</label>
+				<div id="ano_lectivo1">
+					<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
+									    
+					</select>
+				</div>
 			</div>
 
 			<div class="form-group">

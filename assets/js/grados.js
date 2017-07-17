@@ -3,6 +3,8 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrargrados("",1,5);
+	llenarcombo_anos_lectivos();
+
 	// este metodo permite enviar la inf del formulario
 	$("#form_grados").submit(function (event) {
 		//validar()
@@ -96,7 +98,7 @@ function inicio(){
     $("body").on("click","#lista_grados button",function(event){
 		event.preventDefault();
 		idsele = $(this).attr("value");
-		alert("boton eliminar"+idsele);
+		//alert("boton eliminar"+idsele);
 		if(confirm("esta seguro de eliminar el registro?")){
 			eliminar_grado(idsele);
 
@@ -112,7 +114,7 @@ function inicio(){
 		ciclo_gradosele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		jornadasele = $(this).parent().parent().children("td:eq(3)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
-		estado_gradosele = $(this).parent().parent().children("td:eq(5)").text();
+		estado_gradosele = $(this).parent().parent().children("td:eq(6)").text();
 		
 		//alert(municipio_expedicionsele);
 
@@ -213,7 +215,7 @@ function mostrargrados(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.grados.length; i++) {
-					html +="<tr><td>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td>"+registros.grados[i].ciclo_grado+"</td><td>"+registros.grados[i].jornada+"</td><td>"+registros.grados[i].año_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td>"+registros.grados[i].ciclo_grado+"</td><td>"+registros.grados[i].jornada+"</td><td style='display:none'>"+registros.grados[i].ano_lectivo+"</td><td>"+registros.grados[i].nombre_ano_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_grados tbody").html(html);
@@ -328,4 +330,25 @@ function actualizar_grado(){
 
 	});
 
+}
+
+function llenarcombo_anos_lectivos(){
+
+	$.ajax({
+		url:base_url+"grados_controller/llenarcombo_anos_lectivos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
+				};
+				
+				$("#ano_lectivo1 select").html(html);
+		}
+
+	});
 }

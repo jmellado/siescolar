@@ -122,9 +122,10 @@ class Areas_controller extends CI_Controller {
 		'estado_area' =>$this->input->post('estado_area'));
 
 		$id = $this->input->post('id_area');
+		$nombre_buscado = $this->areas_model->obtener_nombre_area($id);
         if(is_numeric($id)){
 
-        	//if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
+        	if ($nombre_buscado == $this->input->post('nombre_area')){
 
 	        	$respuesta=$this->areas_model->modificar_area($this->input->post('id_area'),$area);
 
@@ -134,14 +135,35 @@ class Areas_controller extends CI_Controller {
 
 	             }else{
 
-					echo "registro no se pudo actualizar, nombre de area ya registrado";
+					echo "registro no se pudo actualizar";
 
 	             }
-	        //}
-	        /*else{
+	        }
+	        else{
 
-				echo "grado ya existe";
-			}*/     
+	        	if($this->areas_model->validar_existencia($this->input->post('nombre_area'))){
+
+	        		$respuesta=$this->areas_model->modificar_area($this->input->post('id_area'),$area);
+
+	        		if($respuesta==true){
+
+	        			echo "registro actualizado";
+
+	        		}else{
+
+	        			echo "registro no se pudo actualizar";
+
+	        		}
+
+	        	}
+	        	else{
+
+	        		echo "area ya existe";
+
+	        	}
+
+				
+			}    
                 
          
         }else{

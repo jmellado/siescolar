@@ -26,13 +26,17 @@ class Salones_model extends CI_Model {
 
 	public function buscar_salon($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('nombre_salon',$id,'after');
-		$this->db->or_like('observacion',$id,'after');
-		$this->db->or_like('estado_salon',$id);
+		$this->db->like('salones.nombre_salon',$id,'after');
+		$this->db->or_like('salones.observacion',$id,'after');
+		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('salones.estado_salon',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
+
+		$this->db->join('anos_lectivos', 'salones.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->select('salones.id_salon,salones.nombre_salon,salones.observacion,salones.ano_lectivo,salones.estado_salon,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('salones');
 
@@ -75,6 +79,29 @@ class Salones_model extends CI_Model {
     	$row = $query->result_array();
         $data['query'] = 1 + $row[0]['id_salon'];
         return $data['query'];
+	}
+
+
+	public function llenar_anos_lectivos(){
+
+		$query = $this->db->get('anos_lectivos');
+		return $query->result();
+	}
+
+	public function obtener_nombre_salon($id){
+
+		$this->db->where('id_salon',$id);
+		$query = $this->db->get('salones');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['nombre_salon'];
+		}
+		else{
+			return false;
+		}
+
 	}
 
 

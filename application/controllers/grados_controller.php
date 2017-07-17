@@ -26,7 +26,7 @@ class Grados_controller extends CI_Controller {
         $this->form_validation->set_rules('nombre_grado', 'nombre', 'required|alpha_spaces');
         $this->form_validation->set_rules('ciclo_grado', 'ciclo', 'required|alpha_spaces');
         $this->form_validation->set_rules('jornada', 'jornada', 'required|alpha_spaces');
-        $this->form_validation->set_rules('ano_lectivo', 'año lectivo', 'required|min_length[4]|max_length[4]');
+        $this->form_validation->set_rules('ano_lectivo', 'año lectivo', 'required|min_length[1]|max_length[4]');
         $this->form_validation->set_rules('estado_grado', 'estado', 'required|alpha_spaces');
 
         if ($this->form_validation->run() == FALSE){
@@ -45,7 +45,7 @@ class Grados_controller extends CI_Controller {
 			'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
 			'ciclo_grado' =>$this->input->post('ciclo_grado'),
 			'jornada' =>$this->input->post('jornada'),
-			'año_lectivo' =>$this->input->post('ano_lectivo'),
+			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_grado' =>$this->input->post('estado_grado'));
 
 			if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
@@ -124,13 +124,15 @@ class Grados_controller extends CI_Controller {
 		'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
 		'ciclo_grado' =>$this->input->post('ciclo_grado'),
 		'jornada' =>$this->input->post('jornada'),
-		'año_lectivo' =>$this->input->post('ano_lectivo'),
+		'ano_lectivo' =>$this->input->post('ano_lectivo'),
 		'estado_grado' =>$this->input->post('estado_grado'));
 
 		$id = $this->input->post('id_grado');
+		$nombre_buscado = $this->grados_model->obtener_nombre_grado($id);
+
         if(is_numeric($id)){
 
-        	//if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
+        	if ($nombre_buscado == $this->input->post('nombre_grado')){
 
 	        	$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
 
@@ -140,14 +142,35 @@ class Grados_controller extends CI_Controller {
 
 	             }else{
 
-					echo "registro no se pudo actualizar, nombre de grado ya registrado";
+					echo "registro no se pudo actualizar";
 
 	             }
-	        //}
-	        /*else{
+	        }
+	        else{
 
-				echo "grado ya existe";
-			}*/     
+	        	if($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
+
+	        		$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
+
+	        		if($respuesta==true){
+
+	        			echo "registro actualizado";
+
+	        		}else{
+
+	        			echo "registro no se pudo actualizar";
+	        		}
+
+
+
+	        	}else{
+
+	        		echo "grado ya existe";
+
+	        	}
+
+				
+			}    
                 
          
         }else{
@@ -158,6 +181,12 @@ class Grados_controller extends CI_Controller {
 
 
 
+    }
+
+    public function llenarcombo_anos_lectivos(){
+
+    	$consulta = $this->grados_model->llenar_anos_lectivos();
+    	echo json_encode($consulta);
     }
 
 }

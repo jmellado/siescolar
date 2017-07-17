@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-04-2017 a las 05:20:38
--- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.23
+-- Tiempo de generación: 17-07-2017 a las 22:09:11
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,12 +41,39 @@ CREATE TABLE `acudientes` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `anos_lectivos`
+--
+
+CREATE TABLE `anos_lectivos` (
+  `id_ano_lectivo` int(11) NOT NULL,
+  `nombre_ano_lectivo` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `anos_lectivos`
+--
+
+INSERT INTO `anos_lectivos` (`id_ano_lectivo`, `nombre_ano_lectivo`) VALUES
+(1, 2010),
+(2, 2011),
+(3, 2012),
+(4, 2013),
+(5, 2014),
+(6, 2015),
+(7, 2016),
+(8, 2017),
+(9, 2018);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `areas`
 --
 
 CREATE TABLE `areas` (
   `id_area` int(11) NOT NULL,
   `nombre_area` varchar(45) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `estado_area` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -60,6 +87,7 @@ CREATE TABLE `asignaturas` (
   `id_asignatura` int(11) NOT NULL,
   `nombre_asignatura` varchar(45) NOT NULL,
   `id_area` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `estado_asignatura` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -90,7 +118,7 @@ CREATE TABLE `cargas_academicas` (
   `id_asignatura` int(11) NOT NULL,
   `id_grado` int(11) NOT NULL,
   `id_grupo` int(11) NOT NULL,
-  `año_lectivo` year(4) NOT NULL
+  `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -195,7 +223,7 @@ CREATE TABLE `grados` (
   `nombre_grado` varchar(30) NOT NULL,
   `ciclo_grado` varchar(45) NOT NULL,
   `jornada` varchar(30) NOT NULL,
-  `año_lectivo` year(4) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `estado_grado` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -208,6 +236,7 @@ CREATE TABLE `grados` (
 CREATE TABLE `grupos` (
   `id_grupo` int(11) NOT NULL,
   `nombre_grupo` varchar(30) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `estado_grupo` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -234,7 +263,7 @@ CREATE TABLE `listado_votantes` (
 CREATE TABLE `matriculas` (
   `id_matricula` int(11) NOT NULL,
   `fecha_matricula` date NOT NULL,
-  `año_lectivo` year(4) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_acudiente` int(11) NOT NULL,
   `id_grado` int(11) NOT NULL,
@@ -1389,7 +1418,7 @@ INSERT INTO `municipios` (`id_municipio`, `nombre_municipio`, `id_departamento`)
 
 CREATE TABLE `notas` (
   `id_nota` int(11) NOT NULL,
-  `año_lectivo` year(4) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
   `p1` decimal(10,0) DEFAULT NULL,
@@ -1432,7 +1461,7 @@ CREATE TABLE `pensum` (
   `id_grado` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
   `intensidad_horaria` int(11) NOT NULL,
-  `año_lectivo` year(4) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `estado_pensum` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1517,7 +1546,9 @@ CREATE TABLE `salones` (
   `id_salon` int(11) NOT NULL,
   `nombre_salon` varchar(30) NOT NULL,
   `observacion` varchar(45) NOT NULL,
-  `estado_salon` varchar(8) NOT NULL
+  `ano_lectivo` int(11) NOT NULL,
+  `estado_salon` varchar(8) NOT NULL,
+  `disponibilidad` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1531,6 +1562,16 @@ CREATE TABLE `salones_grupo` (
   `id_grado` int(11) NOT NULL,
   `id_grupo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Disparadores `salones_grupo`
+--
+DELIMITER $$
+CREATE TRIGGER `actualizar_disponibilidad_salon` AFTER INSERT ON `salones_grupo` FOR EACH ROW begin
+UPDATE salones set disponibilidad="no" where id_salon=new.id_salon;
+end
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1574,6 +1615,13 @@ DELIMITER ;
 --
 ALTER TABLE `acudientes`
   ADD PRIMARY KEY (`id_acudiente`);
+
+--
+-- Indices de la tabla `anos_lectivos`
+--
+ALTER TABLE `anos_lectivos`
+  ADD PRIMARY KEY (`id_ano_lectivo`),
+  ADD UNIQUE KEY `año_lectivo_UNIQUE` (`nombre_ano_lectivo`);
 
 --
 -- Indices de la tabla `areas`
@@ -1739,6 +1787,11 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `acudientes`
   MODIFY `id_acudiente` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `anos_lectivos`
+--
+ALTER TABLE `anos_lectivos`
+  MODIFY `id_ano_lectivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --

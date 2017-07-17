@@ -3,6 +3,8 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrargrupos("",1,5);
+	llenarcombo_anos_lectivos();
+
 	// este metodo permite enviar la inf del formulario
 	$("#form_grupos").submit(function (event) {
 		//validar()
@@ -109,13 +111,15 @@ function inicio(){
 		$("#modal_actualizar_grupo").modal();
 		id_gruposele = $(this).attr("href");
 		nombre_gruposele = $(this).parent().parent().children("td:eq(1)").text();
-		estado_gruposele = $(this).parent().parent().children("td:eq(2)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(2)").text();
+		estado_gruposele = $(this).parent().parent().children("td:eq(4)").text();
 		
 		//alert(municipio_expedicionsele);
 
 		//llenarcombo_municipios(departamento_expedicionsele);
 		$("#id_gruposele").val(id_gruposele);
         $("#nombre_gruposele").val(nombre_gruposele);
+        $("#ano_lectivosele").val(ano_lectivosele);
         $("#estado_gruposele").val(estado_gruposele);
         
         //desbloquear_cajas_texto();
@@ -154,6 +158,13 @@ function inicio(){
 
 			},
 
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
 			estado_grupo:{
 				required: true,
 				maxlength: 8,
@@ -186,7 +197,7 @@ function mostrargrupos(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.grupos.length; i++) {
-					html +="<tr><td>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td style='display:none'>"+registros.grupos[i].ano_lectivo+"</td><td>"+registros.grupos[i].nombre_ano_lectivo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_grupos tbody").html(html);
@@ -301,4 +312,25 @@ function actualizar_grupo(){
 
 	});
 
+}
+
+function llenarcombo_anos_lectivos(){
+
+	$.ajax({
+		url:base_url+"grupos_controller/llenarcombo_anos_lectivos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
+				};
+				
+				$("#ano_lectivo1 select").html(html);
+		}
+
+	});
 }

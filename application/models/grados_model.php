@@ -26,15 +26,18 @@ class Grados_model extends CI_Model {
 
 	public function buscar_grado($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('nombre_grado',$id,'after');
-		$this->db->or_like('ciclo_grado',$id,'after');
-		$this->db->or_like('jornada',$id);
-		$this->db->or_like('año_lectivo',$id);
-		$this->db->or_like('estado_grado',$id);
+		$this->db->like('grados.nombre_grado',$id,'after');
+		$this->db->or_like('grados.ciclo_grado',$id,'after');
+		$this->db->or_like('grados.jornada',$id,'after');
+		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('grados.estado_grado',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
+
+		$this->db->join('anos_lectivos', 'grados.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->select('grados.id_grado,grados.nombre_grado,grados.ciclo_grado,grados.jornada,grados.ano_lectivo,grados.estado_grado,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('grados');
 
@@ -80,6 +83,28 @@ class Grados_model extends CI_Model {
 	}
 
 
+	public function llenar_anos_lectivos(){
+
+		$query = $this->db->get('anos_lectivos');
+		return $query->result();
+	}
+
+
+	public function obtener_nombre_grado($id){
+
+		$this->db->where('id_grado',$id);
+		$query = $this->db->get('grados');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['nombre_grado'];
+		}
+		else{
+			return false;
+		}
+
+	}
 
 
 
