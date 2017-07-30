@@ -48,7 +48,7 @@ class Salones_controller extends CI_Controller {
 			'estado_salon' =>$this->input->post('estado_salon'),
 			'disponibilidad' =>$disponibilidad);
 
-			if ($this->salones_model->validar_existencia($this->input->post('nombre_salon'))){
+			if ($this->salones_model->validar_existencia($this->input->post('nombre_salon'),$this->input->post('ano_lectivo'))){
 
 				$respuesta=$this->salones_model->insertar_salon($salon);
 
@@ -130,10 +130,11 @@ class Salones_controller extends CI_Controller {
 
 		$id = $this->input->post('id_salon');
 		$nombre_buscado = $this->salones_model->obtener_nombre_salon($id);
+		$ano_lectivo_buscado = $this->salones_model->obtener_ano_lectivo($id);
 
         if(is_numeric($id)){
 
-        	if ($nombre_buscado == $this->input->post('nombre_salon')){
+        	if ($nombre_buscado == $this->input->post('nombre_salon') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
 	        	$respuesta=$this->salones_model->modificar_salon($this->input->post('id_salon'),$salon);
 
@@ -149,7 +150,7 @@ class Salones_controller extends CI_Controller {
 	        }
 	        else{
 
-	        	if($this->salones_model->validar_existencia($this->input->post('nombre_salon'))){
+	        	if($this->salones_model->validar_existencia($this->input->post('nombre_salon'),$this->input->post('ano_lectivo'))){
 
 	        		$respuesta=$this->salones_model->modificar_salon($this->input->post('id_salon'),$salon);
 

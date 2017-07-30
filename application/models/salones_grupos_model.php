@@ -101,6 +101,7 @@ class Salones_grupos_model extends CI_Model {
 	public function llenar_salones(){
 
 		$this->db->where('estado_salon','Activo');
+		$this->db->where('disponibilidad','si');
 		$query = $this->db->get('salones');
 		return $query->result();
 	}

@@ -10,9 +10,10 @@ class Salones_model extends CI_Model {
 			return false;
 	}
 
-	public function validar_existencia($nombre){
+	public function validar_existencia($nombre,$ano_lectivo){
 
 		$this->db->where('nombre_salon',$nombre);
+		$this->db->where('ano_lectivo',$ano_lectivo);
 		$query = $this->db->get('salones');
 
 		if ($query->num_rows() > 0) {
@@ -97,6 +98,22 @@ class Salones_model extends CI_Model {
 		
 			$row = $query->result_array();
         	return $row[0]['nombre_salon'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+	public function obtener_ano_lectivo($id){
+
+		$this->db->where('id_salon',$id);
+		$query = $this->db->get('salones');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['ano_lectivo'];
 		}
 		else{
 			return false;

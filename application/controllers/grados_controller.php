@@ -48,7 +48,7 @@ class Grados_controller extends CI_Controller {
 			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_grado' =>$this->input->post('estado_grado'));
 
-			if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
+			if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'),$this->input->post('ano_lectivo'))){
 
 				$respuesta=$this->grados_model->insertar_grado($grado);
 
@@ -129,10 +129,11 @@ class Grados_controller extends CI_Controller {
 
 		$id = $this->input->post('id_grado');
 		$nombre_buscado = $this->grados_model->obtener_nombre_grado($id);
+		$ano_lectivo_buscado = $this->grados_model->obtener_ano_lectivo($id);
 
         if(is_numeric($id)){
 
-        	if ($nombre_buscado == $this->input->post('nombre_grado')){
+        	if ($nombre_buscado == $this->input->post('nombre_grado') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
 	        	$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
 
@@ -148,7 +149,7 @@ class Grados_controller extends CI_Controller {
 	        }
 	        else{
 
-	        	if($this->grados_model->validar_existencia($this->input->post('nombre_grado'))){
+	        	if($this->grados_model->validar_existencia($this->input->post('nombre_grado'),$this->input->post('ano_lectivo'))){
 
 	        		$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
 

@@ -44,7 +44,7 @@ class Grupos_controller extends CI_Controller {
 			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_grupo' =>$this->input->post('estado_grupo'));
 
-			if ($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'))){
+			if ($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
 
 				$respuesta=$this->grupos_model->insertar_grupo($grupo);
 
@@ -123,10 +123,11 @@ class Grupos_controller extends CI_Controller {
 
 		$id = $this->input->post('id_grupo');
 		$nombre_buscado = $this->grupos_model->obtener_nombre_grupo($id);
+		$ano_lectivo_buscado = $this->grupos_model->obtener_ano_lectivo($id);
 
         if(is_numeric($id)){
 
-        	if ($nombre_buscado == $this->input->post('nombre_grupo')){
+        	if ($nombre_buscado == $this->input->post('nombre_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
 	        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
@@ -142,7 +143,7 @@ class Grupos_controller extends CI_Controller {
 	        }
 	        else{
 
-	        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'))){
+	        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
 
 	        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
