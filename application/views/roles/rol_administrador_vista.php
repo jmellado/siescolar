@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/estudiantes.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/profesores.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js"></script>
@@ -142,7 +143,7 @@
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> GESTION<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">PROFESORES</a>
+                                <a href="<?php echo base_url(); ?>profesores_controller/index">PROFESORES</a>
                             </li>
                             <li>
                                 <a href="#">ESTUDIANTES <span class="fa arrow"></span></a>
