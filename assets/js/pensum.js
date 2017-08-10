@@ -153,7 +153,51 @@ function inicio(){
 
 
 
-	$("#form_pensum, #form_pensum_actualizar").validate({
+	$("#form_pensum").validate({
+
+    	rules:{
+
+			id_grado:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			id_asignatura:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			intensidad_horaria:{
+				required: true,
+				maxlength: 2
+				//lettersonly: true	
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
+			estado_asignatura:{
+				required: true,
+				maxlength: 8,
+				lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_pensum_actualizar").validate({
 
     	rules:{
 

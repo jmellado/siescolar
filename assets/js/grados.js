@@ -140,7 +140,7 @@ function inicio(){
        }
        else{
 			alert("formulario incorrecto");
-			alert($("#form_estudiantes_actualizar").validate().numberOfInvalids()+"errores");
+			alert($("#form_grados_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
@@ -151,7 +151,51 @@ function inicio(){
 
 
 
-	$("#form_grados, #form_grados_actualizar").validate({
+	$("#form_grados").validate({
+
+    	rules:{
+
+			nombre_grado:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			ciclo_grado:{
+				required: true,
+				maxlength: 45,
+				//lettersonly: true	
+
+			},
+
+			jornada:{
+				required: true,
+				maxlength: 30,
+				//lettersonly: true	
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
+			estado_grado:{
+				required: true,
+				maxlength: 8,
+				lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_grados_actualizar").validate({
 
     	rules:{
 

@@ -150,7 +150,44 @@ function inicio(){
 
 
 
-	$("#form_asignaturas, #form_asignaturas_actualizar").validate({
+	$("#form_asignaturas").validate({
+
+    	rules:{
+
+			nombre_asignatura:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			id_area:{
+				required: true,
+				maxlength: 15,
+				//lettersonly: true	
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
+			estado_asignatura:{
+				required: true,
+				maxlength: 8,
+				lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_asignaturas_actualizar").validate({
 
     	rules:{
 

@@ -149,7 +149,44 @@ function inicio(){
 
 
 
-	$("#form_salones, #form_salones_actualizar").validate({
+	$("#form_salones").validate({
+
+    	rules:{
+
+			nombre_salon:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			observacion:{
+				required: true,
+				maxlength: 30,
+				//lettersonly: true	
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
+			estado_salon:{
+				required: true,
+				maxlength: 8,
+				lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_salones_actualizar").validate({
 
     	rules:{
 

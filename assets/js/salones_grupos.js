@@ -155,7 +155,37 @@ function inicio(){
 
 
 
-	$("#form_salones_grupos, #form_salones_grupos_actualizar").validate({
+	$("#form_salones_grupos").validate({
+
+    	rules:{
+
+			id_salon:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			id_grado:{
+				required: true,
+				maxlength: 30
+				//lettersonly: true	
+
+			},
+
+			id_grupo:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_salones_grupos_actualizar").validate({
 
     	rules:{
 

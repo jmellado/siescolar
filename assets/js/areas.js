@@ -136,7 +136,7 @@ function inicio(){
        }
        else{
 			alert("formulario incorrecto");
-			alert($("#form_estudiantes_actualizar").validate().numberOfInvalids()+"errores");
+			alert($("#form_areas_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
@@ -147,7 +147,37 @@ function inicio(){
 
 
 
-	$("#form_areas, #form_areas_actualizar").validate({
+	$("#form_areas").validate({
+
+    	rules:{
+
+			nombre_area:{
+				required: true,
+				maxlength: 50
+				//lettersonly: true	
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
+			estado_area:{
+				required: true,
+				maxlength: 8,
+				lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_areas_actualizar").validate({
 
     	rules:{
 

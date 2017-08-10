@@ -147,7 +147,37 @@ function inicio(){
 
 
 
-	$("#form_grupos, #form_grupos_actualizar").validate({
+	$("#form_grupos").validate({
+
+    	rules:{
+
+			nombre_grupo:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
+			estado_grupo:{
+				required: true,
+				maxlength: 8,
+				lettersonly: true
+				
+			}
+
+		}
+
+
+	});
+
+	$("#form_grupos_actualizar").validate({
 
     	rules:{
 
