@@ -84,13 +84,6 @@ class Grados_model extends CI_Model {
 	}
 
 
-	public function llenar_anos_lectivos(){
-
-		$query = $this->db->get('anos_lectivos');
-		return $query->result();
-	}
-
-
 	public function obtener_nombre_grado($id){
 
 		$this->db->where('id_grado',$id);

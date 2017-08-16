@@ -172,7 +172,7 @@
   					<div class="form-group">
     					<label class="control-label col-sm-3" for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
     					<div class="col-sm-7">
-      						<input type="date" class="form-control" id="afecha_nacimiento" name="fecha_nacimiento">
+      						<input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
     					</div>
   					</div>
 
@@ -373,7 +373,7 @@
   					<div class="form-group">
     					<label class="control-label col-sm-3" for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
     					<div class="col-sm-7">
-      						<input type="date" class="form-control" id="afecha_nacimientosele" name="fecha_nacimiento">
+      						<input type="date" class="form-control" id="fecha_nacimientosele" name="fecha_nacimiento">
     					</div>
   					</div>
 

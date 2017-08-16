@@ -3,7 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarasignaturas("",1,5);
-	llenarcombo_anos_lectivos();
+	//llenarcombo_anos_lectivos();
 	llenarcombo_areas();
 
 	// este metodo permite enviar la inf del formulario

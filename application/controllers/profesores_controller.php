@@ -69,8 +69,8 @@ class Profesores_controller extends CI_Controller {
 			'tipo_contrato' =>$this->input->post('tipo_contrato'));
 
 			//aqui creamos el username de un profesor
-			$user = substr($this->input->post('nombres'), 0, 2);
-			$name = $this->input->post('apellido1');
+			$user = strtolower(substr($this->input->post('nombres'), 0, 2));
+			$name = strtolower($this->input->post('apellido1'));
 			$username = $user.$name.$ultimo_id;
 
 			//array para insertar en la tabla usuarios
@@ -172,8 +172,8 @@ class Profesores_controller extends CI_Controller {
 
 		//aqui creamos el username de un profesor
 			$id_persona = $this->input->post('id_persona');
-			$user = substr($this->input->post('nombres'), 0, 2);
-			$name = $this->input->post('apellido1');
+			$user = strtolower(substr($this->input->post('nombres'), 0, 2));
+			$name = strtolower($this->input->post('apellido1'));
 			$username = $user.$name.$id_persona;
 
 		//array para actualizar en la tabla usuarios----------	

@@ -80,11 +80,6 @@ class Areas_model extends CI_Model {
         return $data['query'];
 	}
 
-	public function llenar_anos_lectivos(){
-
-		$query = $this->db->get('anos_lectivos');
-		return $query->result();
-	}
 
 	public function obtener_nombre_area($id){
 

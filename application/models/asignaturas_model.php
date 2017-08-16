@@ -85,15 +85,12 @@ class Asignaturas_model extends CI_Model {
 	}
 
 
-	public function llenar_anos_lectivos(){
-
-		$query = $this->db->get('anos_lectivos');
-		return $query->result();
-	}
-
-
 	public function llenar_areas(){
 
+		$this->load->model('funciones_globales_model');
+		$id_ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_area','Activo');
 		$query = $this->db->get('areas');
 		return $query->result();

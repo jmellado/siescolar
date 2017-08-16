@@ -3,7 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarareas("",1,5);
-	llenarcombo_anos_lectivos();
+	//llenarcombo_anos_lectivos();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_areas").submit(function (event) {

@@ -181,12 +181,7 @@ class Asignaturas_controller extends CI_Controller {
 
     }
 
-    public function llenarcombo_anos_lectivos(){
-
-    	$consulta = $this->asignaturas_model->llenar_anos_lectivos();
-    	echo json_encode($consulta);
-    }
-
+    
     public function llenarcombo_areas(){
 
     	$consulta = $this->asignaturas_model->llenar_areas();

@@ -115,7 +115,7 @@
 
 			<div class="form-group">
 				<label for="id_asignatura">ASIGNATURA</label>
-				<div id="asignatura1">
+				<div id="asignatura_carga">
 					<select class="form-control" id="id_asignatura" name="id_asignatura">
 									    
 					</select>
@@ -193,7 +193,7 @@
 
 			<div class="form-group">
 				<label for="id_asignatura">ASIGNATURA</label>
-				<div id="asignatura1">
+				<div id="asignatura_carga">
 					<select class="form-control" id="id_asignaturasele" name="id_asignatura">
 									    
 					</select>

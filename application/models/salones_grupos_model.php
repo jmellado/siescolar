@@ -98,31 +98,6 @@ class Salones_grupos_model extends CI_Model {
         return $data['query'];
 	}
 
-	public function llenar_salones(){
-
-		$this->db->where('estado_salon','Activo');
-		$this->db->where('disponibilidad','si');
-		$query = $this->db->get('salones');
-		return $query->result();
-	}
-
-	public function llenar_grados(){
-
-		$this->db->where('estado_grado','Activo');
-		$query = $this->db->get('grados');
-		return $query->result();
-	}
-
-	public function llenar_grupos(){
-
-		$this->db->where('estado_grupo','Activo');
-		$query = $this->db->get('grupos');
-		return $query->result();
-	}
-
-
-
-
 
 
 

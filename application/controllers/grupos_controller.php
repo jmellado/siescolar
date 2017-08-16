@@ -173,10 +173,6 @@ class Grupos_controller extends CI_Controller {
     }
     
 
-    public function llenarcombo_anos_lectivos(){
-
-    	$consulta = $this->grupos_model->llenar_anos_lectivos();
-    	echo json_encode($consulta);
-    }
+    
 
 }

@@ -3,9 +3,9 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarpensum("",1,5);
-	llenarcombo_anos_lectivos();
+	//llenarcombo_anos_lectivos();
 	llenarcombo_asignaturas();
-	llenarcombo_grados();
+	//llenarcombo_grados();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_pensum").submit(function (event) {

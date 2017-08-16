@@ -185,23 +185,13 @@ class Pensum_controller extends CI_Controller {
 
     }
 
-    public function llenarcombo_anos_lectivos(){
-
-    	$consulta = $this->pensum_model->llenar_anos_lectivos();
-    	echo json_encode($consulta);
-    }
-
+    
     public function llenarcombo_asignaturas(){
 
     	$consulta = $this->pensum_model->llenar_asignaturas();
     	echo json_encode($consulta);
     }
 
-    public function llenarcombo_grados(){
-
-    	$consulta = $this->pensum_model->llenar_grados();
-    	echo json_encode($consulta);
-    }
 
 
 }

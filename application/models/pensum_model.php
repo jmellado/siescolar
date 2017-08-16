@@ -87,13 +87,6 @@ class Pensum_model extends CI_Model {
 	}
 
 
-	public function llenar_anos_lectivos(){
-
-		$query = $this->db->get('anos_lectivos');
-		return $query->result();
-	}
-
-
 	public function obtener_id_grado($id){
 
 		$this->db->where('id_pensum',$id);
@@ -147,18 +140,15 @@ class Pensum_model extends CI_Model {
 
 	public function llenar_asignaturas(){
 
+		$this->load->model('funciones_globales_model');
+		$id_ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_asignatura','Activo');
 		$query = $this->db->get('asignaturas');
 		return $query->result();
 	}
 
-
-	public function llenar_grados(){
-
-		$this->db->where('estado_grado','Activo');
-		$query = $this->db->get('grados');
-		return $query->result();
-	}
 
 
 

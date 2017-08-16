@@ -169,22 +169,6 @@ class Salones_grupos_controller extends CI_Controller {
 
     }
 
-    public function llenarcombo_salones(){
-
-    	$consulta = $this->salones_grupos_model->llenar_salones();
-    	echo json_encode($consulta);
-    }
-
-    public function llenarcombo_grados(){
-
-    	$consulta = $this->salones_grupos_model->llenar_grados();
-    	echo json_encode($consulta);
-    }
-
-    public function llenarcombo_grupos(){
-
-    	$consulta = $this->salones_grupos_model->llenar_grupos();
-    	echo json_encode($consulta);
-    }
+    
 
 }

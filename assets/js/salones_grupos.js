@@ -3,9 +3,9 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarsalonesgrupos("",1,5);
-	llenarcombo_salones();
-	llenarcombo_grados();
-	llenarcombo_grupos();
+	//llenarcombo_salones();
+	//llenarcombo_grados();
+	//llenarcombo_grupos();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_salones_grupos").submit(function (event) {
@@ -25,7 +25,7 @@ function inicio(){
 						
 						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
 						$("#form_salones_grupos")[0].reset();
-
+						llenarcombo_salones();
 
 					}
 					else if(respuesta==="registronoguardado"){
@@ -320,6 +320,7 @@ function eliminar_salongrupo(valor){
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				mostrarsalonesgrupos("",1,5);
+				llenarcombo_salones();
 
 		}
 

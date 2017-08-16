@@ -91,13 +91,6 @@ class Cargas_academicas_model extends CI_Model {
 	}
 
 
-	public function llenar_anos_lectivos(){
-
-		$query = $this->db->get('anos_lectivos');
-		return $query->result();
-	}
-
-
 	public function obtener_cargas_academicas($id){
 
 		$this->db->where('id_carga_academica',$id);
@@ -115,57 +108,6 @@ class Cargas_academicas_model extends CI_Model {
 	}
 
 
-	/*public function obtener_id_grado($id){
-
-		$this->db->where('id_pensum',$id);
-		$query = $this->db->get('pensum');
-
-		if ($query->num_rows() > 0) {
-		
-			$row = $query->result_array();
-        	return $row[0]['id_grado'];
-		}
-		else{
-			return false;
-		}
-
-	}
-
-
-	public function obtener_id_asignatura($id){
-
-		$this->db->where('id_pensum',$id);
-		$query = $this->db->get('pensum');
-
-		if ($query->num_rows() > 0) {
-		
-			$row = $query->result_array();
-        	return $row[0]['id_asignatura'];
-		}
-		else{
-			return false;
-		}
-
-	}
-
-
-	public function obtener_ano_lectivo($id){
-
-		$this->db->where('id_pensum',$id);
-		$query = $this->db->get('pensum');
-
-		if ($query->num_rows() > 0) {
-		
-			$row = $query->result_array();
-        	return $row[0]['ano_lectivo'];
-		}
-		else{
-			return false;
-		}
-
-	}*/
-
-
 	public function llenar_asignaturas($id){
 
 		$this->db->where('id_grado',$id);
@@ -174,14 +116,6 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->select('pensum.id_asignatura,asignaturas.nombre_asignatura');
 
 		$query = $this->db->get('pensum');
-		return $query->result();
-	}
-
-
-	public function llenar_grados(){
-
-		$this->db->where('estado_grado','Activo');
-		$query = $this->db->get('grados');
 		return $query->result();
 	}
 

@@ -25,6 +25,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignaturas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pensum.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
 

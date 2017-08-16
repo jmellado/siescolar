@@ -82,12 +82,6 @@ class Grupos_model extends CI_Model {
 	}
 
 
-	public function llenar_anos_lectivos(){
-
-		$query = $this->db->get('anos_lectivos');
-		return $query->result();
-	}
-
 	public function obtener_nombre_grupo($id){
 
 		$this->db->where('id_grupo',$id);

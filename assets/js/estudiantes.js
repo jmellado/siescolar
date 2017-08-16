@@ -106,7 +106,7 @@ function inicio(){
 		discapacidadsele = $(this).parent().parent().children("td:eq(20)").text();
 		//alert(municipio_expedicionsele);
 
-		llenarcombo_municipios(departamento_expedicionsele);
+		llenarcombo_municipios(departamento_expedicionsele,municipio_expedicionsele);
 		$("#id_personasele").val(id_personasele);
         $("#idsele").val(idsele);
         $("#tipo_idsele").val(tipo_idsele);
@@ -174,13 +174,13 @@ function inicio(){
 
     $("#departamento_expedicion").change(function(){
     	id_departamento = $(this).val();
-    	llenarcombo_municipios(id_departamento);
+    	llenarcombo_municipios(id_departamento,null);
     	$("#municipio_expedicion").removeAttr("disabled");
     });
 
     $("#departamento_expedicionsele").change(function(){
     	id_departamento = $(this).val();
-    	llenarcombo_municipios(id_departamento);
+    	llenarcombo_municipios(id_departamento,null);
     });
 
     
@@ -596,7 +596,7 @@ function llenarcombo_departamentos(){
 	});
 }
 
-function llenarcombo_municipios(valor){
+function llenarcombo_municipios(valor,valor2){
 
 	$.ajax({
 		url:base_url+"estudiantes_controller/llenarcombo_municipios",
@@ -608,8 +608,13 @@ function llenarcombo_municipios(valor){
 
 				html = "";
 				for (var i = 0; i < registros.length; i++) {
-
-					html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					
+					if(registros[i]["id_municipio"]==valor2){
+						html +="<option value="+registros[i]["id_municipio"]+" selected>"+registros[i]["nombre_municipio"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					}
 				};
 				$("#municipio_expedicion1 select").html(html);
 		}

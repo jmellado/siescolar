@@ -184,10 +184,6 @@ class Grados_controller extends CI_Controller {
 
     }
 
-    public function llenarcombo_anos_lectivos(){
-
-    	$consulta = $this->grados_model->llenar_anos_lectivos();
-    	echo json_encode($consulta);
-    }
+    
 
 }
