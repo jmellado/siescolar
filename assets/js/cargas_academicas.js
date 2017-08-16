@@ -3,9 +3,9 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarcargas_academicas("",1,5);
-	llenarcombo_anos_lectivos();
+	//llenarcombo_anos_lectivos();
 	llenarcombo_profesores();
-	llenarcombo_grados();
+	//llenarcombo_grados();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_cargas_academicas").submit(function (event) {
@@ -120,7 +120,7 @@ function inicio(){
 		
 		//alert(id_asignaturasele);
 
-		llenarcombo_asignaturas_cargas(id_grado2sele);
+		llenarcombo_asignaturas_cargas(id_grado2sele,id_asignaturasele);
 		$("#id_carga_academicasele").val(id_carga_academicasele);
 		$("#id_profesorsele").val(id_profesorsele);
         $("#id_grado2sele").val(id_grado2sele);
@@ -151,13 +151,13 @@ function inicio(){
 
     $("#id_grado2").change(function(){
     	id_grado = $(this).val();
-    	llenarcombo_asignaturas_cargas(id_grado);
+    	llenarcombo_asignaturas_cargas(id_grado,null);
     	//$("#municipio_expedicion").removeAttr("disabled");
     });
 
     $("#id_grado2sele").change(function(){
     	id_grado = $(this).val();
-    	llenarcombo_asignaturas_cargas(id_grado);
+    	llenarcombo_asignaturas_cargas(id_grado,null);
     });
 
 
@@ -174,7 +174,7 @@ function inicio(){
 
 			},
 
-			id_grado2:{
+			id_grado:{
 				required: true,
 				maxlength: 15
 				//lettersonly: true	
@@ -409,7 +409,7 @@ function llenarcombo_anos_lectivos(){
 	});
 }
 
-function llenarcombo_asignaturas_cargas(valor){
+function llenarcombo_asignaturas_cargas(valor,valor2){
 
 	$.ajax({
 		url:base_url+"cargas_academicas_controller/llenarcombo_asignaturas",
@@ -422,10 +422,15 @@ function llenarcombo_asignaturas_cargas(valor){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
-					html +="<option value="+registros[i]["id_asignatura"]+">"+registros[i]["nombre_asignatura"]+"</option>";
+					if(registros[i]["id_asignatura"]==valor2){
+						html +="<option value="+registros[i]["id_asignatura"]+" selected>"+registros[i]["nombre_asignatura"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_asignatura"]+">"+registros[i]["nombre_asignatura"]+"</option>";
+					}
 				};
 				
-				$("#asignatura1 select").html(html);
+				$("#asignatura_carga select").html(html);
 		}
 
 	});
