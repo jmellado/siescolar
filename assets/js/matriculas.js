@@ -45,7 +45,7 @@ function inicio(){
 						
 					}
 					mostrarmatriculas("",1,5);
-
+					llenarcombo_salones_grupo();
 						
 						
 				}
@@ -352,7 +352,8 @@ function eliminar_matricula(valor){
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				mostrarmatriculas("",1,5);
-
+				llenarcombo_salones_grupo();
+				
 		}
 
 
@@ -379,6 +380,7 @@ function actualizar_matricula(){
 				$("#fecha_matriculasele").attr("disabled", "disabled");
     			$("#ano_lectivosele").attr("disabled", "disabled");
 				mostrarmatriculas("",1,5);
+				llenarcombo_salones_grupo();
 
 		}
 

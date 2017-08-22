@@ -114,11 +114,38 @@ class Matriculas_model extends CI_Model {
 		
 		$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'salones_grupo.id_grupo = grupos.id_grupo');
+		$this->db->join('salones', 'salones_grupo.id_salon = salones.id_salon');
 
-		$this->db->select('salones_grupo.id_salon,salones_grupo.id_grado,salones_grupo.id_grupo,grados.nombre_grado,grupos.nombre_grupo');
+		$this->db->select('salones_grupo.id_salon,salones_grupo.id_grado,salones_grupo.id_grupo,grados.nombre_grado,grupos.nombre_grupo,salones.cupo_maximo');
 
 		$query = $this->db->get('salones_grupo');
-		return $query->result();
+		$row = $query->result_array();
+		$total = $query->num_rows();
+		$listaArray = array();
+
+		for ($i=0; $i < $total ; $i++) { 
+			
+			$id_salon = $row[$i]['id_salon'];
+			$cupo_maximo = $row[$i]['cupo_maximo'];
+			$total_salon_matricula = $this->matriculas_model->total_salones_matricula($id_salon);
+
+			if ($total_salon_matricula < $cupo_maximo) {
+			
+				$this->db->where('id_salon',$id_salon);
+
+				$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
+				$this->db->join('grupos', 'salones_grupo.id_grupo = grupos.id_grupo');
+
+				$this->db->select('salones_grupo.id_salon,salones_grupo.id_grado,salones_grupo.id_grupo,grados.nombre_grado,grupos.nombre_grupo,');
+
+				$query2 = $this->db->get('salones_grupo');
+
+				$listaArray[] =$query2->row();
+
+			}
+		}
+
+		return $listaArray;
 	}
 
 
@@ -136,6 +163,22 @@ class Matriculas_model extends CI_Model {
 		else{
 			return true;
 		}
+
+	}
+
+
+	//Esta funcion me permite obtener el total de matriculas por salon de un respectivo año
+	public function total_salones_matricula($id_salon){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('id_salon',$id_salon);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+
+		$query = $this->db->get('matriculas');
+
+		return count($query->result());
 
 	}
 
