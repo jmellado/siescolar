@@ -37,7 +37,7 @@ class Salones_model extends CI_Model {
 		}
 
 		$this->db->join('anos_lectivos', 'salones.ano_lectivo = anos_lectivos.id_ano_lectivo');
-		$this->db->select('salones.id_salon,salones.nombre_salon,salones.observacion,salones.ano_lectivo,salones.estado_salon,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('salones.id_salon,salones.nombre_salon,salones.observacion,salones.cupo_maximo,salones.ano_lectivo,salones.estado_salon,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('salones');
 

@@ -85,7 +85,7 @@ function inicio(){
     	mostrarareas(buscar,1,valorcantidad);
     });
 
-    $("body").on("click", ".paginacion_grado li a", function(event){
+    $("body").on("click", ".paginacion_area li a", function(event){
     	event.preventDefault();
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_area").val();

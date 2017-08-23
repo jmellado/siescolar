@@ -112,8 +112,9 @@ function inicio(){
 		id_salonsele = $(this).attr("href");
 		nombre_salonsele = $(this).parent().parent().children("td:eq(1)").text();
 		observacionsele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
-		estado_salonsele = $(this).parent().parent().children("td:eq(5)").text();
+		cupo_maximosele = $(this).parent().parent().children("td:eq(3)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
+		estado_salonsele = $(this).parent().parent().children("td:eq(6)").text();
 		
 		//alert(municipio_expedicionsele);
 
@@ -121,6 +122,7 @@ function inicio(){
 		$("#id_salonsele").val(id_salonsele);
         $("#nombre_salonsele").val(nombre_salonsele);
         $("#observacionsele").val(observacionsele);
+        $("#cupo_maximosele").val(cupo_maximosele);
         $("#ano_lectivosele").val(ano_lectivosele);
         $("#estado_salonsele").val(estado_salonsele);
         
@@ -167,6 +169,13 @@ function inicio(){
 
 			},
 
+			cupo_maximo:{
+				required: true,
+				maxlength: 2,
+				digits: true
+
+			},
+
 			ano_lectivo:{
 				required: true,
 				maxlength: 4,
@@ -201,6 +210,13 @@ function inicio(){
 				required: true,
 				maxlength: 30,
 				//lettersonly: true	
+
+			},
+
+			cupo_maximo:{
+				required: true,
+				maxlength: 2,
+				digits: true
 
 			},
 
@@ -243,7 +259,7 @@ function mostrarsalones(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.salones.length; i++) {
-					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td>"+registros.salones[i].cupo_maximo+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_salones tbody").html(html);

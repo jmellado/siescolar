@@ -25,6 +25,7 @@ class Salones_controller extends CI_Controller {
 
         $this->form_validation->set_rules('nombre_salon', 'nombre', 'required|alpha_spaces');
         $this->form_validation->set_rules('observacion', 'observacion', 'required|alpha_spaces');
+        $this->form_validation->set_rules('cupo_maximo', 'cupo', 'required|numeric|max_length[2]');
         $this->form_validation->set_rules('ano_lectivo', 'ano lectivo', 'required|min_length[1]|max_length[4]');
         $this->form_validation->set_rules('estado_salon', 'estado', 'required|alpha_spaces');
 
@@ -44,6 +45,7 @@ class Salones_controller extends CI_Controller {
         	'id_salon' =>$ultimo_id,	
 			'nombre_salon' =>ucwords($this->input->post('nombre_salon')),
 			'observacion' =>ucwords($this->input->post('observacion')),
+			'cupo_maximo' =>$this->input->post('cupo_maximo'),
 			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_salon' =>$this->input->post('estado_salon'),
 			'disponibilidad' =>$disponibilidad);
@@ -124,45 +126,61 @@ class Salones_controller extends CI_Controller {
         'id_salon' =>$this->input->post('id_salon'),	
 		'nombre_salon' =>ucwords($this->input->post('nombre_salon')),
 		'observacion' =>ucwords($this->input->post('observacion')),
+		'cupo_maximo' =>$this->input->post('cupo_maximo'),
 		'ano_lectivo' =>$this->input->post('ano_lectivo'),
 		'estado_salon' =>$this->input->post('estado_salon'),
 		'disponibilidad' =>$disponibilidad);
 
 		$id = $this->input->post('id_salon');
+		$cupo_maximo = $this->input->post('cupo_maximo');
 		$nombre_buscado = $this->salones_model->obtener_nombre_salon($id);
 		$ano_lectivo_buscado = $this->salones_model->obtener_ano_lectivo($id);
+
+		$this->load->model('matriculas_model');
+		$total_salon_matricula = $this->matriculas_model->total_salones_matricula($id);
 
         if(is_numeric($id)){
 
         	if ($nombre_buscado == $this->input->post('nombre_salon') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
-	        	$respuesta=$this->salones_model->modificar_salon($this->input->post('id_salon'),$salon);
+        		if($cupo_maximo >= $total_salon_matricula){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->salones_model->modificar_salon($this->input->post('id_salon'),$salon);
 
-					echo "registro actualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registro actualizado";
 
-					echo "registro no se pudo actualizar";
+		             }else{
 
-	             }
+						echo "registro no se pudo actualizar";
+
+		             }
+	         	}
+	         	else{
+	         		echo "El Cupo Ingresado No Satisface Los Alumnos Actualmente Matriculados En Este Salon.";
+	         	}
 	        }
 	        else{
 
 	        	if($this->salones_model->validar_existencia($this->input->post('nombre_salon'),$this->input->post('ano_lectivo'))){
 
-	        		$respuesta=$this->salones_model->modificar_salon($this->input->post('id_salon'),$salon);
+	        		if($cupo_maximo >= $total_salon_matricula){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->salones_model->modificar_salon($this->input->post('id_salon'),$salon);
 
-	        			echo "registro actualizado";
+		        		if($respuesta==true){
 
-	        		}else{
+		        			echo "registro actualizado";
 
-	        			echo "registro no se pudo actualizar";
+		        		}else{
+
+		        			echo "registro no se pudo actualizar";
+		        		}
 	        		}
-
+	        		else{
+	        			echo "El Cupo Ingresado No Satisface Los Alumnos Actualmente Matriculados En Este Salon.";
+	        		}
 	        	}
 	        	else{
 

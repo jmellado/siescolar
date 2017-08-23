@@ -54,6 +54,7 @@
 									<th>#</th>
 									<th>Nombre</th>
 									<th>Observacion</th>
+									<th>Cupo Maximo</th>
 									<th>Año lectivo</th>
 									<th>Estado</th>
 									<th></th>
@@ -104,6 +105,12 @@
 				<label for="observacion">OBSERVACIONES</label>
 				<input type="text" class="form-control" id="observacion" name="observacion"
 						 placeholder="observaciones">
+			</div>
+
+			<div class="form-group">
+				<label for="cupo_maximo">CUPO MAXIMO</label>
+				<input type="text" class="form-control" id="cupo_maximo" name="cupo_maximo"
+						 placeholder="Cupo maximo">
 			</div>
 
 			<div class="form-group">
@@ -166,6 +173,12 @@
 				<label for="observacion">OBSERVACIONES</label>
 				<input type="text" class="form-control" id="observacionsele" name="observacion"
 						 placeholder="observaciones">
+			</div>
+
+			<div class="form-group">
+				<label for="cupo_maximo">CUPO MAXIMO</label>
+				<input type="text" class="form-control" id="cupo_maximosele" name="cupo_maximo"
+						 placeholder="Cupo maximo">
 			</div>
 
 			<div class="form-group">
