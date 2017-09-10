@@ -65,6 +65,24 @@ class Matriculas_controller extends CI_Controller {
 				if($respuesta==true){
 
 					echo "registroguardado";
+					//*******************************matricular materias********************************************
+					$id_grado = $this->matriculas_model->obtener_gradoPorsalon($this->input->post('id_salon'));
+
+					$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
+
+					for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+
+						$id_estudiante = $this->input->post('id_persona');
+
+						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$asignaturas_grados[$i]['id_asignatura']);
+
+						if($resp == false){
+							echo "no se pudo registrar en la tabla notas";
+						}
+						
+					}
+					//*************************************************************************************************
+
 				}
 				else{
 
@@ -109,6 +127,16 @@ class Matriculas_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
+        	//Obtenemos id_estudiante y ano_lectivo con ese id de matricula********************************************
+			$row=$this->matriculas_model->obtener_estudiantePormatricula($id);
+			$id_estudiante = $row[0]['id_estudiante'];
+			$ano_lectivo = $row[0]['ano_lectivo'];
+
+			//eliminanos las materias registradas de ese estudiante en la tabla notas********************************************
+			if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
+				echo "No se pudo eliminar en la tabla notas";
+			}
+
 			
 	        $respuesta=$this->matriculas_model->eliminar_matricula($id);
 	        
@@ -150,6 +178,30 @@ class Matriculas_controller extends CI_Controller {
 	        if($respuesta==true){
 
 	        	echo "registro actualizado";
+
+	        	//******************************eliminar materias********************************************
+				if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($this->input->post('ano_lectivo'),$this->input->post('id_persona'))){
+					echo "No se pudo eliminar en la tabla notas";
+				}
+
+				//*******************************matricular materias********************************************
+				$id_grado = $this->matriculas_model->obtener_gradoPorsalon($this->input->post('id_salon'));
+
+				$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
+
+				for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+
+					$id_estudiante = $this->input->post('id_persona');
+					$ano_lectivo = $this->input->post('ano_lectivo');
+
+					$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$asignaturas_grados[$i]['id_asignatura']);
+
+					if($resp == false){
+						echo "no se pudo registrar en la tabla notas";
+					}
+						
+				}
+				//*************************************************************************************************
 
 	        }else{
 

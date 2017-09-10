@@ -183,6 +183,96 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	//Esta Funcion me permite obtener el grado por el salon registrado en la tabla matricula
+	public function obtener_gradoPorsalon($id_salon){
+
+		$this->db->where('matriculas.id_salon',$id_salon);
+
+		$this->db->join('salones_grupo', 'matriculas.id_salon = salones_grupo.id_salon');
+		$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
+
+		$this->db->select('grados.id_grado');
+
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_grado'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	//Esta funcion me permite obtener las materias a cursar por un determinado grado dependiendo del pensum
+	public function obtener_asignaturasPorgrados($id_grado){
+
+		$this->db->where('id_grado',$id_grado);
+
+		$this->db->select('pensum.id_asignatura');
+
+		$query = $this->db->get('pensum');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+		
+	}
+
+
+	//Esta Funcion me permite registrar las materias a cursar, por un estudiante, en la tabla notas
+	public function insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_asignatura){
+
+		$sql= "INSERT INTO notas(ano_lectivo, id_estudiante, id_asignatura) VALUES('". $ano_lectivo."', '". $id_estudiante ."','".$id_asignatura."')";
+
+		if ($this->db->query($sql)) 
+			return true;
+		else
+			return false;
+
+	}
+
+
+	//esta funcion me permite obtener un estudiante por este id de matricula
+	public function obtener_estudiantePormatricula($id_matricula){
+
+		$this->db->where('id_matricula',$id_matricula);
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	//esta funcion me permite eliminar las materias ya registradas a cursar por un estudiante en la tabla notas
+	public function eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante){
+
+     	$this->db->where('ano_lectivo',$ano_lectivo);
+     	$this->db->where('id_estudiante',$id_estudiante);
+		$consulta = $this->db->delete('notas');
+       	if($consulta==true){
+
+           return true;
+       	}
+       	else{
+
+           return false;
+       	}
+    }
+
+
 	
 
 
