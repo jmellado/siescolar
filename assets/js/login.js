@@ -36,7 +36,7 @@ function login(){
 
 	});
 
-	$("form").validate({
+	$("#formlogin").validate({
 
     	rules:{
 
