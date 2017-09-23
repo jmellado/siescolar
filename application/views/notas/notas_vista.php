@@ -178,7 +178,7 @@
         				<div class="col-md-3">
 	        				<div class="form-group">
 								<label for="periodo">PERIODO</label>
-									<select class="form-control" id="periodoseleN" name="periodo">
+									<select class="form-control" id="periodoseleN" name="periodo" disabled>
 										<option value="Primero">Primero</option>
 										<option value="Segundo">Segundo</option>
 										<option value="Tercero">Tercero</option>
@@ -191,7 +191,7 @@
 							<div class="form-group">
 								<label for="id_grado">GRADO</label>
 								<div id="grados_notas1">
-									<select class="form-control" id="id_gradoseleN" name="id_grado">
+									<select class="form-control" id="id_gradoseleN" name="id_grado" disabled>
 												    
 									</select>
 								</div>
@@ -202,7 +202,7 @@
 							<div class="form-group">
 								<label for="id_grupo">GRUPO</label>
 								<div id="grupos_notas1">
-									<select class="form-control" id="id_gruposeleN" name="id_grupo">
+									<select class="form-control" id="id_gruposeleN" name="id_grupo" disabled>
 												    
 									</select>
 								</div>
@@ -213,7 +213,7 @@
 							<div class="form-group">
 								<label for="id_asignatura">ASIGNATURA</label>
 								<div id="asignaturas_notas1">
-									<select class="form-control" id="id_asignaturaseleN" name="id_asignatura">
+									<select class="form-control" id="id_asignaturaseleN" name="id_asignatura" disabled>
 												    
 									</select>
 								</div>

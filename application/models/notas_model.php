@@ -54,7 +54,7 @@ class Notas_model extends CI_Model {
 		$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
 
 		//$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas.p1,notas.p2,notas.p3,notas.p4,notas.nota_final,notas.fallas');
-		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,notas.nota_final,notas.fallas', false);
+		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,notas.fallas', false);
 		
 		$query = $this->db->get('matriculas');
 
@@ -155,7 +155,62 @@ class Notas_model extends CI_Model {
 	}
 
 
+	public function calcularNota_final($n1,$n2,$n3,$n4){
 
+		if($n1 == NULL && $n2 == NULL && $n3 == NULL && $n4 == NULL ){
+        $def =NULL;
+        }elseif ($n2 == NULL && $n3 == NULL && $n4 == NULL  ){
+            $def = $n1;
+        }elseif($n1 == NULL && $n3 == NULL && $n4 == NULL ){
+            $def= $n2;
+        }elseif($n1 == NULL && $n2 == NULL && $n4 == NULL ){
+            $def= $n3;
+        }elseif($n1 == NULL && $n2 == NULL && $n3 == NULL ){
+            $def= $n4;
+        }elseif($n3 == NULL && $n4 == NULL ){
+            $def= ($n1+$n2)/2;
+        }elseif($n2 == NULL && $n4 == NULL ){
+            $def= ($n1+$n3)/2;
+        }elseif($n1 == NULL && $n4 == NULL ){
+            $def= ($n2+$n3)/2;
+        }elseif($n2 == NULL && $n3 == NULL ){
+            $def= ($n1+$n4)/2;
+        }elseif($n1 == NULL && $n3 == NULL ){
+            $def= ($n2+$n4)/2;
+        }elseif($n1 == NULL && $n2 == NULL ){
+            $def= ($n4+$n3)/2;
+        }elseif($n4 == NULL ){
+            $def= ($n1+$n2+$n3)/3;
+        }elseif($n3 == NULL ){
+            $def= ($n1+$n2+$n4)/3;
+        }elseif($n2 == NULL ){
+            $def= ($n1+$n3+$n4)/3;
+        }elseif($n1 == NULL ){
+            $def= ($n2+$n3+$n4)/3;
+        }else{
+            $def= ($n1 + $n2 + $n3 + $n4)/4;
+        }
+        return $def;
+
+	}
+
+
+	public function obtener_desempeno($nota_final){
+
+		$sql= "SELECT id_desempeno FROM desempenos WHERE '".$nota_final."' >= rango_inicial AND '".$nota_final."' <= rango_final";
+
+		$query = $this->db->query($sql);
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_desempeno'];
+		}
+		else{
+			return false;
+		}
+
+	}
 
 
 

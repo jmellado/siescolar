@@ -33,25 +33,47 @@ class Notas_controller extends CI_Controller {
 		//var_dump($items2);
 
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
-		$campo = "";
+		$estado = "activo";
 
 		//$data = array();
 
-		for ($i=0; $i < count($this->input->post('id_persona')) ; $i++) { 
+		for ($i=0; $i < count($this->input->post('id_persona')) ; $i++) {
+
+			$p1 = $this->input->post('p1')[$i];
+			$p2 = $this->input->post('p2')[$i];
+			$p3 = $this->input->post('p3')[$i];
+			$p4 = $this->input->post('p4')[$i];
+
+			$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
+			$desempeno = $this->notas_model->obtener_desempeno($nota_final);
+
+			if ($p1==""){
+	            $p1=NULL;
+	        }
+	        if ($p2==""){
+	            $p2=NULL;
+	        }
+	        if ($p3==""){
+	            $p3=NULL;
+	        }
+	        if ($p4==""){
+	            $p4=NULL;
+	        }
+
 			//$data[]
 			$data = array(
 
             	'ano_lectivo' => $ano_lectivo,
                 'id_estudiante' => $this->input->post('id_persona')[$i],
                 'id_asignatura' => $this->input->post('id_asignatura'),
-                'p1' => $this->input->post('p1')[$i],
-                'p2' => $this->input->post('p2')[$i],
-                'p3' => $this->input->post('p3')[$i],
-                'p4' => $this->input->post('p4')[$i],
-                'nota_final' => $this->input->post('nota_final')[$i],
-                'id_desempeño' => $campo,
+                'p1' => $p1,
+                'p2' => $p2,
+                'p3' => $p3,
+                'p4' => $p4,
+                'nota_final' => $nota_final,
+                'id_desempeno' => $desempeno,
                 'fallas' => $this->input->post('fallas')[$i],
-                'estado_nota' => $campo
+                'estado_nota' => $estado
                 
             );
 
