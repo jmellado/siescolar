@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2017 a las 22:09:11
+-- Tiempo de generación: 23-09-2017 a las 21:31:41
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -115,11 +115,71 @@ CREATE TABLE `candidatos_eleccion` (
 CREATE TABLE `cargas_academicas` (
   `id_carga_academica` int(11) NOT NULL,
   `id_profesor` int(11) NOT NULL,
-  `id_asignatura` int(11) NOT NULL,
   `id_grado` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
   `id_grupo` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id_categoria` int(11) NOT NULL,
+  `nombre_categoria` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`id_categoria`, `nombre_categoria`) VALUES
+(1, 'periodo academico'),
+(2, 'votacion');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `conceptos_pagos`
+--
+
+CREATE TABLE `conceptos_pagos` (
+  `id_concepto_pago` int(11) NOT NULL,
+  `nombre_concepto` varchar(25) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  `valor` decimal(10,0) NOT NULL,
+  `fecha_creacion` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cronogramas`
+--
+
+CREATE TABLE `cronogramas` (
+  `id_actividad` int(11) NOT NULL,
+  `nombre_actividad` varchar(45) NOT NULL,
+  `id_categoria` int(11) NOT NULL,
+  `descripcion_actividad` varchar(100) NOT NULL,
+  `fecha_inicial` date NOT NULL,
+  `fecha_final` date NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `estado_actividad` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cronogramas`
+--
+
+INSERT INTO `cronogramas` (`id_actividad`, `nombre_actividad`, `id_categoria`, `descripcion_actividad`, `fecha_inicial`, `fecha_final`, `ano_lectivo`, `estado_actividad`) VALUES
+(1, 'Primero', 1, 'apertura para ingreso de notas para el primer periodo', '2017-09-05', '2017-09-15', 8, 'activo'),
+(2, 'Segundo', 1, 'apertura para ingreso de notas para el segundo periodo', '2017-09-05', '2017-09-05', 8, 'inactivo'),
+(3, 'Tercero', 1, 'apertura para ingreso de notas para el tercer periodo', '2017-09-05', '2017-09-05', 8, 'inactivo'),
+(4, 'Cuarto', 1, 'apertura para ingreso de notas para el cuarto periodo', '2017-09-05', '2017-09-05', 8, 'inactivo');
 
 -- --------------------------------------------------------
 
@@ -174,15 +234,26 @@ INSERT INTO `departamentos` (`id_departamento`, `nombre_departamento`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `desempeños`
+-- Estructura de tabla para la tabla `desempenos`
 --
 
-CREATE TABLE `desempeños` (
-  `id_desempeño` int(11) NOT NULL,
-  `nombre_desempeño` varchar(45) NOT NULL,
-  `rango_inicial` int(11) NOT NULL,
-  `rango_final` int(11) NOT NULL
+CREATE TABLE `desempenos` (
+  `id_desempeno` int(11) NOT NULL,
+  `nombre_desempeno` varchar(45) NOT NULL,
+  `rango_inicial` decimal(11,1) NOT NULL,
+  `rango_final` decimal(11,1) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `desempenos`
+--
+
+INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `rango_final`, `ano_lectivo`) VALUES
+(1, 'Superior', '4.6', '5.0', 8),
+(2, 'Alto', '4.0', '4.5', 8),
+(3, 'Básico', '3.0', '3.9', 8),
+(4, 'Bajo', '1.0', '2.9', 8);
 
 -- --------------------------------------------------------
 
@@ -211,6 +282,15 @@ CREATE TABLE `estudiantes` (
   `institucion_procedencia` varchar(45) NOT NULL,
   `discapacidad` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `estudiantes`
+--
+
+INSERT INTO `estudiantes` (`id_persona`, `institucion_procedencia`, `discapacidad`) VALUES
+(2, 'manuela beltran', 'ninguna'),
+(3, 'cotez queruz', 'ninguna'),
+(4, 'la esperanza', 'ninguna');
 
 -- --------------------------------------------------------
 
@@ -257,6 +337,23 @@ CREATE TABLE `listado_votantes` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `logros`
+--
+
+CREATE TABLE `logros` (
+  `id_logro` int(11) NOT NULL,
+  `nombre_logro` varchar(30) NOT NULL,
+  `descripcion_logro` varchar(200) NOT NULL,
+  `periodo` varchar(45) NOT NULL,
+  `id_profesor` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `matriculas`
 --
 
@@ -265,12 +362,30 @@ CREATE TABLE `matriculas` (
   `fecha_matricula` date NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `id_acudiente` int(11) NOT NULL,
-  `id_grado` int(11) NOT NULL,
-  `id_grupo` int(11) NOT NULL,
+  `id_salon` int(11) NOT NULL,
   `observaciones` varchar(45) NOT NULL,
-  `estado_matricula` varchar(8) NOT NULL
+  `estado_matricula` varchar(8) NOT NULL,
+  `jornada` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Disparadores `matriculas`
+--
+DELIMITER $$
+CREATE TRIGGER `denegar_acceso_usuario` AFTER DELETE ON `matriculas` FOR EACH ROW begin
+-- Edit trigger body code below this line. Do not edit lines above this one
+UPDATE usuarios set acceso="0" where id_persona=old.id_estudiante;
+end
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `permitir_acceso_usuario` AFTER INSERT ON `matriculas` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
+begin
+-- Edit trigger body code below this line. Do not edit lines above this one
+UPDATE usuarios set acceso="1" where id_persona=new.id_estudiante;
+end
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1426,9 +1541,9 @@ CREATE TABLE `notas` (
   `p3` decimal(10,0) DEFAULT NULL,
   `p4` decimal(10,0) DEFAULT NULL,
   `nota_final` decimal(10,0) DEFAULT NULL,
-  `id_desempeño` int(11) NOT NULL,
-  `fallas` varchar(45) NOT NULL,
-  `estado_nota` varchar(45) NOT NULL
+  `id_desempeno` int(11) NOT NULL,
+  `fallas` varchar(2) NOT NULL,
+  `estado_nota` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1448,6 +1563,20 @@ CREATE TABLE `padres` (
   `telefono_trabajo` varchar(10) NOT NULL,
   `direccion_trabajo` varchar(45) NOT NULL,
   `estado_padre` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pagos`
+--
+
+CREATE TABLE `pagos` (
+  `id_pago` int(11) NOT NULL,
+  `id_concepto_pago` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `mes_liquidado` varchar(25) NOT NULL,
+  `fecha_pago` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1498,7 +1627,12 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `lugar_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
-(1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza');
+(1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
+(2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio', 'Cesar', 'Frias', 'm', '2000-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
+(3, '1066', 'cc', '1990-05-05', 20, 404, 'Hugo', 'Mairon', 'Sosa', 'm', '1990-05-05', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
+(4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian', 'Andres', 'Romero', 'm', '1998-06-06', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
+(5, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
+(6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 'Valledupar', 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona');
 
 -- --------------------------------------------------------
 
@@ -1513,6 +1647,14 @@ CREATE TABLE `profesores` (
   `fecha_inicio` date NOT NULL,
   `tipo_contrato` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `profesores`
+--
+
+INSERT INTO `profesores` (`id_persona`, `perfil`, `escalafon`, `fecha_inicio`, `tipo_contrato`) VALUES
+(5, 'profesional', '10', '2017-01-01', '2017-12-12'),
+(6, 'profesional', '10', '2017-01-01', '2017-12-12');
 
 -- --------------------------------------------------------
 
@@ -1546,6 +1688,7 @@ CREATE TABLE `salones` (
   `id_salon` int(11) NOT NULL,
   `nombre_salon` varchar(30) NOT NULL,
   `observacion` varchar(45) NOT NULL,
+  `cupo_maximo` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `estado_salon` varchar(8) NOT NULL,
   `disponibilidad` varchar(2) NOT NULL
@@ -1568,7 +1711,16 @@ CREATE TABLE `salones_grupo` (
 --
 DELIMITER $$
 CREATE TRIGGER `actualizar_disponibilidad_salon` AFTER INSERT ON `salones_grupo` FOR EACH ROW begin
+-- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE salones set disponibilidad="no" where id_salon=new.id_salon;
+end
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `actualizar_disponibilidad_salon_si` AFTER DELETE ON `salones_grupo` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
+begin
+-- Edit trigger body code below this line. Do not edit lines above this one
+UPDATE salones set disponibilidad="si" where id_salon=old.id_salon;
 end
 $$
 DELIMITER ;
@@ -1593,15 +1745,22 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `password`, `acceso`) VALUES
-(1, 1, 1, 'siescolar', '8cb2237d0679ca88db6464eac60da96345513964', '1');
+(1, 1, 1, 'siescolar', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
+(2, 2, 2, 'jfirias', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
+(3, 3, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
+(4, 4, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
+(5, 5, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
+(6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1');
 
 --
 -- Disparadores `usuarios`
 --
 DELIMITER $$
 CREATE TRIGGER `eliminar_estudiantes_personas` AFTER DELETE ON `usuarios` FOR EACH ROW begin
+-- Edit trigger body code below this line. Do not edit lines above this one
 DELETE FROM estudiantes where id_persona=old.id_persona;
 DELETE FROM personas where id_persona=old.id_persona;
+DELETE FROM profesores where id_persona=old.id_persona;
 end
 $$
 DELIMITER ;
@@ -1650,8 +1809,27 @@ ALTER TABLE `cargas_academicas`
   ADD UNIQUE KEY `id_cargaacademica_UNIQUE` (`id_carga_academica`),
   ADD KEY `fk_cargas_personas_idx` (`id_profesor`),
   ADD KEY `fk_cargas_asignaturas_idx` (`id_asignatura`),
-  ADD KEY `fk_cargas_grados_idx` (`id_grado`),
-  ADD KEY `fk_cargas_grupos_idx` (`id_grupo`);
+  ADD KEY `fk_cargas_grupos_idx` (`id_grupo`),
+  ADD KEY `fk_cargas_pensum_grados_idx` (`id_grado`);
+
+--
+-- Indices de la tabla `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id_categoria`);
+
+--
+-- Indices de la tabla `conceptos_pagos`
+--
+ALTER TABLE `conceptos_pagos`
+  ADD PRIMARY KEY (`id_concepto_pago`);
+
+--
+-- Indices de la tabla `cronogramas`
+--
+ALTER TABLE `cronogramas`
+  ADD PRIMARY KEY (`id_actividad`),
+  ADD KEY `fk_cronogramas_categorias_idx` (`id_categoria`);
 
 --
 -- Indices de la tabla `departamentos`
@@ -1660,10 +1838,10 @@ ALTER TABLE `departamentos`
   ADD PRIMARY KEY (`id_departamento`);
 
 --
--- Indices de la tabla `desempeños`
+-- Indices de la tabla `desempenos`
 --
-ALTER TABLE `desempeños`
-  ADD PRIMARY KEY (`id_desempeño`);
+ALTER TABLE `desempenos`
+  ADD PRIMARY KEY (`id_desempeno`);
 
 --
 -- Indices de la tabla `elecciones`
@@ -1681,8 +1859,7 @@ ALTER TABLE `estudiantes`
 -- Indices de la tabla `grados`
 --
 ALTER TABLE `grados`
-  ADD PRIMARY KEY (`id_grado`),
-  ADD UNIQUE KEY `nombre_grado_UNIQUE` (`nombre_grado`);
+  ADD PRIMARY KEY (`id_grado`);
 
 --
 -- Indices de la tabla `grupos`
@@ -1697,10 +1874,18 @@ ALTER TABLE `listado_votantes`
   ADD PRIMARY KEY (`id_eleccion`);
 
 --
+-- Indices de la tabla `logros`
+--
+ALTER TABLE `logros`
+  ADD PRIMARY KEY (`id_logro`),
+  ADD UNIQUE KEY `nombre_logro_UNIQUE` (`nombre_logro`);
+
+--
 -- Indices de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
-  ADD PRIMARY KEY (`id_matricula`);
+  ADD PRIMARY KEY (`id_matricula`),
+  ADD KEY `fk_salones_grupo_idx` (`id_salon`);
 
 --
 -- Indices de la tabla `municipios`
@@ -1716,13 +1901,21 @@ ALTER TABLE `notas`
   ADD PRIMARY KEY (`id_nota`),
   ADD KEY `fk_notas_estudiantes_idx` (`id_estudiante`),
   ADD KEY `fk_notas_asignaturas_idx` (`id_asignatura`),
-  ADD KEY `fk_notas_desempeños_idx` (`id_desempeño`);
+  ADD KEY `fk_notas_desempeños_idx` (`id_desempeno`);
 
 --
 -- Indices de la tabla `padres`
 --
 ALTER TABLE `padres`
   ADD PRIMARY KEY (`id_padre`);
+
+--
+-- Indices de la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  ADD PRIMARY KEY (`id_pago`),
+  ADD UNIQUE KEY `id_pago_UNIQUE` (`id_pago`),
+  ADD KEY `fk_conceptos_pagos_idx` (`id_concepto_pago`);
 
 --
 -- Indices de la tabla `pensum`
@@ -1808,15 +2001,25 @@ ALTER TABLE `asignaturas`
 ALTER TABLE `cargas_academicas`
   MODIFY `id_carga_academica` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `cronogramas`
+--
+ALTER TABLE `cronogramas`
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
   MODIFY `id_departamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 --
--- AUTO_INCREMENT de la tabla `desempeños`
+-- AUTO_INCREMENT de la tabla `desempenos`
 --
-ALTER TABLE `desempeños`
-  MODIFY `id_desempeño` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `desempenos`
+  MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
@@ -1833,6 +2036,11 @@ ALTER TABLE `grados`
 ALTER TABLE `grupos`
   MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `logros`
+--
+ALTER TABLE `logros`
+  MODIFY `id_logro` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
@@ -1848,6 +2056,11 @@ ALTER TABLE `municipios`
 ALTER TABLE `notas`
   MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `pensum`
 --
 ALTER TABLE `pensum`
@@ -1856,7 +2069,7 @@ ALTER TABLE `pensum`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
@@ -1871,7 +2084,7 @@ ALTER TABLE `salones`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Restricciones para tablas volcadas
 --
@@ -1893,15 +2106,27 @@ ALTER TABLE `candidatos_eleccion`
 --
 ALTER TABLE `cargas_academicas`
   ADD CONSTRAINT `fk_cargas_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_cargas_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_cargas_grupos` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_cargas_pensum_grados` FOREIGN KEY (`id_grado`) REFERENCES `pensum` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_cargas_personas` FOREIGN KEY (`id_profesor`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `cronogramas`
+--
+ALTER TABLE `cronogramas`
+  ADD CONSTRAINT `fk_cronogramas_categorias` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `listado_votantes`
 --
 ALTER TABLE `listado_votantes`
   ADD CONSTRAINT `fk_votantes_elecciones` FOREIGN KEY (`id_eleccion`) REFERENCES `elecciones` (`id_eleccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `matriculas`
+--
+ALTER TABLE `matriculas`
+  ADD CONSTRAINT `fk_salones_grupo` FOREIGN KEY (`id_salon`) REFERENCES `salones_grupo` (`id_salon`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `municipios`
@@ -1914,8 +2139,14 @@ ALTER TABLE `municipios`
 --
 ALTER TABLE `notas`
   ADD CONSTRAINT `fk_notas_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_notas_desempeños` FOREIGN KEY (`id_desempeño`) REFERENCES `desempeños` (`id_desempeño`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_notas_desempeños` FOREIGN KEY (`id_desempeno`) REFERENCES `desempenos` (`id_desempeno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_notas_estudiantes` FOREIGN KEY (`id_estudiante`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  ADD CONSTRAINT `fk_conceptos_pagos` FOREIGN KEY (`id_concepto_pago`) REFERENCES `conceptos_pagos` (`id_concepto_pago`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `pensum`

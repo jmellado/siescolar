@@ -139,7 +139,7 @@ class Logros_controller extends CI_Controller {
         $id_asignatura = $this->input->post('id_asignatura');
 		$n_grado = $this->grados_model->obtener_nombre_grado($id_grado);
 		$n_asignatura = $this->asignaturas_model->obtener_nombre_asignatura($id_asignatura);
-		$nombre_logro = $n_asignatura.$n_grado.$ultimo_id;
+		$nombre_logro = $n_asignatura.$n_grado.$id_logro;
 
     	//array para insertar en la tabla logros----------
         $logro = array(
