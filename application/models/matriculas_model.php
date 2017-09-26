@@ -228,9 +228,9 @@ class Matriculas_model extends CI_Model {
 
 
 	//Esta Funcion me permite registrar las materias a cursar, por un estudiante, en la tabla notas
-	public function insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_asignatura){
+	public function insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$id_asignatura){
 
-		$sql= "INSERT INTO notas(ano_lectivo, id_estudiante, id_asignatura) VALUES('". $ano_lectivo."', '". $id_estudiante ."','".$id_asignatura."')";
+		$sql= "INSERT INTO notas(ano_lectivo, id_estudiante, id_grado, id_asignatura) VALUES('". $ano_lectivo."','". $id_estudiante ."','". $id_grado ."','".$id_asignatura."')";
 
 		if ($this->db->query($sql)) 
 			return true;

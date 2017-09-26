@@ -74,7 +74,7 @@ class Matriculas_controller extends CI_Controller {
 
 						$id_estudiante = $this->input->post('id_persona');
 
-						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$asignaturas_grados[$i]['id_asignatura']);
+						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
 
 						if($resp == false){
 							echo "no se pudo registrar en la tabla notas";
