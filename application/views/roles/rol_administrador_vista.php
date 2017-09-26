@@ -30,6 +30,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/matriculas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
@@ -329,13 +330,18 @@
             <span>Gestionar Cargas Academicas</span>
           </a>
         </li>
-        <li>
-          <a href="<?php echo base_url(); ?>logros_controller/index">
-            <i class="fa fa-line-chart"></i> <span>Gestionar Logros</span>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-line-chart"></i>
+            <span>Gestionar Logros</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-blue">3</small>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>logros_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
+            <li><a href="<?php echo base_url(); ?>asignar_logros_controller/index"><i class="fa fa-indent"></i>Asignar</a></li>
+          </ul>
         </li>
         <li>
           <a href="<?php echo base_url(); ?>notas_controller/index">
@@ -345,7 +351,7 @@
             </span>
           </a>
         </li>
-        <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        <li><a href="<?php echo base_url(); ?>asignar_logros_controller/index"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
