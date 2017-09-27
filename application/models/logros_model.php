@@ -10,9 +10,10 @@ class Logros_model extends CI_Model {
 			return false;
 	}
 
-	public function validar_existencia($nombre,$ano_lectivo){
+	public function validar_existencia($nombre,$id_profesor,$ano_lectivo){
 
 		$this->db->where('nombre_logro',$nombre);
+		$this->db->where('id_profesor',$id_profesor);
 		$this->db->where('ano_lectivo',$ano_lectivo);
 		$query = $this->db->get('logros');
 
@@ -87,6 +88,39 @@ class Logros_model extends CI_Model {
     	$row = $query->result_array();
         $data['query'] = 1 + $row[0]['id_logro'];
         return $data['query'];
+	}
+
+
+	public function obtener_ultima_secuencia($periodo,$id_profesor,$id_grado,$id_asignatura,$ano_lectivo){
+
+		$this->db->where('periodo',$periodo);
+		$this->db->where('id_profesor',$id_profesor);
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_asignatura',$id_asignatura);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+
+		$this->db->select_max('secuencia');
+		$query = $this->db->get('logros');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['secuencia'];
+        return $data['query'];
+	}
+
+
+	public function obtener_secuencia_logro($id){
+
+		$this->db->where('id_logro',$id);
+		$query = $this->db->get('logros');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
 	}
 
 

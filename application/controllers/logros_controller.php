@@ -43,26 +43,32 @@ class Logros_controller extends CI_Controller {
 
         	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-        	//aqui creamos el nombre del logro
+        	$descripcion_logro = $this->input->post('descripcion_logro');
+        	$periodo = $this->input->post('periodo');
+        	$id_profesor = $this->input->post('id_persona');
         	$id_grado = $this->input->post('id_grado');
         	$id_asignatura = $this->input->post('id_asignatura');
+        	$secuencia = $this->logros_model->obtener_ultima_secuencia($periodo,$id_profesor,$id_grado,$id_asignatura,$ano_lectivo);
+
+        	//aqui creamos el nombre del logro
 			$n_grado = substr($this->grados_model->obtener_nombre_grado($id_grado), 0,1);
 			$n_asignatura = substr($this->asignaturas_model->obtener_nombre_asignatura($id_asignatura), 0,4);
-			$n_periodo = substr($this->input->post('periodo'), 0,1);
-			$nombre_logro = $n_asignatura.$n_grado.$n_periodo.$ultimo_id;
+			$n_periodo = substr($periodo, 0,1);
+			$nombre_logro = $n_asignatura.$n_grado.$n_periodo.$secuencia;
 
         	  //array para insertar en la tabla logros----------
         	$logro = array(
         	'id_logro' =>$ultimo_id,	
 			'nombre_logro' =>$nombre_logro,
-			'descripcion_logro' =>$this->input->post('descripcion_logro'),
-			'periodo' =>$this->input->post('periodo'),
-			'id_profesor' =>$this->input->post('id_persona'),
-			'id_grado' =>$this->input->post('id_grado'),
-			'id_asignatura' =>$this->input->post('id_asignatura'),
-			'ano_lectivo' =>$ano_lectivo);
+			'descripcion_logro' =>$descripcion_logro,
+			'periodo' =>$periodo,
+			'id_profesor' =>$id_profesor,
+			'id_grado' =>$id_grado,
+			'id_asignatura' =>$id_asignatura,
+			'ano_lectivo' =>$ano_lectivo,
+			'secuencia' =>$secuencia);
 
-			if ($this->logros_model->validar_existencia($nombre_logro,$ano_lectivo)){
+			if ($this->logros_model->validar_existencia($nombre_logro,$id_profesor,$ano_lectivo)){
 
 				$respuesta=$this->logros_model->insertar_logro($logro);
 
@@ -134,25 +140,37 @@ class Logros_controller extends CI_Controller {
 
     	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-    	//aqui creamos el nombre del logro
     	$id_logro = $this->input->post('id_logro');
+    	$descripcion_logro = $this->input->post('descripcion_logro');
+        $periodo = $this->input->post('periodo');
+        $id_profesor = $this->input->post('id_persona');
         $id_grado = $this->input->post('id_grado');
         $id_asignatura = $this->input->post('id_asignatura');
+        $row = $this->logros_model->obtener_secuencia_logro($id_logro);
+
+        if($row[0]['periodo'] == $periodo && $row[0]['id_asignatura'] == $id_asignatura && $row[0]['id_grado'] == $id_grado){
+        	$secuencia = $row[0]['secuencia'];
+        }
+        else{
+        	$secuencia = $this->logros_model->obtener_ultima_secuencia($periodo,$id_profesor,$id_grado,$id_asignatura,$ano_lectivo);
+    	}
+    	//aqui creamos el nombre del logro
 		$n_grado = substr($this->grados_model->obtener_nombre_grado($id_grado), 0,1);
 		$n_asignatura = substr($this->asignaturas_model->obtener_nombre_asignatura($id_asignatura), 0,4);
-		$n_periodo = substr($this->input->post('periodo'), 0,1);
-		$nombre_logro = $n_asignatura.$n_grado.$n_periodo.$id_logro;
+		$n_periodo = substr($periodo, 0,1);
+		$nombre_logro = $n_asignatura.$n_grado.$n_periodo.$secuencia;
 
     	//array para insertar en la tabla logros----------
         $logro = array(
-        'id_logro' =>$this->input->post('id_logro'),	
+        'id_logro' =>$id_logro,	
 		'nombre_logro' =>$nombre_logro,
-		'descripcion_logro' =>$this->input->post('descripcion_logro'),
-		'periodo' =>$this->input->post('periodo'),
-		'id_profesor' =>$this->input->post('id_persona'),
-		'id_grado' =>$this->input->post('id_grado'),
-		'id_asignatura' =>$this->input->post('id_asignatura'),
-		'ano_lectivo' =>$ano_lectivo);
+		'descripcion_logro' =>$descripcion_logro,
+		'periodo' =>$periodo,
+		'id_profesor' =>$id_profesor,
+		'id_grado' =>$id_grado,
+		'id_asignatura' =>$id_asignatura,
+		'ano_lectivo' =>$ano_lectivo,
+		'secuencia' =>$secuencia);
 
 
         if(is_numeric($id_logro)){
