@@ -46,9 +46,10 @@ class Logros_controller extends CI_Controller {
         	//aqui creamos el nombre del logro
         	$id_grado = $this->input->post('id_grado');
         	$id_asignatura = $this->input->post('id_asignatura');
-			$n_grado = $this->grados_model->obtener_nombre_grado($id_grado);
-			$n_asignatura = $this->asignaturas_model->obtener_nombre_asignatura($id_asignatura);
-			$nombre_logro = $n_asignatura.$n_grado.$ultimo_id;
+			$n_grado = substr($this->grados_model->obtener_nombre_grado($id_grado), 0,1);
+			$n_asignatura = substr($this->asignaturas_model->obtener_nombre_asignatura($id_asignatura), 0,4);
+			$n_periodo = substr($this->input->post('periodo'), 0,1);
+			$nombre_logro = $n_asignatura.$n_grado.$n_periodo.$ultimo_id;
 
         	  //array para insertar en la tabla logros----------
         	$logro = array(
@@ -137,9 +138,10 @@ class Logros_controller extends CI_Controller {
     	$id_logro = $this->input->post('id_logro');
         $id_grado = $this->input->post('id_grado');
         $id_asignatura = $this->input->post('id_asignatura');
-		$n_grado = $this->grados_model->obtener_nombre_grado($id_grado);
-		$n_asignatura = $this->asignaturas_model->obtener_nombre_asignatura($id_asignatura);
-		$nombre_logro = $n_asignatura.$n_grado.$id_logro;
+		$n_grado = substr($this->grados_model->obtener_nombre_grado($id_grado), 0,1);
+		$n_asignatura = substr($this->asignaturas_model->obtener_nombre_asignatura($id_asignatura), 0,4);
+		$n_periodo = substr($this->input->post('periodo'), 0,1);
+		$nombre_logro = $n_asignatura.$n_grado.$n_periodo.$id_logro;
 
     	//array para insertar en la tabla logros----------
         $logro = array(
