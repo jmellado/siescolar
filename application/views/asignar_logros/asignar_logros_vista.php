@@ -8,6 +8,7 @@
   			overflow:auto;
 		}
 	</style>
+	
 
 
 <div class="container-fluid">
@@ -116,7 +117,7 @@
 											</div>
 										</div>
 									</div>
-
+							
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="id_asignatura">ASIGNATURA</label>
@@ -136,7 +137,7 @@
 	        			<div class="col-sm-offset-9 col-sm-3">
 
 	        				<div class="form-group">
-								<button type="button" name="btn_ingresar_logro" id="btn_ingresar_logro" class="btn btn-primary btn-lg btn-block" disabled>Asignar</button>
+								<button type="button" name="btn_ingresar_logro" id="btn_ingresar_logro" class="btn btn-primary btn-lg btn-block btn-flat" disabled>Asignar</button>
 							</div>
 							
 	        			</div>
@@ -153,4 +154,70 @@
     	
     </div>
 
+    <div id="div-asignar_logros" class="row" style="display:none;">
+    <form role="form" action="<?php echo base_url(); ?>asignar_logros_controller/insertar" name="" method="post" id="form_logrosAL_insertar">
+
+    	
+		<div class="form-group">
+			<input type="hidden" class="form-control" id="periodoseleAL" name="periodo">
+		</div>
+		<div class="form-group">
+			<input type="hidden" class="form-control" id="id_gradoseleAL" name="id_grado">
+		</div>
+		<div class="form-group">
+			<input type="hidden" class="form-control" id="id_asignaturaseleAL" name="id_asignatura">
+		</div>
+
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">Listado De Estudiantes</div>
+    				<div class="panel-body">
+
+    					<div class="form-group">
+						  <label for="cantidad_logro">Mostrar Por:</label>
+						  <select class="selectpicker" id="cantidad_logroAL" name="cantidad_logro" >
+						    <option value="5">5</option>
+		  					<option value="10">10</option>
+		  					<option value="15">15</option>
+		  					<option value="20">20</option>
+						  </select>
+						</div>
+
+						<div class="table-responsive">
+						<table border='1' id="lista_logrosAL" class="table table-bordered table-condensed table-hover table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Identificacion</th>
+									<th>Nombres</th>
+									<th>Apellido1</th>
+									<th>Apellido2</th>
+									<th>Desempeño</th>
+									<th>Logro 1</th>
+									<th>Logro 2</th>
+									<th>Logro 3</th>
+									<th>Logro 4</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						</div>
+
+						<div class="text-center paginacion_logroAL">
+						
+						</div>
+
+    				</div>
+
+    		</div>
+    	</div>
+    	<div class="col-sm-offset-9 col-sm-3">
+			<div class="form-group">
+				<button type="submit" name="btn_registrar_logroAL" id="btn_registrar_logroAL" class="btn btn-success btn-flat btn-lg btn-block">Registrar</button>
+			</div>
+		</div>
+    </form>
+    </div>
+    
 </div>

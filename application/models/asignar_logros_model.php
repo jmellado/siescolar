@@ -3,6 +3,49 @@
 class asignar_logros_model extends CI_Model {
 
 
+	public function insertar_logros($data){
+		if ($this->db->insert('logros_asignados', $data)) 
+			return true;
+		else
+			return false;
+	}
+
+
+	public function modificar_logros($data,$ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('periodo',$periodo);
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_asignatura',$id_asignatura);
+
+		if ($this->db->update('logros_asignados', $data))
+
+			return true;
+		else
+			return false;
+
+	}
+
+
+	public function validar_existencia($ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('periodo',$periodo);
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_asignatura',$id_asignatura);
+		$query = $this->db->get('logros_asignados');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
 
 	public function buscar_profesor($id){
 
@@ -107,6 +150,58 @@ class asignar_logros_model extends CI_Model {
 		$query = $this->db->get('logros');
 		return $query->result();
 	}
+
+
+	public function buscar_nota($id,$inicio = FALSE,$cantidad = FALSE,$id_grado = FALSE,$id_grupo = FALSE,$id_asignatura = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$id_salon = $this->asignar_logros_model->obtener_id_salon($id_grado,$id_grupo);
+
+
+		$this->db->where('matriculas.id_salon',$id_salon);
+		$this->db->where('notas.id_asignatura',$id_asignatura);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		
+
+		if ($inicio !== FALSE && $cantidad !== FALSE && $id_grado !== FALSE && $id_grupo !== FALSE && $id_asignatura != FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
+		$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
+
+		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,notas.fallas', false);
+		
+		$query = $this->db->get('matriculas');
+
+		return $query->result();
+	
+	}
+
+
+	public function obtener_id_salon($id_grado,$id_grupo){
+
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_grupo',$id_grupo);
+		$query = $this->db->get('salones_grupo');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_salon'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	
+
 
 
 

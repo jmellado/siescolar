@@ -102,4 +102,131 @@ class Asignar_logros_controller extends CI_Controller {
     	echo json_encode($consulta);
     }
 
+
+    public function mostrarplanillas(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+
+		$id_grado = $this->input->post('id_grado');
+		$id_grupo =	$this->input->post('id_grupo');
+		$id_asignatura = $this->input->post('id_asignatura');
+		
+		$data = array(
+
+			'notas' => $this->asignar_logros_model->buscar_nota($id,$inicio,$cantidad,$id_grado,$id_grupo,$id_asignatura),
+
+		    'totalregistros' => count($this->asignar_logros_model->buscar_nota($id,$inicio,$cantidad,$id_grado,$id_grupo,$id_asignatura)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function insertar(){
+
+		//$items1 = $this->input->post('id_persona');
+		//$items2 = $this->input->post('p1');
+
+		//var_dump($items1);
+		//var_dump($items2);
+		if($this->input->post('id_persona')!=""){
+
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+			$estado = "activo";
+
+			//$data = array();
+
+			for ($i=0; $i < count($this->input->post('id_persona')) ; $i++) {
+
+				$id_estudiante = $this->input->post('id_persona')[$i];
+				$periodo = $this->input->post('periodo');
+				$id_grado = $this->input->post('id_grado');
+				$id_asignatura = $this->input->post('id_asignatura');
+				$id_logro1 = $this->input->post('id_logro1')[$i];
+				$id_logro2 = $this->input->post('id_logro2')[$i];
+				$id_logro3 = $this->input->post('id_logro3')[$i];
+				$id_logro4 = $this->input->post('id_logro4')[$i];
+
+				//$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
+				//$desempeno = $this->notas_model->obtener_desempeno($nota_final);
+
+				/*if ($p1==""){
+		            $p1=NULL;
+		        }
+		        if ($p2==""){
+		            $p2=NULL;
+		        }
+		        if ($p3==""){
+		            $p3=NULL;
+		        }
+		        if ($p4==""){
+		            $p4=NULL;
+		        }*/
+
+				//$data[]
+				$data = array(
+
+	            	'ano_lectivo' => $ano_lectivo,
+	                'id_estudiante' => $id_estudiante,
+	                'periodo' => $periodo,
+	                'id_grado' => $id_grado,
+	                'id_asignatura' => $id_asignatura,
+	                'id_logro1' => $id_logro1,
+	                'id_logro2' => $id_logro2,
+	                'id_logro3' => $id_logro3,
+	                'id_logro4' => $id_logro4
+	                
+	            );
+
+				$estado = $this->asignar_logros_model->validar_existencia($ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
+
+				if($estado){
+
+					$respuesta = $this->asignar_logros_model->insertar_logros($data);
+
+		            if($respuesta == false){
+						echo "error al ingresar logros";
+					}
+				}
+				else{
+					
+					$respuesta = $this->asignar_logros_model->modificar_logros($data,$ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
+
+		            if($respuesta == false){
+						echo "error al modificar logros";
+					}
+
+				}
+
+
+			}
+
+			// $respuesta = $this->notas_model->modificar_nota($data);
+
+			if($respuesta == true){
+
+	        	echo "registroguardado";
+	        }
+	        else{
+	        	echo "registronoguardado";
+	        }
+
+	    }else{
+
+	    	echo "No Hay Informacion Por Registrar";
+	    }
+
+	}
+
+
+	
+
 }

@@ -42,6 +42,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/plugins/select2/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -49,6 +51,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/css/skins/_all-skins.min.css">
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    
 
 </head>
 <body class="hold-transition skin-red fixed sidebar-mini" onload="nobackbutton();">
@@ -605,7 +608,14 @@
 <script src="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/js/demo.js"></script>
-
+<!-- Select2 -->
+<script src="<?php echo base_url(); ?>assets/plantillas/AdminLTE/plugins/select2/select2.full.min.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+  });
+</script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
 
