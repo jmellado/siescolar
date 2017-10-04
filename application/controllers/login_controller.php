@@ -50,14 +50,16 @@ class Login_controller extends CI_Controller {
 			if ($check_user == true){
 
 				$data = array(
-	                'logueado' 	=> 		TRUE,
-	                'id_usuario' 	    => 		$check_user->id_usuario,
-	                'rol'		=>		$check_user->nombre_rol,
-	                'username' 	=> 		$check_user->username,
-	                'acceso' 	=> 		$check_user->acceso,
-	                'nombres' 	=> 		$check_user->nombres,
-	                'apellido1' => 		$check_user->apellido1,
-	                'apellido2' => 		$check_user->apellido2
+	                'logueado' 		=> 		TRUE,
+	                'id_usuario' 	=> 		$check_user->id_usuario,
+	                'id_persona'	=>		$check_user->id_persona,
+	                'rol'			=>		$check_user->nombre_rol,
+	                'username' 		=> 		$check_user->username,
+	                'acceso' 		=> 		$check_user->acceso,
+	                'identificacion'=> 		$check_user->identificacion,
+	                'nombres' 		=> 		$check_user->nombres,
+	                'apellido1' 	=> 		$check_user->apellido1,
+	                'apellido2' 	=> 		$check_user->apellido2
             		);	
 
 					$this->session->set_userdata($data);
