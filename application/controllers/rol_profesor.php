@@ -8,6 +8,7 @@ class Rol_profesor extends CI_Controller {
 		{
 			redirect(base_url().'login_controller');
 		}
-		$this->load->view('roles/rol_profesor_vista');
+		$data['contents'] = null;
+		$this->load->view('roles/rol_profesor_vista',$data);
 	}
 }
