@@ -23,6 +23,17 @@ class Logros_controller extends CI_Controller {
 		$this->template->load('roles/rol_administrador_vista', 'logros/logros_vista');
 	}
 
+	public function index_profesor()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		//$this->load->view('estudiantes/registrar2');
+		$this->template->load('roles/rol_profesor_vista', 'logros/logros_profesor_vista');
+	}
+
 	public function insertar(){
 
         $this->form_validation->set_rules('descripcion_logro', 'descripcion', 'required|alpha_spaces');
