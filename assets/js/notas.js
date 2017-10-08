@@ -3,7 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	
-	
+	llenarcombo_grados_profesorN($("#id_persona").val());
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_notas_insertar").submit(function (event) {

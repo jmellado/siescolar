@@ -24,6 +24,18 @@ class Notas_controller extends CI_Controller {
 	}
 
 
+	public function index_profesor()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		$this->template->load('roles/rol_profesor_vista', 'notas/notas_profesor_vista');
+	}
+
+
 	public function insertar(){
 
 		//$items1 = $this->input->post('id_persona');
