@@ -53,6 +53,34 @@ class Logros_model extends CI_Model {
 		
 	}
 
+	//Esta funcion me permite obtener los logros ingresados por un profesor en el respectivo año lectivo
+	public function buscar_logro_profesor($id,$id_profesor,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('id_profesor',$id_profesor);
+		$this->db->where('logros.ano_lectivo',$ano_lectivo);
+
+		$this->db->where("(logros.nombre_logro LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR logros.periodo LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%' OR anos_lectivos.nombre_ano_lectivo LIKE '".$id."%')", NULL, FALSE);
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('anos_lectivos', 'logros.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->join('personas', 'logros.id_profesor = personas.id_persona');
+		$this->db->join('grados', 'logros.id_grado = grados.id_grado');
+		$this->db->join('asignaturas', 'logros.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('logros.id_logro,logros.nombre_logro,logros.descripcion_logro,logros.periodo,logros.id_profesor,personas.nombres,personas.apellido1,logros.id_grado,grados.nombre_grado,logros.id_asignatura,asignaturas.nombre_asignatura,logros.ano_lectivo,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('logros');
+
+		return $query->result();
+		
+	}
+
 	public function eliminar_logro($id){
 
      	$this->db->where('id_logro',$id);

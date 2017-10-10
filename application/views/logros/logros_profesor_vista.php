@@ -53,12 +53,12 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Nombre</th>
-									<th>Descripcion</th>
+									<th>Código</th>
+									<th>Descripción</th>
 									<th>Periodo</th>
 									<th>Grado</th>
 									<th>Asignatura</th>
-									<th>Año Lectivo</th>
+									<th>Año</th>
 									<th></th>
 									<th></th>
 								</tr>
@@ -141,7 +141,7 @@
 	        		
 			        		<div class="form-group">
 								<label for="descripcion_logro">DESCRIPCION LOGRO</label>
-								<textarea class="form-control" name="descripcion_logro" id="descripcion_logro" cols="50" rows="4" placeholder="Describir logro.."></textarea>
+								<textarea class="form-control" name="descripcion_logro" id="descripcion_logro" cols="50" rows="4" placeholder="Describir logro.." style="resize:none"></textarea>
 							</div>
 						</div>
 					</div>		
@@ -224,7 +224,7 @@
 	        			<div class="panel-body">
 							<div class="form-group">
 								<label for="descripcion_logro">DESCRIPCION LOGRO</label>
-								<textarea class="form-control" name="descripcion_logro" id="descripcion_logrosele" cols="60" rows="4" placeholder="Descripcion logro"></textarea>
+								<textarea class="form-control" name="descripcion_logro" id="descripcion_logrosele" cols="60" rows="4" placeholder="Descripcion logro" style="resize:none"></textarea>
 							</div>
 						</div>
 					</div>		

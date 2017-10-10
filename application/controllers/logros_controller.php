@@ -124,6 +124,30 @@ class Logros_controller extends CI_Controller {
 
 	}
 
+	//Mostrar los Logros Ingresados Por Un Determinado Profesor
+	public function mostrarlogros_profesor(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		$id_profesor =$this->input->post('id_persona');
+
+		$data = array(
+
+			'logros' => $this->logros_model->buscar_logro_profesor($id,$id_profesor,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->logros_model->buscar_logro_profesor($id,$id_profesor)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
 	public function eliminar(){
 
 	  	$id =$this->input->post('id'); 

@@ -19,7 +19,7 @@
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros_profesor.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
