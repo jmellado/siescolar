@@ -134,7 +134,7 @@ class asignar_logros_model extends CI_Model {
 	}
 
 
-	public function llenar_logros($periodo,$id_profesor,$id_grado,$id_asignatura){
+	public function buscar_logros($periodo,$id_profesor,$id_grado,$id_asignatura){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
@@ -151,8 +151,8 @@ class asignar_logros_model extends CI_Model {
 		return $query->result();
 	}
 
-
-	public function buscar_nota($id,$inicio = FALSE,$cantidad = FALSE,$id_grado = FALSE,$id_grupo = FALSE,$id_asignatura = FALSE){
+	//Esta Funcion me permite obtener los estudiantes matriculados en un respectivo curso(id_grado y id_grupo)
+	public function llenar_estudiantes($id_grado,$id_grupo){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
@@ -161,25 +161,65 @@ class asignar_logros_model extends CI_Model {
 
 
 		$this->db->where('matriculas.id_salon',$id_salon);
-		$this->db->where('notas.id_asignatura',$id_asignatura);
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
-		
-
-		if ($inicio !== FALSE && $cantidad !== FALSE && $id_grado !== FALSE && $id_grupo !== FALSE && $id_asignatura != FALSE) {
-			$this->db->limit($cantidad,$inicio);
-		}
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
-		$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
 
-		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,notas.fallas', false);
+		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
 		
 		$query = $this->db->get('matriculas');
 
 		return $query->result();
 	
 	}
+
+	//Esta funcion me permite por cada estudiante obtener la calificacion de una asignatura en un determinado periodo
+	public function buscar_notas($id_estudiante,$periodo,$id_grado,$id_asignatura){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_asignatura',$id_asignatura);
+
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+	//Esta funcion me permite por cada estudiante seleccionado, los logros asignados para una determinada asignatura
+	public function buscar_logros_asignados($id_estudiante,$periodo,$id_grado,$id_asignatura){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('periodo',$periodo);
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_asignatura',$id_asignatura);
+
+		$this->db->select('id_logro1,id_logro2,id_logro3,id_logro4');
+		$query = $this->db->get('logros_asignados');
+
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+		else{
+			return false;
+		}
+
+	}
+
 
 
 	public function obtener_id_salon($id_grado,$id_grupo){

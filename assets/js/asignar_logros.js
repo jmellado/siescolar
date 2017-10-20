@@ -10,79 +10,65 @@ function inicio(){
 		
 		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
 
-		$("#id_asignaturaseleAL").removeAttr("disabled");
-		p = $("#periodoAL").val();
-		if(validarCampoNota(p)==true){
-			if(validarLogros()==true){
-				$.ajax({
+		if($("#form_logrosAL_insertar").valid()==true){
+			if(validarCampoNotaAL()==true){
+				if(validarLogros()==true){
+					$.ajax({
 
-					url:$("#form_logrosAL_insertar").attr("action"),
-					type:$("#form_logrosAL_insertar").attr("method"),
-					data:$("#form_logrosAL_insertar").serialize(),   //captura la info de la cajas de texto
-					success:function(respuesta) {
+						url:$("#form_logrosAL_insertar").attr("action"),
+						type:$("#form_logrosAL_insertar").attr("method"),
+						data:$("#form_logrosAL_insertar").serialize(),   //captura la info de la cajas de texto
+						success:function(respuesta) {
 
-						
-						if (respuesta==="registroguardado") {
 							
-							toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
-							//$("#form_notas_insertar")[0].reset();
-							$("#id_asignaturaseleAL").attr("disabled", "disabled");
-							mostrarnotas("",1,5,id_grado,id_grupo,id_asignatura);
-
-						}
-						else if(respuesta==="registronoguardado"){
-							
-							toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
-							$("#id_asignaturaseleAL").attr("disabled", "disabled");
-
-						}
-						else if(respuesta==="grado ya existe"){
-							
-							toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+							if (respuesta==="registroguardado") {
 								
+								toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
 
+							}
+							else if(respuesta==="registronoguardado"){
+								
+								toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+
+							}
+							else if(respuesta==="grado ya existe"){
+								
+								toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+									
+							}
+							else{
+
+								toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+								
+							}
+							
+
+								
+								
 						}
-						else{
 
-							toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
-							
-						}
-						
-
-							
-							
-					}
-
-				});
+					});
+				}else{
+					toastr.error('Debe Asignar Cuatro Logros En Total', 'Success Alert', {timeOut: 3000});
+				}	
 			}else{
-				toastr.error('Uno o Varios Estudiantes No Tienen Asignado Todos Los Logros', 'Success Alert', {timeOut: 5000});
-			}	
-		}else{
 
-			toastr.error('Uno o Varios Estudiantes No Tienen Notas Ingresadas', 'Success Alert', {timeOut: 5000});
-			
-		}
+				toastr.error('El Estudiante Seleccionado No Tiene Nota Ingresada', 'Success Alert', {timeOut: 3000});
+				
+			}
+		}	
 
 	});
 
 
-
-    $("#cantidad_logroAL").change(function(){
-    	valorcantidad = $(this).val();
-    	mostrarplanillas("",1,valorcantidad,id_grado,id_grupo,id_asignatura);
-    });
-
-    $("body").on("click", ".paginacion_logroAL li a", function(event){
-    	event.preventDefault();
-    	numero_pagina = $(this).attr("href");
-    	//buscar = $("#buscar_grado").val();
-    	valorcantidad = $("#cantidad_logroAL").val();
-		
-		if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
-			
-			mostrarplanillas("",numero_pagina,valorcantidad,id_grado,id_grupo,id_asignatura);
-		}
-
+    $("#id_estudianteAL").change(function(){
+    	desmarcar_checkbox();
+    	id_estudiante = $(this).val();
+    	periodo = $("#periodoAL").val();
+		id_grado = $("#id_gradoAL").val();
+		id_asignatura = $("#id_asignaturaAL").val();
+		buscar_notas_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura);
+		logros_asignados_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura);
     });
 
 
@@ -124,6 +110,7 @@ function inicio(){
     	id_persona = $("#id_persona").val();
     	llenarcombo_grupos_profesorAL(id_persona,id_grado);
     	ocultar_div();
+    	limpiarcampo_calificacion();
     });
 
 
@@ -133,16 +120,19 @@ function inicio(){
     	id_grado = $("#id_gradoAL").val();
     	llenarcombo_asignaturas_profesorAL(id_persona,id_grado,id_grupo);
     	ocultar_div();
+    	limpiarcampo_calificacion();
     });
 
 
     $("#id_asignaturaAL").change(function(){
     	ocultar_div();
+    	limpiarcampo_calificacion();
     });
 
 
     $("#periodoAL").change(function(){
     	ocultar_div();
+    	limpiarcampo_calificacion();
     });
 
 
@@ -163,13 +153,10 @@ function inicio(){
 	    		id_grado = $("#id_gradoAL").val();
 	    		id_grupo = $("#id_grupoAL").val();
 	    		id_asignatura = $("#id_asignaturaAL").val();
-	    		//llenarcombo_logrosAL(periodo,id_persona,id_grado,id_asignatura);
 
-	    		mostrarplanillas("",1,5,id_grado,id_grupo,id_asignatura);
-
-	    		//llenarcombo_grados_profesorN(id_persona);
-	    		//llenarcombo_grupos_profesorN(id_persona,id_grado);
-	    		//llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
+	    		llenarcombo_estudiantesAL(id_grado,id_grupo);
+	    		mostrarlogros_profesorAL(periodo,id_persona,id_grado,id_asignatura);
+	    		document.getElementById("id_estudianteAL").focus();
 
 	    		$("#periodoseleAL").val(periodo);
 	    		$("#id_gradoseleAL").val(id_grado);
@@ -232,6 +219,19 @@ function inicio(){
 
 	});
 
+	$("#form_logrosAL_insertar").validate({
+
+    	rules:{
+
+			id_persona:{
+				required: true
+			}
+
+		}
+
+
+	});
+
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
   	return this.optional(element) || /^[a-z\s]+$/i.test(value);
 	}, "Solo Valores Alfabeticos");
@@ -240,98 +240,26 @@ function inicio(){
 }
 
 
-function mostrarplanillas(valor,pagina,cantidad,id_grado,id_grupo,id_asignatura){
+//Est Funcion me permite obtener los logros ingresados por un profesor para una asignatura de un respectivo grado y periodo
+function mostrarlogros_profesorAL(periodo,id_persona,id_grado,id_asignatura){
 
 	$.ajax({
-		url:base_url+"asignar_logros_controller/mostrarplanillas",
+		url:base_url+"asignar_logros_controller/mostrarlogros_profesor",
 		type:"post",
-		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_grado:id_grado,id_grupo:id_grupo,id_asignatura:id_asignatura},
+		data:{periodo:periodo,id_persona:id_persona,id_grado:id_grado,id_asignatura:id_asignatura},
 		success:function(respuesta) {
 				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
-				p = $("#periodoAL").val();
+
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.notas.length; i++) {
-					
-					if(p=="Primero"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro1[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro2[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro3[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro4[]'></select></div></td></tr>";
-					}
-					if(p=="Segundo"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p2[]' id='p1' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p1' value='"+registros.notas[i].p2+"'></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro1[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro2[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro3[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro4[]'></select></div></td></tr>";
-					}
-					if(p=="Tercero"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p3[]' id='p1' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p1' value='"+registros.notas[i].p3+"'></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro1[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro2[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro3[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro4[]'></select></div></td></tr>";
-					}
-					if(p=="Cuarto"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p4[]' id='p1' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p1' value='"+registros.notas[i].p4+"'></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro1[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro2[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro3[]'></select></div></td><td><div id='logrosAL1'><select class='form-control select2' id='id_logroAL' name='id_logro4[]'></select></div></td></tr>";
-					}
+				for (var i = 0; i < registros.logros.length; i++) {
+					html +="<tr><td>"+[i+1]+"</td><td><input type='checkbox' name='id_logro[]' value='"+registros.logros[i].id_logro+"'></td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td><textarea class='form-control' cols='80' rows='3' readonly style='resize:none'>"+registros.logros[i].descripcion_logro+"</textarea></td><td style='display:none'>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td style='display:none'>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td style='display:none'>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td style='display:none'>"+registros.logros[i].nombre_ano_lectivo+"</td></tr>";
 				};
 				
 				$("#lista_logrosAL tbody").html(html);
-
-				linkseleccionado = Number(pagina);
-				//total de registros
-			    totalregistros = registros.totalregistros;
-				//cantidad de registros por pagina
-				cantidadregistros = registros.cantidad;
-				//numero de links o paginas dependiendo de la cantidad de registros y el numero a mostrar
-				numerolinks = Math.ceil(totalregistros/cantidadregistros);
-
-				paginador="<ul class='pagination'>";
-
-				if(linkseleccionado>1)
-				{
-					paginador+="<li><a href='1'>&laquo;</a></li>";
-					paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
-
-				}
-				else
-				{
-					paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
-					paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
-				}
-				//muestro de los enlaces 
-				//cantidad de link hacia atras y adelante
-	 			cant = 2;
-	 			//inicio de donde se va a mostrar los links
-				pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
-				//condicion en la cual establecemos el fin de los links
-				if (numerolinks > cant)
-				{
-					//conocer los links que hay entre el seleccionado y el final
-					pagRestantes = numerolinks - linkseleccionado;
-					//defino el fin de los links
-					pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
-				}
-				else 
-				{
-					pagFin = numerolinks;
-				}
-
-				for (var i = pagInicio; i <= pagFin; i++) {
-					if (i == linkseleccionado)
-						paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
-					else
-						paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
-				}
-				//condicion para mostrar el boton sigueinte y ultimo
-				if(linkseleccionado<numerolinks)
-				{
-					paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
-					paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
-
-				}
-				else
-				{
-					paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
-					paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
-				}
+ 
 				
-				paginador +="</ul>";
-				$(".paginacion_logroAL").html(paginador);
-				llenarcombo_logrosAL(periodo,id_persona,id_grado,id_asignatura);
 				
 			}
 
@@ -483,11 +411,9 @@ function validar_fechaIngresoLogros(nombre_periodo,fecha_actual){
 		    		id_grupo = $("#id_grupoAL").val();
 		    		id_asignatura = $("#id_asignaturaAL").val();
 
-		    		mostrarplanillas("",1,5,id_grado,id_grupo,id_asignatura);
-
-		    		//llenarcombo_grados_profesorN(id_persona);
-		    		//llenarcombo_grupos_profesorN(id_persona,id_grado);
-		    		//llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
+		    		llenarcombo_estudiantesAL(id_grado,id_grupo);
+	    			mostrarlogros_profesorAL(periodo,id_persona,id_grado,id_asignatura);
+	    			document.getElementById("id_estudianteAL").focus();
 
 		    		$("#periodoseleAL").val(periodo);
 		    		$("#id_gradoseleAL").val(id_grado);
@@ -505,25 +431,126 @@ function validar_fechaIngresoLogros(nombre_periodo,fecha_actual){
 }
 
 
-function llenarcombo_logrosAL(valor,valor2,valor3,valor4){
+//Esta Funcion me permite obtener los estudiantes matriculados en un respectivo curso(id_grado y id_grupo)
+function llenarcombo_estudiantesAL(id_grado,id_grupo){
 
 	$.ajax({
-		url:base_url+"asignar_logros_controller/llenarcombo_logros",
+		url:base_url+"asignar_logros_controller/llenarcombo_estudiantes",
 		type:"post",
-		data:{periodo:valor,id_persona:valor2,id_grado:valor3,id_asignatura:valor4},
+		data:{id_grado:id_grado,id_grupo:id_grupo},
 		success:function(respuesta) {
-				
+				//alert(""+respuesta);
 				var registros = eval(respuesta);
 				
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 
-					html +="<option value="+registros[i]["id_logro"]+">"+registros[i]["nombre_logro"]+[" - "]+registros[i]["descripcion_logro"]+"</option>";
+					html +="<option value="+registros[i]["id_persona"]+">"+[i+1]+[". "]+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
 					
 				};
 				
-				$("#logrosAL1 select").html(html);
-				$(".select2").select2();
+				$("#estudiantesAL1 select").html(html);
+				//$(".select2").select2();
+		}
+
+	});
+}
+
+//Esta funcion me permite por cada estudiante obtener la calificacion de una asignatura en un determinado periodo
+function buscar_notas_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura){
+
+	p = periodo;
+	$.ajax({
+		url:base_url+"asignar_logros_controller/buscar_notas_estudiante",
+		type:"post",
+		data:{id_estudiante:id_estudiante,periodo:periodo,id_grado:id_grado,id_asignatura:id_asignatura},
+		success:function(respuesta) {
+				
+
+				if(respuesta==="no"){
+
+					limpiarcampo_calificacion();
+				}
+				else{
+
+					var registros = eval(respuesta);
+					for (var i = 0; i < registros.length; i++) {
+
+						if(p=="Primero"){
+							calificacion = registros[i]["p1"];
+							$("#calificacion").val(calificacion);
+						}
+						if(p=="Segundo"){
+							calificacion = registros[i]["p2"];
+							$("#calificacion").val(calificacion);
+						}
+						if(p=="Tercero"){
+							calificacion = registros[i]["p3"];
+							$("#calificacion").val(calificacion);
+						}
+						if(p=="Cuarto"){
+							calificacion = registros[i]["p4"];
+							$("#calificacion").val(calificacion);
+						}
+
+					};
+				}	
+				
+		
+		}
+
+	});
+}
+
+//Esta funcion me permite por cada estudiante seleccionado, los logros asignados para una determinada asignatura
+function logros_asignados_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura){
+
+	$.ajax({
+		url:base_url+"asignar_logros_controller/buscar_logros_asignados",
+		type:"post",
+		data:{id_estudiante:id_estudiante,periodo:periodo,id_grado:id_grado,id_asignatura:id_asignatura},
+		success:function(respuesta) {
+				
+				
+				if(respuesta==="no"){
+
+					toastr.success('El Estudiante Seleccionado No Tiene Logros Asignados', 'Success Alert', {timeOut: 2000});
+				}
+				else{
+
+					var registros = eval(respuesta);
+					for (var i = 0; i < registros.length; i++) {
+
+						var logros = document.getElementsByName("id_logro[]");
+
+						for(j = 0; j < logros.length; j++){
+
+					   		if(logros[j].value == registros[i]["id_logro1"]){
+
+					   			logros[j].checked=1;
+					   		}
+					   		if(logros[j].value == registros[i]["id_logro2"]){
+
+					   			logros[j].checked=1;
+					   		}
+					   		if(logros[j].value == registros[i]["id_logro3"]){
+
+					   			logros[j].checked=1;
+					   		}
+					   		if(logros[j].value == registros[i]["id_logro4"]){
+
+					   			logros[j].checked=1;
+					   		}
+					   		
+
+
+					   	}
+
+
+					};
+				}	
+				
+		
 		}
 
 	});
@@ -570,46 +597,17 @@ function obtener_fecha_actual(){
 }
 
 
-function validarCampoNota(periodo){
+function validarCampoNotaAL(){
 
-	var resn=[];
-    var resy=[];
     var vacio = "";
 
-	if(periodo=="Primero"){
-   	 	var notas = document.getElementsByName("p1[]");
+   	var nota = document.getElementById("calificacion").value;
 
-   	}else if(periodo=="Segundo"){
-   		var notas = document.getElementsByName("p2[]");
-   	}
-   	else if(periodo=="Tercero"){
-   		var notas = document.getElementsByName("p3[]");
-   	}
-   	else{
-   		var notas = document.getElementsByName("p4[]");
-   	}
+   	if(nota.length != 0){
 
-
-   	for(i = 0; i < notas.length; i++){
-
-   		if(notas[i].value != vacio && notas[i].value >= 0 && notas[i].value <= 5){
-
-   			resy.push("si")
-   		}
-   		else{
-   			resn.push("no");
-   		}
-
-
-   	}
-
-   	if(resy.length == notas.length){
-
-		//alert("ok");
 		return true;
 	}
 	else{
-		//alert("no");
 		return false;
 	}
 
@@ -618,71 +616,22 @@ function validarCampoNota(periodo){
 
 function validarLogros(){
 
-	var resn1=[];
-    var resy1=[];
-    var resn2=[];
-    var resy2=[];
-    var resn3=[];
-    var resy3=[];
-    var resn4=[];
-    var resy4=[];
-    var vacio = "";
-   	var logro1 = document.getElementsByName("id_logro1[]");
-   	var logro2 = document.getElementsByName("id_logro2[]");
-   	var logro3 = document.getElementsByName("id_logro3[]");
-   	var logro4 = document.getElementsByName("id_logro4[]");
-   		
-   		
-   	for(i = 0; i < logro1.length; i++){
+   	var logros = document.getElementsByName("id_logro[]");
+   	var cont = 0; 
 
-   		if(logro1[i].value != vacio){
+   	//alert("total:"+logros.length);
 
-   			resy1.push("si")
+   	for(i = 0; i < logros.length; i++){
+
+   		if(logros[i].checked){
+
+   			cont = cont + 1;
    		}
-   		else{
-   			resn1.push("no");
-   		}
-
-
-   	}
-   	for(i = 0; i < logro2.length; i++){
-
-   		if(logro2[i].value != vacio){
-
-   			resy2.push("si")
-   		}
-   		else{
-   			resn2.push("no");
-   		}
-
-
-   	}
-   	for(i = 0; i < logro3.length; i++){
-
-   		if(logro3[i].value != vacio){
-
-   			resy3.push("si")
-   		}
-   		else{
-   			resn3.push("no");
-   		}
-
-
-   	}
-   	for(i = 0; i < logro4.length; i++){
-
-   		if(logro4[i].value != vacio){
-
-   			resy4.push("si")
-   		}
-   		else{
-   			resn4.push("no");
-   		}
-
-
    	}
 
-   	if(resy1.length == logro1.length && resy2.length == logro2.length && resy3.length == logro3.length && resy4.length == logro4.length){
+   	//alert("total chek:"+cont);
+
+   	if(cont == 4){
 
 		return true;
 	}
@@ -706,5 +655,26 @@ function ocultar_div(){
 	div = document.getElementById('div-asignar_logros');
     div.style.display = 'none';
 }
+
+function desmarcar_checkbox(){
+
+	var logros = document.getElementsByName("id_logro[]");
+   	
+   	for(i = 0; i < logros.length; i++){
+
+   		logros[i].checked=0;
+
+   	}
+
+   
+}
+
+function limpiarcampo_calificacion(){
+
+	$("#calificacion").val("");
+
+}
+
+
 
 
