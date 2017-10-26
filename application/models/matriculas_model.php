@@ -40,12 +40,12 @@ class Matriculas_model extends CI_Model {
 		}
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
-		$this->db->join('salones_grupo', 'matriculas.id_salon = salones_grupo.id_salon');
-		$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
-		$this->db->join('grupos', 'salones_grupo.id_grupo = grupos.id_grupo');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_salon,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('matriculas');
 
@@ -110,35 +110,41 @@ class Matriculas_model extends CI_Model {
 	}
 
 
-	public function llenar_salones_grupo(){
+	public function llenar_cursos($jornada){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
 		
-		$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
-		$this->db->join('grupos', 'salones_grupo.id_grupo = grupos.id_grupo');
-		$this->db->join('salones', 'salones_grupo.id_salon = salones.id_salon');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('salones', 'cursos.id_salon = salones.id_salon');
 
-		$this->db->select('salones_grupo.id_salon,salones_grupo.id_grado,salones_grupo.id_grupo,grados.nombre_grado,grupos.nombre_grupo,salones.cupo_maximo');
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.cupo_maximo');
 
-		$query = $this->db->get('salones_grupo');
+		$query = $this->db->get('cursos');
 		$row = $query->result_array();
 		$total = $query->num_rows();
 		$listaArray = array();
 
 		for ($i=0; $i < $total ; $i++) { 
 			
-			$id_salon = $row[$i]['id_salon'];
+			$id_curso = $row[$i]['id_curso'];
 			$cupo_maximo = $row[$i]['cupo_maximo'];
-			$total_salon_matricula = $this->matriculas_model->total_salones_matricula($id_salon);
+			$total_curso_matricula = $this->matriculas_model->total_cursos_matricula($id_curso);
 
-			if ($total_salon_matricula < $cupo_maximo) {
+			if ($total_curso_matricula < $cupo_maximo) {
 			
-				$this->db->where('id_salon',$id_salon);
+				$this->db->where('id_curso',$id_curso);
 
-				$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
-				$this->db->join('grupos', 'salones_grupo.id_grupo = grupos.id_grupo');
+				$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+				$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 
-				$this->db->select('salones_grupo.id_salon,salones_grupo.id_grado,salones_grupo.id_grupo,grados.nombre_grado,grupos.nombre_grupo,');
+				$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 
-				$query2 = $this->db->get('salones_grupo');
+				$query2 = $this->db->get('cursos');
 
 				$listaArray[] =$query2->row();
 
@@ -168,12 +174,12 @@ class Matriculas_model extends CI_Model {
 
 
 	//Esta funcion me permite obtener el total de matriculas por salon de un respectivo año
-	public function total_salones_matricula($id_salon){
+	public function total_cursos_matricula($id_curso){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-		$this->db->where('id_salon',$id_salon);
+		$this->db->where('id_curso',$id_curso);
 		$this->db->where('ano_lectivo',$ano_lectivo);
 
 		$query = $this->db->get('matriculas');
@@ -184,12 +190,12 @@ class Matriculas_model extends CI_Model {
 
 
 	//Esta Funcion me permite obtener el grado por el salon registrado en la tabla matricula
-	public function obtener_gradoPorsalon($id_salon){
+	public function obtener_gradoPorcurso($id_curso){
 
-		$this->db->where('matriculas.id_salon',$id_salon);
+		$this->db->where('matriculas.id_curso',$id_curso);
 
-		$this->db->join('salones_grupo', 'matriculas.id_salon = salones_grupo.id_salon');
-		$this->db->join('grados', 'salones_grupo.id_grado = grados.id_grado');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 
 		$this->db->select('grados.id_grado');
 
@@ -240,8 +246,8 @@ class Matriculas_model extends CI_Model {
 	}
 
 
-	//esta funcion me permite obtener un estudiante por este id de matricula
-	public function obtener_estudiantePormatricula($id_matricula){
+	//esta funcion me permite obtener informacion informacion de una matricula
+	public function obtener_informacion_matricula($id_matricula){
 
 		$this->db->where('id_matricula',$id_matricula);
 		$query = $this->db->get('matriculas');

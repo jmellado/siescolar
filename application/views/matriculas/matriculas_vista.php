@@ -138,24 +138,25 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="id_salon">SALON</label>
+						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
 						<div class="col-sm-4">
-							<div id="salones_grupo1">
-								<select class="form-control" id="id_salon" name="id_salon" disabled>
-												    
-								</select>
-							</div>
+							<select class="form-control" id="jornadaMT" name="jornada" disabled>
+									<option value="Mañana">Mañana</option>
+									<option value="Tarde">Tarde</option>
+									<option value="Noche">Noche</option>
+									<option value="Unica">Única</option>
+							</select>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
+						<label class="control-label col-sm-3" for="id_salon">CURSO</label>
 						<div class="col-sm-4">
-							<select class="form-control" id="jornada" name="jornada" disabled>
-									<option value="Mañana">Mañana</option>
-									<option value="Tarde">Tarde</option>
-									<option value="Noche">Noche</option>
-							</select>
+							<div id="curso1">
+								<select class="form-control" id="id_curso" name="id_curso" disabled>
+												    
+								</select>
+							</div>
 						</div>
 					</div>
 
@@ -228,24 +229,25 @@
 			</div>
 
 			<div class="form-group">
-				<label class="control-label col-sm-3" for="id_salon">SALON</label>
+				<label class="control-label col-sm-3" for="jornada">JORNADA</label>
 				<div class="col-sm-4">
-					<div id="salones_grupo1">
-						<select class="form-control" id="id_salonsele" name="id_salon">
-										    
-						</select>
-					</div>
+					<select class="form-control" id="jornadaseleMT" name="jornada">
+							<option value="Mañana">Mañana</option>
+							<option value="Tarde">Tarde</option>
+							<option value="Noche">Noche</option>
+							<option value="Unica">Única</option>
+					</select>
 				</div>	
 			</div>
 
 			<div class="form-group">
-				<label class="control-label col-sm-3" for="jornada">JORNADA</label>
+				<label class="control-label col-sm-3" for="id_salon">CURSO</label>
 				<div class="col-sm-4">
-					<select class="form-control" id="jornadasele" name="jornada">
-							<option value="Mañana">Mañana</option>
-							<option value="Tarde">Tarde</option>
-							<option value="Noche">Noche</option>
-					</select>
+					<div id="curso1">
+						<select class="form-control" id="id_cursosele" name="id_curso">
+										    
+						</select>
+					</div>
 				</div>	
 			</div>
 

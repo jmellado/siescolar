@@ -25,7 +25,7 @@ class Matriculas_controller extends CI_Controller {
 	public function insertar(){
 
         $this->form_validation->set_rules('id_persona', 'id persona', 'required|numeric');
-        $this->form_validation->set_rules('id_salon', 'salon', 'required|numeric');
+        $this->form_validation->set_rules('id_curso', 'curso', 'required|numeric');
         $this->form_validation->set_rules('jornada', 'jornada', 'required|alpha_spaces');
         $this->form_validation->set_rules('observaciones', 'observaciones', 'required|alpha_spaces');
 
@@ -37,42 +37,46 @@ class Matriculas_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de matriculas + 1 
-        	 $ultimo_id = $this->matriculas_model->obtener_ultimo_id();
+        	$ultimo_id = $this->matriculas_model->obtener_ultimo_id();
 
         	//obtengo la fecha actual 
-        	 $fecha_actual = $this->funciones_globales_model->obtener_fecha_actual_corta();
+        	$fecha_actual = $this->funciones_globales_model->obtener_fecha_actual_corta();
         	 
-        	 //obtengo la año actual 
-        	 $ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	//obtengo la año actual 
+        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-        	 $estado = 'Activo';
+        	$id_estudiante = $this->input->post('id_persona');
+        	$id_curso = $this->input->post('id_curso');
+        	$jornada = $this->input->post('jornada');
+        	$observaciones = ucwords($this->input->post('observaciones'));
+        	$estado = 'Activo';
 
-        	  //array para insertar en la tabla grados----------
+        	//array para insertar en la tabla grados----------
         	$matricula = array(
         	'id_matricula' =>$ultimo_id,	
 			'fecha_matricula' =>$fecha_actual,
 			'ano_lectivo' =>$ano_lectivo,
-			'id_estudiante' =>$this->input->post('id_persona'),
-			'id_salon' =>$this->input->post('id_salon'),
-			'jornada' =>$this->input->post('jornada'),
-			'observaciones' =>ucwords($this->input->post('observaciones')),
+			'id_estudiante' =>$id_estudiante,
+			'id_curso' =>$id_curso,
+			'jornada' =>$jornada,
+			'observaciones' =>$observaciones,
 			'estado_matricula' =>$estado);
 
-			if ($this->matriculas_model->validar_existencia($this->input->post('id_persona'),$ano_lectivo)){
+			if ($this->matriculas_model->validar_existencia($id_estudiante,$ano_lectivo)){
 
 				$respuesta=$this->matriculas_model->insertar_matricula($matricula);
 
 				if($respuesta==true){
 
 					echo "registroguardado";
+
 					//*******************************matricular materias********************************************
-					$id_grado = $this->matriculas_model->obtener_gradoPorsalon($this->input->post('id_salon'));
+					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
 
 					$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
 
 					for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
 
-						$id_estudiante = $this->input->post('id_persona');
 
 						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
 
@@ -128,9 +132,9 @@ class Matriculas_controller extends CI_Controller {
         if(is_numeric($id)){
 
         	//Obtenemos id_estudiante y ano_lectivo con ese id de matricula********************************************
-			$row=$this->matriculas_model->obtener_estudiantePormatricula($id);
-			$id_estudiante = $row[0]['id_estudiante'];
-			$ano_lectivo = $row[0]['ano_lectivo'];
+			$matri=$this->matriculas_model->obtener_informacion_matricula($id);
+			$id_estudiante = $matri[0]['id_estudiante'];
+			$ano_lectivo = $matri[0]['ano_lectivo'];
 
 			//eliminanos las materias registradas de ese estudiante en la tabla notas********************************************
 			if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
@@ -156,45 +160,48 @@ class Matriculas_controller extends CI_Controller {
 
     public function modificar(){
 
+    	$id_matricula = $this->input->post('id_matricula');
+    	$fecha_matricula = $this->input->post('fecha_matricula');
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+    	$id_estudiante = $this->input->post('id_persona');
+    	$id_curso = $this->input->post('id_curso');
+    	$jornada = $this->input->post('jornada');
+    	$observaciones = ucwords($this->input->post('observaciones'));
         $estado = 'Activo';
 
     	//array para insertar en la tabla matriculas----------
         $matricula = array(
-        'id_matricula' =>$this->input->post('id_matricula'),	
-		'fecha_matricula' =>$this->input->post('fecha_matricula'),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'),
-		'id_estudiante' =>$this->input->post('id_persona'),
-		'id_salon' =>$this->input->post('id_salon'),
-		'jornada' =>$this->input->post('jornada'),
-		'observaciones' =>ucwords($this->input->post('observaciones')),
+        'id_matricula' =>$id_matricula,	
+		'fecha_matricula' =>$fecha_matricula,
+		'ano_lectivo' =>$ano_lectivo,
+		'id_estudiante' =>$id_estudiante,
+		'id_curso' =>$id_curso,
+		'jornada' =>$jornada,
+		'observaciones' =>$observaciones,
 		'estado_matricula' =>$estado);
 
-		$id = $this->input->post('id_matricula');
 
-        if(is_numeric($id)){
+        if(is_numeric($id_matricula)){
 
-	    	$respuesta=$this->matriculas_model->modificar_matricula($this->input->post('id_matricula'),$matricula);
+	    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula);
 
 	        if($respuesta==true){
 
 	        	echo "registro actualizado";
 
 	        	//******************************eliminar materias********************************************
-				if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($this->input->post('ano_lectivo'),$this->input->post('id_persona'))){
+				if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
 					echo "No se pudo eliminar en la tabla notas";
 				}
 
 				//*******************************matricular materias********************************************
-				$id_grado = $this->matriculas_model->obtener_gradoPorsalon($this->input->post('id_salon'));
+				$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
 
 				$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
 
 				for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
 
-					$id_estudiante = $this->input->post('id_persona');
-					$ano_lectivo = $this->input->post('ano_lectivo');
-
-					$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$asignaturas_grados[$i]['id_asignatura']);
+					$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
 
 					if($resp == false){
 						echo "no se pudo registrar en la tabla notas";
@@ -246,9 +253,11 @@ class Matriculas_controller extends CI_Controller {
 	}
 
 
-    public function llenarcombo_salones_grupo(){
+    public function llenarcombo_cursos(){
 
-    	$consulta = $this->matriculas_model->llenar_salones_grupo();
+    	$jornada = $this->input->post('jornada');
+
+    	$consulta = $this->matriculas_model->llenar_cursos($jornada);
     	echo json_encode($consulta);
     }
 

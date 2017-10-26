@@ -23,7 +23,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones_grupos.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cursos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/areas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignaturas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pensum.js"></script>
@@ -269,9 +269,9 @@
           </a>
         </li>
         <li>
-          <a href="<?php echo base_url(); ?>salones_grupos_controller/index">
+          <a href="<?php echo base_url(); ?>cursos_controller/index">
             <i class="fa fa-th-large"></i>
-            <span>Gestionar Salones-Grupos</span>
+            <span>Gestionar Cursos</span>
           </a>
         </li>
         <li>

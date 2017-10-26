@@ -3,7 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarmatriculas("",1,5);
-	llenarcombo_salones_grupo();
+	llenarcombo_cursos($("#jornadaMT").val(),null);
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_matriculas").submit(function (event) {
@@ -45,7 +45,7 @@ function inicio(){
 						
 					}
 					mostrarmatriculas("",1,5);
-					llenarcombo_salones_grupo();
+					llenarcombo_cursos($("#jornadaMT").val(),null);
 						
 						
 				}
@@ -64,6 +64,7 @@ function inicio(){
 	$("#btn_agregar_matricula").click(function(){
 
 		$("#modal_agregar_matricula").modal();
+		llenarcombo_cursos($("#jornadaMT").val(),null);
        
     });
 
@@ -91,8 +92,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_matricula").val();
     	valorcantidad = $("#cantidad_matricula").val();
-		mostrarmatriculas(buscar,numero_pagina,valorcantidad);
 
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrarmatriculas(buscar,numero_pagina,valorcantidad);
+		}	
 
     });
 
@@ -114,19 +118,19 @@ function inicio(){
 		fecha_matriculasele = $(this).parent().parent().children("td:eq(2)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		id_personasele = $(this).parent().parent().children("td:eq(5)").text()
-		id_salonsele = $(this).parent().parent().children("td:eq(9)").text()
+		id_cursosele = $(this).parent().parent().children("td:eq(9)").text()
 		jornadasele = $(this).parent().parent().children("td:eq(12)").text();
 		observacionessele = $(this).parent().parent().children("td:eq(13)").text();
 		
 		//alert(""+observacionessele+fecha_matriculasele+ano_lectivosele);
 
-		//llenarcombo_municipios(departamento_expedicionsele);
+		llenarcombo_cursos(jornadasele,id_cursosele);
 		$("#id_matriculasele").val(id_matriculasele);
         $("#fecha_matriculasele").val(fecha_matriculasele);
         $("#ano_lectivosele").val(ano_lectivosele);
         $("#id_personasele").val(id_personasele);
-        $("#id_salonsele").val(id_salonsele);
-        $("#jornadasele").val(jornadasele);
+        $("#id_cursosele").val(id_cursosele);
+        $("#jornadaseleMT").val(jornadasele);
         $("#observacionessele").val(observacionessele);
         //desbloquear_cajas_texto();
 
@@ -184,6 +188,16 @@ function inicio(){
     });
 
 
+    $("#jornadaMT").change(function(){
+    	jornada = $(this).val();
+    	llenarcombo_cursos(jornada,null);
+    });
+
+
+    $("#jornadaseleMT").change(function(){
+    	jornadasele = $(this).val();
+    	llenarcombo_cursos(jornadasele,null);
+    });
 
 
 
@@ -192,7 +206,7 @@ function inicio(){
 
     	rules:{
 
-			id_salon:{
+			id_curso:{
 				required: true,
 				maxlength: 15
 				//lettersonly: true	
@@ -222,7 +236,7 @@ function inicio(){
 
     	rules:{
 
-			id_salon:{
+			id_curso:{
 				required: true,
 				maxlength: 15
 				//lettersonly: true	
@@ -268,7 +282,7 @@ function mostrarmatriculas(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.matriculas.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.matriculas[i].id_matricula+"</td><td>"+registros.matriculas[i].fecha_matricula+"</td><td style='display:none'>"+registros.matriculas[i].ano_lectivo+"</td><td>"+registros.matriculas[i].nombre_ano_lectivo+"</td><td style='display:none'>"+registros.matriculas[i].id_estudiante+"</td><td>"+registros.matriculas[i].identificacion+"</td><td>"+registros.matriculas[i].nombres+"</td><td>"+registros.matriculas[i].apellido1+"</td><td style='display:none'>"+registros.matriculas[i].id_salon+"</td><td>"+registros.matriculas[i].nombre_grado+"</td><td>"+registros.matriculas[i].nombre_grupo+"</td><td>"+registros.matriculas[i].jornada+"</td><td style='display:none'>"+registros.matriculas[i].observaciones+"</td><td>"+registros.matriculas[i].estado_matricula+"</td><td><a class='btn btn-success' href="+registros.matriculas[i].id_matricula+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.matriculas[i].id_matricula+">eliminar</button></td></tr>";
+					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.matriculas[i].id_matricula+"</td><td>"+registros.matriculas[i].fecha_matricula+"</td><td style='display:none'>"+registros.matriculas[i].ano_lectivo+"</td><td>"+registros.matriculas[i].nombre_ano_lectivo+"</td><td style='display:none'>"+registros.matriculas[i].id_estudiante+"</td><td>"+registros.matriculas[i].identificacion+"</td><td>"+registros.matriculas[i].nombres+"</td><td>"+registros.matriculas[i].apellido1+"</td><td style='display:none'>"+registros.matriculas[i].id_curso+"</td><td>"+registros.matriculas[i].nombre_grado+"</td><td>"+registros.matriculas[i].nombre_grupo+"</td><td>"+registros.matriculas[i].jornada+"</td><td style='display:none'>"+registros.matriculas[i].observaciones+"</td><td>"+registros.matriculas[i].estado_matricula+"</td><td><a class='btn btn-success' href="+registros.matriculas[i].id_matricula+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.matriculas[i].id_matricula+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_matriculas tbody").html(html);
@@ -352,7 +366,7 @@ function eliminar_matricula(valor){
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				mostrarmatriculas("",1,5);
-				llenarcombo_salones_grupo();
+				llenarcombo_cursos($("#jornadaMT").val(),null);
 				
 		}
 
@@ -380,7 +394,7 @@ function actualizar_matricula(){
 				$("#fecha_matriculasele").attr("disabled", "disabled");
     			$("#ano_lectivosele").attr("disabled", "disabled");
 				mostrarmatriculas("",1,5);
-				llenarcombo_salones_grupo();
+				llenarcombo_cursos($("#jornadaMT").val(),null);
 
 		}
 
@@ -389,11 +403,12 @@ function actualizar_matricula(){
 
 }
 
-function llenarcombo_salones_grupo(){
+function llenarcombo_cursos(jornada,id_cursosele){
 
 	$.ajax({
-		url:base_url+"matriculas_controller/llenarcombo_salones_grupo",
+		url:base_url+"matriculas_controller/llenarcombo_cursos",
 		type:"post",
+		data:{jornada:jornada},
 		success:function(respuesta) {
 				//toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
 				var registros = eval(respuesta);
@@ -401,10 +416,17 @@ function llenarcombo_salones_grupo(){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
-					html +="<option value="+registros[i]["id_salon"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+"</option>";
+					if(registros[i]["id_curso"]==id_cursosele){
+
+						html +="<option value="+registros[i]["id_curso"]+" selected>"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
+					}
+					else{
+
+						html +="<option value="+registros[i]["id_curso"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
+					}	
 				};
 				
-				$("#salones_grupo1 select").html(html);
+				$("#curso1 select").html(html);
 		}
 
 	});
@@ -460,16 +482,16 @@ function buscar_estudiante(valor){
 
 function bloquear_cajas_texto(){
 
-	$("#id_salon").attr("disabled", "disabled");
-    $("#jornada").attr("disabled", "disabled");
+	$("#id_curso").attr("disabled", "disabled");
+    $("#jornadaMT").attr("disabled", "disabled");
     $("#observaciones").attr("disabled", "disabled");
     $("#btn_registrar_matricula").attr("disabled", "disabled");
 }
 
 function desbloquear_cajas_texto(){
 
-	$("#id_salon").removeAttr("disabled");
-    $("#jornada").removeAttr("disabled");
+	$("#id_curso").removeAttr("disabled");
+    $("#jornadaMT").removeAttr("disabled");
     $("#observaciones").removeAttr("disabled");
     $("#btn_registrar_matricula").removeAttr("disabled");
 
