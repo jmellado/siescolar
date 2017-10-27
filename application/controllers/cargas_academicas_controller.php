@@ -17,16 +17,15 @@ class Cargas_academicas_controller extends CI_Controller {
 		{
 			redirect(base_url().'login_controller');
 		}
-		//$this->load->view('estudiantes/registrar2');
+
 		$this->template->load('roles/rol_administrador_vista', 'cargas_academicas/cargas_academicas_vista');
 	}
 
 	public function insertar(){
 
 		$this->form_validation->set_rules('id_profesor', 'profesor', 'required|numeric');
-        $this->form_validation->set_rules('id_grado', 'grado', 'required|numeric');
+        $this->form_validation->set_rules('id_curso', 'grado', 'required|numeric');
         $this->form_validation->set_rules('id_asignatura', 'asignatura', 'required|numeric');
-        $this->form_validation->set_rules('id_grupo', 'grupo', 'required|numeric');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -36,18 +35,22 @@ class Cargas_academicas_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de cargas academicas + 1 
-        	 $ultimo_id = $this->cargas_academicas_model->obtener_ultimo_id();
+        	$ultimo_id = $this->cargas_academicas_model->obtener_ultimo_id();
 
-        	  //array para insertar en la tabla cargas academicas----------
+        	$id_profesor = $this->input->post('id_profesor');
+        	$id_curso = $this->input->post('id_curso');
+        	$id_asignatura = $this->input->post('id_asignatura');
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+
+        	//array para insertar en la tabla cargas academicas----------
         	$cargas_academicas = array(
         	'id_carga_academica' =>$ultimo_id,
-        	'id_profesor' =>$this->input->post('id_profesor'),	
-			'id_grado' =>$this->input->post('id_grado'),
-			'id_asignatura' =>$this->input->post('id_asignatura'),
-			'id_grupo' =>$this->input->post('id_grupo'),
-			'ano_lectivo' =>$this->input->post('ano_lectivo'));
+        	'id_profesor' =>$id_profesor,	
+			'id_curso' =>$id_curso,
+			'id_asignatura' =>$id_asignatura,
+			'ano_lectivo' =>$ano_lectivo);
 
-			if ($this->cargas_academicas_model->validar_existencia($this->input->post('id_grado'),$this->input->post('id_asignatura'),$this->input->post('id_grupo'),$this->input->post('ano_lectivo'))){
+			if ($this->cargas_academicas_model->validar_existencia($id_curso,$id_asignatura,$ano_lectivo)){
 
 				$respuesta=$this->cargas_academicas_model->insertar_cargas_academicas($cargas_academicas);
 
@@ -94,12 +97,12 @@ class Cargas_academicas_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id_carga_academica =$this->input->post('id_carga_academica'); 
 
-        if(is_numeric($id)){
+        if(is_numeric($id_carga_academica)){
 
 			
-	        $respuesta=$this->cargas_academicas_model->eliminar_cargas_academicas($id);
+	        $respuesta=$this->cargas_academicas_model->eliminar_cargas_academicas($id_carga_academica);
 	        
           	if($respuesta==true){
               
@@ -117,28 +120,31 @@ class Cargas_academicas_controller extends CI_Controller {
 
     public function modificar(){
 
+    	$id_carga_academica = $this->input->post('id_carga_academica');
+    	$id_profesor = $this->input->post('id_profesor');
+    	$id_curso = $this->input->post('id_curso');
+    	$id_asignatura = $this->input->post('id_asignatura');
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+
     	//array para insertar en la tabla cargas_academicas----------
         $cargas_academicas = array(
-        'id_carga_academica' =>$this->input->post('id_carga_academica'),
-        'id_profesor' =>$this->input->post('id_profesor'),	
-		'id_grado' =>$this->input->post('id_grado'),
-		'id_asignatura' =>$this->input->post('id_asignatura'),
-		'id_grupo' =>$this->input->post('id_grupo'),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'));
+        'id_carga_academica' =>$id_carga_academica,
+        'id_profesor' =>$id_profesor,	
+		'id_curso' =>$id_curso,
+		'id_asignatura' =>$id_asignatura,
+		'ano_lectivo' =>$ano_lectivo);
 
-		$id = $this->input->post('id_carga_academica');
-		$row = $this->cargas_academicas_model->obtener_cargas_academicas($id);
+		$carg = $this->cargas_academicas_model->obtener_informacion_carga($id_carga_academica);
 
-		$grado_buscado = $row[0]['id_grado'];
-		$asignatura_buscada = $row[0]['id_asignatura'];
-		$grupo_buscado = $row[0]['id_grupo'];
-		$ano_lectivo_buscado = $row[0]['ano_lectivo'];
+		$curso_buscado = $carg[0]['id_curso'];
+		$asignatura_buscada = $carg[0]['id_asignatura'];
+		$ano_lectivo_buscado = $carg[0]['ano_lectivo'];
 
-        if(is_numeric($id)){
+        if(is_numeric($id_carga_academica)){
 
-        	if ($grado_buscado == $this->input->post('id_grado') && $asignatura_buscada == $this->input->post('id_asignatura') && $grupo_buscado == $this->input->post('id_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+        	if ($curso_buscado == $id_curso && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-	        	$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($this->input->post('id_carga_academica'),$cargas_academicas);
+	        	$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($id_carga_academica,$cargas_academicas);
 
 				 if($respuesta==true){
 
@@ -152,9 +158,9 @@ class Cargas_academicas_controller extends CI_Controller {
 	        }
 	        else{
 
-	        	if($this->cargas_academicas_model->validar_existencia($this->input->post('id_grado'),$this->input->post('id_asignatura'),$this->input->post('id_grupo'),$this->input->post('ano_lectivo'))){
+	        	if($this->cargas_academicas_model->validar_existencia($id_curso,$id_asignatura,$ano_lectivo)){
 
-	        		$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($this->input->post('id_carga_academica'),$cargas_academicas);
+	        		$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($id_carga_academica,$cargas_academicas);
 
 	        		if($respuesta==true){
 
@@ -190,8 +196,10 @@ class Cargas_academicas_controller extends CI_Controller {
    
     public function llenarcombo_asignaturas(){
 
-    	$id =$this->input->post('id');
-    	$consulta = $this->cargas_academicas_model->llenar_asignaturas($id);
+    	$id_curso =$this->input->post('id_curso');
+    	$id_grado = $this->cargas_academicas_model->obtener_gradoPorcurso($id_curso);
+
+    	$consulta = $this->cargas_academicas_model->llenar_asignaturas($id_grado);
     	echo json_encode($consulta);
     }
     
@@ -199,6 +207,13 @@ class Cargas_academicas_controller extends CI_Controller {
     public function llenarcombo_profesores(){
 
     	$consulta = $this->cargas_academicas_model->llenar_profesores();
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_cursos(){
+
+    	$consulta = $this->cargas_academicas_model->llenar_cursos();
     	echo json_encode($consulta);
     }
 

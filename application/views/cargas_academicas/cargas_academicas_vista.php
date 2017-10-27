@@ -53,9 +53,8 @@
 								<tr>
 									<th>#</th>
 									<th>Profesor</th>
-									<th>Grado</th>
+									<th>Curso</th>
 									<th>Asignatura</th>
-									<th>Grupo</th>
 									<th>Año lectivo</th>
 									<th></th>
 									<th></th>
@@ -91,62 +90,71 @@
         <h4 class="modal-title">REGISTRAR CARGAS ACADEMICAS</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
 
-        <form role="form" action="<?php echo base_url(); ?>cargas_academicas_controller/insertar" name="" method="post" id="form_cargas_academicas">
+        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>cargas_academicas_controller/insertar" name="" method="post" id="form_cargas_academicas">
 
-        	<div class="form-group">
-				<label for="id_profesor">PROFESOR</label>
-				<div id="profesor1">
-					<select class="form-control" id="id_profesor" name="id_profesor">
-									    
-					</select>
+        	<div class="row">
+	        	<div class="col-md-12">
+	        		<div class="panel panel-default">
+		        		<div class="panel-body">
+
+				        	<div class="form-group">
+								<label class="control-label col-md-3" for="id_profesor">PROFESOR</label>
+								<div class="col-md-7">
+									<div id="profesor_carga1">
+										<select class="form-control" id="id_profesorCG" name="id_profesor">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="id_curso">CURSO</label>
+								<div class="col-md-7">
+									<div id="curso_carga1">
+										<select class="form-control" id="id_cursoCG" name="id_curso">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="id_asignatura">ASIGNATURA</label>
+								<div class="col-md-7">
+									<div id="asignatura_carga1">
+										<select class="form-control" id="id_asignaturaCG" name="id_asignatura">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="año_lectivo">AÑO LECTIVO</label>
+								<div class="col-md-7">
+									<div id="ano_lectivo1">
+										<select class="form-control" id="ano_lectivo" name="ano_lectivo" disabled>
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>			
+
+				<div class="col-md-offset-4 col-md-5">
+					<button type="submit" name="btn_registrar_cargas_academicas" id="btn_registrar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Registrar</button>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="id_grado2">GRADO</label>
-				<div id="grado1">
-					<select class="form-control" id="id_grado2" name="id_grado">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="id_asignatura">ASIGNATURA</label>
-				<div id="asignatura_carga">
-					<select class="form-control" id="id_asignatura" name="id_asignatura">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="id_asignatura">GRUPO</label>
-				<div id="grupo1">
-					<select class="form-control" id="id_grupo" name="id_grupo">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivo" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
-
-			<button type="submit" name="btn_registrar_cargas_academicas" id="btn_registrar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Registrar</button>
+			</div>		
 
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 
@@ -164,67 +172,77 @@
         <h4 class="modal-title">ACTUALIZAR CARGAS ACADEMICAS</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        
 
-        <form role="form" id="form_cargas_academicas_actualizar">
+        <form class="form-horizontal" role="form" id="form_cargas_academicas_actualizar">
 
-        	<div class="form-group">
-								    
-				<input type="hidden" class="form-control" id="id_carga_academicasele" name="id_carga_academica">
-			</div>
+        	<div class="row">
+	        	<div class="col-md-12">
+	        		<div class="panel panel-default">
+		        		<div class="panel-body">
 
-			<div class="form-group">
-				<label for="id_profesor">PROFESOR</label>
-				<div id="profesor1">
-					<select class="form-control" id="id_profesorsele" name="id_profesor">
-									    
-					</select>
+				        	<div class="form-group">				    
+								<input type="hidden" class="form-control" id="id_carga_academicasele" name="id_carga_academica">
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="id_profesor">PROFESOR</label>
+								<div class="col-md-7">
+									<div id="profesor_carga1">
+										<select class="form-control" id="id_profesorCGsele" name="id_profesor">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="id_curso">CURSO</label>
+								<div class="col-md-7">
+									<div id="curso_carga1">
+										<select class="form-control" id="id_cursoCGsele" name="id_curso">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="id_asignatura">ASIGNATURA</label>
+								<div class="col-md-7">
+									<div id="asignatura_carga1">
+										<select class="form-control" id="id_asignaturaCGsele" name="id_asignatura">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="año_lectivo">AÑO LECTIVO</label>
+								<div class="col-md-7">
+									<div id="ano_lectivo1">
+										<select class="form-control" id="ano_lectivosele" name="ano_lectivo" disabled>
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="id_grado2">GRADO</label>
-				<div id="grado1">
-					<select class="form-control" id="id_grado2sele" name="id_grado">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="id_asignatura">ASIGNATURA</label>
-				<div id="asignatura_carga">
-					<select class="form-control" id="id_asignaturasele" name="id_asignatura">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="id_asignatura">GRUPO</label>
-				<div id="grupo1">
-					<select class="form-control" id="id_gruposele" name="id_grupo">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
-	
+			</div>				
         </form>
 
-        <button type="submit" name="btn_actualizar_cargas_academicas" id="btn_actualizar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+        <div class="row">
+        	<div class="col-md-offset-4 col-md-5">
+        		<button type="submit" name="btn_actualizar_cargas_academicas" id="btn_actualizar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+        	</div>
+        </div>		
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 

@@ -10,11 +10,10 @@ class Cargas_academicas_model extends CI_Model {
 			return false;
 	}
 
-	public function validar_existencia($id_grado,$id_asignatura,$id_grupo,$ano_lectivo){
+	public function validar_existencia($id_curso,$id_asignatura,$ano_lectivo){
 
-		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_curso',$id_curso);
 		$this->db->where('id_asignatura',$id_asignatura);
-		$this->db->where('id_grupo',$id_grupo);
 		$this->db->where('ano_lectivo',$ano_lectivo);
 		$query = $this->db->get('cargas_academicas');
 
@@ -30,22 +29,25 @@ class Cargas_academicas_model extends CI_Model {
 	public function buscar_cargas_academicas($id,$inicio = FALSE,$cantidad = FALSE){
 
 		$this->db->like('personas.nombres',$id,'after');
+		$this->db->or_like('personas.apellido1',$id,'after');
 		$this->db->or_like('grados.nombre_grado',$id,'after');
 		$this->db->or_like('asignaturas.nombre_asignatura',$id,'after');
 		$this->db->or_like('grupos.nombre_grupo',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('cursos.jornada',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
 		$this->db->join('personas', 'cargas_academicas.id_profesor = personas.id_persona');
-		$this->db->join('grados', 'cargas_academicas.id_grado = grados.id_grado');
+		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
-		$this->db->join('grupos', 'cargas_academicas.id_grupo = grupos.id_grupo');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'cargas_academicas.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('cargas_academicas.id_carga_academica,cargas_academicas.id_profesor,cargas_academicas.id_grado,cargas_academicas.id_asignatura,cargas_academicas.id_grupo,cargas_academicas.ano_lectivo,personas.nombres,grados.nombre_grado,asignaturas.nombre_asignatura,grupos.nombre_grupo,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('cargas_academicas.id_carga_academica,cargas_academicas.id_profesor,cargas_academicas.id_curso,cargas_academicas.id_asignatura,cargas_academicas.ano_lectivo,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo,cursos.jornada');
 		
 		$query = $this->db->get('cargas_academicas');
 
@@ -53,9 +55,9 @@ class Cargas_academicas_model extends CI_Model {
 		
 	}
 
-	public function eliminar_cargas_academicas($id){
+	public function eliminar_cargas_academicas($id_carga_academica){
 
-     	$this->db->where('id_carga_academica',$id);
+     	$this->db->where('id_carga_academica',$id_carga_academica);
 		$consulta = $this->db->delete('cargas_academicas');
        	if($consulta==true){
 
@@ -67,10 +69,10 @@ class Cargas_academicas_model extends CI_Model {
        	}
     }
 
-    public function modificar_cargas_academicas($id,$cargas_academicas){
+    public function modificar_cargas_academicas($id_carga_academica,$cargas_academicas){
 
 	
-		$this->db->where('id_carga_academica',$id);
+		$this->db->where('id_carga_academica',$id_carga_academica);
 
 		if ($this->db->update('cargas_academicas', $cargas_academicas))
 
@@ -91,9 +93,9 @@ class Cargas_academicas_model extends CI_Model {
 	}
 
 
-	public function obtener_cargas_academicas($id){
+	public function obtener_informacion_carga($id_carga_academica){
 
-		$this->db->where('id_carga_academica',$id);
+		$this->db->where('id_carga_academica',$id_carga_academica);
 		$query = $this->db->get('cargas_academicas');
 
 		if ($query->num_rows() > 0) {
@@ -107,10 +109,10 @@ class Cargas_academicas_model extends CI_Model {
 
 	}
 
+	//Esta funcion me permite obtener las asignaturas por grado de la tabla pensum.
+	public function llenar_asignaturas($id_grado){
 
-	public function llenar_asignaturas($id){
-
-		$this->db->where('id_grado',$id);
+		$this->db->where('id_grado',$id_grado);
 
 		$this->db->join('asignaturas', 'pensum.id_asignatura = asignaturas.id_asignatura');
 		$this->db->select('pensum.id_asignatura,asignaturas.nombre_asignatura');
@@ -123,8 +125,49 @@ class Cargas_academicas_model extends CI_Model {
 	public function llenar_profesores(){
 
 		$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');
+
+		$this->db->select('personas.id_persona,personas.nombres,personas.apellido1,personas.apellido2');
+
 		$query = $this->db->get('personas');
 		return $query->result();
+	}
+
+
+	public function llenar_cursos(){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
+	}
+
+
+	//Esta Funcion me permite obtener el id_grado del curso seleccionado
+	public function obtener_gradoPorcurso($id_curso){
+
+		$this->db->where('cursos.id_curso',$id_curso);
+
+		$this->db->select('cursos.id_grado');
+
+		$query = $this->db->get('cursos');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_grado'];
+		}
+		else{
+			return false;
+		}
+
 	}
 
 

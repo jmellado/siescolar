@@ -4,13 +4,15 @@ function inicio(){
 
 	mostrarcargas_academicas("",1,5);
 	//llenarcombo_anos_lectivos();
-	llenarcombo_profesores();
-	//llenarcombo_grados();
+	llenarcombo_profesoresCG();
+	llenarcombo_cursoCG();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_cargas_academicas").submit(function (event) {
 		//validar()
 		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
+		desbloquear_CampoAnoLectivoCG();
+
 		if($("#form_cargas_academicas").valid()==true){
 
 			$.ajax({
@@ -25,7 +27,7 @@ function inicio(){
 						
 						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
 						$("#form_cargas_academicas")[0].reset();
-
+						llenarcombo_asignaturasCG("","");
 
 					}
 					else if(respuesta==="registronoguardado"){
@@ -45,6 +47,7 @@ function inicio(){
 						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
+					bloquear_CampoAnoLectivoCG();
 					mostrarcargas_academicas("",1,5);
 
 						
@@ -92,7 +95,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_cargas_academicas").val();
     	valorcantidad = $("#cantidad_cargas_academicas").val();
-		mostrarcargas_academicas(buscar,numero_pagina,valorcantidad);
+
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+    		
+			mostrarcargas_academicas(buscar,numero_pagina,valorcantidad);
+		}	
 
 
     });
@@ -112,23 +119,17 @@ function inicio(){
 		event.preventDefault();
 		$("#modal_actualizar_cargas_academicas").modal();
 		id_carga_academicasele = $(this).attr("href");
-		id_profesorsele = $(this).parent().parent().children("td:eq(2)").text();
-		id_grado2sele = $(this).parent().parent().children("td:eq(4)").text();
-		id_asignaturasele = $(this).parent().parent().children("td:eq(6)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		id_gruposele = $(this).parent().parent().children("td:eq(8)").text();
-		ano_lectivosele = $(this).parent().parent().children("td:eq(10)").text();
-		
-		//alert(id_asignaturasele);
+		id_profesorCGsele = $(this).parent().parent().children("td:eq(2)").text();
+		id_cursoCGsele = $(this).parent().parent().children("td:eq(4)").text();
+		id_asignaturaCGsele = $(this).parent().parent().children("td:eq(6)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		ano_lectivosele = $(this).parent().parent().children("td:eq(8)").text();
 
-		llenarcombo_asignaturas_cargas(id_grado2sele,id_asignaturasele);
+		llenarcombo_asignaturasCG(id_cursoCGsele,id_asignaturaCGsele);
 		$("#id_carga_academicasele").val(id_carga_academicasele);
-		$("#id_profesorsele").val(id_profesorsele);
-        $("#id_grado2sele").val(id_grado2sele);
-        $("#id_asignaturasele").val(id_asignaturasele);
-        $("#id_gruposele").val(id_gruposele);
+		$("#id_profesorCGsele").val(id_profesorCGsele);
+        $("#id_cursoCGsele").val(id_cursoCGsele);
+        $("#id_asignaturaCGsele").val(id_asignaturaCGsele);
         $("#ano_lectivosele").val(ano_lectivosele);
-        
-        //desbloquear_cajas_texto();
 
 	});
 
@@ -136,11 +137,10 @@ function inicio(){
     $("#btn_actualizar_cargas_academicas").click(function(event){
 
     	if($("#form_cargas_academicas_actualizar").valid()==true){
-       	actualizar_cargas_academicas();
-       	//bloquear_cajas_texto();
+       		actualizar_cargas_academicas();
 
-       }
-       else{
+       	}
+       	else{
 			alert("formulario incorrecto");
 			//alert($("#form_cargas_academicas_actualizar").validate().numberOfInvalids()+"errores");
 		}
@@ -149,15 +149,14 @@ function inicio(){
     });
 
 
-    $("#id_grado2").change(function(){
-    	id_grado = $(this).val();
-    	llenarcombo_asignaturas_cargas(id_grado,null);
-    	//$("#municipio_expedicion").removeAttr("disabled");
+    $("#id_cursoCG").change(function(){
+    	id_curso = $(this).val();
+    	llenarcombo_asignaturasCG(id_curso,null);
     });
 
-    $("#id_grado2sele").change(function(){
-    	id_grado = $(this).val();
-    	llenarcombo_asignaturas_cargas(id_grado,null);
+    $("#id_cursoCGsele").change(function(){
+    	id_curso = $(this).val();
+    	llenarcombo_asignaturasCG(id_curso,null);
     });
 
 
@@ -174,7 +173,7 @@ function inicio(){
 
 			},
 
-			id_grado:{
+			id_curso:{
 				required: true,
 				maxlength: 15
 				//lettersonly: true	
@@ -218,7 +217,7 @@ function inicio(){
 
 			},
 
-			id_grado:{
+			id_curso:{
 				required: true,
 				maxlength: 15
 				//lettersonly: true	
@@ -271,7 +270,7 @@ function mostrarcargas_academicas(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.cargas_academicas.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_carga_academica+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_profesor+"</td><td>"+registros.cargas_academicas[i].nombres+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_grado+"</td><td>"+registros.cargas_academicas[i].nombre_grado+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_asignatura+"</td><td>"+registros.cargas_academicas[i].nombre_asignatura+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_grupo+"</td><td>"+registros.cargas_academicas[i].nombre_grupo+"</td><td style='display:none'>"+registros.cargas_academicas[i].ano_lectivo+"</td><td>"+registros.cargas_academicas[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.cargas_academicas[i].id_carga_academica+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.cargas_academicas[i].id_carga_academica+">eliminar</button></td></tr>";
+					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_carga_academica+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_profesor+"</td><td>"+registros.cargas_academicas[i].nombres+" "+registros.cargas_academicas[i].apellido1+" "+registros.cargas_academicas[i].apellido2+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_curso+"</td><td>"+registros.cargas_academicas[i].nombre_grado+" "+registros.cargas_academicas[i].nombre_grupo+" "+registros.cargas_academicas[i].jornada+"</td><td style='display:none'>"+registros.cargas_academicas[i].id_asignatura+"</td><td>"+registros.cargas_academicas[i].nombre_asignatura+"</td><td style='display:none'>"+registros.cargas_academicas[i].ano_lectivo+"</td><td>"+registros.cargas_academicas[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.cargas_academicas[i].id_carga_academica+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.cargas_academicas[i].id_carga_academica+">eliminar</button></td></tr>";
 				};
 				
 				$("#lista_cargas_academicas tbody").html(html);
@@ -349,7 +348,7 @@ function eliminar_cargas_academicas(valor){
 	$.ajax({
 		url:base_url+"cargas_academicas_controller/eliminar",
 		type:"post",
-        data:{id:valor},
+        data:{id_carga_academica:valor},
 		success:function(respuesta) {
 				
 				
@@ -367,6 +366,7 @@ function eliminar_cargas_academicas(valor){
 
 function actualizar_cargas_academicas(){
 
+	desbloquear_CampoAnoLectivoCG();
 	$.ajax({
 		url:base_url+"cargas_academicas_controller/modificar",
 		type:"post",
@@ -379,7 +379,9 @@ function actualizar_cargas_academicas(){
 				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
 				$("#form_cargas_academicas_actualizar")[0].reset();
 
+				bloquear_CampoAnoLectivoCG();
 				mostrarcargas_academicas("",1,5);
+
 
 		}
 
@@ -409,12 +411,12 @@ function llenarcombo_anos_lectivos(){
 	});
 }
 
-function llenarcombo_asignaturas_cargas(valor,valor2){
+function llenarcombo_asignaturasCG(id_curso,id_asignatura){
 
 	$.ajax({
 		url:base_url+"cargas_academicas_controller/llenarcombo_asignaturas",
 		type:"post",
-		data:{id:valor},
+		data:{id_curso:id_curso},
 		success:function(respuesta) {
 
 				var registros = eval(respuesta);
@@ -422,7 +424,7 @@ function llenarcombo_asignaturas_cargas(valor,valor2){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
-					if(registros[i]["id_asignatura"]==valor2){
+					if(registros[i]["id_asignatura"]==id_asignatura){
 						html +="<option value="+registros[i]["id_asignatura"]+" selected>"+registros[i]["nombre_asignatura"]+"</option>";
 					}
 					else{
@@ -430,16 +432,16 @@ function llenarcombo_asignaturas_cargas(valor,valor2){
 					}
 				};
 				
-				$("#asignatura_carga select").html(html);
+				$("#asignatura_carga1 select").html(html);
 		}
 
 	});
 }
 
-function llenarcombo_grados(){
+function llenarcombo_cursoCG(){
 
 	$.ajax({
-		url:base_url+"cargas_academicas_controller/llenarcombo_grados",
+		url:base_url+"cargas_academicas_controller/llenarcombo_cursos",
 		type:"post",
 		success:function(respuesta) {
 
@@ -448,16 +450,16 @@ function llenarcombo_grados(){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
-					html +="<option value="+registros[i]["id_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
+					html +="<option value="+registros[i]["id_curso"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
 				};
 				
-				$("#grado1 select").html(html);
+				$("#curso_carga1 select").html(html);
 		}
 
 	});
 }
 
-function llenarcombo_profesores(){
+function llenarcombo_profesoresCG(){
 
 	$.ajax({
 		url:base_url+"cargas_academicas_controller/llenarcombo_profesores",
@@ -469,11 +471,23 @@ function llenarcombo_profesores(){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 					
-					html +="<option value="+registros[i]["id_persona"]+">"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+"</option>";
+					html +="<option value="+registros[i]["id_persona"]+">"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
 				};
 				
-				$("#profesor1 select").html(html);
+				$("#profesor_carga1 select").html(html);
 		}
 
 	});
+}
+
+function bloquear_CampoAnoLectivoCG(){
+
+	$("#ano_lectivo").attr("disabled", "disabled");
+	$("#ano_lectivosele").attr("disabled", "disabled");
+}
+
+function desbloquear_CampoAnoLectivoCG(){
+
+	$("#ano_lectivo").removeAttr("disabled");
+	$("#ano_lectivosele").removeAttr("disabled");
 }
