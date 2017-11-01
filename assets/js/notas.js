@@ -3,7 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	
-	llenarcombo_grados_profesorN($("#id_persona").val());
+	llenarcombo_cursos_profesorN($("#id_persona").val());
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_notas_insertar").submit(function (event) {
@@ -25,20 +25,18 @@ function inicio(){
 					if (respuesta==="registroguardado") {
 						
 						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
-						//$("#form_notas_insertar")[0].reset();
-						$("#id_asignaturaseleN").attr("disabled", "disabled");
-						mostrarnotas("",1,5,id_grado,id_grupo,id_asignatura);
+						mostrarnotas("",1,5,id_curso,id_asignatura);
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
 						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
-						$("#id_asignaturaseleN").attr("disabled", "disabled");
+		
 
 					}
-					else if(respuesta==="grado ya existe"){
+					else if(respuesta==="nohayestudiantes"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.success('No Hay Informacion Por Registrar', 'Success Alert', {timeOut: 5000});
 							
 
 					}
@@ -47,7 +45,8 @@ function inicio(){
 						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
-					
+
+					$("#id_asignaturaseleN").attr("disabled", "disabled");
 
 						
 						
@@ -67,7 +66,7 @@ function inicio(){
 
     $("#cantidad_nota").change(function(){
     	valorcantidad = $(this).val();
-    	mostrarnotas("",1,valorcantidad,id_grado,id_grupo,id_asignatura);
+    	mostrarnotas("",1,valorcantidad,id_curso,id_asignatura);
     });
 
     $("body").on("click", ".paginacion_nota li a", function(event){
@@ -78,7 +77,7 @@ function inicio(){
 		
 		if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
 			
-			mostrarnotas("",numero_pagina,valorcantidad,id_grado,id_grupo,id_asignatura);
+			mostrarnotas("",numero_pagina,valorcantidad,id_curso,id_asignatura);
 		}
 
     });
@@ -117,20 +116,10 @@ function inicio(){
     });
 
 
-    $("#id_gradoN").change(function(){
-    	id_grado = $(this).val();
+    $("#id_cursoN").change(function(){
+    	id_curso = $(this).val();
     	id_persona = $("#id_persona").val();
-    	llenarcombo_grupos_profesorN(id_persona,id_grado);
-
-    });
-
-
-    $("#id_grupoN").change(function(){
-    	id_grupo = $(this).val();
-    	id_persona = $("#id_persona").val();
-    	id_grado = $("#id_gradoN").val();
-    	llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
-
+    	llenarcombo_asignaturas_profesorN(id_persona,id_curso);
     });
 
 
@@ -147,19 +136,17 @@ function inicio(){
 
     			id_persona = $("#id_persona").val();
 	    		periodo = $("#periodoN").val();
-	    		id_grado = $("#id_gradoN").val();
-	    		id_grupo = $("#id_grupoN").val();
+	    		id_curso = $("#id_cursoN").val();
 	    		id_asignatura = $("#id_asignaturaN").val();
 
-	    		mostrarnotas("",1,5,id_grado,id_grupo,id_asignatura);
+	    		mostrarnotas("",1,5,id_curso,id_asignatura);
 
 	    		//llenarcombo_grados_profesorN(id_persona);
 	    		//llenarcombo_grupos_profesorN(id_persona,id_grado);
 	    		//llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
 
 	    		$("#periodoseleN").val(periodo);
-	    		$("#id_gradoseleN").val(id_grado);
-	    		$("#id_gruposeleN").val(id_grupo);
+	    		$("#id_cursoseleN").val(id_curso);
 	    		$("#id_asignaturaseleN").val(id_asignatura);
 
     		}
@@ -195,19 +182,13 @@ function inicio(){
 
 			},
 
-			id_grado:{
+			id_curso:{
 				required: true,
 				maxlength: 15
 
 			},
 
 			id_asignatura:{
-				required: true,
-				maxlength: 15	
-
-			},
-
-			id_grupo:{
 				required: true,
 				maxlength: 15	
 
@@ -226,12 +207,12 @@ function inicio(){
 }
 
 
-function mostrarnotas(valor,pagina,cantidad,id_grado,id_grupo,id_asignatura){
+function mostrarnotas(valor,pagina,cantidad,id_curso,id_asignatura){
 
 	$.ajax({
 		url:base_url+"notas_controller/mostrarnotas",
 		type:"post",
-		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_grado:id_grado,id_grupo:id_grupo,id_asignatura:id_asignatura},
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_curso:id_curso,id_asignatura:id_asignatura},
 		success:function(respuesta) {
 				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
@@ -339,9 +320,8 @@ function buscar_profesorN(valor){
 					toastr.success('Profesor No Registrado', 'Success Alert', {timeOut: 5000});
 					$("#form_notas")[0].reset();
 					$("#id_persona").val("");
-					llenarcombo_grados_profesorN("");
+					llenarcombo_cursos_profesorN("");
 					llenarcombo_asignaturas_profesorN("","","");
-					llenarcombo_grupos_profesorN("","");
 					bloquear_cajas_texto_notas();
 				}
 				else{
@@ -360,9 +340,8 @@ function buscar_profesorN(valor){
 	        			$("#apellido2").val(apellido2);
 
 	        			desbloquear_cajas_texto_notas();
-						llenarcombo_grados_profesorN(id_persona);
+						llenarcombo_cursos_profesorN(id_persona);
 						llenarcombo_asignaturas_profesorN("","","");
-						llenarcombo_grupos_profesorN("","");
 					};
 				}	
 				
@@ -373,10 +352,10 @@ function buscar_profesorN(valor){
 }
 
 
-function llenarcombo_grados_profesorN(valor){
+function llenarcombo_cursos_profesorN(valor){
 
 	$.ajax({
-		url:base_url+"notas_controller/llenarcombo_grados_profesor",
+		url:base_url+"notas_controller/llenarcombo_cursos_profesor",
 		type:"post",
 		data:{id_persona:valor},
 		success:function(respuesta) {
@@ -386,47 +365,23 @@ function llenarcombo_grados_profesorN(valor){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 
-					html +="<option value="+registros[i]["id_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
+					html +="<option value="+registros[i]["id_curso"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
 					
 				};
 				
-				$("#grados_notas1 select").html(html);
+				$("#cursos_notas1 select").html(html);
 		}
 
 	});
 }
 
 
-function llenarcombo_grupos_profesorN(valor,valor2){
-
-	$.ajax({
-		url:base_url+"notas_controller/llenarcombo_grupos_profesor",
-		type:"post",
-		data:{id_persona:valor,id_grado:valor2},
-		success:function(respuesta) {
-				
-				var registros = eval(respuesta);
-			
-				html = "<option value=''></option>";
-				for (var i = 0; i < registros.length; i++) {
-
-					html +="<option value="+registros[i]["id_grupo"]+">"+registros[i]["nombre_grupo"]+"</option>";
-					
-				};
-				
-				$("#grupos_notas1 select").html(html);
-		}
-
-	});
-}
-
-
-function llenarcombo_asignaturas_profesorN(valor,valor2,valor3){
+function llenarcombo_asignaturas_profesorN(valor,valor2){
 
 	$.ajax({
 		url:base_url+"notas_controller/llenarcombo_asignaturas_profesor",
 		type:"post",
-		data:{id_persona:valor,id_grado:valor2,id_grupo:valor3},
+		data:{id_persona:valor,id_curso:valor2},
 		success:function(respuesta) {
 
 				var registros = eval(respuesta);
@@ -460,22 +415,19 @@ function validar_fechaIngresoNotas(nombre_periodo,fecha_actual){
 
 					$("#modal_ingresar_nota").modal();
 			
-    		
 		    		id_persona = $("#id_persona").val();
 		    		periodo = $("#periodoN").val();
-		    		id_grado = $("#id_gradoN").val();
-		    		id_grupo = $("#id_grupoN").val();
+		    		id_curso = $("#id_cursoN").val();
 		    		id_asignatura = $("#id_asignaturaN").val();
 
-		    		mostrarnotas("",1,5,id_grado,id_grupo,id_asignatura);
+		    		mostrarnotas("",1,5,id_curso,id_asignatura);
 
 		    		//llenarcombo_grados_profesorN(id_persona);
 		    		//llenarcombo_grupos_profesorN(id_persona,id_grado);
 		    		//llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
 
 		    		$("#periodoseleN").val(periodo);
-		    		$("#id_gradoseleN").val(id_grado);
-		    		$("#id_gruposeleN").val(id_grupo);
+		    		$("#id_cursoseleN").val(id_curso);
 		    		$("#id_asignaturaseleN").val(id_asignatura);
 
 				}
@@ -490,19 +442,17 @@ function validar_fechaIngresoNotas(nombre_periodo,fecha_actual){
 
 function bloquear_cajas_texto_notas(){
 
-	$("#id_gradoN").attr("disabled", "disabled");
+	$("#id_cursoN").attr("disabled", "disabled");
 	$("#id_asignaturaN").attr("disabled", "disabled");
     $("#periodoN").attr("disabled", "disabled");
-    $("#id_grupoN").attr("disabled", "disabled");
     $("#btn_ingresar_nota").attr("disabled", "disabled");
 }
 
 function desbloquear_cajas_texto_notas(){
 
-	$("#id_gradoN").removeAttr("disabled");
+	$("#id_cursoN").removeAttr("disabled");
 	$("#id_asignaturaN").removeAttr("disabled");
     $("#periodoN").removeAttr("disabled");
-    $("#id_grupoN").removeAttr("disabled");
     $("#btn_ingresar_nota").removeAttr("disabled");
 
 }

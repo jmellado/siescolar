@@ -43,70 +43,79 @@ class Notas_controller extends CI_Controller {
 
 		//var_dump($items1);
 		//var_dump($items2);
+		if($this->input->post('id_persona')!=""){
 
-		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
-		$estado = "activo";
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+			$id_asignatura = $this->input->post('id_asignatura');
+			$estado = "activo";
 
-		//$data = array();
+			//$data = array();
 
-		for ($i=0; $i < count($this->input->post('id_persona')) ; $i++) {
+			for ($i=0; $i < count($this->input->post('id_persona')) ; $i++) {
 
-			$p1 = $this->input->post('p1')[$i];
-			$p2 = $this->input->post('p2')[$i];
-			$p3 = $this->input->post('p3')[$i];
-			$p4 = $this->input->post('p4')[$i];
+				$id_estudiante = $this->input->post('id_persona')[$i];
+				$p1 = $this->input->post('p1')[$i];
+				$p2 = $this->input->post('p2')[$i];
+				$p3 = $this->input->post('p3')[$i];
+				$p4 = $this->input->post('p4')[$i];
+				$fallas = $this->input->post('fallas')[$i];
 
-			$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
-			$desempeno = $this->notas_model->obtener_desempeno($nota_final);
+				$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
+				$desempeno = $this->notas_model->obtener_desempeno($nota_final);
 
-			if ($p1==""){
-	            $p1=NULL;
-	        }
-	        if ($p2==""){
-	            $p2=NULL;
-	        }
-	        if ($p3==""){
-	            $p3=NULL;
-	        }
-	        if ($p4==""){
-	            $p4=NULL;
-	        }
+				if ($p1==""){
+		            $p1=NULL;
+		        }
+		        if ($p2==""){
+		            $p2=NULL;
+		        }
+		        if ($p3==""){
+		            $p3=NULL;
+		        }
+		        if ($p4==""){
+		            $p4=NULL;
+		        }
 
-			//$data[]
-			$data = array(
+				//$data[]
+				$data = array(
 
-            	'ano_lectivo' => $ano_lectivo,
-                'id_estudiante' => $this->input->post('id_persona')[$i],
-                'id_asignatura' => $this->input->post('id_asignatura'),
-                'p1' => $p1,
-                'p2' => $p2,
-                'p3' => $p3,
-                'p4' => $p4,
-                'nota_final' => $nota_final,
-                'id_desempeno' => $desempeno,
-                'fallas' => $this->input->post('fallas')[$i],
-                'estado_nota' => $estado
-                
-            );
+	            	'ano_lectivo' => $ano_lectivo,
+	                'id_estudiante' => $id_estudiante,
+	                'id_asignatura' => $id_asignatura,
+	                'p1' => $p1,
+	                'p2' => $p2,
+	                'p3' => $p3,
+	                'p4' => $p4,
+	                'nota_final' => $nota_final,
+	                'id_desempeno' => $desempeno,
+	                'fallas' => $fallas,
+	                'estado_nota' => $estado
+	                
+	            );
 
-            //asi para guardar de uno en uno sin el update_batch
-            $respuesta = $this->notas_model->modificar_nota($data,$this->input->post('id_persona')[$i],$this->input->post('id_asignatura'));
+	            //asi para guardar de uno en uno sin el update_batch
+	            $respuesta = $this->notas_model->modificar_nota($data,$id_estudiante,$id_asignatura);
 
-            if($respuesta == false){
-				echo "error al ingresar notas";
+	            if($respuesta == false){
+					echo "error al ingresar notas";
+				}
+
 			}
 
-		}
+			// $respuesta = $this->notas_model->modificar_nota($data);
 
-		// $respuesta = $this->notas_model->modificar_nota($data);
+			if($respuesta == true){
 
-		if($respuesta == true){
+	        	echo "registroguardado";
+	        }
+	        else{
+	        	echo "registronoguardado";
+	        }
 
-        	echo "registroguardado";
-        }
-        else{
-        	echo "registronoguardado";
-        }
+	    }else{
+
+	    	echo "nohayestudiantes";
+	    }
 
 	}
 
@@ -118,15 +127,14 @@ class Notas_controller extends CI_Controller {
 		$cantidad =$this->input->post('cantidad'); 
 		$inicio = ($numero_pagina -1)*$cantidad;
 
-		$id_grado = $this->input->post('id_grado');
-		$id_grupo =	$this->input->post('id_grupo');
+		$id_curso = $this->input->post('id_curso');
 		$id_asignatura = $this->input->post('id_asignatura');
 		
 		$data = array(
 
-			'notas' => $this->notas_model->buscar_nota($id,$inicio,$cantidad,$id_grado,$id_grupo,$id_asignatura),
+			'notas' => $this->notas_model->buscar_nota($id,$inicio,$cantidad,$id_curso,$id_asignatura),
 
-		    'totalregistros' => count($this->notas_model->buscar_nota($id,$inicio,$cantidad,$id_grado,$id_grupo,$id_asignatura)),
+		    'totalregistros' => count($this->notas_model->buscar_nota($id,$inicio,$cantidad,$id_curso,$id_asignatura)),
 
 		    'cantidad' => $cantidad
 
@@ -156,7 +164,7 @@ class Notas_controller extends CI_Controller {
 	}
 
 
-	public function llenarcombo_grados_profesor(){
+	public function llenarcombo_cursos_profesor(){
 
 		$id_profesor = $this->input->post('id_persona');
 
@@ -165,23 +173,13 @@ class Notas_controller extends CI_Controller {
     }
 
 
-    public function llenarcombo_grupos_profesor(){
-
-		$id_profesor = $this->input->post('id_persona');
-		$id_grado = $this->input->post('id_grado');
-
-    	$consulta = $this->notas_model->llenar_grupos_profesor($id_profesor,$id_grado);
-    	echo json_encode($consulta);
-    }
-
-
     public function llenarcombo_asignaturas_profesor(){
 
     	$id_profesor = $this->input->post('id_persona');
-		$id_grado = $this->input->post('id_grado');
-		$id_grupo = $this->input->post('id_grupo');
+		$id_curso = $this->input->post('id_curso');
+		//$id_grupo = $this->input->post('id_grupo');
 
-    	$consulta = $this->notas_model->llenar_asignaturas_profesor($id_profesor,$id_grado,$id_grupo);
+    	$consulta = $this->notas_model->llenar_asignaturas_profesor($id_profesor,$id_curso);
     	echo json_encode($consulta);
     }
 

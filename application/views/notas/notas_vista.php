@@ -83,7 +83,7 @@
 	        				<div class="panel panel-default">
 	        					<!--<div class="panel-heading"></div>-->
 	                			<div class="panel-body">
-			        				<div class="col-md-3">
+			        				<div class="col-md-offset-1 col-md-3">
 				        				<div class="form-group">
 											<label for="periodo">PERIODO</label>
 												<select class="form-control" id="periodoN" name="periodo" disabled>
@@ -95,29 +95,18 @@
 										</div>
 									</div>
 
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<div class="form-group">
-											<label for="id_grado">GRADO</label>
-											<div id="grados_notas1">
-												<select class="form-control" id="id_gradoN" name="id_grado" disabled>
+											<label for="id_grado">CURSO</label>
+											<div id="cursos_notas1">
+												<select class="form-control" id="id_cursoN" name="id_curso" disabled>
 															    
 												</select>
 											</div>
 										</div>
 									</div>
 
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="id_grupo">GRUPO</label>
-											<div id="grupos_notas1">
-												<select class="form-control" id="id_grupoN" name="id_grupo" disabled>
-															    
-												</select>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-md-3">
+									<div class="col-md-3 ">
 										<div class="form-group">
 											<label for="id_asignatura">ASIGNATURA</label>
 											<div id="asignaturas_notas1">
@@ -175,7 +164,7 @@
 				<div class="panel panel-default">
 					<!--<div class="panel-heading"></div>-->
         			<div class="panel-body">
-        				<div class="col-md-3">
+        				<div class="col-md-offset-1 col-md-3">
 	        				<div class="form-group">
 								<label for="periodo">PERIODO</label>
 									<select class="form-control" id="periodoseleN" name="periodo" disabled>
@@ -187,22 +176,11 @@
 							</div>
 						</div>
 
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="form-group">
-								<label for="id_grado">GRADO</label>
-								<div id="grados_notas1">
-									<select class="form-control" id="id_gradoseleN" name="id_grado" disabled>
-												    
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-3">
-							<div class="form-group">
-								<label for="id_grupo">GRUPO</label>
-								<div id="grupos_notas1">
-									<select class="form-control" id="id_gruposeleN" name="id_grupo" disabled>
+								<label for="id_grado">CURSO</label>
+								<div id="cursos_notas1">
+									<select class="form-control" id="id_cursoseleN" name="id_curso" disabled>
 												    
 									</select>
 								</div>

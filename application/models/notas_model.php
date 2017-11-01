@@ -32,20 +32,17 @@ class Notas_model extends CI_Model {
 
 
 
-	public function buscar_nota($id,$inicio = FALSE,$cantidad = FALSE,$id_grado = FALSE,$id_grupo = FALSE,$id_asignatura = FALSE){
+	public function buscar_nota($id,$inicio = FALSE,$cantidad = FALSE,$id_curso = FALSE,$id_asignatura = FALSE){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-		$id_salon = $this->notas_model->obtener_id_salon($id_grado,$id_grupo);
-
-
-		$this->db->where('matriculas.id_salon',$id_salon);
+		$this->db->where('matriculas.id_curso',$id_curso);
 		$this->db->where('notas.id_asignatura',$id_asignatura);
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
 		
 
-		if ($inicio !== FALSE && $cantidad !== FALSE && $id_grado !== FALSE && $id_grupo !== FALSE && $id_asignatura != FALSE) {
+		if ($inicio !== FALSE && $cantidad !== FALSE && $id_curso !== FALSE && $id_asignatura != FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
@@ -61,25 +58,6 @@ class Notas_model extends CI_Model {
 		return $query->result();
 	
 	}
-
-
-	public function obtener_id_salon($id_grado,$id_grupo){
-
-		$this->db->where('id_grado',$id_grado);
-		$this->db->where('id_grupo',$id_grupo);
-		$query = $this->db->get('salones_grupo');
-
-		if ($query->num_rows() > 0) {
-		
-			$row = $query->result_array();
-        	return $row[0]['id_salon'];
-		}
-		else{
-			return false;
-		}
-
-	}
-
 
 
 	public function buscar_profesor($id){
@@ -109,41 +87,25 @@ class Notas_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
-		$this->db->join('grados', 'cargas_academicas.id_grado = grados.id_grado');
+		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 
-		$this->db->select('DISTINCT(cargas_academicas.id_grado),grados.nombre_grado');
-
-		$query = $this->db->get('cargas_academicas');
-		return $query->result();
-	}
-
-
-	public function llenar_grupos_profesor($id_profesor,$id_grado){
-
-		$this->load->model('funciones_globales_model');
-		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
-
-		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
-		$this->db->where('cargas_academicas.id_grado',$id_grado);
-		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
-
-		$this->db->join('grupos', 'cargas_academicas.id_grupo = grupos.id_grupo');
-
-		$this->db->select('DISTINCT(cargas_academicas.id_grupo),grupos.nombre_grupo');
+		$this->db->select('DISTINCT(cargas_academicas.id_curso),grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 
 		$query = $this->db->get('cargas_academicas');
 		return $query->result();
 	}
 
 
-	public function llenar_asignaturas_profesor($id_profesor,$id_grado,$id_grupo){
+	public function llenar_asignaturas_profesor($id_profesor,$id_curso){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
-		$this->db->where('cargas_academicas.id_grado',$id_grado);
-		$this->db->where('cargas_academicas.id_grupo',$id_grupo);
+		$this->db->where('cargas_academicas.id_curso',$id_curso);
+		//$this->db->where('cargas_academicas.id_grupo',$id_grupo);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 		
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
