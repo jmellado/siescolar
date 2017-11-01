@@ -196,9 +196,10 @@ class Logros_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
-		$this->db->join('grados', 'cargas_academicas.id_grado = grados.id_grado');
+		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 
-		$this->db->select('DISTINCT(cargas_academicas.id_grado),grados.nombre_grado');
+		$this->db->select('DISTINCT(cursos.id_grado),grados.nombre_grado');
 
 		$query = $this->db->get('cargas_academicas');
 		return $query->result();
@@ -211,10 +212,11 @@ class Logros_model extends CI_Model {
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
-		$this->db->where('cargas_academicas.id_grado',$id_grado);
+		$this->db->where('cursos.id_grado',$id_grado);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 		
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
 
 		$this->db->select('DISTINCT(cargas_academicas.id_asignatura),asignaturas.nombre_asignatura');
 
