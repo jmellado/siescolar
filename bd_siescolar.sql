@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-09-2017 a las 21:31:41
+-- Tiempo de generación: 02-11-2017 a las 05:02:25
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -115,9 +115,8 @@ CREATE TABLE `candidatos_eleccion` (
 CREATE TABLE `cargas_academicas` (
   `id_carga_academica` int(11) NOT NULL,
   `id_profesor` int(11) NOT NULL,
-  `id_grado` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `id_grupo` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -180,6 +179,23 @@ INSERT INTO `cronogramas` (`id_actividad`, `nombre_actividad`, `id_categoria`, `
 (2, 'Segundo', 1, 'apertura para ingreso de notas para el segundo periodo', '2017-09-05', '2017-09-05', 8, 'inactivo'),
 (3, 'Tercero', 1, 'apertura para ingreso de notas para el tercer periodo', '2017-09-05', '2017-09-05', 8, 'inactivo'),
 (4, 'Cuarto', 1, 'apertura para ingreso de notas para el cuarto periodo', '2017-09-05', '2017-09-05', 8, 'inactivo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cursos`
+--
+
+CREATE TABLE `cursos` (
+  `id_curso` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `id_grupo` int(11) NOT NULL,
+  `id_salon` int(11) NOT NULL,
+  `director` int(11) NOT NULL,
+  `cupo_maximo` int(11) NOT NULL,
+  `jornada` varchar(6) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -253,7 +269,8 @@ INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `
 (1, 'Superior', '4.6', '5.0', 8),
 (2, 'Alto', '4.0', '4.5', 8),
 (3, 'Básico', '3.0', '3.9', 8),
-(4, 'Bajo', '1.0', '2.9', 8);
+(4, 'Bajo', '1.0', '2.9', 8),
+(5, 'Bajisimo', '0.0', '0.9', 8);
 
 -- --------------------------------------------------------
 
@@ -348,7 +365,27 @@ CREATE TABLE `logros` (
   `id_profesor` int(11) NOT NULL,
   `id_grado` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `ano_lectivo` int(11) NOT NULL
+  `ano_lectivo` int(11) NOT NULL,
+  `secuencia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `logros_asignados`
+--
+
+CREATE TABLE `logros_asignados` (
+  `id_logro_asignacion` int(11) NOT NULL,
+  `ano_lectivo` int(11) DEFAULT NULL,
+  `id_estudiante` int(11) DEFAULT NULL,
+  `periodo` varchar(8) DEFAULT NULL,
+  `id_grado` int(11) DEFAULT NULL,
+  `id_asignatura` int(11) DEFAULT NULL,
+  `id_logro1` int(11) DEFAULT NULL,
+  `id_logro2` int(11) DEFAULT NULL,
+  `id_logro3` int(11) DEFAULT NULL,
+  `id_logro4` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -362,7 +399,7 @@ CREATE TABLE `matriculas` (
   `fecha_matricula` date NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `id_salon` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
   `observaciones` varchar(45) NOT NULL,
   `estado_matricula` varchar(8) NOT NULL,
   `jornada` varchar(6) NOT NULL
@@ -1535,13 +1572,14 @@ CREATE TABLE `notas` (
   `id_nota` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `p1` decimal(10,0) DEFAULT NULL,
-  `p2` decimal(10,0) DEFAULT NULL,
-  `p3` decimal(10,0) DEFAULT NULL,
-  `p4` decimal(10,0) DEFAULT NULL,
-  `nota_final` decimal(10,0) DEFAULT NULL,
-  `id_desempeno` int(11) NOT NULL,
+  `p1` decimal(11,1) DEFAULT NULL,
+  `p2` decimal(11,1) DEFAULT NULL,
+  `p3` decimal(11,1) DEFAULT NULL,
+  `p4` decimal(11,1) DEFAULT NULL,
+  `nota_final` decimal(11,1) DEFAULT NULL,
+  `id_desempeno` int(11) DEFAULT NULL,
   `fallas` varchar(2) NOT NULL,
   `estado_nota` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1697,37 +1735,6 @@ CREATE TABLE `salones` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `salones_grupo`
---
-
-CREATE TABLE `salones_grupo` (
-  `id_salon` int(11) NOT NULL,
-  `id_grado` int(11) NOT NULL,
-  `id_grupo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Disparadores `salones_grupo`
---
-DELIMITER $$
-CREATE TRIGGER `actualizar_disponibilidad_salon` AFTER INSERT ON `salones_grupo` FOR EACH ROW begin
--- Edit trigger body code below this line. Do not edit lines above this one
-UPDATE salones set disponibilidad="no" where id_salon=new.id_salon;
-end
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `actualizar_disponibilidad_salon_si` AFTER DELETE ON `salones_grupo` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
-begin
--- Edit trigger body code below this line. Do not edit lines above this one
-UPDATE salones set disponibilidad="si" where id_salon=old.id_salon;
-end
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -1809,8 +1816,7 @@ ALTER TABLE `cargas_academicas`
   ADD UNIQUE KEY `id_cargaacademica_UNIQUE` (`id_carga_academica`),
   ADD KEY `fk_cargas_personas_idx` (`id_profesor`),
   ADD KEY `fk_cargas_asignaturas_idx` (`id_asignatura`),
-  ADD KEY `fk_cargas_grupos_idx` (`id_grupo`),
-  ADD KEY `fk_cargas_pensum_grados_idx` (`id_grado`);
+  ADD KEY `fk_cargas_cursos_idx` (`id_curso`);
 
 --
 -- Indices de la tabla `categorias`
@@ -1830,6 +1836,15 @@ ALTER TABLE `conceptos_pagos`
 ALTER TABLE `cronogramas`
   ADD PRIMARY KEY (`id_actividad`),
   ADD KEY `fk_cronogramas_categorias_idx` (`id_categoria`);
+
+--
+-- Indices de la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  ADD PRIMARY KEY (`id_curso`),
+  ADD KEY `fk_salones_idx` (`id_salon`),
+  ADD KEY `fk_grados_idx` (`id_grado`),
+  ADD KEY `fk_grupos_idx` (`id_grupo`);
 
 --
 -- Indices de la tabla `departamentos`
@@ -1877,15 +1892,24 @@ ALTER TABLE `listado_votantes`
 -- Indices de la tabla `logros`
 --
 ALTER TABLE `logros`
-  ADD PRIMARY KEY (`id_logro`),
-  ADD UNIQUE KEY `nombre_logro_UNIQUE` (`nombre_logro`);
+  ADD PRIMARY KEY (`id_logro`);
+
+--
+-- Indices de la tabla `logros_asignados`
+--
+ALTER TABLE `logros_asignados`
+  ADD PRIMARY KEY (`id_logro_asignacion`),
+  ADD KEY `fk_logros_estudiantes_idx` (`id_estudiante`),
+  ADD KEY `fk_logros_grados_idx` (`id_grado`),
+  ADD KEY `fk_logros_asignaturas_idx` (`id_asignatura`),
+  ADD KEY `fk_logros_logros_idx` (`id_logro1`);
 
 --
 -- Indices de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
   ADD PRIMARY KEY (`id_matricula`),
-  ADD KEY `fk_salones_grupo_idx` (`id_salon`);
+  ADD KEY `fk_salones_grupo_idx` (`id_curso`);
 
 --
 -- Indices de la tabla `municipios`
@@ -1901,7 +1925,8 @@ ALTER TABLE `notas`
   ADD PRIMARY KEY (`id_nota`),
   ADD KEY `fk_notas_estudiantes_idx` (`id_estudiante`),
   ADD KEY `fk_notas_asignaturas_idx` (`id_asignatura`),
-  ADD KEY `fk_notas_desempeños_idx` (`id_desempeno`);
+  ADD KEY `fk_notas_desempeños_idx` (`id_desempeno`),
+  ADD KEY `fk_notas_grados_idx` (`id_grado`);
 
 --
 -- Indices de la tabla `padres`
@@ -1952,15 +1977,6 @@ ALTER TABLE `roles`
 ALTER TABLE `salones`
   ADD PRIMARY KEY (`id_salon`),
   ADD UNIQUE KEY `nombre_salon_UNIQUE` (`nombre_salon`);
-
---
--- Indices de la tabla `salones_grupo`
---
-ALTER TABLE `salones_grupo`
-  ADD UNIQUE KEY `id_salon_UNIQUE` (`id_salon`),
-  ADD KEY `fk_salones_idx` (`id_salon`),
-  ADD KEY `fk_grados_idx` (`id_grado`),
-  ADD KEY `fk_grupos_idx` (`id_grupo`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -2019,7 +2035,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `desempenos`
 --
 ALTER TABLE `desempenos`
-  MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
@@ -2040,6 +2056,11 @@ ALTER TABLE `grupos`
 --
 ALTER TABLE `logros`
   MODIFY `id_logro` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `logros_asignados`
+--
+ALTER TABLE `logros_asignados`
+  MODIFY `id_logro_asignacion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
@@ -2106,8 +2127,7 @@ ALTER TABLE `candidatos_eleccion`
 --
 ALTER TABLE `cargas_academicas`
   ADD CONSTRAINT `fk_cargas_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_cargas_grupos` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_cargas_pensum_grados` FOREIGN KEY (`id_grado`) REFERENCES `pensum` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_cargas_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_cargas_personas` FOREIGN KEY (`id_profesor`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -2117,16 +2137,33 @@ ALTER TABLE `cronogramas`
   ADD CONSTRAINT `fk_cronogramas_categorias` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  ADD CONSTRAINT `fk_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_grupos` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_salones` FOREIGN KEY (`id_salon`) REFERENCES `salones` (`id_salon`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `listado_votantes`
 --
 ALTER TABLE `listado_votantes`
   ADD CONSTRAINT `fk_votantes_elecciones` FOREIGN KEY (`id_eleccion`) REFERENCES `elecciones` (`id_eleccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `logros_asignados`
+--
+ALTER TABLE `logros_asignados`
+  ADD CONSTRAINT `fk_logros_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_logros_estudiantes` FOREIGN KEY (`id_estudiante`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_logros_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_logros_logros` FOREIGN KEY (`id_logro1`) REFERENCES `logros` (`id_logro`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
-  ADD CONSTRAINT `fk_salones_grupo` FOREIGN KEY (`id_salon`) REFERENCES `salones_grupo` (`id_salon`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `municipios`
@@ -2140,7 +2177,8 @@ ALTER TABLE `municipios`
 ALTER TABLE `notas`
   ADD CONSTRAINT `fk_notas_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_notas_desempeños` FOREIGN KEY (`id_desempeno`) REFERENCES `desempenos` (`id_desempeno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_notas_estudiantes` FOREIGN KEY (`id_estudiante`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_notas_estudiantes` FOREIGN KEY (`id_estudiante`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_notas_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `pagos`
@@ -2154,14 +2192,6 @@ ALTER TABLE `pagos`
 ALTER TABLE `pensum`
   ADD CONSTRAINT `fk_pensum_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pensum_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `salones_grupo`
---
-ALTER TABLE `salones_grupo`
-  ADD CONSTRAINT `fk_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_grupos` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_salones` FOREIGN KEY (`id_salon`) REFERENCES `salones` (`id_salon`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuarios`

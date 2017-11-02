@@ -65,10 +65,10 @@ function inicio(){
     	desmarcar_checkbox();
     	id_estudiante = $(this).val();
     	periodo = $("#periodoAL").val();
-		id_grado = $("#id_gradoAL").val();
+		id_curso = $("#id_cursoAL").val();
 		id_asignatura = $("#id_asignaturaAL").val();
-		buscar_notas_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura);
-		logros_asignados_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura);
+		buscar_notas_estudianteAL(id_estudiante,periodo,id_curso,id_asignatura);
+		logros_asignados_estudianteAL(id_estudiante,periodo,id_curso,id_asignatura);
     });
 
 
@@ -105,20 +105,10 @@ function inicio(){
     });
 
 
-    $("#id_gradoAL").change(function(){
-    	id_grado = $(this).val();
+    $("#id_cursoAL").change(function(){
+    	id_curso = $(this).val();
     	id_persona = $("#id_persona").val();
-    	llenarcombo_grupos_profesorAL(id_persona,id_grado);
-    	ocultar_div();
-    	limpiarcampo_calificacion();
-    });
-
-
-    $("#id_grupoAL").change(function(){
-    	id_grupo = $(this).val();
-    	id_persona = $("#id_persona").val();
-    	id_grado = $("#id_gradoAL").val();
-    	llenarcombo_asignaturas_profesorAL(id_persona,id_grado,id_grupo);
+    	llenarcombo_asignaturas_profesorAL(id_persona,id_curso);
     	ocultar_div();
     	limpiarcampo_calificacion();
     });
@@ -150,17 +140,15 @@ function inicio(){
 
     			id_persona = $("#id_persona").val();
 	    		periodo = $("#periodoAL").val();
-	    		id_grado = $("#id_gradoAL").val();
-	    		id_grupo = $("#id_grupoAL").val();
+	    		id_curso = $("#id_cursoAL").val();
 	    		id_asignatura = $("#id_asignaturaAL").val();
 
-	    		llenarcombo_estudiantesAL(id_grado,id_grupo);
-	    		mostrarlogros_profesorAL(periodo,id_persona,id_grado,id_asignatura);
+	    		llenarcombo_estudiantesAL(id_curso);
+	    		mostrarlogros_profesorAL(periodo,id_persona,id_curso,id_asignatura);
 	    		document.getElementById("id_estudianteAL").focus();
 
 	    		$("#periodoseleAL").val(periodo);
-	    		$("#id_gradoseleAL").val(id_grado);
-	    		$("#id_gruposeleAL").val(id_grupo);
+	    		$("#id_cursoseleAL").val(id_curso);
 	    		$("#id_asignaturaseleAL").val(id_asignatura);
 
     		}
@@ -196,7 +184,7 @@ function inicio(){
 
 			},
 
-			id_grado:{
+			id_curso:{
 				required: true,
 				maxlength: 15
 
@@ -206,13 +194,8 @@ function inicio(){
 				required: true,
 				maxlength: 15	
 
-			},
-
-			id_grupo:{
-				required: true,
-				maxlength: 15	
-
 			}
+
 
 		}
 
@@ -241,12 +224,12 @@ function inicio(){
 
 
 //Est Funcion me permite obtener los logros ingresados por un profesor para una asignatura de un respectivo grado y periodo
-function mostrarlogros_profesorAL(periodo,id_persona,id_grado,id_asignatura){
+function mostrarlogros_profesorAL(periodo,id_persona,id_curso,id_asignatura){
 
 	$.ajax({
 		url:base_url+"asignar_logros_controller/mostrarlogros_profesor",
 		type:"post",
-		data:{periodo:periodo,id_persona:id_persona,id_grado:id_grado,id_asignatura:id_asignatura},
+		data:{periodo:periodo,id_persona:id_persona,id_curso:id_curso,id_asignatura:id_asignatura},
 		success:function(respuesta) {
 				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 
@@ -282,9 +265,8 @@ function buscar_profesorAL(valor){
 					toastr.success('Profesor No Registrado', 'Success Alert', {timeOut: 5000});
 					$("#form_asignar_logros")[0].reset();
 					$("#id_persona").val("");
-					llenarcombo_grados_profesorAL("");
-					llenarcombo_asignaturas_profesorAL("","","");
-					llenarcombo_grupos_profesorAL("","");
+					llenarcombo_cursos_profesorAL("");
+					llenarcombo_asignaturas_profesorAL("","");
 					bloquear_cajas_texto_logrosAL();
 					ocultar_div();
 				}
@@ -304,9 +286,8 @@ function buscar_profesorAL(valor){
 	        			$("#apellido2").val(apellido2);
 
 	        			desbloquear_cajas_texto_logrosAL();
-						llenarcombo_grados_profesorAL(id_persona);
-						llenarcombo_asignaturas_profesorAL("","","");
-						llenarcombo_grupos_profesorAL("","");
+						llenarcombo_cursos_profesorAL(id_persona);
+						llenarcombo_asignaturas_profesorAL("","");
 						ocultar_div();
 					};
 				}	
@@ -318,10 +299,10 @@ function buscar_profesorAL(valor){
 }
 
 
-function llenarcombo_grados_profesorAL(valor){
+function llenarcombo_cursos_profesorAL(valor){
 
 	$.ajax({
-		url:base_url+"asignar_logros_controller/llenarcombo_grados_profesor",
+		url:base_url+"asignar_logros_controller/llenarcombo_cursos_profesor",
 		type:"post",
 		data:{id_persona:valor},
 		success:function(respuesta) {
@@ -331,47 +312,23 @@ function llenarcombo_grados_profesorAL(valor){
 				html = "<option value=''></option>";
 				for (var i = 0; i < registros.length; i++) {
 
-					html +="<option value="+registros[i]["id_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
+					html +="<option value="+registros[i]["id_curso"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
 					
 				};
 				
-				$("#grados_logrosAL1 select").html(html);
+				$("#cursos_logrosAL1 select").html(html);
 		}
 
 	});
 }
 
 
-function llenarcombo_grupos_profesorAL(valor,valor2){
-
-	$.ajax({
-		url:base_url+"asignar_logros_controller/llenarcombo_grupos_profesor",
-		type:"post",
-		data:{id_persona:valor,id_grado:valor2},
-		success:function(respuesta) {
-				
-				var registros = eval(respuesta);
-			
-				html = "<option value=''></option>";
-				for (var i = 0; i < registros.length; i++) {
-
-					html +="<option value="+registros[i]["id_grupo"]+">"+registros[i]["nombre_grupo"]+"</option>";
-					
-				};
-				
-				$("#grupos_logrosAL1 select").html(html);
-		}
-
-	});
-}
-
-
-function llenarcombo_asignaturas_profesorAL(valor,valor2,valor3){
+function llenarcombo_asignaturas_profesorAL(valor,valor2){
 
 	$.ajax({
 		url:base_url+"asignar_logros_controller/llenarcombo_asignaturas_profesor",
 		type:"post",
-		data:{id_persona:valor,id_grado:valor2,id_grupo:valor3},
+		data:{id_persona:valor,id_curso:valor2},
 		success:function(respuesta) {
 
 				var registros = eval(respuesta);
@@ -407,17 +364,15 @@ function validar_fechaIngresoLogros(nombre_periodo,fecha_actual){
     		
 		    		id_persona = $("#id_persona").val();
 		    		periodo = $("#periodoAL").val();
-		    		id_grado = $("#id_gradoAL").val();
-		    		id_grupo = $("#id_grupoAL").val();
+		    		id_curso = $("#id_cursoAL").val();
 		    		id_asignatura = $("#id_asignaturaAL").val();
 
-		    		llenarcombo_estudiantesAL(id_grado,id_grupo);
-	    			mostrarlogros_profesorAL(periodo,id_persona,id_grado,id_asignatura);
+		    		llenarcombo_estudiantesAL(id_curso);
+	    			mostrarlogros_profesorAL(periodo,id_persona,id_curso,id_asignatura);
 	    			document.getElementById("id_estudianteAL").focus();
 
 		    		$("#periodoseleAL").val(periodo);
-		    		$("#id_gradoseleAL").val(id_grado);
-		    		$("#id_gruposeleAL").val(id_grupo);
+		    		$("#id_cursoseleAL").val(id_curso);
 		    		$("#id_asignaturaseleAL").val(id_asignatura);
 
 				}
@@ -432,12 +387,12 @@ function validar_fechaIngresoLogros(nombre_periodo,fecha_actual){
 
 
 //Esta Funcion me permite obtener los estudiantes matriculados en un respectivo curso(id_grado y id_grupo)
-function llenarcombo_estudiantesAL(id_grado,id_grupo){
+function llenarcombo_estudiantesAL(id_curso){
 
 	$.ajax({
 		url:base_url+"asignar_logros_controller/llenarcombo_estudiantes",
 		type:"post",
-		data:{id_grado:id_grado,id_grupo:id_grupo},
+		data:{id_curso:id_curso},
 		success:function(respuesta) {
 				//alert(""+respuesta);
 				var registros = eval(respuesta);
@@ -457,13 +412,13 @@ function llenarcombo_estudiantesAL(id_grado,id_grupo){
 }
 
 //Esta funcion me permite por cada estudiante obtener la calificacion de una asignatura en un determinado periodo
-function buscar_notas_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura){
+function buscar_notas_estudianteAL(id_estudiante,periodo,id_curso,id_asignatura){
 
 	p = periodo;
 	$.ajax({
 		url:base_url+"asignar_logros_controller/buscar_notas_estudiante",
 		type:"post",
-		data:{id_estudiante:id_estudiante,periodo:periodo,id_grado:id_grado,id_asignatura:id_asignatura},
+		data:{id_estudiante:id_estudiante,periodo:periodo,id_curso:id_curso,id_asignatura:id_asignatura},
 		success:function(respuesta) {
 				
 
@@ -503,12 +458,12 @@ function buscar_notas_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura)
 }
 
 //Esta funcion me permite por cada estudiante seleccionado, los logros asignados para una determinada asignatura
-function logros_asignados_estudianteAL(id_estudiante,periodo,id_grado,id_asignatura){
+function logros_asignados_estudianteAL(id_estudiante,periodo,id_curso,id_asignatura){
 
 	$.ajax({
 		url:base_url+"asignar_logros_controller/buscar_logros_asignados",
 		type:"post",
-		data:{id_estudiante:id_estudiante,periodo:periodo,id_grado:id_grado,id_asignatura:id_asignatura},
+		data:{id_estudiante:id_estudiante,periodo:periodo,id_curso:id_curso,id_asignatura:id_asignatura},
 		success:function(respuesta) {
 				
 				
@@ -559,19 +514,17 @@ function logros_asignados_estudianteAL(id_estudiante,periodo,id_grado,id_asignat
 
 function bloquear_cajas_texto_logrosAL(){
 
-	$("#id_gradoAL").attr("disabled", "disabled");
+	$("#id_cursoAL").attr("disabled", "disabled");
 	$("#id_asignaturaAL").attr("disabled", "disabled");
     $("#periodoAL").attr("disabled", "disabled");
-    $("#id_grupoAL").attr("disabled", "disabled");
     $("#btn_ingresar_logro").attr("disabled", "disabled");
 }
 
 function desbloquear_cajas_texto_logrosAL(){
 
-	$("#id_gradoAL").removeAttr("disabled");
+	$("#id_cursoAL").removeAttr("disabled");
 	$("#id_asignaturaAL").removeAttr("disabled");
     $("#periodoAL").removeAttr("disabled");
-    $("#id_grupoAL").removeAttr("disabled");
     $("#btn_ingresar_logro").removeAttr("disabled");
 
 }

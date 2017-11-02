@@ -42,21 +42,11 @@ class Asignar_logros_controller extends CI_Controller {
 	}
 
 
-	public function llenarcombo_grados_profesor(){
+	public function llenarcombo_cursos_profesor(){
 
 		$id_profesor = $this->input->post('id_persona');
 
-    	$consulta = $this->asignar_logros_model->llenar_grados_profesor($id_profesor);
-    	echo json_encode($consulta);
-    }
-
-
-    public function llenarcombo_grupos_profesor(){
-
-		$id_profesor = $this->input->post('id_persona');
-		$id_grado = $this->input->post('id_grado');
-
-    	$consulta = $this->asignar_logros_model->llenar_grupos_profesor($id_profesor,$id_grado);
+    	$consulta = $this->asignar_logros_model->llenar_cursos_profesor($id_profesor);
     	echo json_encode($consulta);
     }
 
@@ -64,10 +54,9 @@ class Asignar_logros_controller extends CI_Controller {
     public function llenarcombo_asignaturas_profesor(){
 
     	$id_profesor = $this->input->post('id_persona');
-		$id_grado = $this->input->post('id_grado');
-		$id_grupo = $this->input->post('id_grupo');
+		$id_curso = $this->input->post('id_curso');
 
-    	$consulta = $this->asignar_logros_model->llenar_asignaturas_profesor($id_profesor,$id_grado,$id_grupo);
+    	$consulta = $this->asignar_logros_model->llenar_asignaturas_profesor($id_profesor,$id_curso);
     	echo json_encode($consulta);
     }
 
@@ -94,10 +83,9 @@ class Asignar_logros_controller extends CI_Controller {
     //Esta Funcion me permite obtener los estudiantes matriculados en un respectivo curso(id_grado y id_grupo)
     public function llenarcombo_estudiantes(){
 
-		$id_grado = $this->input->post('id_grado');
-		$id_grupo =	$this->input->post('id_grupo');
+		$id_curso = $this->input->post('id_curso');
 
-    	$consulta = $this->asignar_logros_model->llenar_estudiantes($id_grado,$id_grupo);
+    	$consulta = $this->asignar_logros_model->llenar_estudiantes($id_curso);
     	echo json_encode($consulta);
     }
 
@@ -107,8 +95,10 @@ class Asignar_logros_controller extends CI_Controller {
 
     	$periodo = $this->input->post('periodo');
     	$id_profesor = $this->input->post('id_persona');
-		$id_grado = $this->input->post('id_grado');
+		$id_curso = $this->input->post('id_curso');
 		$id_asignatura = $this->input->post('id_asignatura');
+
+		$id_grado = $this->asignar_logros_model->obtener_id_grado($id_curso);
 
     	$data = array(
 
@@ -130,7 +120,8 @@ class Asignar_logros_controller extends CI_Controller {
 
 			$id_estudiante = $this->input->post('id_persona');
 			$periodo = $this->input->post('periodo');
-			$id_grado = $this->input->post('id_grado');
+			$id_curso = $this->input->post('id_curso');
+			$id_grado = $this->asignar_logros_model->obtener_id_grado($id_curso);
 			$id_asignatura = $this->input->post('id_asignatura');
 			$id_logro1 = $this->input->post('id_logro')[$i];
 			$id_logro2 = $this->input->post('id_logro')[$i+1];
@@ -193,8 +184,10 @@ class Asignar_logros_controller extends CI_Controller {
 
 		$id_estudiante = $this->input->post('id_estudiante');
 		$periodo = $this->input->post('periodo');
-		$id_grado = $this->input->post('id_grado');
+		$id_curso = $this->input->post('id_curso');
 		$id_asignatura = $this->input->post('id_asignatura');
+
+		$id_grado = $this->asignar_logros_model->obtener_id_grado($id_curso);
 		
 		$consulta = $this->asignar_logros_model->buscar_notas($id_estudiante,$periodo,$id_grado,$id_asignatura);
 
@@ -214,8 +207,10 @@ class Asignar_logros_controller extends CI_Controller {
 
 		$id_estudiante = $this->input->post('id_estudiante');
 		$periodo = $this->input->post('periodo');
-		$id_grado = $this->input->post('id_grado');
+		$id_curso = $this->input->post('id_curso');
 		$id_asignatura = $this->input->post('id_asignatura');
+
+		$id_grado = $this->asignar_logros_model->obtener_id_grado($id_curso);
 		
 		$consulta = $this->asignar_logros_model->buscar_logros_asignados($id_estudiante,$periodo,$id_grado,$id_asignatura);
 

@@ -85,7 +85,7 @@
 	        				<div class="panel panel-default">
 	        					<!--<div class="panel-heading"></div>-->
 	                			<div class="panel-body">
-			        				<div class="col-md-3">
+			        				<div class="col-md-offset-1 col-md-3">
 				        				<div class="form-group">
 											<label for="periodo">PERIODO</label>
 												<select class="form-control" id="periodoAL" name="periodo" disabled>
@@ -97,22 +97,11 @@
 										</div>
 									</div>
 
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<div class="form-group">
-											<label for="id_grado">GRADO</label>
-											<div id="grados_logrosAL1">
-												<select class="form-control" id="id_gradoAL" name="id_grado" disabled>
-															    
-												</select>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="id_grupo">GRUPO</label>
-											<div id="grupos_logrosAL1">
-												<select class="form-control" id="id_grupoAL" name="id_grupo" disabled>
+											<label for="id_curso">CURSO</label>
+											<div id="cursos_logrosAL1">
+												<select class="form-control" id="id_cursoAL" name="id_curso" disabled>
 															    
 												</select>
 											</div>
@@ -172,7 +161,7 @@
 											<input type="hidden" class="form-control" id="periodoseleAL" name="periodo">
 										</div>
 										<div class="form-group">
-											<input type="hidden" class="form-control" id="id_gradoseleAL" name="id_grado">
+											<input type="hidden" class="form-control" id="id_cursoseleAL" name="id_curso">
 										</div>
 										<div class="form-group">
 											<input type="hidden" class="form-control" id="id_asignaturaseleAL" name="id_asignatura">
@@ -188,7 +177,7 @@
 										</div>
 
 										<div class="form-group">
-											<label for="calificacion">Calificacion</label>
+											<label for="calificacion">Calificación</label>
 											<input type="text" class="form-control" id="calificacion" name="calificacion" readonly>
 										</div>
 
