@@ -32,6 +32,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/imprimir.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
@@ -353,6 +354,19 @@
               <small class="label pull-right bg-yellow">4</small>
             </span>
           </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-print"></i>
+            <span>Imprimir</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_boletin"><i class="fa fa-clipboard"></i>Boletines</a></li>
+            
+          </ul>
         </li>
         <li><a href="<?php echo base_url(); ?>asignar_logros_controller/index"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>

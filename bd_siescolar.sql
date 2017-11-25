@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2017 a las 05:02:25
+-- Tiempo de generación: 26-11-2017 a las 00:32:02
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -200,6 +200,33 @@ CREATE TABLE `cursos` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `datos_institucion`
+--
+
+CREATE TABLE `datos_institucion` (
+  `id` int(11) NOT NULL,
+  `nombre_institucion` varchar(100) NOT NULL,
+  `niveles_educacion` varchar(200) NOT NULL,
+  `resolucion` varchar(100) NOT NULL,
+  `dane` varchar(45) NOT NULL,
+  `nit` varchar(45) NOT NULL,
+  `direccion` varchar(45) NOT NULL,
+  `telefono` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `escudo` varchar(45) NOT NULL,
+  `rector` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `datos_institucion`
+--
+
+INSERT INTO `datos_institucion` (`id`, `nombre_institucion`, `niveles_educacion`, `resolucion`, `dane`, `nit`, `direccion`, `telefono`, `email`, `escudo`, `rector`) VALUES
+(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria y Media', 'Aprobado según Resolucion 000209 del 29 de octubre de 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'calle 7 # 29-90', '5807659', 'cenuestraseñoradelcarmen@gmail.com', 'logo_example.jpg', 'Alvaro Araujo');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `departamentos`
 --
 
@@ -270,7 +297,7 @@ INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `
 (2, 'Alto', '4.0', '4.5', 8),
 (3, 'Básico', '3.0', '3.9', 8),
 (4, 'Bajo', '1.0', '2.9', 8),
-(5, 'Bajisimo', '0.0', '0.9', 8);
+(5, 'Bajo', '0.0', '0.9', 8);
 
 -- --------------------------------------------------------
 
@@ -1587,6 +1614,22 @@ CREATE TABLE `notas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificaciones`
+--
+
+CREATE TABLE `notificaciones` (
+  `id_notificacion` int(11) NOT NULL,
+  `asunto` varchar(45) NOT NULL,
+  `mensaje` varchar(45) NOT NULL,
+  `destinatario` varchar(45) NOT NULL,
+  `fecha_evento` date NOT NULL,
+  `hora_evento` time NOT NULL,
+  `fecha_envio` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `padres`
 --
 
@@ -1847,6 +1890,12 @@ ALTER TABLE `cursos`
   ADD KEY `fk_grupos_idx` (`id_grupo`);
 
 --
+-- Indices de la tabla `datos_institucion`
+--
+ALTER TABLE `datos_institucion`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
@@ -1927,6 +1976,12 @@ ALTER TABLE `notas`
   ADD KEY `fk_notas_asignaturas_idx` (`id_asignatura`),
   ADD KEY `fk_notas_desempeños_idx` (`id_desempeno`),
   ADD KEY `fk_notas_grados_idx` (`id_grado`);
+
+--
+-- Indices de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  ADD PRIMARY KEY (`id_notificacion`);
 
 --
 -- Indices de la tabla `padres`
@@ -2027,6 +2082,11 @@ ALTER TABLE `categorias`
 ALTER TABLE `cronogramas`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT de la tabla `datos_institucion`
+--
+ALTER TABLE `datos_institucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
@@ -2076,6 +2136,11 @@ ALTER TABLE `municipios`
 --
 ALTER TABLE `notas`
   MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
