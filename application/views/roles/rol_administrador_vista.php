@@ -33,10 +33,12 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/imprimir.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
-
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/fileinput.js"></script>
+    
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -52,7 +54,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/css/skins/_all-skins.min.css">
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fileinput.css">
 
 </head>
 <body class="hold-transition skin-red fixed sidebar-mini" onload="nobackbutton();">
@@ -293,6 +295,35 @@
             <span>Gestionar Pensum</span>
           </a>
         </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-print"></i>
+            <span>Imprimir</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_boletin"><i class="fa fa-clipboard"></i>Boletines</a></li>
+            
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gears"></i>
+            <span>Configuraciones</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>configuraciones_controller/datos_institucion"><i class="fa fa-clipboard"></i>Datos Institución</a></li>
+            
+          </ul>
+        </li>
+
         <li class="header">MAIN ESTUDIANTES</li>
         <li class="treeview">
           <a href="#">
@@ -354,19 +385,6 @@
               <small class="label pull-right bg-yellow">4</small>
             </span>
           </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-print"></i>
-            <span>Imprimir</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_boletin"><i class="fa fa-clipboard"></i>Boletines</a></li>
-            
-          </ul>
         </li>
         <li><a href="<?php echo base_url(); ?>asignar_logros_controller/index"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
