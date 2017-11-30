@@ -33,6 +33,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/imprimir.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
@@ -308,6 +309,13 @@
             <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_boletin"><i class="fa fa-clipboard"></i>Boletines</a></li>
             
           </ul>
+        </li>
+
+        <li>
+          <a href="<?php echo base_url(); ?>notificaciones_controller/index">
+            <i class="fa fa-envelope"></i>
+            <span>Difundir Mensaje</span>
+          </a>
         </li>
 
         <li class="treeview">

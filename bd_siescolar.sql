@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2017 a las 00:32:02
+-- Tiempo de generación: 30-11-2017 a las 02:28:11
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -1619,12 +1619,14 @@ CREATE TABLE `notas` (
 
 CREATE TABLE `notificaciones` (
   `id_notificacion` int(11) NOT NULL,
-  `asunto` varchar(45) NOT NULL,
-  `mensaje` varchar(45) NOT NULL,
+  `autor` varchar(45) NOT NULL,
+  `asunto` varchar(100) NOT NULL,
+  `mensaje` varchar(300) NOT NULL,
   `destinatario` varchar(45) NOT NULL,
   `fecha_evento` date NOT NULL,
   `hora_evento` time NOT NULL,
-  `fecha_envio` datetime NOT NULL
+  `fecha_envio` datetime NOT NULL,
+  `estado` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
