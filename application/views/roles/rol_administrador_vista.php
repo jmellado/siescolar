@@ -17,28 +17,28 @@
 	  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery-1.12.4.min.js"></script>
 	  <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 
-	  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/estudiantes.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/profesores.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cursos.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/areas.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignaturas.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pensum.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/matriculas.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/imprimir.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/fileinput.js"></script>
+	  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/estudiantes.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/profesores.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/salones.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cursos.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/areas.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignaturas.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pensum.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/matriculas.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/imprimir.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/fileinput.js" defer></script>
     
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/bootstrap/css/bootstrap.min.css">
@@ -656,8 +656,8 @@
     $(".select2").select2();
   });
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
 
 </body>
 </html>

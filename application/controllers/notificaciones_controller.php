@@ -21,6 +21,18 @@ class Notificaciones_controller extends CI_Controller {
 	}
 
 
+	public function index_profesor()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		$this->template->load('roles/rol_profesor_vista', 'notificaciones/notificaciones_usuarios_vista');
+	}
+
+
 	public function insertar(){
 
         $this->form_validation->set_rules('asunto', 'asunto', 'required|alpha_spaces');
@@ -204,6 +216,69 @@ class Notificaciones_controller extends CI_Controller {
 
 
 
+    }
+
+
+    public function mostrarnotificaciones_usuarios(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		$rol =$this->input->post('rol');
+		
+		$data = array(
+
+			'notificaciones' => $this->notificaciones_model->buscar_notificacion_usuarios($id,$rol,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->notificaciones_model->buscar_notificacion_usuarios($id,$rol)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function total_notificaciones(){
+
+    	$rol =$this->input->post('rol'); 
+
+    	$data = array(
+
+		    'totalnotificaciones' => count($this->notificaciones_model->total_notificaciones($rol))
+
+		);
+	    echo json_encode($data);
+    	
+    }
+
+
+    public function vistaprevia_notificaciones(){
+
+    	$rol =$this->input->post('rol'); 
+    	$estado = $this->notificaciones_model->actualizar_estado_notificacion();
+
+    	if($estado){
+
+    		$data = array(
+
+				'notificaciones' => $this->notificaciones_model->vistaprevia_notificaciones($rol)
+
+			);
+		    echo json_encode($data);
+
+    	}
+    	else{
+
+    		echo "error1";
+    	}
+
+    	
+    	
     }
 
 

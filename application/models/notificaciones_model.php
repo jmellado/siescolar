@@ -117,8 +117,95 @@ class Notificaciones_model extends CI_Model {
 	}
 
 
+	public function buscar_notificacion_usuarios($id,$rol,$inicio = FALSE,$cantidad = FALSE){
+
+		if ($rol == "profesor") {
+			$this->db->where("(destinatario = 2 OR destinatario = 3)");
+		}
+		elseif ($rol == "estudiante") {
+			$this->db->where("(destinatario = 1 OR destinatario = 3)");
+		}
+		else{
+			$this->db->where("(destinatario = 1 OR destinatario = 3)");
+		}
+
+		$this->db->order_by('fecha_envio', 'desc');
+
+		$this->db->where("(notificaciones.asunto LIKE '".$id."%' OR notificaciones.fecha_evento LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%')", NULL, FALSE);
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->select('id_notificacion,autor,asunto,mensaje,destinatario,fecha_evento,hora_evento,DATE_FORMAT(hora_evento, "%r") as hora_evento1,fecha_envio,estado',false);
+		$query = $this->db->get('notificaciones');
+
+		return $query->result();
+		
+	}
 
 
+	public function total_notificaciones($rol){
+
+		if ($rol == "profesor") {
+			
+			$this->db->where("(destinatario = 2 OR destinatario = 3)");
+			$this->db->where('estado',0);
+		}
+		elseif ($rol == "estudiante") {
+			$this->db->where("(destinatario = 1 OR destinatario = 3)");
+			$this->db->where('estado',0);
+		}
+		else{
+			$this->db->where("(destinatario = 1 OR destinatario = 3)");
+			$this->db->where('estado',0);
+		}
+
+		$query = $this->db->get('notificaciones');
+		return $query->result();
+	}
+
+
+	public function vistaprevia_notificaciones($rol){
+
+
+		if ($rol == "profesor") {
+			
+			$this->db->where('destinatario',2);
+			$this->db->or_where('destinatario',3);
+		}
+		elseif ($rol == "estudiante") {
+			$this->db->where('destinatario',1);
+			$this->db->or_where('destinatario',3);
+		}
+		else{
+			$this->db->where('destinatario',1);
+			$this->db->or_where('destinatario',3);
+		}
+
+		$this->db->order_by('fecha_envio', 'desc');
+		$this->db->limit(3);
+
+		$query = $this->db->get('notificaciones');
+		return $query->result();
+	}
+
+
+	public function actualizar_estado_notificacion(){
+
+		$notificacion = array(
+
+			'estado' => '1'
+			);
+	
+		$this->db->where('estado',0);
+
+		if ($this->db->update('notificaciones', $notificacion))
+
+			return true;
+		else
+			return false;
+	}
 
 
 
