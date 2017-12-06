@@ -86,7 +86,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">MENSAJE NUEVO</h4>
+        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;MENSAJE NUEVO</h4>
       </div>
       <div class="modal-body">
 
@@ -142,7 +142,7 @@
 							</div>
 
 							<div class="form-group">
-				        		<div class="col-sm-offset-3 col-sm-7"> 
+				        		<div class="col-sm-offset-4 col-sm-5"> 
 									<button type="submit" name="btn_registrar_notificacion" id="btn_registrar_notificacion" class="btn btn-primary btn-lg btn-block">Enviar</button>
 								</div>
 							</div>
@@ -174,7 +174,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">ACTUALIZAR MENSAJE</h4>
+        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR MENSAJE</h4>
       </div>
       <div class="modal-body">
         
@@ -234,7 +234,7 @@
 				        </form>
 
 				        <div class="form-group">
-			        		<div class="col-sm-offset-3 col-sm-7"> 
+			        		<div class="col-sm-offset-4 col-sm-5"> 
 								<button type="submit" name="btn_actualizar_notificacion" id="btn_actualizar_notificacion" class="btn btn-primary btn-lg btn-block">Actualizar</button>
 							</div>
 						</div>

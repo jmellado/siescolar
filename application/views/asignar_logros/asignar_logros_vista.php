@@ -154,7 +154,7 @@
 
 		    			<div class="col-md-4">
 				    		<div class="panel panel-default">
-					    		<div class="panel-heading">Seleccionar Estudiante:</div>
+					    		<div class="panel-heading"><i class='fa fa-check-square'></i>&nbsp;Seleccionar Estudiante:</div>
 					    			<div class="panel-body">
     	
 										<div class="form-group">
@@ -188,7 +188,7 @@
 
 				    	<div class="col-md-8">
 				    		<div class="panel panel-default">
-				    			<div class="panel-heading">Seleccionar Logros:</div>
+				    			<div class="panel-heading"><i class='fa fa-check-square'></i>&nbsp;Seleccionar Logros:</div>
 				    				<div class="panel-body">
 
 										<div class="table-responsive">

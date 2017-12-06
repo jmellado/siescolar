@@ -88,70 +88,88 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">REGISTRAR PENSUM</h4>
+        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR PENSUM</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        
+      	<div class="panel panel-default">
+		    <div class="panel-body">
 
-        <form role="form" action="<?php echo base_url(); ?>pensum_controller/insertar" name="" method="post" id="form_pensum">
+		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>pensum_controller/insertar" name="" method="post" id="form_pensum">
 
-			<div class="form-group">
-				<label for="id_grado">GRADO</label>
-				<div id="grado1">
-					<select class="form-control" id="id_grado" name="id_grado">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="id_grado">GRADO</label>
+						<div class="col-sm-7">
+							<div id="grado1">
+								<select class="form-control" id="id_grado" name="id_grado">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="id_asignatura">ASIGNATURA</label>
-				<div id="asignatura1">
-					<select class="form-control" id="id_asignatura" name="id_asignatura">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="id_asignatura">ASIGNATURA</label>
+						<div class="col-sm-7">
+							<div id="asignatura1">
+								<select class="form-control" id="id_asignatura" name="id_asignatura">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="intensidad_horaria">HORAS</label>
-				<select class="form-control" id="intensidad_horaria" name="intensidad_horaria">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="intensidad_horaria">HORAS</label>
+						<div class="col-sm-2">
+							<select class="form-control" id="intensidad_horaria" name="intensidad_horaria">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivo" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<div class="col-sm-7">
+							<div id="ano_lectivo1">
+								<select class="form-control" id="ano_lectivo" name="ano_lectivo">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="estado_pensum">ESTADO</label>
-				<select class="form-control" id="estado_pensum" name="estado_pensum">
-						<option value="Activo">Activo</option>
-						<option value="Inactivo">Inactivo</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado_pensum">ESTADO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="estado_pensum" name="estado_pensum">
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+							</select>
+						</div>	
+					</div>
 
-			<button type="submit" name="btn_registrar_pensum" id="btn_registrar_pensum" class="btn btn-primary btn-lg btn-block">Registrar</button>
+					<div class="form-group">
+						<div class="col-sm-offset-4 col-sm-5">
+							<button type="submit" name="btn_registrar_pensum" id="btn_registrar_pensum" class="btn btn-primary btn-lg btn-block">Registrar</button>
+						</div>
+					</div>		
 
-        </form>
+		        </form>
+		    </div>
+		</div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 
@@ -166,78 +184,91 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">ACTUALIZAR PENSUM</h4>
+        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR PENSUM</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        
+      	<div class="panel panel-default">
+		    <div class="panel-body">
 
-        <form role="form" id="form_pensum_actualizar">
+		        <form class="form-horizontal" role="form" id="form_pensum_actualizar">
+				    
+					<input type="hidden" class="form-control" id="id_pensumsele" name="id_pensum">
+					
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="id_grado">GRADO</label>
+						<div class="col-sm-7">
+							<div id="grado1">
+								<select class="form-control" id="id_gradosele" name="id_grado">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-        	<div class="form-group">
-								    
-				<input type="hidden" class="form-control" id="id_pensumsele" name="id_pensum">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="id_asignatura">ASIGNATURA</label>
+						<div class="col-sm-7">
+							<div id="asignatura1">
+								<select class="form-control" id="id_asignaturasele" name="id_asignatura">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="id_grado">GRADO</label>
-				<div id="grado1">
-					<select class="form-control" id="id_gradosele" name="id_grado">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="intensidad_horaria">HORAS</label>
+						<div class="col-sm-2">
+							<select class="form-control" id="intensidad_horariasele" name="intensidad_horaria">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="id_asignatura">ASIGNATURA</label>
-				<div id="asignatura1">
-					<select class="form-control" id="id_asignaturasele" name="id_asignatura">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<div class="col-sm-7">
+							<div id="ano_lectivo1">
+								<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="intensidad_horaria">HORAS</label>
-				<select class="form-control" id="intensidad_horariasele" name="intensidad_horaria">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado_pensum">ESTADO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="estado_pensumsele" name="estado_pensum">
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+							</select>
+						</div>	
+					</div>
+	
+		        </form>
 
-        	
+		        <div class="form-group">
+					<div class="col-sm-offset-4 col-sm-5">
+		        		<button type="submit" name="btn_actualizar_pensum" id="btn_actualizar_pensum" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+		        	</div>
+		        </div>
 
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="estado_pensum">ESTADO</label>
-				<select class="form-control" id="estado_pensumsele" name="estado_pensum">
-						<option value="Activo">Activo</option>
-						<option value="Inactivo">Inactivo</option>
-				</select>
-			</div>
-
-			
-        </form>
-
-        <button type="submit" name="btn_actualizar_pensum" id="btn_actualizar_pensum" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+		    </div>
+		</div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 

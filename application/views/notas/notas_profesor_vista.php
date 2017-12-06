@@ -105,7 +105,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">REGISTRAR NOTAS</h4>
+        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR NOTAS</h4>
       </div>
       <div class="modal-body">
         
@@ -159,7 +159,7 @@
         	<div class="row">
 		    	<div class="col-md-12">
 		    		<div class="panel panel-default">
-		    			<div class="panel-heading">Ingresar Notas</div>
+		    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Ingresar Notas</div>
 		    				<div class="panel-body">
 
 		    					<div class="form-group">
@@ -214,7 +214,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 

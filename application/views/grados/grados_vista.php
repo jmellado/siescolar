@@ -88,62 +88,80 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">REGISTRAR GRADOS</h4>
+        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR GRADOS</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        
+      	<div class="panel panel-default">
+		    <div class="panel-body">
 
-        <form role="form" action="<?php echo base_url(); ?>grados_controller/insertar" name="" method="post" id="form_grados">
+		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>grados_controller/insertar" name="" method="post" id="form_grados">
 
-        	<div class="form-group">
-				<label for="nombre_grado">NOMBRE</label>
-				<input type="text" class="form-control" id="nombre_grado" name="nombre_grado"
-						 placeholder="Nombre">
-			</div>
+		        	<div class="form-group">
+						<label class="control-label col-sm-3" for="nombre_grado">NOMBRE</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="nombre_grado" name="nombre_grado"
+								 placeholder="Nombre">
+						</div>		 
+					</div>
 
-			<div class="form-group">
-				<label for="ciclo_grado">CICLO</label>
-				<select class="form-control" id="ciclo_grado" name="ciclo_grado">
-						<option value="Preescolar">Preescolar</option>
-						<option value="Básica primaria">Básica-primaria</option>
-						<option value="Básica secundaria">Básica-secundaria</option>
-						<option value="Media">Media</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="ciclo_grado">CICLO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="ciclo_grado" name="ciclo_grado">
+									<option value="Preescolar">Preescolar</option>
+									<option value="Básica primaria">Básica-primaria</option>
+									<option value="Básica secundaria">Básica-secundaria</option>
+									<option value="Media">Media</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="jornada">JORNADA</label>
-				<select class="form-control" id="jornada" name="jornada">
-						<option value="Mañana">Mañana</option>
-						<option value="Tarde">Tarde</option>
-						<option value="Noche">Noche</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="jornada" name="jornada">
+									<option value="Mañana">Mañana</option>
+									<option value="Tarde">Tarde</option>
+									<option value="Noche">Noche</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivo" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<div class="col-sm-7">
+							<div id="ano_lectivo1">
+								<select class="form-control" id="ano_lectivo" name="ano_lectivo">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="estado_grado">ESTADO</label>
-				<select class="form-control" id="estado_grado" name="estado_grado">
-						<option value="Activo">Activo</option>
-						<option value="Inactivo">Inactivo</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado_grado">ESTADO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="estado_grado" name="estado_grado">
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+							</select>
+						</div>	
+					</div>
 
-			<button type="submit" name="btn_registrar_grado" id="btn_registrar_grado" class="btn btn-primary btn-lg btn-block">Registrar</button>
+					<div class="form-group">
+						<div class="col-sm-offset-4 col-sm-5">
+							<button type="submit" name="btn_registrar_grado" id="btn_registrar_grado" class="btn btn-primary btn-lg btn-block">Registrar</button>
+						</div>
+					</div>		
 
-        </form>
+		        </form>
+		    </div>
+		</div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 
@@ -158,68 +176,83 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">ACTUALIZAR GRADOS</h4>
+        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR GRADOS</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        
+        <div class="panel panel-default">
+		    <div class="panel-body">
 
-        <form role="form" id="form_grados_actualizar">
+		        <form class="form-horizontal" role="form" id="form_grados_actualizar">
+										    
+					<input type="hidden" class="form-control" id="id_gradosele" name="id_grado">
+					
+		        	<div class="form-group">
+						<label class="control-label col-sm-3" for="nombre_grado">NOMBRE</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="nombre_gradosele" name="nombre_grado"
+								 placeholder="Nombre">
+						</div>		 
+					</div>
 
-        	<div class="form-group">
-								    
-				<input type="hidden" class="form-control" id="id_gradosele" name="id_grado">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="ciclo_grado">CICLO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="ciclo_gradosele" name="ciclo_grado">
+									<option value="Preescolar">Preescolar</option>
+									<option value="Básica primaria">Básica-primaria</option>
+									<option value="Básica secundaria">Básica-secundaria</option>
+									<option value="Media">Media</option>
+							</select>
+						</div>	
+					</div>
 
-        	<div class="form-group">
-				<label for="nombre_grado">NOMBRE</label>
-				<input type="text" class="form-control" id="nombre_gradosele" name="nombre_grado"
-						 placeholder="Nombre">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="jornadasele" name="jornada">
+									<option value="Mañana">Mañana</option>
+									<option value="Tarde">Tarde</option>
+									<option value="Noche">Noche</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="ciclo_grado">CICLO</label>
-				<select class="form-control" id="ciclo_gradosele" name="ciclo_grado">
-						<option value="Preescolar">Preescolar</option>
-						<option value="Básica primaria">Básica-primaria</option>
-						<option value="Básica secundaria">Básica-secundaria</option>
-						<option value="Media">Media</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<div class="col-sm-7">
+							<div id="ano_lectivo1">
+								<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="jornada">JORNADA</label>
-				<select class="form-control" id="jornadasele" name="jornada">
-						<option value="Mañana">Mañana</option>
-						<option value="Tarde">Tarde</option>
-						<option value="Noche">Noche</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado_grado">ESTADO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="estado_gradosele" name="estado_grado">
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
+		        </form>
 
-			<div class="form-group">
-				<label for="estado_grado">ESTADO</label>
-				<select class="form-control" id="estado_gradosele" name="estado_grado">
-						<option value="Activo">Activo</option>
-						<option value="Inactivo">Inactivo</option>
-				</select>
-			</div>
+		        <div class="form-group">
+					<div class="col-sm-offset-4 col-sm-5">
+		        		<button type="submit" name="btn_actualizar_grado" id="btn_actualizar_grado" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+		        	</div>
+		        </div>		
 
-			
-        </form>
-
-        <button type="submit" name="btn_actualizar_grado" id="btn_actualizar_grado" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+		    </div>
+		</div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 

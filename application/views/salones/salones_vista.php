@@ -88,55 +88,73 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">REGISTRAR SALONES</h4>
+        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR SALONES</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
 
-        <form role="form" action="<?php echo base_url(); ?>salones_controller/insertar" name="" method="post" id="form_salones">
+      	<div class="panel panel-default">
+		    <div class="panel-body">
 
-        	<div class="form-group">
-				<label for="nombre_salon">NOMBRE</label>
-				<input type="text" class="form-control" id="nombre_salon" name="nombre_salon"
-						 placeholder="Nombre">
-			</div>
+		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>salones_controller/insertar" name="" method="post" id="form_salones">
 
-			<div class="form-group">
-				<label for="observacion">OBSERVACIONES</label>
-				<input type="text" class="form-control" id="observacion" name="observacion"
-						 placeholder="observaciones">
-			</div>
+		        	<div class="form-group">
+						<label class="control-label col-sm-3" for="nombre_salon">NOMBRE</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="nombre_salon" name="nombre_salon"
+								 placeholder="Nombre">
+						</div>		 
+					</div>
 
-			<div class="form-group">
-				<label for="cupo_maximo">CUPO MAXIMO</label>
-				<input type="text" class="form-control" id="cupo_maximo" name="cupo_maximo"
-						 placeholder="Cupo maximo">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="observacion" name="observacion"
+								 placeholder="observaciones">
+						</div>		 
+					</div>
 
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivo" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cupo_maximo">CUPO MAXIMO</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="cupo_maximo" name="cupo_maximo"
+								 placeholder="Cupo maximo">
+						</div>		 
+					</div>
 
-			<div class="form-group">
-				<label for="estado_salon">ESTADO</label>
-				<select class="form-control" id="estado_salon" name="estado_salon">
-						<option value="Activo">Activo</option>
-						<option value="Inactivo">Inactivo</option>
-				</select>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<div class="col-sm-7">
+							<div id="ano_lectivo1">
+								<select class="form-control" id="ano_lectivo" name="ano_lectivo">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<button type="submit" name="btn_registrar_salon" id="btn_registrar_salon" class="btn btn-primary btn-lg btn-block">Registrar</button>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado_salon">ESTADO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="estado_salon" name="estado_salon">
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+							</select>
+						</div>	
+					</div>
 
-        </form>
+					<div class="form-group">
+						<div class="col-sm-offset-4 col-sm-5">
+							<button type="submit" name="btn_registrar_salon" id="btn_registrar_salon" class="btn btn-primary btn-lg btn-block">Registrar</button>
+						</div>
+					</div>		
+
+		        </form>
+		    </div>
+		</div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 
@@ -151,61 +169,76 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">ACTUALIZAR SALON</h4>
+        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR SALON</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
 
-        <form role="form" id="form_salones_actualizar">
+      	<div class="panel panel-default">
+		    <div class="panel-body">
 
-        	<div class="form-group">
-								    
-				<input type="hidden" class="form-control" id="id_salonsele" name="id_salon">
-			</div>
+		        <form class="form-horizontal" role="form" id="form_salones_actualizar">
+				    
+					<input type="hidden" class="form-control" id="id_salonsele" name="id_salon">
+					
+		        	<div class="form-group">
+						<label class="control-label col-sm-3" for="nombre_salon">NOMBRE</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="nombre_salonsele" name="nombre_salon"
+								 placeholder="Nombre">
+						</div>		 
+					</div>
 
-        	<div class="form-group">
-				<label for="nombre_salon">NOMBRE</label>
-				<input type="text" class="form-control" id="nombre_salonsele" name="nombre_salon"
-						 placeholder="Nombre">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="observacionsele" name="observacion"
+								 placeholder="observaciones">
+						</div>		 
+					</div>
 
-			<div class="form-group">
-				<label for="observacion">OBSERVACIONES</label>
-				<input type="text" class="form-control" id="observacionsele" name="observacion"
-						 placeholder="observaciones">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cupo_maximo">CUPO MAXIMO</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="cupo_maximosele" name="cupo_maximo"
+								 placeholder="Cupo maximo">
+						</div>		 
+					</div>
 
-			<div class="form-group">
-				<label for="cupo_maximo">CUPO MAXIMO</label>
-				<input type="text" class="form-control" id="cupo_maximosele" name="cupo_maximo"
-						 placeholder="Cupo maximo">
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<div class="col-sm-7">
+							<div id="ano_lectivo1">
+								<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
+												    
+								</select>
+							</div>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="año_lectivo">AÑO LECTIVO</label>
-				<div id="ano_lectivo1">
-					<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
-									    
-					</select>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado_salon">ESTADO</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="estado_salonsele" name="estado_salon">
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+							</select>
+						</div>	
+					</div>
 
-			<div class="form-group">
-				<label for="estado_salon">ESTADO</label>
-				<select class="form-control" id="estado_salonsele" name="estado_salon">
-						<option value="Activo">Activo</option>
-						<option value="Inactivo">Inactivo</option>
-				</select>
-			</div>
+		        </form>
 
-			
-        </form>
+		        <div class="form-group">
+					<div class="col-sm-offset-4 col-sm-5">
+		        		<button type="submit" name="btn_actualizar_salon" id="btn_actualizar_salon" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+		        	</div>
+		        </div>		
 
-        <button type="submit" name="btn_actualizar_salon" id="btn_actualizar_salon" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+		    </div>
+		</div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
 
