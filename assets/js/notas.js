@@ -57,6 +57,7 @@ function inicio(){
 		}else{
 
 			toastr.success('Las Notas ingresadas son incorrectas', 'Success Alert', {timeOut: 5000});
+			$("#id_asignaturaseleN").attr("disabled", "disabled");
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 

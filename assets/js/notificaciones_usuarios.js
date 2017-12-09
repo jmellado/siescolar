@@ -149,7 +149,7 @@ function mostrarnotificaciones_usuarios(valor,pagina,cantidad,rol){
 					if (item.destinatario == 3) {
 						destino = "Estudiantes, Profesores y Acudientes";
 					}
-					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.id_notificacion+"</td><td>"+item.asunto+"</td><td style='display:none'>"+item.mensaje+"</td><td>"+item.fecha_evento+"</td><td style='display:none'>"+item.hora_evento+"</td><td>"+item.hora_evento1+"</td><td style='display:none'>"+item.destinatario+"</td><td>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.id_notificacion+"><i class='fa fa-search'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+item.id_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.id_notificacion+"</td><td>"+item.asunto+"</td><td style='display:none'>"+item.mensaje+"</td><td>"+item.fecha_evento+"</td><td style='display:none'>"+item.hora_evento+"</td><td>"+item.hora_evento1+"</td><td style='display:none'>"+item.destinatario+"</td><td style='display:none'>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.id_notificacion+"><i class='fa fa-search'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+item.id_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
 					i++;
 				});
 				

@@ -227,7 +227,7 @@ function mostrarareas(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.areas.length; i++) {
-					html +="<tr><td>"+registros.areas[i].id_area+"</td><td>"+registros.areas[i].nombre_area+"</td><td style='display:none'>"+registros.areas[i].ano_lectivo+"</td><td>"+registros.areas[i].nombre_ano_lectivo+"</td><td>"+registros.areas[i].estado_area+"</td><td><a class='btn btn-success' href="+registros.areas[i].id_area+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.areas[i].id_area+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.areas[i].id_area+"</td><td>"+registros.areas[i].nombre_area+"</td><td style='display:none'>"+registros.areas[i].ano_lectivo+"</td><td>"+registros.areas[i].nombre_ano_lectivo+"</td><td>"+registros.areas[i].estado_area+"</td><td><a class='btn btn-success' href="+registros.areas[i].id_area+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.areas[i].id_area+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_areas tbody").html(html);

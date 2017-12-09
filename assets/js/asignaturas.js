@@ -244,7 +244,7 @@ function mostrarasignaturas(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.asignaturas.length; i++) {
-					html +="<tr><td>"+registros.asignaturas[i].id_asignatura+"</td><td>"+registros.asignaturas[i].nombre_asignatura+"</td><td style='display:none'>"+registros.asignaturas[i].id_area+"</td><td>"+registros.asignaturas[i].nombre_area+"</td><td style='display:none'>"+registros.asignaturas[i].ano_lectivo+"</td><td>"+registros.asignaturas[i].nombre_ano_lectivo+"</td><td>"+registros.asignaturas[i].estado_asignatura+"</td><td><a class='btn btn-success' href="+registros.asignaturas[i].id_asignatura+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.asignaturas[i].id_asignatura+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.asignaturas[i].id_asignatura+"</td><td>"+registros.asignaturas[i].nombre_asignatura+"</td><td style='display:none'>"+registros.asignaturas[i].id_area+"</td><td>"+registros.asignaturas[i].nombre_area+"</td><td style='display:none'>"+registros.asignaturas[i].ano_lectivo+"</td><td>"+registros.asignaturas[i].nombre_ano_lectivo+"</td><td>"+registros.asignaturas[i].estado_asignatura+"</td><td><a class='btn btn-success' href="+registros.asignaturas[i].id_asignatura+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.asignaturas[i].id_asignatura+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_asignaturas tbody").html(html);

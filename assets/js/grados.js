@@ -259,7 +259,7 @@ function mostrargrados(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.grados.length; i++) {
-					html +="<tr><td>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td>"+registros.grados[i].ciclo_grado+"</td><td>"+registros.grados[i].jornada+"</td><td style='display:none'>"+registros.grados[i].ano_lectivo+"</td><td>"+registros.grados[i].nombre_ano_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td>"+registros.grados[i].ciclo_grado+"</td><td>"+registros.grados[i].jornada+"</td><td style='display:none'>"+registros.grados[i].ano_lectivo+"</td><td>"+registros.grados[i].nombre_ano_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_grados tbody").html(html);

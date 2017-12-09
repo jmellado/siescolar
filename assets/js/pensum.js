@@ -261,7 +261,7 @@ function mostrarpensum(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.pensum.length; i++) {
-					html +="<tr><td>"+registros.pensum[i].id_pensum+"</td><td style='display:none'>"+registros.pensum[i].id_grado+"</td><td>"+registros.pensum[i].nombre_grado+"</td><td style='display:none'>"+registros.pensum[i].id_asignatura+"</td><td>"+registros.pensum[i].nombre_asignatura+"</td><td>"+registros.pensum[i].intensidad_horaria+"</td><td style='display:none'>"+registros.pensum[i].ano_lectivo+"</td><td>"+registros.pensum[i].nombre_ano_lectivo+"</td><td>"+registros.pensum[i].estado_pensum+"</td><td><a class='btn btn-success' href="+registros.pensum[i].id_pensum+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.pensum[i].id_pensum+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.pensum[i].id_pensum+"</td><td style='display:none'>"+registros.pensum[i].id_grado+"</td><td>"+registros.pensum[i].nombre_grado+"</td><td style='display:none'>"+registros.pensum[i].id_asignatura+"</td><td>"+registros.pensum[i].nombre_asignatura+"</td><td>"+registros.pensum[i].intensidad_horaria+"</td><td style='display:none'>"+registros.pensum[i].ano_lectivo+"</td><td>"+registros.pensum[i].nombre_ano_lectivo+"</td><td>"+registros.pensum[i].estado_pensum+"</td><td><a class='btn btn-success' href="+registros.pensum[i].id_pensum+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.pensum[i].id_pensum+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_pensum tbody").html(html);

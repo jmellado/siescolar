@@ -227,7 +227,7 @@ function mostrargrupos(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.grupos.length; i++) {
-					html +="<tr><td>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td style='display:none'>"+registros.grupos[i].ano_lectivo+"</td><td>"+registros.grupos[i].nombre_ano_lectivo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td style='display:none'>"+registros.grupos[i].ano_lectivo+"</td><td>"+registros.grupos[i].nombre_ano_lectivo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_grupos tbody").html(html);

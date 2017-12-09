@@ -259,7 +259,7 @@ function mostrarsalones(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.salones.length; i++) {
-					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td>"+registros.salones[i].cupo_maximo+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+">eliminar</button></td></tr>";
+					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td>"+registros.salones[i].cupo_maximo+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_salones tbody").html(html);
