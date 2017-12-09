@@ -14,7 +14,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE NOTAS</h1>
+            <h1 class="page-header"><i class='fa fa-sticky-note'></i>&nbsp;GESTIÓN DE NOTAS</h1>
         </div>
     </div>
     <input type="hidden" id="rol" name="rol" value="<?php echo $this->session->userdata('rol')?>">
@@ -24,19 +24,21 @@
     	<div class="col-md-12">
 
     		<div class="panel panel-default">
-                <div class="panel-heading"></div>
+                <!--<div class="panel-heading"></div>-->
                 <div class="panel-body">
 
                 	<div class="col-sm-offset-4 col-sm-4">
-						<div class="input-group custom-search-form">
-							<input type="text" class="form-control" id="identificacion_profesorN" name="identificacion_profesorN" placeholder="Identificacion Profesor" onkeypress="return valida(event)">
-			    				<span class="input-group-btn">
-			        				<button class="btn btn-primary" type="button" name="btn_buscar_profesorN" id="btn_buscar_profesorN">
-			            				<i class="fa fa-search"></i>
-			            			</button>
-			        			</span>
+                		<div class="form-group">
+							<div class="input-group custom-search-form">
+								<input type="text" class="form-control" id="identificacion_profesorN" name="identificacion_profesorN" placeholder="Identificacion Profesor" onkeypress="return valida(event)">
+				    				<span class="input-group-btn">
+				        				<button class="btn btn-primary" type="button" name="btn_buscar_profesorN" id="btn_buscar_profesorN">
+				            				<i class="fa fa-search"></i>
+				            			</button>
+				        			</span>
+							</div>
 						</div>
-					</div></br></br>
+					</div>
 
 					<form role="form" action="<?php echo base_url(); ?>notas_controller/ingresar_notas" name="" method="post" id="form_notas">
 
@@ -223,17 +225,17 @@
 								<table border='1' id="lista_notas" class="table table-bordered table-condensed table-hover table-striped">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>Identificacion</th>
-											<th>Nombres</th>
-											<th>Apellido 1</th>
-											<th>Apellido 2</th>
-											<th>Nota 1</th>
-											<th>Nota 2</th>
-											<th>Nota 3</th>
-											<th>Nota 4</th>
-											<th>Nota Final</th>
-											<th># Fallas</th>
+											<th><i class='fa fa-sort-amount-asc'></i></th>
+											<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificacion</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido 1</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido 2</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 1</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 2</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 3</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 4</th>
+											<th><i class='fa fa-caret-right'></i>&nbsp;Nota Final</th>
+											<th><i class='fa fa-check-square-o'></i>&nbsp;Fallas</th>
 										</tr>
 									</thead>
 									<tbody>

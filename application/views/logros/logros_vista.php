@@ -8,34 +8,39 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE LOGROS</h1>
+            <h1 class="page-header"><i class='fa fa-line-chart'></i>&nbsp;GESTIÓN DE LOGROS</h1>
         </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_logro" id="btn_agregar_logro" class="btn btn-success">Agregar Logro</button>
+    	<div class="col-lg-3">
+    		<div class="form-group">
+    			<button type="submit" name="btn_agregar_logro" id="btn_agregar_logro" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Logro</button>
     		<!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_agregar_logro">Open Modal</button>-->
-    	</div></br>
+    		</div>
+    	</div>
 
-        <div class="col-lg-6">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_logro">Email</label>
-					<input type="text" class="form-control" id="buscar_logro" name="buscar_logro"
+    	<div class="col-lg-offset-2 col-lg-3">
+    		<div class="form-group">
+    			<div class="input-group">
+    				<input type="text" class="form-control" id="buscar_logro" name="buscar_logro"
 					           placeholder="Buscar..">
-				</div>
+					<span class="input-group-btn">
+						<button type="submit" name="btn_buscar_logro" id="btn_buscar_logro" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+    			</div>
+    		</div>	
+    	</div>
 
-				<button type="submit" name="btn_buscar_logro" id="btn_buscar_logro" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Listado De Logros</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Logros</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -52,13 +57,13 @@
 						<table border='1' id="lista_logros" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Nombre</th>
-									<th>Periodo</th>
-									<th>Profesor</th>
-									<th>Grado</th>
-									<th>Asignatura</th>
-									<th>AÑO LECTIVO</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Código</th>
+									<th><i class='fa fa-clock-o'></i>&nbsp;Periodo</th>
+									<th><i class='fa fa-user'></i>&nbsp;Profesor</th>
+									<th><i class='fa fa-graduation-cap'></i>&nbsp;Grado</th>
+									<th><i class='fa fa-clone'></i>&nbsp;Asignatura</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año Lectivo</th>
 									<th></th>
 									<th></th>
 								</tr>

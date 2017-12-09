@@ -8,17 +8,33 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE GRADOS</h1>
+            <h1 class="page-header"><i class='fa fa-graduation-cap'></i>&nbsp;GESTIÓN DE GRADOS</h1>
         </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_grado" id="btn_agregar_grado" class="btn btn-success">Agregar Grado</button>
-    	</div></br>
+    	<div class="col-lg-3">
+    		<div class="form-group">
+    			<button type="submit" name="btn_agregar_grado" id="btn_agregar_grado" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Grado</button>
+    		</div>	
+    	</div>
 
-        <div class="col-lg-6">
+    	<div class="col-lg-offset-2 col-lg-3">
+    		<div class="form-group">
+    			<div class="input-group">
+    				<input type="text" class="form-control" id="buscar_grado" name="buscar_grado"
+					           placeholder="Buscar..">
+					<span class="input-group-btn">
+						<button type="submit" name="btn_buscar_grado" id="btn_buscar_grado" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+    			</div>
+    		</div>	
+    	</div>
+
+        <!--<div class="col-lg-6">
             <form class="form-inline" role="form">
 				<div class="form-group">
 					<label class="sr-only" for="buscar_grado">Email</label>
@@ -28,13 +44,13 @@
 
 				<button type="submit" name="btn_buscar_grado" id="btn_buscar_grado" class="btn btn-primary">Buscar</button>
 			</form></br></br>
-        </div>
+        </div>-->
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Lista De Grados</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Grados</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -51,12 +67,12 @@
 						<table border='1' id="lista_grados" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Nombre</th>
-									<th>Ciclo</th>
-									<th>Jornada</th>
-									<th>Año lectivo</th>
-									<th>Estado</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-repeat'></i>&nbsp;Ciclo</th>
+									<th><i class='fa fa-calendar-o'></i>&nbsp;Jornada</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
+									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 									<th></th>
 								</tr>

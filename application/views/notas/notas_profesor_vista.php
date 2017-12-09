@@ -14,7 +14,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE NOTAS</h1>
+            <h1 class="page-header"><i class='fa fa-sticky-note'></i>&nbsp;GESTIÓN DE NOTAS</h1>
         </div>
     </div>
     <input type="hidden" id="rol" name="rol" value="<?php echo $this->session->userdata('rol')?>">
@@ -176,17 +176,17 @@
 								<table border='1' id="lista_notas" class="table table-bordered table-condensed table-hover table-striped">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>Identificacion</th>
-											<th>Nombres</th>
-											<th>Apellido 1</th>
-											<th>Apellido 2</th>
-											<th>Nota 1</th>
-											<th>Nota 2</th>
-											<th>Nota 3</th>
-											<th>Nota 4</th>
-											<th>Nota Final</th>
-											<th># Fallas</th>
+											<th><i class='fa fa-sort-amount-asc'></i></th>
+											<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificacion</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido 1</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido 2</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 1</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 2</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 3</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 4</th>
+											<th><i class='fa fa-caret-right'></i>&nbsp;Nota Final</th>
+											<th><i class='fa fa-check-square-o'></i>&nbsp;Fallas</th>
 										</tr>
 									</thead>
 									<tbody>

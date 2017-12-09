@@ -14,7 +14,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">IMPRESIÓN DE BOLETINES</h1>
+            <h1 class="page-header"><i class='fa fa-print'></i>&nbsp;IMPRESIÓN DE BOLETINES</h1>
         </div>
     </div>
     <input type="hidden" id="rol" name="rol" value="<?php echo $this->session->userdata('rol')?>">

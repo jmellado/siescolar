@@ -8,33 +8,38 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE CARGAS ACADEMICAS</h1>
+            <h1 class="page-header"><i class='fa fa-th'></i>&nbsp;GESTIÓN DE CARGAS ACADÉMICAS</h1>
         </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_cargas_academicas" id="btn_agregar_cargas_academicas" class="btn btn-success">Asignar Carga Academica</button>
-    	</div></br>
+    	<div class="col-lg-3">
+    		<div class="form-group">
+    			<button type="submit" name="btn_agregar_cargas_academicas" id="btn_agregar_cargas_academicas" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Asignar Carga Académica</button>
+    		</div>
+    	</div>
 
-        <div class="col-lg-6">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_cargas_academicas">Email</label>
-					<input type="text" class="form-control" id="buscar_cargas_academicas" name="buscar_cargas_academicas"
-					           placeholder="Introduce tu nombre">
-				</div>
-
-				<button type="submit" name="btn_buscar_cargas_academicas" id="btn_buscar_cargas_academicas" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>
+    	<div class="col-lg-offset-2 col-lg-3">
+    		<div class="form-group">
+    			<div class="input-group">
+    				<input type="text" class="form-control" id="buscar_cargas_academicas" name="buscar_cargas_academicas"
+					           placeholder="Buscar..">
+					<span class="input-group-btn">
+						<button type="submit" name="btn_buscar_cargas_academicas" id="btn_buscar_cargas_academicas" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+    			</div>
+    		</div>	
+    	</div>
+       
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Listado De Cargas Academicas</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Cargas Académicas</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -51,11 +56,11 @@
 						<table border='1' id="lista_cargas_academicas" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Profesor</th>
-									<th>Curso</th>
-									<th>Asignatura</th>
-									<th>Año lectivo</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-user'></i>&nbsp;Profesor</th>
+									<th><i class='fa fa-th-large'></i>&nbsp;Curso</th>
+									<th><i class='fa fa-clone'></i>&nbsp;Asignatura</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th></th>
 									<th></th>
 								</tr>

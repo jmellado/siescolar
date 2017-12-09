@@ -7,34 +7,39 @@
 <div class="container-fluid">
 
 	<div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE PROFESORES</h1>
-        </div>
+      <div class="col-lg-12">
+          <h1 class="page-header"><i class='fa fa-user'></i>&nbsp;GESTIÓN DE PROFESORES</h1>
+      </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_profesor" id="btn_agregar_profesor" class="btn btn-success">Agregar Profesor</button>
-    	</div></br>
+    	<div class="col-lg-3">
+            <div class="form-group">
+    		  <button type="submit" name="btn_agregar_profesor" id="btn_agregar_profesor" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Profesor</button>
+            </div>
+    	</div>
 
-        <div class="col-lg-6">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_grado">Email</label>
-					<input type="text" class="form-control" id="buscar_profesor" name="buscar_profesor"
-					           placeholder="Introduce tu nombre">
-				</div>
+	    <div class="col-lg-offset-2 col-lg-3">
+		    <div class="form-group">
+		    	<div class="input-group">
+			        <input type="text" class="form-control" id="buscar_profesor" name="buscar_profesor"
+			                 placeholder="Buscar..">
+			      	<span class="input-group-btn">
+				        <button type="submit" name="btn_buscar_profesor" id="btn_buscar_profesor" class="btn btn-primary">
+				         	<i class="fa fa-search"></i>
+				        </button>
+			      	</span>
+		        </div>
+		    </div>  
+	    </div>
 
-				<button type="submit" name="btn_buscar_profesor" id="btn_buscar_profesor" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Lista De Profesores</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Profesores</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -51,16 +56,16 @@
 						<table border='1' id="lista_profesores" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Identificacion</th>
-									<th>Nombre</th>
-									<th>Apellido1</th>
-									<th>Apellido2</th>
-									<th>Sexo</th>
-									<th>Fecha Nacimiento</th>
-									<th>Telefono</th>
-									<th>Correo</th>
-									<th>Direccion</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificacion</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido1</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido2</th>
+									<th><i class='fa fa-intersex'></i>&nbsp;Sexo</th>
+									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha Nacimiento</th>
+									<th><i class='fa fa-phone-square'></i>&nbsp;Telefono</th>
+									<th><i class='fa fa-envelope'></i>&nbsp;Correo</th>
+									<th><i class='fa fa-map'></i>&nbsp;Direccion</th>
 									<th></th>
 									<th></th>
 								</tr>

@@ -8,33 +8,38 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE PENSUM</h1>
+            <h1 class="page-header"><i class='fa fa-sitemap'></i>&nbsp;GESTIÓN DE PENSUM</h1>
         </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_pensum" id="btn_agregar_pensum" class="btn btn-success">Agregar Pensum</button>
-    	</div></br>
+    	<div class="col-lg-3">
+    		<div class="form-group">
+    			<button type="submit" name="btn_agregar_pensum" id="btn_agregar_pensum" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Pensum</button>
+    		</div>
+    	</div>
 
-        <div class="col-lg-6">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_pensum">Email</label>
-					<input type="text" class="form-control" id="buscar_pensum" name="buscar_pensum"
-					           placeholder="Introduce tu nombre">
-				</div>
+    	<div class="col-lg-offset-2 col-lg-3">
+    		<div class="form-group">
+    			<div class="input-group">
+    				<input type="text" class="form-control" id="buscar_pensum" name="buscar_pensum"
+					           placeholder="Buscar..">
+					<span class="input-group-btn">
+						<button type="submit" name="btn_buscar_pensum" id="btn_buscar_pensum" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+    			</div>
+    		</div>	
+    	</div>
 
-				<button type="submit" name="btn_buscar_pensum" id="btn_buscar_pensum" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Lista De Pensum</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Pensum</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -51,12 +56,12 @@
 						<table border='1' id="lista_pensum" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Grado</th>
-									<th>Asignatura</th>
-									<th>Horas</th>
-									<th>Año lectivo</th>
-									<th>Estado</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-graduation-cap'></i>&nbsp;Grado</th>
+									<th><i class='fa fa-clone'></i>&nbsp;Asignatura</th>
+									<th><i class='fa fa-clock-o'></i>&nbsp;Horas</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
+									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 									<th></th>
 								</tr>

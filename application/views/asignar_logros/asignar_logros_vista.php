@@ -16,7 +16,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">ASIGNACIÓN DE LOGROS</h1>
+            <h1 class="page-header"><i class='fa fa-indent'></i>&nbsp;ASIGNACIÓN DE LOGROS</h1>
         </div>
     </div>
     <input type="hidden" id="rol" name="rol" value="<?php echo $this->session->userdata('rol')?>">
@@ -30,15 +30,17 @@
                 <div class="panel-body">
 
                 	<div class="col-sm-offset-4 col-sm-4">
-						<div class="input-group custom-search-form">
-							<input type="text" class="form-control" id="identificacion_profesorAL" name="identificacion_profesorAL" placeholder="Identificacion Profesor" onkeypress="return valida(event)">
-			    				<span class="input-group-btn">
-			        				<button class="btn btn-primary" type="button" name="btn_buscar_profesorAL" id="btn_buscar_profesorAL">
-			            				<i class="fa fa-search"></i>
-			            			</button>
-			        			</span>
-						</div>
-					</div></br></br>
+                		<div class="form-group">
+							<div class="input-group custom-search-form">
+								<input type="text" class="form-control" id="identificacion_profesorAL" name="identificacion_profesorAL" placeholder="Identificacion Profesor" onkeypress="return valida(event)">
+				    				<span class="input-group-btn">
+				        				<button class="btn btn-primary" type="button" name="btn_buscar_profesorAL" id="btn_buscar_profesorAL">
+				            				<i class="fa fa-search"></i>
+				            			</button>
+				        			</span>
+							</div>
+						</div>	
+					</div>
 
 					<form role="form" action="<?php echo base_url(); ?>logros_controller/ingresar_notas" name="" method="post" id="form_asignar_logros">
 
@@ -168,7 +170,7 @@
 										</div>
 
 										<div class="form-group">
-											<label for="id_estudiante">Estudiantes:</label>
+											<label for="id_estudiante"><i class='fa fa-group'></i>&nbsp;Estudiantes:</label>
 											<div id="estudiantesAL1">
 												<select class="form-control" id="id_estudianteAL" name="id_persona" size="8">
 															    
@@ -177,7 +179,7 @@
 										</div>
 
 										<div class="form-group">
-											<label for="calificacion">Calificación</label>
+											<label for="calificacion"><i class='fa fa-chevron-right'></i>&nbsp;Calificación</label>
 											<input type="text" class="form-control" id="calificacion" name="calificacion" readonly>
 										</div>
 
@@ -195,7 +197,7 @@
 										<table border='1' id="lista_logrosAL" class="table table-bordered table-condensed table-hover table-striped">
 											<thead>
 												<tr>
-													<th>#</th>
+													<th><i class='fa fa-sort-amount-asc'></i></th>
 													<th>Seleccionar</th>
 													<th>Código</th>
 													<th>Logro</th>

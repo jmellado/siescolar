@@ -8,33 +8,38 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE GRUPOS</h1>
+            <h1 class="page-header"><i class='fa fa-object-group'></i>&nbsp;GESTIÓN DE GRUPOS</h1>
         </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_grupo" id="btn_agregar_grupo" class="btn btn-success">Agregar Grupo</button>
-    	</div></br>
+    	<div class="col-lg-3">
+    		<div class="form-group">
+    			<button type="submit" name="btn_agregar_grupo" id="btn_agregar_grupo" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Grupo</button>
+    		</div>	
+    	</div>
 
-        <div class="col-lg-6">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_grupo">Email</label>
-					<input type="text" class="form-control" id="buscar_grupo" name="buscar_grupo"
-					           placeholder="Introduce tu nombre">
-				</div>
+    	<div class="col-lg-offset-2 col-lg-3">
+    		<div class="form-group">
+    			<div class="input-group">
+    				<input type="text" class="form-control" id="buscar_grupo" name="buscar_grupo"
+					           placeholder="Buscar..">
+					<span class="input-group-btn">
+						<button type="submit" name="btn_buscar_grupo" id="btn_buscar_grupo" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+    			</div>
+    		</div>	
+    	</div>
 
-				<button type="submit" name="btn_buscar_grupo" id="btn_buscar_grupo" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Lista De Grupos</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Grupos</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -51,10 +56,10 @@
 						<table border='1' id="lista_grupos" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Nombre</th>
-									<th>Año lectivo</th>
-									<th>Estado</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
+									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 									<th></th>
 								</tr>

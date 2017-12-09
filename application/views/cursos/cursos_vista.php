@@ -8,33 +8,38 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">GESTIÓN DE CURSOS</h1>
+            <h1 class="page-header"><i class='fa fa-th-large'></i>&nbsp;GESTIÓN DE CURSOS</h1>
         </div>
     </div>
 
     <div class="row">
 
-    	<div class="col-lg-6">
-    		<button type="submit" name="btn_agregar_curso" id="btn_agregar_curso" class="btn btn-success">Agregar Curso</button>
-    	</div></br>
+    	<div class="col-lg-3">
+    		<div class="form-group">
+    			<button type="submit" name="btn_agregar_curso" id="btn_agregar_curso" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Curso</button>
+    		</div>	
+    	</div>
 
-        <div class="col-lg-4">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_curso">Email</label>
-					<input type="text" class="form-control" id="buscar_curso" name="buscar_curso"
+    	<div class="col-lg-offset-2 col-lg-3">
+    		<div class="form-group">
+    			<div class="input-group">
+    				<input type="text" class="form-control" id="buscar_curso" name="buscar_curso"
 					           placeholder="Buscar..">
-				</div>
+					<span class="input-group-btn">
+						<button type="submit" name="btn_buscar_curso" id="btn_buscar_curso" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+    			</div>
+    		</div>	
+    	</div>
 
-				<button type="submit" name="btn_buscar_curso" id="btn_buscar_curso" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>
     </div>
 
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading">Listado De Cursos</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Listado De Cursos</div>
     				<div class="panel-body">
 
     					<div class="form-group">
@@ -51,14 +56,14 @@
 						<table border='1' id="lista_cursos" class="table table-bordered table-condensed table-hover table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Grado</th>
-									<th>Grupo</th>
-									<th>Aula</th>
-									<th>Director</th>
-									<th>Cupo Maximo</th>
-									<th>Jornada</th>
-									<th>Año lectivo</th>
+									<th><i class='fa fa-sort-amount-asc'></i></th>
+									<th><i class='fa fa-graduation-cap'></i>&nbsp;Grado</th>
+									<th><i class='fa fa-object-group'></i>&nbsp;Grupo</th>
+									<th><i class='fa fa-institution'></i>&nbsp;Aula</th>
+									<th><i class='fa fa-user'></i>&nbsp;Director</th>
+									<th><i class='fa fa-external-link-square'></i>&nbsp;Cupo Maximo</th>
+									<th><i class='fa fa-calendar-o'></i>&nbsp;Jornada</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th></th>
 									<th></th>
 								</tr>

@@ -8,7 +8,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">DATOS DE LA INSTITUCIÓN EDUCATIVA</h1>
+            <h1 class="page-header"><i class='fa fa-clipboard'></i>&nbsp;DATOS DE LA INSTITUCIÓN EDUCATIVA</h1>
         </div>
     </div>
 
