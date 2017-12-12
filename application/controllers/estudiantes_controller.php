@@ -17,7 +17,6 @@ class Estudiantes_controller extends CI_Controller {
 		{
 			redirect(base_url().'login_controller');
 		}
-		//$this->load->view('estudiantes/registrar2');
 		$this->template->load('roles/rol_administrador_vista', 'estudiantes/registrar');
 	}
 
@@ -28,7 +27,6 @@ class Estudiantes_controller extends CI_Controller {
 		{
 			redirect(base_url().'login_controller');
 		}
-		//$this->load->view('estudiantes/consultar2');
 		$this->template->load('roles/rol_administrador_vista', 'estudiantes/consultar');
 	}
 
@@ -36,9 +34,21 @@ class Estudiantes_controller extends CI_Controller {
 	public function insertar(){
 
 		$this->form_validation->set_rules('identificacion', 'id de usuario', 'required|numeric|max_length[10]');
-        $this->form_validation->set_rules('nombres', 'nombre de usuario', 'required|alpha_spaces');
-        $this->form_validation->set_rules('apellido1', 'apellido de usuario', 'required|alpha_spaces');
+        $this->form_validation->set_rules('nombres', 'nombres', 'required|alpha_spaces');
+        $this->form_validation->set_rules('apellido1', 'primer apellido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('apellido2', 'segundo apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('sexo', 'sexo', 'required|min_length[1]|max_length[1]');
+        $this->form_validation->set_rules('fecha_nacimiento', 'fecha de nacimiento', 'required');
+        $this->form_validation->set_rules('lugar_nacimiento', 'lugar de nacimiento', 'required|alpha_spaces');
+        $this->form_validation->set_rules('tipo_sangre', 'tipo de sangre', 'required');
+        $this->form_validation->set_rules('eps', 'eps', 'required|alpha_spaces');
+        $this->form_validation->set_rules('poblacion', 'poblacion', 'required|alpha_spaces');
+        $this->form_validation->set_rules('email', 'correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('direccion', 'dieccion', 'required|alpha_spaces');
+        $this->form_validation->set_rules('telefono', 'telefono', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('barrio', 'barrio', 'required|alpha_spaces');
+        $this->form_validation->set_rules('institucion_procedencia', 'institucion procedencia', 'required|alpha_spaces');
+        $this->form_validation->set_rules('discapacidad', 'discapacidad', 'required|alpha_spaces');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -49,8 +59,7 @@ class Estudiantes_controller extends CI_Controller {
         	 $ultimo_id = $this->estudiantes_model->obtener_ultimo_id();
 
         	 //obtengo el ultimo id de padres + 1 
-        	 $ultimo_id_padre = $this->estudiantes_model->obtener_ultimo_id_padres();
-        	 $ultimo_id_madre = $ultimo_id_padre+1;
+        	 $ultimo_id_padres = $this->estudiantes_model->obtener_ultimo_id_padres();
 
         	 //array para insertar en la tabla personas----------
         	$estudiante = array(
@@ -86,7 +95,7 @@ class Estudiantes_controller extends CI_Controller {
 			$username = $user.$name.$ultimo_id;
 
 			//array para insertar en la tabla usuarios
-			$estudiante3 = array(
+			$usuario = array(
 			'id_usuario' =>$ultimo_id,
 			'id_persona' =>$ultimo_id,
 			'id_rol' => 2,
@@ -94,37 +103,29 @@ class Estudiantes_controller extends CI_Controller {
 			'password' =>sha1($this->input->post('identificacion')),
 			'acceso' =>1);
 
-			$estado = 'activo';
-			//array del padre - para insertar en la tabla padres
-			$padre = array(
-			'id_padre' =>$ultimo_id_padre,
-			'identificacion' =>$this->input->post('identificacion_padre'),
+			//array de los padres - para insertar en la tabla padres
+			$padres = array(
+			'id_padres' =>$ultimo_id_padres,
 			'id_estudiante' =>$ultimo_id,
-			'nombres' =>ucwords($this->input->post('nombres_padre')),
-			'apellidos' =>ucwords($this->input->post('apellidos_padre')),
-			'ocupacion' =>$this->input->post('ocupacion_padre'),
-			'telefono' =>$this->input->post('telefono_padre'),
-			'telefono_trabajo' =>$this->input->post('telefono_trabajo_padre'),
-			'direccion_trabajo' =>$this->input->post('direccion_trabajo_padre'),
-			'estado_padre' =>$estado);
+			'identificacion_padre' =>$this->input->post('identificacion_padre'),
+			'nombres_padre' =>ucwords($this->input->post('nombres_padre')),
+			'apellidos_padre' =>ucwords($this->input->post('apellidos_padre')),
+			'ocupacion_padre' =>ucwords($this->input->post('ocupacion_padre')),
+			'telefono_padre' =>$this->input->post('telefono_padre'),
+			'telefono_trabajo_padre' =>$this->input->post('telefono_trabajo_padre'),
+			'direccion_trabajo_padre' =>ucwords($this->input->post('direccion_trabajo_padre')),
+			'identificacion_madre' =>$this->input->post('identificacion_madre'),
+			'nombres_madre' =>ucwords($this->input->post('nombres_madre')),
+			'apellidos_madre' =>ucwords($this->input->post('apellidos_madre')),
+			'ocupacion_madre' =>ucwords($this->input->post('ocupacion_madre')),
+			'telefono_madre' =>$this->input->post('telefono_madre'),
+			'telefono_trabajo_madre' =>$this->input->post('telefono_trabajo_madre'),
+			'direccion_trabajo_madre' =>ucwords($this->input->post('direccion_trabajo_madre')));
 
-			//array de la madre - para insertar en la tabla padres
-			$madre = array(
-			'id_padre' =>$ultimo_id_madre,
-			'identificacion' =>$this->input->post('identificacion_madre'),
-			'id_estudiante' =>$ultimo_id,
-			'nombres' =>ucwords($this->input->post('nombres_madre')),
-			'apellidos' =>ucwords($this->input->post('apellidos_madre')),
-			'ocupacion' =>$this->input->post('ocupacion_madre'),
-			'telefono' =>$this->input->post('telefono_madre'),
-			'telefono_trabajo' =>$this->input->post('telefono_trabajo_madre'),
-			'direccion_trabajo' =>$this->input->post('direccion_trabajo_madre'),
-			'estado_padre' =>$estado);
-			
 
 			if ($this->estudiantes_model->validar_existencia($this->input->post('identificacion'))){
 
-				$respuesta=$this->estudiantes_model->insertar_estudiante($estudiante,$estudiante2,$estudiante3,$padre,$madre);
+				$respuesta=$this->estudiantes_model->insertar_estudiante($estudiante,$estudiante2,$usuario,$padres);
 				
 
 				if($respuesta==true){
@@ -140,7 +141,7 @@ class Estudiantes_controller extends CI_Controller {
 			}
 			else{
 
-				echo "estudiante ya existe";
+				echo "estudianteyaexiste";
 			}
 
 
@@ -180,47 +181,64 @@ class Estudiantes_controller extends CI_Controller {
 
 		//array para actualizar en la tabla personas----------
 		$estudiante = array(
-        	'id_persona' =>$this->input->post('id_persona'),	
-			'identificacion' =>$this->input->post('identificacion'),
-			'tipo_id' =>$this->input->post('tipo_id'),
-			'fecha_expedicion' =>$this->input->post('fecha_expedicion'),
-			'departamento_expedicion' =>$this->input->post('departamento_expedicion'),
-			'municipio_expedicion' =>$this->input->post('municipio_expedicion'),
-			'nombres' =>ucwords($this->input->post('nombres')),
-			'apellido1' =>ucwords($this->input->post('apellido1')),
-			'apellido2' =>ucwords($this->input->post('apellido2')),
-			'sexo' =>$this->input->post('sexo'),
-			'fecha_nacimiento' =>$this->input->post('fecha_nacimiento'),
-			'lugar_nacimiento' =>$this->input->post('lugar_nacimiento'),
-			'tipo_sangre' =>$this->input->post('tipo_sangre'),
-			'eps' =>ucwords($this->input->post('eps')),
-			'poblacion' =>$this->input->post('poblacion'),
-			'telefono' =>$this->input->post('telefono'),
-			'email' =>$this->input->post('correo'),
-			'direccion' =>$this->input->post('direccion'),
-			'barrio' =>ucwords($this->input->post('barrio')) );
+    	'id_persona' =>$this->input->post('id_persona'),	
+		'identificacion' =>$this->input->post('identificacion'),
+		'tipo_id' =>$this->input->post('tipo_id'),
+		'fecha_expedicion' =>$this->input->post('fecha_expedicion'),
+		'departamento_expedicion' =>$this->input->post('departamento_expedicion'),
+		'municipio_expedicion' =>$this->input->post('municipio_expedicion'),
+		'nombres' =>ucwords($this->input->post('nombres')),
+		'apellido1' =>ucwords($this->input->post('apellido1')),
+		'apellido2' =>ucwords($this->input->post('apellido2')),
+		'sexo' =>$this->input->post('sexo'),
+		'fecha_nacimiento' =>$this->input->post('fecha_nacimiento'),
+		'lugar_nacimiento' =>$this->input->post('lugar_nacimiento'),
+		'tipo_sangre' =>$this->input->post('tipo_sangre'),
+		'eps' =>ucwords($this->input->post('eps')),
+		'poblacion' =>$this->input->post('poblacion'),
+		'telefono' =>$this->input->post('telefono'),
+		'email' =>$this->input->post('correo'),
+		'direccion' =>$this->input->post('direccion'),
+		'barrio' =>ucwords($this->input->post('barrio')) );
 
 		//array para actualizar en la tabla estudiantes----------
 		$estudiante2 = array(
-			'id_persona' =>$this->input->post('id_persona'),
-			'institucion_procedencia' =>ucwords($this->input->post('institucion_procedencia')),
-			'discapacidad' =>$this->input->post('discapacidad'));
+		'id_persona' =>$this->input->post('id_persona'),
+		'institucion_procedencia' =>ucwords($this->input->post('institucion_procedencia')),
+		'discapacidad' =>$this->input->post('discapacidad'));
 
 		//aqui creamos el username de un estudiante
-			$id_persona = $this->input->post('id_persona');
-			$user = strtolower(substr($this->input->post('nombres'), 0, 2));
-			$name = strtolower($this->input->post('apellido1'));
-			$username = $user.$name.$id_persona;
+		$id_persona = $this->input->post('id_persona');
+		$user = strtolower(substr($this->input->post('nombres'), 0, 2));
+		$name = strtolower($this->input->post('apellido1'));
+		$username = $user.$name.$id_persona;
 
 		//array para actualizar en la tabla usuarios----------	
-		$estudiante3 = array(
-			'id_usuario' =>$this->input->post('id_persona'),
-			'id_persona' =>$this->input->post('id_persona'),
-			'id_rol' => 2,
-			'username' =>$username,
-			'password' =>sha1($this->input->post('identificacion')),
-			'acceso' =>1);
+		$usuario = array(
+		'id_usuario' =>$this->input->post('id_persona'),
+		'id_persona' =>$this->input->post('id_persona'),
+		'id_rol' => 2,
+		'username' =>$username,
+		'password' =>sha1($this->input->post('identificacion')),
+		'acceso' =>1);
 
+		//array de los padres - para insertar en la tabla padres
+		$padres = array(
+		'id_estudiante' =>$this->input->post('id_persona'),
+		'identificacion_padre' =>$this->input->post('identificacion_padre'),
+		'nombres_padre' =>ucwords($this->input->post('nombres_padre')),
+		'apellidos_padre' =>ucwords($this->input->post('apellidos_padre')),
+		'ocupacion_padre' =>ucwords($this->input->post('ocupacion_padre')),
+		'telefono_padre' =>$this->input->post('telefono_padre'),
+		'telefono_trabajo_padre' =>$this->input->post('telefono_trabajo_padre'),
+		'direccion_trabajo_padre' =>ucwords($this->input->post('direccion_trabajo_padre')),
+		'identificacion_madre' =>$this->input->post('identificacion_madre'),
+		'nombres_madre' =>ucwords($this->input->post('nombres_madre')),
+		'apellidos_madre' =>ucwords($this->input->post('apellidos_madre')),
+		'ocupacion_madre' =>ucwords($this->input->post('ocupacion_madre')),
+		'telefono_madre' =>$this->input->post('telefono_madre'),
+		'telefono_trabajo_madre' =>$this->input->post('telefono_trabajo_madre'),
+		'direccion_trabajo_madre' =>ucwords($this->input->post('direccion_trabajo_madre')));
 		
 
 
@@ -229,7 +247,8 @@ class Estudiantes_controller extends CI_Controller {
           
                 $respuesta=$this->estudiantes_model->modificar_estudiante($this->input->post('id_persona'),$estudiante);
                 $respuesta2=$this->estudiantes_model->modificar_estudiante2($this->input->post('id_persona'),$estudiante2); 
-                $respuesta3=$this->estudiantes_model->modificar_estudiante3($this->input->post('id_persona'),$estudiante3);   
+                $respuesta3=$this->estudiantes_model->modificar_usuario($this->input->post('id_persona'),$usuario);
+                $respuesta4=$this->estudiantes_model->modificar_padres($this->input->post('id_persona'),$padres);    
                 if($respuesta==true && $respuesta2==true && $respuesta3==true){
                     
                     echo "registro actualizado";
@@ -240,7 +259,7 @@ class Estudiantes_controller extends CI_Controller {
                 //redirect(base_url());
          
         }else{
-            //redirect(base_url()); 
+            
             echo "digite valor numerico para la cedula";
         }
     }
@@ -253,8 +272,7 @@ class Estudiantes_controller extends CI_Controller {
 
 			
 	        $respuesta=$this->estudiantes_model->eliminar_estudiante($id);
-	        //$respuesta2=$this->estudiantes_model->eliminar_estudiante2($id);
-			//$respuesta3=$this->estudiantes_model->eliminar_estudiante3($id);	
+	        	
           	if($respuesta==true){
               
               	echo "eliminado correctamente";
@@ -264,7 +282,7 @@ class Estudiantes_controller extends CI_Controller {
           	}
           //redirect(base_url());
         }else{
-          //redirect(base_url());
+          
           	echo "digite valor numerico para la cedula";
         }
     }

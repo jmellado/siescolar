@@ -21,7 +21,7 @@ function inicio(){
 
 					
 					if (respuesta==="registroguardado") {
-						//alert("registro guardado satisfactoriamente");
+
 						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
 						$("#mensajes-error").hide();
 						$("#form_estudiantes")[0].reset();
@@ -29,15 +29,15 @@ function inicio(){
 
 					}
 					else if(respuesta==="registro no guardado"){
-						//alert("registronoguardado");
+					
 						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
 						$("#mensajes-error").hide();
 							
 
 					}
-					else if(respuesta==="estudiante ya existe"){
-						//alert("ya esta registrado");
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+					else if(respuesta==="estudianteyaexiste"){
+						
+						toastr.success('Ya Fue Registrado', 'Success Alert', {timeOut: 5000});
 						$("#mensajes-error").hide();
 							
 
@@ -53,10 +53,11 @@ function inicio(){
 				}
 
 			});
-		}/*else{
-			alert("formulario incorrecto");
-			alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
-		}*/
+		}else{
+
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+		}
 
 	});
 
@@ -67,12 +68,7 @@ function inicio(){
 		valorcantidad = $("#cantidad").val();
 		mostrarestudiantes(buscar,1,valorcantidad);
 	});
-
-
-	/*$("body").on("#btn_buscar").click(function(){
-		alert("pulso");
-       mostrarestudiantes("");
-    });*/
+   
 
     $("body").on("click","#btn_buscar",function(event){
 		//alert("pulso");
@@ -83,27 +79,44 @@ function inicio(){
     $("body").on("click","#lista_estudiantes a",function(event){
 		event.preventDefault();
 		$("#myModal").modal();
-		idsele = $(this).attr("href");
-		id_personasele = $(this).parent().parent().children("td:eq(0)").text();
-		tipo_idsele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		fecha_expedicionsele = $(this).parent().parent().children("td:eq(3)").text();
-		departamento_expedicionsele = $(this).parent().parent().children("td:eq(4)").text();
-		municipio_expedicionsele = $(this).parent().parent().children("td:eq(5)").text();
-		nombressele = $(this).parent().parent().children("td:eq(6)").text();
-		apellido1sele = $(this).parent().parent().children("td:eq(7)").text();
-		apellido2sele = $(this).parent().parent().children("td:eq(8)").text();
-		sexosele = $(this).parent().parent().children("td:eq(9)").text();
-		fecha_nacimientosele = $(this).parent().parent().children("td:eq(10)").text();
-		lugar_nacimientosele = $(this).parent().parent().children("td:eq(11)").text();
-		tipo_sangresele = $(this).parent().parent().children("td:eq(12)").text();
-		epssele = $(this).parent().parent().children("td:eq(13)").text();
-		poblacionsele = $(this).parent().parent().children("td:eq(14)").text();
-		telefonosele = $(this).parent().parent().children("td:eq(15)").text();
-		correosele = $(this).parent().parent().children("td:eq(16)").text();
-		direccionsele = $(this).parent().parent().children("td:eq(17)").text();
-		barriosele = $(this).parent().parent().children("td:eq(18)").text();
-		institucion_procedenciasele = $(this).parent().parent().children("td:eq(19)").text();
-		discapacidadsele = $(this).parent().parent().children("td:eq(20)").text();
+		id_personasele = $(this).attr("href");
+		idsele = $(this).parent().parent().children("td:eq(2)").text();
+		tipo_idsele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		fecha_expedicionsele = $(this).parent().parent().children("td:eq(4)").text();
+		departamento_expedicionsele = $(this).parent().parent().children("td:eq(5)").text();
+		municipio_expedicionsele = $(this).parent().parent().children("td:eq(6)").text();
+		nombressele = $(this).parent().parent().children("td:eq(7)").text();
+		apellido1sele = $(this).parent().parent().children("td:eq(8)").text();
+		apellido2sele = $(this).parent().parent().children("td:eq(9)").text();
+		sexosele = $(this).parent().parent().children("td:eq(10)").text();
+		fecha_nacimientosele = $(this).parent().parent().children("td:eq(11)").text();
+		lugar_nacimientosele = $(this).parent().parent().children("td:eq(12)").text();
+		tipo_sangresele = $(this).parent().parent().children("td:eq(13)").text();
+		epssele = $(this).parent().parent().children("td:eq(14)").text();
+		poblacionsele = $(this).parent().parent().children("td:eq(15)").text();
+		telefonosele = $(this).parent().parent().children("td:eq(16)").text();
+		correosele = $(this).parent().parent().children("td:eq(17)").text();
+		direccionsele = $(this).parent().parent().children("td:eq(18)").text();
+		barriosele = $(this).parent().parent().children("td:eq(19)").text();
+		institucion_procedenciasele = $(this).parent().parent().children("td:eq(20)").text();
+		discapacidadsele = $(this).parent().parent().children("td:eq(21)").text();
+
+		identificacion_padresele = $(this).parent().parent().children("td:eq(22)").text();
+		nombres_padresele = $(this).parent().parent().children("td:eq(23)").text();
+		apellidos_padresele = $(this).parent().parent().children("td:eq(24)").text();
+		ocupacion_padresele = $(this).parent().parent().children("td:eq(25)").text();
+		telefono_padresele = $(this).parent().parent().children("td:eq(26)").text();
+		telefono_trabajo_padresele = $(this).parent().parent().children("td:eq(27)").text();
+		direccion_trabajo_padresele = $(this).parent().parent().children("td:eq(28)").text();
+
+		identificacion_madresele = $(this).parent().parent().children("td:eq(29)").text();
+		nombres_madresele = $(this).parent().parent().children("td:eq(30)").text();
+		apellidos_madresele = $(this).parent().parent().children("td:eq(31)").text();
+		ocupacion_madresele = $(this).parent().parent().children("td:eq(32)").text();
+		telefono_madresele = $(this).parent().parent().children("td:eq(33)").text();
+		telefono_trabajo_madresele = $(this).parent().parent().children("td:eq(34)").text();
+		direccion_trabajo_madresele = $(this).parent().parent().children("td:eq(35)").text();
+
 		//alert(municipio_expedicionsele);
 
 		llenarcombo_municipios(departamento_expedicionsele,municipio_expedicionsele);
@@ -128,6 +141,22 @@ function inicio(){
         $("#barriosele").val(barriosele);
         $("#institucion_procedenciasele").val(institucion_procedenciasele);
         $("#discapacidadsele").val(discapacidadsele);
+
+        $("#identificacion_padresele").val(identificacion_padresele);
+        $("#nombres_padresele").val(nombres_padresele);
+        $("#apellidos_padresele").val(apellidos_padresele);
+        $("#ocupacion_padresele").val(ocupacion_padresele);
+        $("#telefono_padresele").val(telefono_padresele);
+        $("#telefono_trabajo_padresele").val(telefono_trabajo_padresele);
+        $("#direccion_trabajo_padresele").val(direccion_trabajo_padresele);
+
+        $("#identificacion_madresele").val(identificacion_madresele);
+        $("#nombres_madresele").val(nombres_madresele);
+        $("#apellidos_madresele").val(apellidos_madresele);
+        $("#ocupacion_madresele").val(ocupacion_madresele);
+        $("#telefono_madresele").val(telefono_madresele);
+        $("#telefono_trabajo_madresele").val(telefono_trabajo_madresele);
+        $("#direccion_trabajo_madresele").val(direccion_trabajo_madresele);
         desbloquear_cajas_texto();
 
 	});
@@ -135,7 +164,7 @@ function inicio(){
 	$("body").on("click","#lista_estudiantes button",function(event){
 		event.preventDefault();
 		idsele = $(this).attr("value");
-		//alert("boton eliminar"+idsele);
+		
 		if(confirm("esta seguro de eliminar el registro?")){
 			eliminar(idsele);
 
@@ -144,14 +173,13 @@ function inicio(){
 	});
 
     $("body").on("click", "#btn_actualizar", function(event){
-       if($("#form_estudiantes_actualizar").valid()==true){
-       	actualizar();
-       	bloquear_cajas_texto();
+    	if($("#form_estudiantes_actualizar").valid()==true){
+       		actualizar();
+       		bloquear_cajas_texto();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_estudiantes_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+       	else{
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
 		}
        
     });
@@ -181,10 +209,243 @@ function inicio(){
     $("#departamento_expedicionsele").change(function(){
     	id_departamento = $(this).val();
     	llenarcombo_municipios(id_departamento,null);
+    	$("#municipio_expedicionsele").removeAttr("disabled");
     });
 
     
-	$("#form_estudiantes, #form_estudiantes_actualizar").validate({
+	$("#form_estudiantes").validate({
+
+    	rules:{
+
+			identificacion:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			tipo_id:{
+				required: true,
+				maxlength: 2
+				
+			},
+
+			fecha_expedicion:{
+				required: true,
+				date: true
+				
+			},
+
+			departamento_expedicion:{
+				required: true
+				
+				
+			},
+
+			municipio_expedicion:{
+				required: true
+				
+				
+			},
+
+			nombres:{
+				required: true,
+				maxlength: 40,
+				lettersonly: true
+				
+			},
+
+			apellido1:{
+				required: true,
+				maxlength: 15,
+				lettersonly: true
+				
+			},
+
+			apellido2:{
+				required: true,
+				maxlength: 15,
+				lettersonly: true
+				
+			},
+
+			sexo:{
+				required: true,
+				maxlength: 15
+				
+			},
+
+			fecha_nacimiento:{
+				required: true,
+				date: true
+				
+			},
+
+			lugar_nacimiento:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			tipo_sangre:{
+				required: true,
+				maxlength: 2,
+					
+
+			},
+
+			eps:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			poblacion:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			telefono:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			correo:{
+				required: true,
+				email: true,
+				maxlength: 50	
+
+			},
+
+			direccion:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio:{
+				required: true,
+				maxlength: 40	
+
+			},
+
+			institucion_procedencia:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			discapacidad:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			identificacion_padre:{
+				required: true,
+				maxlength: 10,
+				digits: true
+
+			},
+
+			nombres_padre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			apellidos_padre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			ocupacion_padre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			telefono_padre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			telefono_trabajo_padre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			direccion_trabajo_padre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			identificacion_madre:{
+				required: true,
+				maxlength: 10,
+				digits: true
+
+			},
+
+			nombres_madre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			apellidos_madre:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			ocupacion_madre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			telefono_madre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			telefono_trabajo_madre:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			direccion_trabajo_madre:{
+				required: true,
+				maxlength: 50	
+
+			}
+
+
+
+		}
+
+
+	});
+
+	$("#form_estudiantes_actualizar").validate({
 
     	rules:{
 
@@ -434,17 +695,17 @@ function mostrarestudiantes(valor,pagina,cantidad){
 		type:"post",
 		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad},
 		success:function(respuesta) {
-				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
+				
+				//alert(""+respuesta);
 				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
-				html="<table border='1' class='table table-bordered table-condensed table-hover table-striped'>";
-				html+="<tr><th>ID0</th><th>ID1</th><th>TIPO_ID</th><th style='display:none'>FECHA EXPEDICION</th><th style='display:none'>DEPARTAMENTO EXPEDICION</th><th style='display:none'>MUNICIPIO EXPEDICION</th><th>NOMBRES</th><th>APELLIDO1</th><th>APELLIDO2</th><th>SEXO</th><th>FECHA NACIMIENTO</th><th style='display:none'>LUGAR NACIMIENTO</th><th>TIPO SANGRE</th><th style='display:none'>EPS</th><th style='display:none'>POBLACION</th><th>TELEFONO</th><th>CORREO</th><th>DIRECCION</th><th>BARRIO</th><th style='display:none'>INSTITUCION PROCEDENCIA</th><th style='display:none'>DISCAPACIDAD</th><th></th><th>ACCIONES</th></tr>";
+				html="";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].id_departamento+"</td><td style='display:none'>"+registros.estudiantes[i].id_municipio+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td></td><td><a class='btn btn-success' href="+registros.estudiantes[i].identificacion+">editar</a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+">eliminar</button></td></tr>";
+					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td style='display:none'>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].id_departamento+"</td><td style='display:none'>"+registros.estudiantes[i].id_municipio+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td style='display:none'>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td style='display:none'>"+registros.estudiantes[i].identificacion_padre+"</td><td style='display:none'>"+registros.estudiantes[i].nombres_padre+"</td><td style='display:none'>"+registros.estudiantes[i].apellidos_padre+"</td><td style='display:none'>"+registros.estudiantes[i].ocupacion_padre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_padre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_trabajo_padre+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_trabajo_padre+"</td><td style='display:none'>"+registros.estudiantes[i].identificacion_madre+"</td><td style='display:none'>"+registros.estudiantes[i].nombres_madre+"</td><td style='display:none'>"+registros.estudiantes[i].apellidos_madre+"</td><td style='display:none'>"+registros.estudiantes[i].ocupacion_madre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_madre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_trabajo_madre+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_trabajo_madre+"</td><td><a class='btn btn-success' href="+registros.estudiantes[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				html +="</table>";
-				$("#lista_estudiantes").html(html);
+				$("#lista_estudiantes tbody").html(html);
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -529,7 +790,6 @@ function mostrarestudiantes(valor,pagina,cantidad){
 function actualizar(){
 
 	$.ajax({
-		//url:"http://localhost/siescolar/estudiantes_controller/modificar",
 		url:base_url+"estudiantes_controller/modificar",
 		type:"post",
         data:$("#form_estudiantes_actualizar").serialize(),
@@ -553,7 +813,6 @@ function actualizar(){
 function eliminar(valor){
 
 	$.ajax({
-		//url:"http://localhost/siescolar/estudiantes_controller/eliminar",
 		url:base_url+"estudiantes_controller/eliminar",
 		type:"post",
         data:{id:valor},

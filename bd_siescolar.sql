@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2017 a las 02:28:11
+-- Tiempo de generación: 12-12-2017 a las 23:59:12
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -1636,17 +1636,32 @@ CREATE TABLE `notificaciones` (
 --
 
 CREATE TABLE `padres` (
-  `id_padre` int(11) NOT NULL,
-  `identificacion` varchar(10) NOT NULL,
+  `id_padres` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `nombres` varchar(50) NOT NULL,
-  `apellidos` varchar(50) NOT NULL,
-  `ocupacion` varchar(45) NOT NULL,
-  `telefono` varchar(10) NOT NULL,
-  `telefono_trabajo` varchar(10) NOT NULL,
-  `direccion_trabajo` varchar(45) NOT NULL,
-  `estado_padre` varchar(8) NOT NULL
+  `identificacion_padre` varchar(10) NOT NULL,
+  `nombres_padre` varchar(50) NOT NULL,
+  `apellidos_padre` varchar(50) NOT NULL,
+  `ocupacion_padre` varchar(45) NOT NULL,
+  `telefono_padre` varchar(10) NOT NULL,
+  `telefono_trabajo_padre` varchar(10) NOT NULL,
+  `direccion_trabajo_padre` varchar(45) NOT NULL,
+  `identificacion_madre` varchar(10) NOT NULL,
+  `nombres_madre` varchar(50) NOT NULL,
+  `apellidos_madre` varchar(50) NOT NULL,
+  `ocupacion_madre` varchar(45) NOT NULL,
+  `telefono_madre` varchar(10) NOT NULL,
+  `telefono_trabajo_madre` varchar(10) NOT NULL,
+  `direccion_trabajo_madre` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `padres`
+--
+
+INSERT INTO `padres` (`id_padres`, `id_estudiante`, `identificacion_padre`, `nombres_padre`, `apellidos_padre`, `ocupacion_padre`, `telefono_padre`, `telefono_trabajo_padre`, `direccion_trabajo_padre`, `identificacion_madre`, `nombres_madre`, `apellidos_madre`, `ocupacion_madre`, `telefono_madre`, `telefono_trabajo_madre`, `direccion_trabajo_madre`) VALUES
+(1, 2, '1010', 'Flavio', 'Mindiola', 'yui', '678', '678', 'ghj', '1112', 'Nidia', 'Bossa', 'ama', '89', '45', 'hjk'),
+(2, 3, '1011', 'Pedro', 'Martinez', 'yui', '678', '678', 'ghj', '1113', 'Natalia', 'Ochoa', 'ama', '89', '56', 'hj'),
+(3, 4, '1012', 'Juan', 'Suarez', 'yui', '678', '678', 'ghj', '1114', 'Norma', 'Rivaldo', 'ama', '89', '567', 'hjk');
 
 -- --------------------------------------------------------
 
@@ -1813,6 +1828,7 @@ CREATE TRIGGER `eliminar_estudiantes_personas` AFTER DELETE ON `usuarios` FOR EA
 DELETE FROM estudiantes where id_persona=old.id_persona;
 DELETE FROM personas where id_persona=old.id_persona;
 DELETE FROM profesores where id_persona=old.id_persona;
+DELETE FROM padres where id_estudiante=old.id_persona;
 end
 $$
 DELIMITER ;
@@ -1989,7 +2005,7 @@ ALTER TABLE `notificaciones`
 -- Indices de la tabla `padres`
 --
 ALTER TABLE `padres`
-  ADD PRIMARY KEY (`id_padre`);
+  ADD PRIMARY KEY (`id_padres`);
 
 --
 -- Indices de la tabla `pagos`
@@ -2143,6 +2159,11 @@ ALTER TABLE `notas`
 --
 ALTER TABLE `notificaciones`
   MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `padres`
+--
+ALTER TABLE `padres`
+  MODIFY `id_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
