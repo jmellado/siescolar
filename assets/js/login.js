@@ -6,7 +6,7 @@ function login(){
 	$("#formlogin").submit(function (event) {
 		
 		event.preventDefault(); 
-		if($("#formlogin").valid()==true){
+		//if($("#formlogin").valid()==true){
 
 		
 			$.ajax({
@@ -16,7 +16,7 @@ function login(){
 				success:function(respuesta) {
 					if(respuesta ==="usuario no existe"){
 						//alert(respuesta);
-						toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.success('Usuario o Contraseña Incorrectos', 'Success Alert', {timeOut: 2000});
 						
 
 					}
@@ -28,15 +28,11 @@ function login(){
 				}
 
 			});
-	    }
-	    //else{
-		//alert("formulario incorrecto");
-		//alert($("#form").validate().numberOfInvalids()+"errores");
-	  //}
+	   // }
 
 	});
 
-	$("#formlogin").validate({
+	/*$("#formloginn").validate({
 
     	rules:{
 
@@ -59,7 +55,7 @@ function login(){
 	});
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
   	return this.optional(element) || /^[a-z\s]+$/i.test(value);
-	}, "Solo Valores Alfabeticos");
+	}, "Solo Valores Alfabeticos");*/
 
 }
 
