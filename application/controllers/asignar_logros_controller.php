@@ -24,6 +24,18 @@ class Asignar_logros_controller extends CI_Controller {
 	}
 
 
+	public function index_profesor()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_profesor_vista', 'asignar_logros/asignar_logrosprofesor_vista');
+	}
+
+
 	public function buscar_profesor(){
 
 		$id = $this->input->post('id'); 
