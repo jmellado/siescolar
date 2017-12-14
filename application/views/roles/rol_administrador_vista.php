@@ -247,7 +247,7 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="active">
-          <a href="<?php echo base_url(); ?>">
+          <a href="<?php echo base_url(); ?>rol_administrador/dashboard">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-blue">1</small>

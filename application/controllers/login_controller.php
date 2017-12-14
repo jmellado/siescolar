@@ -20,7 +20,7 @@ class Login_controller extends CI_Controller {
 				$this->load->view('login/login_vista');
 				break;
 			case 'administrador':
-				redirect(site_url("rol_administrador"));
+				redirect(site_url("rol_administrador/dashboard"));
 				break;
 			case 'estudiante':
 				redirect(site_url("rol_estudiante"));
