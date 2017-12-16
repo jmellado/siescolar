@@ -59,7 +59,6 @@
 									<th><i class='fa fa-sort-amount-asc'></i></th>
 									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
 									<th><i class='fa fa-eye'></i>&nbsp;Observaciones</th>
-									<th><i class='fa fa-external-link-square'></i>&nbsp;Cupo Maximo</th>
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
@@ -115,14 +114,6 @@
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="observacion" name="observacion"
 								 placeholder="observaciones">
-						</div>		 
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="cupo_maximo">CUPO MAXIMO</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="cupo_maximo" name="cupo_maximo"
-								 placeholder="Cupo maximo">
 						</div>		 
 					</div>
 
@@ -198,14 +189,6 @@
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="observacionsele" name="observacion"
 								 placeholder="observaciones">
-						</div>		 
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="cupo_maximo">CUPO MAXIMO</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="cupo_maximosele" name="cupo_maximo"
-								 placeholder="Cupo maximo">
 						</div>		 
 					</div>
 

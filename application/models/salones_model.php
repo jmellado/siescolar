@@ -37,7 +37,7 @@ class Salones_model extends CI_Model {
 		}
 
 		$this->db->join('anos_lectivos', 'salones.ano_lectivo = anos_lectivos.id_ano_lectivo');
-		$this->db->select('salones.id_salon,salones.nombre_salon,salones.observacion,salones.cupo_maximo,salones.ano_lectivo,salones.estado_salon,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('salones.id_salon,salones.nombre_salon,salones.observacion,salones.ano_lectivo,salones.estado_salon,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('salones');
 
@@ -83,44 +83,21 @@ class Salones_model extends CI_Model {
 	}
 
 
-	public function obtener_nombre_salon($id){
+	public function obtener_informacion_salon($id){
 
 		$this->db->where('id_salon',$id);
 		$query = $this->db->get('salones');
 
 		if ($query->num_rows() > 0) {
 		
-			$row = $query->result_array();
-        	return $row[0]['nombre_salon'];
+			return $query->result_array();
+        	
 		}
 		else{
 			return false;
 		}
 
 	}
-
-	public function obtener_ano_lectivo($id){
-
-		$this->db->where('id_salon',$id);
-		$query = $this->db->get('salones');
-
-		if ($query->num_rows() > 0) {
-		
-			$row = $query->result_array();
-        	return $row[0]['ano_lectivo'];
-		}
-		else{
-			return false;
-		}
-
-	}
-
-
-
-
-
-
-
 
 
 

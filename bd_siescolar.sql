@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2017 a las 23:59:12
+-- Tiempo de generación: 16-12-2017 a las 16:59:12
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -1786,7 +1786,6 @@ CREATE TABLE `salones` (
   `id_salon` int(11) NOT NULL,
   `nombre_salon` varchar(30) NOT NULL,
   `observacion` varchar(45) NOT NULL,
-  `cupo_maximo` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `estado_salon` varchar(8) NOT NULL,
   `disponibilidad` varchar(2) NOT NULL
@@ -2048,8 +2047,7 @@ ALTER TABLE `roles`
 -- Indices de la tabla `salones`
 --
 ALTER TABLE `salones`
-  ADD PRIMARY KEY (`id_salon`),
-  ADD UNIQUE KEY `nombre_salon_UNIQUE` (`nombre_salon`);
+  ADD PRIMARY KEY (`id_salon`);
 
 --
 -- Indices de la tabla `usuarios`

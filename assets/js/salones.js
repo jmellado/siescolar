@@ -53,8 +53,8 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
-			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			
 		}
 
 	});
@@ -90,7 +90,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_salon").val();
     	valorcantidad = $("#cantidad_salon").val();
-		mostrarsalones(buscar,numero_pagina,valorcantidad);
+
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrarsalones(buscar,numero_pagina,valorcantidad);
+		}		
 
 
     });
@@ -98,7 +102,7 @@ function inicio(){
     $("body").on("click","#lista_salones button",function(event){
 		event.preventDefault();
 		idsele = $(this).attr("value");
-		//alert("boton eliminar"+idsele);
+		
 		if(confirm("esta seguro de eliminar el registro?")){
 			eliminar_salon(idsele);
 
@@ -112,21 +116,15 @@ function inicio(){
 		id_salonsele = $(this).attr("href");
 		nombre_salonsele = $(this).parent().parent().children("td:eq(1)").text();
 		observacionsele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		cupo_maximosele = $(this).parent().parent().children("td:eq(3)").text();
-		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
-		estado_salonsele = $(this).parent().parent().children("td:eq(6)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
+		estado_salonsele = $(this).parent().parent().children("td:eq(5)").text();
 		
-		//alert(municipio_expedicionsele);
-
-		//llenarcombo_municipios(departamento_expedicionsele);
 		$("#id_salonsele").val(id_salonsele);
         $("#nombre_salonsele").val(nombre_salonsele);
         $("#observacionsele").val(observacionsele);
-        $("#cupo_maximosele").val(cupo_maximosele);
         $("#ano_lectivosele").val(ano_lectivosele);
         $("#estado_salonsele").val(estado_salonsele);
-        
-        //desbloquear_cajas_texto();
+     
 
 	});
 
@@ -134,13 +132,13 @@ function inicio(){
     $("#btn_actualizar_salon").click(function(event){
 
     	if($("#form_salones_actualizar").valid()==true){
-       	actualizar_salon();
-       	//bloquear_cajas_texto();
+       		actualizar_salon();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_salones_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+       	else{
+
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_salones_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
@@ -166,13 +164,6 @@ function inicio(){
 				required: true,
 				maxlength: 30,
 				//lettersonly: true	
-
-			},
-
-			cupo_maximo:{
-				required: true,
-				maxlength: 2,
-				digits: true
 
 			},
 
@@ -210,13 +201,6 @@ function inicio(){
 				required: true,
 				maxlength: 30,
 				//lettersonly: true	
-
-			},
-
-			cupo_maximo:{
-				required: true,
-				maxlength: 2,
-				digits: true
 
 			},
 
@@ -259,7 +243,7 @@ function mostrarsalones(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.salones.length; i++) {
-					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td>"+registros.salones[i].cupo_maximo+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_salones tbody").html(html);
@@ -353,6 +337,7 @@ function eliminar_salon(valor){
 
 }
 
+
 function actualizar_salon(){
 
 	$.ajax({
@@ -363,7 +348,7 @@ function actualizar_salon(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_salon").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
+				
 				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
 				$("#form_salones_actualizar")[0].reset();
 
@@ -374,108 +359,4 @@ function actualizar_salon(){
 
 	});
 
-}
-
-//------------------------------FUNCIONES PARA LA GESTION SALONES POR GRUPOS--------------------------------------------------------
-
-function inicio2(){
-
-	llenarcombo_salones();
-	llenarcombo_grados();
-	llenarcombo_grupos();
-
-
-	$("#btn_agregar_salon_grupo").click(function(){
-
-		$("#modal_agregar_salon_grupo").modal();
-       
-    });
-
-
-
-
-}
-
-function llenarcombo_salones(){
-
-	$.ajax({
-		url:base_url+"salones_grupos_controller/llenarcombo_salones",
-		type:"post",
-		success:function(respuesta) {
-
-				var registros = eval(respuesta);
-
-				html = "<option value=''></option>";
-				for (var i = 0; i < registros.length; i++) {
-					
-					html +="<option value="+registros[i]["id_salon"]+">"+registros[i]["nombre_salon"]+"</option>";
-				};
-				
-				$("#salon1 select").html(html);
-		}
-
-	});
-}
-
-function llenarcombo_grados(){
-
-	$.ajax({
-		url:base_url+"salones_grupos_controller/llenarcombo_grados",
-		type:"post",
-		success:function(respuesta) {
-
-				var registros = eval(respuesta);
-
-				html = "<option value=''></option>";
-				for (var i = 0; i < registros.length; i++) {
-					
-					html +="<option value="+registros[i]["id_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
-				};
-				
-				$("#grado1 select").html(html);
-		}
-
-	});
-}
-
-function llenarcombo_grupos(){
-
-	$.ajax({
-		url:base_url+"salones_grupos_controller/llenarcombo_grupos",
-		type:"post",
-		success:function(respuesta) {
-
-				var registros = eval(respuesta);
-
-				html = "<option value=''></option>";
-				for (var i = 0; i < registros.length; i++) {
-					
-					html +="<option value="+registros[i]["id_grupo"]+">"+registros[i]["nombre_grupo"]+"</option>";
-				};
-				
-				$("#grupo1 select").html(html);
-		}
-
-	});
-}
-
-function llenarcombo_anos_lectivos(){
-
-	$.ajax({
-		url:base_url+"salones_controller/llenarcombo_anos_lectivos",
-		type:"post",
-		success:function(respuesta) {
-
-				var registros = eval(respuesta);
-			
-				html = "<option value=''></option>";
-				for (var i = 0; i < registros.length; i++) {
-					
-					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
-				};
-				
-				$("#ano_lectivo1 select").html(html);
-		}
-
-	});
 }
