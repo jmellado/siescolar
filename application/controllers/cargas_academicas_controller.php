@@ -21,6 +21,17 @@ class Cargas_academicas_controller extends CI_Controller {
 		$this->template->load('roles/rol_administrador_vista', 'cargas_academicas/cargas_academicas_vista');
 	}
 
+	public function index_profesor()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_profesor_vista', 'cargas_academicas/cargas_academicasprofesor_vista');
+	}
+
 	public function insertar(){
 
 		$this->form_validation->set_rules('id_profesor', 'profesor', 'required|numeric');
@@ -216,6 +227,31 @@ class Cargas_academicas_controller extends CI_Controller {
     	$consulta = $this->cargas_academicas_model->llenar_cursos();
     	echo json_encode($consulta);
     }
+    
+
+    //Esta funcion me permite obtener la carga academica asignada a un profesor en el respectivo año lectivo
+    public function mostrarcargas_academicasprofesor(){
+
+		$id =$this->input->post('id_buscar'); 
+		$id_profesor = $this->input->post('id_persona');
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'cargas_academicas' => $this->cargas_academicas_model->buscar_cargas_academicasprofesor($id,$id_profesor,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->cargas_academicas_model->buscar_cargas_academicasprofesor($id,$id_profesor)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
 
 
 }

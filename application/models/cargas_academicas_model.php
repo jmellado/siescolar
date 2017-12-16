@@ -171,6 +171,38 @@ class Cargas_academicas_model extends CI_Model {
 	}
 
 
+	//Esta funcion me permite obtener la carga academica asignada a un profesor en el respectivo año lectivo
+	public function buscar_cargas_academicasprofesor($id,$id_profesor,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('id_profesor',$id_profesor);
+		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
+
+		$this->db->where("(grados.nombre_grado LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%' OR grupos.nombre_grupo LIKE '".$id."%' OR cursos.jornada LIKE '".$id."%' OR pensum.intensidad_horaria LIKE '".$id."%' OR anos_lectivos.nombre_ano_lectivo LIKE '".$id."%')", NULL, FALSE);
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('personas', 'cargas_academicas.id_profesor = personas.id_persona');
+		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
+		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('anos_lectivos', 'cargas_academicas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->join('pensum', 'cargas_academicas.id_asignatura = pensum.id_asignatura');
+
+		$this->db->select('cargas_academicas.id_carga_academica,cargas_academicas.id_profesor,cargas_academicas.id_curso,cargas_academicas.id_asignatura,cargas_academicas.ano_lectivo,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo,cursos.jornada,pensum.intensidad_horaria');
+		
+		$query = $this->db->get('cargas_academicas');
+
+		return $query->result();
+		
+	}
+
+
 
 
 

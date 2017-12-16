@@ -18,7 +18,7 @@
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas_profesor.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros_profesor.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros_profesor.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js" defer></script>
