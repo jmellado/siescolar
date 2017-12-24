@@ -4,10 +4,11 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 	mostrarestudiantes("",1,5);
 	llenarcombo_departamentos();
+	llenarcombo_departamentosN();
 
 	// body...
 	// este metodo permite enviar la inf del formulario
-	$("body").on("#form_estudiantes").submit(function (event) {
+	$("#form_estudiantes").submit(function (event) {
 		//validar()
 		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
 		if($("#form_estudiantes").valid()==true){
@@ -25,26 +26,28 @@ function inicio(){
 						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
 						$("#mensajes-error").hide();
 						$("#form_estudiantes")[0].reset();
-
+						llenarcombo_municipios("","");
+						llenarcombo_municipiosN("","");
 
 					}
 					else if(respuesta==="registro no guardado"){
 					
 						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
-						$("#mensajes-error").hide();
+						//$("#mensajes-error").hide();
 							
 
 					}
 					else if(respuesta==="estudianteyaexiste"){
 						
 						toastr.success('Ya Fue Registrado', 'Success Alert', {timeOut: 5000});
-						$("#mensajes-error").hide();
+						//$("#mensajes-error").hide();
 							
 
 					}
 					else{
-						$("#mensajes-error").show();
-						$("#mensajes-error").html(respuesta);
+						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						//$("#mensajes-error").show();
+						//$("#mensajes-error").html(respuesta);
 					}
 					mostrarestudiantes("",1,5);
 
@@ -90,36 +93,50 @@ function inicio(){
 		apellido2sele = $(this).parent().parent().children("td:eq(9)").text();
 		sexosele = $(this).parent().parent().children("td:eq(10)").text();
 		fecha_nacimientosele = $(this).parent().parent().children("td:eq(11)").text();
-		lugar_nacimientosele = $(this).parent().parent().children("td:eq(12)").text();
-		tipo_sangresele = $(this).parent().parent().children("td:eq(13)").text();
-		epssele = $(this).parent().parent().children("td:eq(14)").text();
-		poblacionsele = $(this).parent().parent().children("td:eq(15)").text();
-		telefonosele = $(this).parent().parent().children("td:eq(16)").text();
-		correosele = $(this).parent().parent().children("td:eq(17)").text();
-		direccionsele = $(this).parent().parent().children("td:eq(18)").text();
-		barriosele = $(this).parent().parent().children("td:eq(19)").text();
-		institucion_procedenciasele = $(this).parent().parent().children("td:eq(20)").text();
-		discapacidadsele = $(this).parent().parent().children("td:eq(21)").text();
+		departamento_nacimientosele = $(this).parent().parent().children("td:eq(12)").text();
+		municipio_nacimientosele = $(this).parent().parent().children("td:eq(13)").text();
+		tipo_sangresele = $(this).parent().parent().children("td:eq(14)").text();
+		epssele = $(this).parent().parent().children("td:eq(15)").text();
+		poblacionsele = $(this).parent().parent().children("td:eq(16)").text();
+		telefonosele = $(this).parent().parent().children("td:eq(17)").text();
+		correosele = $(this).parent().parent().children("td:eq(18)").text();
+		direccionsele = $(this).parent().parent().children("td:eq(19)").text();
+		barriosele = $(this).parent().parent().children("td:eq(20)").text();
 
-		identificacion_padresele = $(this).parent().parent().children("td:eq(22)").text();
-		nombres_padresele = $(this).parent().parent().children("td:eq(23)").text();
-		apellidos_padresele = $(this).parent().parent().children("td:eq(24)").text();
-		ocupacion_padresele = $(this).parent().parent().children("td:eq(25)").text();
-		telefono_padresele = $(this).parent().parent().children("td:eq(26)").text();
-		telefono_trabajo_padresele = $(this).parent().parent().children("td:eq(27)").text();
-		direccion_trabajo_padresele = $(this).parent().parent().children("td:eq(28)").text();
+		institucion_procedenciasele = $(this).parent().parent().children("td:eq(21)").text();
+		grado_cursadosele = $(this).parent().parent().children("td:eq(22)").text();
+		aniosele = $(this).parent().parent().children("td:eq(23)").text();
+		discapacidadsele = $(this).parent().parent().children("td:eq(24)").text();
 
-		identificacion_madresele = $(this).parent().parent().children("td:eq(29)").text();
-		nombres_madresele = $(this).parent().parent().children("td:eq(30)").text();
-		apellidos_madresele = $(this).parent().parent().children("td:eq(31)").text();
-		ocupacion_madresele = $(this).parent().parent().children("td:eq(32)").text();
-		telefono_madresele = $(this).parent().parent().children("td:eq(33)").text();
-		telefono_trabajo_madresele = $(this).parent().parent().children("td:eq(34)").text();
-		direccion_trabajo_madresele = $(this).parent().parent().children("td:eq(35)").text();
+		identificacion_padresele = $(this).parent().parent().children("td:eq(25)").text();
+		nombres_padresele = $(this).parent().parent().children("td:eq(26)").text();
+		apellido1_padresele = $(this).parent().parent().children("td:eq(27)").text();
+		apellido2_padresele = $(this).parent().parent().children("td:eq(28)").text();
+		ocupacion_padresele = $(this).parent().parent().children("td:eq(29)").text();
+		telefono_padresele = $(this).parent().parent().children("td:eq(30)").text();
+		direccion_padresele = $(this).parent().parent().children("td:eq(31)").text();
+		barrio_padresele = $(this).parent().parent().children("td:eq(32)").text();
+		telefono_trabajo_padresele = $(this).parent().parent().children("td:eq(33)").text();
+		direccion_trabajo_padresele = $(this).parent().parent().children("td:eq(34)").text();
+
+		identificacion_madresele = $(this).parent().parent().children("td:eq(35)").text();
+		nombres_madresele = $(this).parent().parent().children("td:eq(36)").text();
+		apellido1_madresele = $(this).parent().parent().children("td:eq(37)").text();
+		apellido2_madresele = $(this).parent().parent().children("td:eq(38)").text();
+		ocupacion_madresele = $(this).parent().parent().children("td:eq(39)").text();
+		telefono_madresele = $(this).parent().parent().children("td:eq(40)").text();
+		direccion_madresele = $(this).parent().parent().children("td:eq(41)").text();
+		barrio_madresele = $(this).parent().parent().children("td:eq(42)").text();
+		telefono_trabajo_madresele = $(this).parent().parent().children("td:eq(43)").text();
+		direccion_trabajo_madresele = $(this).parent().parent().children("td:eq(44)").text();
+
+		id_padresele = $(this).parent().parent().children("td:eq(45)").text();
+		id_madresele = $(this).parent().parent().children("td:eq(46)").text();
 
 		//alert(municipio_expedicionsele);
 
 		llenarcombo_municipios(departamento_expedicionsele,municipio_expedicionsele);
+		llenarcombo_municipiosN(departamento_nacimientosele,municipio_nacimientosele);
 		$("#id_personasele").val(id_personasele);
         $("#idsele").val(idsele);
         $("#tipo_idsele").val(tipo_idsele);
@@ -131,7 +148,8 @@ function inicio(){
         $("#apellido2sele").val(apellido2sele);
         $("#sexosele").val(sexosele);
         $("#fecha_nacimientosele").val(fecha_nacimientosele);
-        $("#lugar_nacimientosele").val(lugar_nacimientosele);
+        $("#departamento_nacimientosele").val(departamento_nacimientosele);
+        $("#municipio_nacimientosele").val(municipio_nacimientosele);
         $("#tipo_sangresele").val(tipo_sangresele);
         $("#epssele").val(epssele);
         $("#poblacionsele").val(poblacionsele);
@@ -139,24 +157,36 @@ function inicio(){
         $("#correosele").val(correosele);
         $("#direccionsele").val(direccionsele);
         $("#barriosele").val(barriosele);
+
         $("#institucion_procedenciasele").val(institucion_procedenciasele);
         $("#discapacidadsele").val(discapacidadsele);
+        $("#grado_cursadosele").val(grado_cursadosele);
+        $("#aniosele").val(aniosele);
 
         $("#identificacion_padresele").val(identificacion_padresele);
         $("#nombres_padresele").val(nombres_padresele);
-        $("#apellidos_padresele").val(apellidos_padresele);
+        $("#apellido1_padresele").val(apellido1_padresele);
+        $("#apellido2_padresele").val(apellido2_padresele);
         $("#ocupacion_padresele").val(ocupacion_padresele);
         $("#telefono_padresele").val(telefono_padresele);
+        $("#direccion_padresele").val(direccion_padresele);
+        $("#barrio_padresele").val(barrio_padresele);
         $("#telefono_trabajo_padresele").val(telefono_trabajo_padresele);
         $("#direccion_trabajo_padresele").val(direccion_trabajo_padresele);
 
         $("#identificacion_madresele").val(identificacion_madresele);
         $("#nombres_madresele").val(nombres_madresele);
-        $("#apellidos_madresele").val(apellidos_madresele);
+        $("#apellido1_madresele").val(apellido1_madresele);
+        $("#apellido2_madresele").val(apellido2_madresele);
         $("#ocupacion_madresele").val(ocupacion_madresele);
         $("#telefono_madresele").val(telefono_madresele);
+        $("#direccion_madresele").val(direccion_madresele);
+        $("#barrio_madresele").val(barrio_madresele);
         $("#telefono_trabajo_madresele").val(telefono_trabajo_madresele);
         $("#direccion_trabajo_madresele").val(direccion_trabajo_madresele);
+
+        $("#id_padresele").val(id_padresele);
+        $("#id_madresele").val(id_madresele);
         desbloquear_cajas_texto();
 
 	});
@@ -210,6 +240,18 @@ function inicio(){
     	id_departamento = $(this).val();
     	llenarcombo_municipios(id_departamento,null);
     	$("#municipio_expedicionsele").removeAttr("disabled");
+    });
+
+    $("#departamento_nacimiento").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosN(id_departamento,null);
+    	//$("#municipio_expedicion").removeAttr("disabled");
+    });
+
+    $("#departamento_nacimientosele").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosN(id_departamento,null);
+    	//$("#municipio_expedicionsele").removeAttr("disabled");
     });
 
     
@@ -281,11 +323,18 @@ function inicio(){
 				
 			},
 
-			lugar_nacimiento:{
-				required: true,
-				maxlength: 50	
-
+			departamento_nacimiento:{
+				required: true
+				
+				
 			},
+
+			municipio_nacimiento:{
+				required: true
+				
+				
+			},
+
 
 			tipo_sangre:{
 				required: true,
@@ -344,6 +393,19 @@ function inicio(){
 
 			},
 
+			grado_cursado:{
+				required: true,
+				maxlength: 10	
+
+			},
+
+			anio:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
 			identificacion_padre:{
 				required: true,
 				maxlength: 10,
@@ -358,16 +420,17 @@ function inicio(){
 
 			},
 
-			apellidos_padre:{
+			apellido1_padre:{
 				required: true,
 				maxlength: 50,
 				lettersonly: true	
 
 			},
 
-			ocupacion_padre:{
+			apellido2_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 50,
+				lettersonly: true	
 
 			},
 
@@ -375,6 +438,24 @@ function inicio(){
 				required: true,
 				maxlength: 10,
 				digits: true	
+
+			},
+
+			direccion_padre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio_padre:{
+				required: true,
+				maxlength: 40	
+
+			},
+
+			ocupacion_padre:{
+				required: true,
+				maxlength: 50	
 
 			},
 
@@ -405,16 +486,17 @@ function inicio(){
 
 			},
 
-			apellidos_madre:{
+			apellido1_madre:{
 				required: true,
 				maxlength: 50,
 				lettersonly: true	
 
 			},
 
-			ocupacion_madre:{
+			apellido2_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 50,
+				lettersonly: true	
 
 			},
 
@@ -422,6 +504,24 @@ function inicio(){
 				required: true,
 				maxlength: 10,
 				digits: true	
+
+			},
+
+			direccion_madre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio_madre:{
+				required: true,
+				maxlength: 40	
+
+			},
+
+			ocupacion_madre:{
+				required: true,
+				maxlength: 50	
 
 			},
 
@@ -513,11 +613,18 @@ function inicio(){
 				
 			},
 
-			lugar_nacimiento:{
-				required: true,
-				maxlength: 50	
-
+			departamento_nacimiento:{
+				required: true
+				
+				
 			},
+
+			municipio_nacimiento:{
+				required: true
+				
+				
+			},
+
 
 			tipo_sangre:{
 				required: true,
@@ -576,6 +683,19 @@ function inicio(){
 
 			},
 
+			grado_cursado:{
+				required: true,
+				maxlength: 10	
+
+			},
+
+			anio:{
+				required: true,
+				maxlength: 4,
+				digits: true	
+
+			},
+
 			identificacion_padre:{
 				required: true,
 				maxlength: 10,
@@ -590,16 +710,17 @@ function inicio(){
 
 			},
 
-			apellidos_padre:{
+			apellido1_padre:{
 				required: true,
 				maxlength: 50,
 				lettersonly: true	
 
 			},
 
-			ocupacion_padre:{
+			apellido2_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 50,
+				lettersonly: true	
 
 			},
 
@@ -607,6 +728,24 @@ function inicio(){
 				required: true,
 				maxlength: 10,
 				digits: true	
+
+			},
+
+			direccion_padre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio_padre:{
+				required: true,
+				maxlength: 40	
+
+			},
+
+			ocupacion_padre:{
+				required: true,
+				maxlength: 50	
 
 			},
 
@@ -637,16 +776,17 @@ function inicio(){
 
 			},
 
-			apellidos_madre:{
+			apellido1_madre:{
 				required: true,
 				maxlength: 50,
 				lettersonly: true	
 
 			},
 
-			ocupacion_madre:{
+			apellido2_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 50,
+				lettersonly: true	
 
 			},
 
@@ -654,6 +794,24 @@ function inicio(){
 				required: true,
 				maxlength: 10,
 				digits: true	
+
+			},
+
+			direccion_madre:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio_madre:{
+				required: true,
+				maxlength: 40	
+
+			},
+
+			ocupacion_madre:{
+				required: true,
+				maxlength: 50	
 
 			},
 
@@ -702,7 +860,7 @@ function mostrarestudiantes(valor,pagina,cantidad){
 
 				html="";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td style='display:none'>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].id_departamento+"</td><td style='display:none'>"+registros.estudiantes[i].id_municipio+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].lugar_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td style='display:none'>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td style='display:none'>"+registros.estudiantes[i].identificacion_padre+"</td><td style='display:none'>"+registros.estudiantes[i].nombres_padre+"</td><td style='display:none'>"+registros.estudiantes[i].apellidos_padre+"</td><td style='display:none'>"+registros.estudiantes[i].ocupacion_padre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_padre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_trabajo_padre+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_trabajo_padre+"</td><td style='display:none'>"+registros.estudiantes[i].identificacion_madre+"</td><td style='display:none'>"+registros.estudiantes[i].nombres_madre+"</td><td style='display:none'>"+registros.estudiantes[i].apellidos_madre+"</td><td style='display:none'>"+registros.estudiantes[i].ocupacion_madre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_madre+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_trabajo_madre+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_trabajo_madre+"</td><td><a class='btn btn-success' href="+registros.estudiantes[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.estudiantes[i].id_persona+"</td><td>"+registros.estudiantes[i].identificacion+"</td><td style='display:none'>"+registros.estudiantes[i].tipo_id+"</td><td style='display:none'>"+registros.estudiantes[i].fecha_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].departamento_expedicion+"</td><td style='display:none'>"+registros.estudiantes[i].municipio_expedicion+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td>"+registros.estudiantes[i].sexo+"</td><td>"+registros.estudiantes[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].departamento_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].municipio_nacimiento+"</td><td style='display:none'>"+registros.estudiantes[i].tipo_sangre+"</td><td style='display:none'>"+registros.estudiantes[i].eps+"</td><td style='display:none'>"+registros.estudiantes[i].poblacion+"</td><td>"+registros.estudiantes[i].telefono+"</td><td>"+registros.estudiantes[i].email+"</td><td>"+registros.estudiantes[i].direccion+"</td><td style='display:none'>"+registros.estudiantes[i].barrio+"</td><td style='display:none'>"+registros.estudiantes[i].institucion_procedencia+"</td><td style='display:none'>"+registros.estudiantes[i].grado_cursado+"</td><td style='display:none'>"+registros.estudiantes[i].anio+"</td><td style='display:none'>"+registros.estudiantes[i].discapacidad+"</td><td style='display:none'>"+registros.estudiantes[i].identificacion_p+"</td><td style='display:none'>"+registros.estudiantes[i].nombres_p+"</td><td style='display:none'>"+registros.estudiantes[i].apellido1_p+"</td><td style='display:none'>"+registros.estudiantes[i].apellido2_p+"</td><td style='display:none'>"+registros.estudiantes[i].ocupacion_p+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_p+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_p+"</td><td style='display:none'>"+registros.estudiantes[i].barrio_p+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_trabajo_p+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_trabajo_p+"</td><td style='display:none'>"+registros.estudiantes[i].identificacion_m+"</td><td style='display:none'>"+registros.estudiantes[i].nombres_m+"</td><td style='display:none'>"+registros.estudiantes[i].apellido1_m+"</td><td style='display:none'>"+registros.estudiantes[i].apellido2_m+"</td><td style='display:none'>"+registros.estudiantes[i].ocupacion_m+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_m+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_m+"</td><td style='display:none'>"+registros.estudiantes[i].barrio_m+"</td><td style='display:none'>"+registros.estudiantes[i].telefono_trabajo_m+"</td><td style='display:none'>"+registros.estudiantes[i].direccion_trabajo_m+"</td><td style='display:none'>"+registros.estudiantes[i].id_padre+"</td><td style='display:none'>"+registros.estudiantes[i].id_madre+"</td><td><a class='btn btn-success' href="+registros.estudiantes[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				html +="</table>";
 				$("#lista_estudiantes tbody").html(html);
@@ -876,6 +1034,57 @@ function llenarcombo_municipios(valor,valor2){
 					}
 				};
 				$("#municipio_expedicion1 select").html(html);
+		}
+
+	});
+
+
+}
+
+
+function llenarcombo_departamentosN(){
+
+	$.ajax({
+		url:base_url+"estudiantes_controller/llenarcombo_departamentos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre_departamento"]+"</option>";
+				};
+				
+				$("#departamento_nacimiento1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_municipiosN(valor,valor2){
+
+	$.ajax({
+		url:base_url+"estudiantes_controller/llenarcombo_municipios",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_municipio"]==valor2){
+						html +="<option value="+registros[i]["id_municipio"]+" selected>"+registros[i]["nombre_municipio"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					}
+				};
+				$("#municipio_nacimiento1 select").html(html);
 		}
 
 	});

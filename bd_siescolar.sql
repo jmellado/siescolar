@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-12-2017 a las 16:59:12
+-- Tiempo de generación: 24-12-2017 a las 01:48:39
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -27,15 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `acudientes` (
-  `id_acudiente` int(11) NOT NULL,
-  `identificacion` varchar(10) NOT NULL,
-  `id_estudiante` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
   `parentesco` varchar(45) NOT NULL,
   `ocupacion` varchar(45) NOT NULL,
-  `telefono` varchar(10) NOT NULL,
   `telefono_trabajo` varchar(10) NOT NULL,
   `direccion_trabajo` varchar(45) NOT NULL,
-  `estado_acudiente` varchar(8) NOT NULL
+  `estado_acudiente` varchar(8) NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -323,18 +320,68 @@ CREATE TABLE `elecciones` (
 
 CREATE TABLE `estudiantes` (
   `id_persona` int(11) NOT NULL,
+  `discapacidad` varchar(45) NOT NULL,
   `institucion_procedencia` varchar(45) NOT NULL,
-  `discapacidad` varchar(45) NOT NULL
+  `grado_cursado` varchar(45) NOT NULL,
+  `anio` varchar(4) NOT NULL,
+  `estado_estudiante` varchar(8) NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `estudiantes`
 --
 
-INSERT INTO `estudiantes` (`id_persona`, `institucion_procedencia`, `discapacidad`) VALUES
-(2, 'manuela beltran', 'ninguna'),
-(3, 'cotez queruz', 'ninguna'),
-(4, 'la esperanza', 'ninguna');
+INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedencia`, `grado_cursado`, `anio`, `estado_estudiante`) VALUES
+(2, 'ninguna', 'manuela beltran', 'Primero', '2007', 'Activo'),
+(3, 'ninguna', 'cotez queruz', 'Quinto', '2007', 'Activo'),
+(4, 'ninguna', 'la esperanza', 'Quinto', '2008', 'Activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estudiantes_acudientes`
+--
+
+CREATE TABLE `estudiantes_acudientes` (
+  `idestudiantes_acudientes` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_acudiente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estudiantes_padres`
+--
+
+CREATE TABLE `estudiantes_padres` (
+  `idestudiantes_padres` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_padre` int(11) NOT NULL,
+  `id_madre` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `estudiantes_padres`
+--
+
+INSERT INTO `estudiantes_padres` (`idestudiantes_padres`, `id_estudiante`, `id_padre`, `id_madre`) VALUES
+(1, 2, 1, 1),
+(2, 3, 2, 2),
+(3, 4, 3, 3);
+
+--
+-- Disparadores `estudiantes_padres`
+--
+DELIMITER $$
+CREATE TRIGGER `eliminar_padres_madres` AFTER DELETE ON `estudiantes_padres` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
+begin
+-- Edit trigger body code below this line. Do not edit lines above this one
+DELETE FROM padres where id_padre=old.id_padre;
+DELETE FROM madres where id_madre=old.id_madre;
+end
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -414,6 +461,37 @@ CREATE TABLE `logros_asignados` (
   `id_logro3` int(11) DEFAULT NULL,
   `id_logro4` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `madres`
+--
+
+CREATE TABLE `madres` (
+  `id_madre` int(11) NOT NULL,
+  `identificacion_m` varchar(10) NOT NULL,
+  `nombres_m` varchar(50) NOT NULL,
+  `apellido1_m` varchar(50) NOT NULL,
+  `apellido2_m` varchar(45) NOT NULL,
+  `parentesco_m` varchar(45) NOT NULL DEFAULT 'Madre',
+  `sexo_m` varchar(1) NOT NULL DEFAULT 'f',
+  `telefono_m` varchar(10) NOT NULL,
+  `direccion_m` varchar(45) NOT NULL,
+  `barrio_m` varchar(45) NOT NULL,
+  `ocupacion_m` varchar(45) NOT NULL,
+  `telefono_trabajo_m` varchar(10) NOT NULL,
+  `direccion_trabajo_m` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `madres`
+--
+
+INSERT INTO `madres` (`id_madre`, `identificacion_m`, `nombres_m`, `apellido1_m`, `apellido2_m`, `parentesco_m`, `sexo_m`, `telefono_m`, `direccion_m`, `barrio_m`, `ocupacion_m`, `telefono_trabajo_m`, `direccion_trabajo_m`) VALUES
+(1, '456', 'Lola', 'Lopez', 'Lopez', 'Madre', 'f', '322', 'Calle 4', 'Popa', 'D', '32', 'Calle 3'),
+(2, '457', 'Lina', 'Caceres', 'Caceres', 'Madre', 'f', '321', 'Calle 4', 'Popa', 'D', '23', 'Calle 3'),
+(3, '457', 'Laura', 'Diaz', 'Diaz', 'Madre', 'f', '320', 'Calle 4', 'Nevada', 'D', '32', 'Calle 4');
 
 -- --------------------------------------------------------
 
@@ -1636,32 +1714,29 @@ CREATE TABLE `notificaciones` (
 --
 
 CREATE TABLE `padres` (
-  `id_padres` int(11) NOT NULL,
-  `id_estudiante` int(11) NOT NULL,
-  `identificacion_padre` varchar(10) NOT NULL,
-  `nombres_padre` varchar(50) NOT NULL,
-  `apellidos_padre` varchar(50) NOT NULL,
-  `ocupacion_padre` varchar(45) NOT NULL,
-  `telefono_padre` varchar(10) NOT NULL,
-  `telefono_trabajo_padre` varchar(10) NOT NULL,
-  `direccion_trabajo_padre` varchar(45) NOT NULL,
-  `identificacion_madre` varchar(10) NOT NULL,
-  `nombres_madre` varchar(50) NOT NULL,
-  `apellidos_madre` varchar(50) NOT NULL,
-  `ocupacion_madre` varchar(45) NOT NULL,
-  `telefono_madre` varchar(10) NOT NULL,
-  `telefono_trabajo_madre` varchar(10) NOT NULL,
-  `direccion_trabajo_madre` varchar(45) NOT NULL
+  `id_padre` int(11) NOT NULL,
+  `identificacion_p` varchar(10) NOT NULL,
+  `nombres_p` varchar(50) NOT NULL,
+  `apellido1_p` varchar(50) NOT NULL,
+  `apellido2_p` varchar(45) NOT NULL,
+  `parentesco_p` varchar(45) NOT NULL DEFAULT 'Padre',
+  `sexo_p` varchar(1) NOT NULL DEFAULT 'm',
+  `telefono_p` varchar(10) NOT NULL,
+  `direccion_p` varchar(45) NOT NULL,
+  `barrio_p` varchar(45) NOT NULL,
+  `ocupacion_p` varchar(45) NOT NULL,
+  `telefono_trabajo_p` varchar(10) NOT NULL,
+  `direccion_trabajo_p` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `padres`
 --
 
-INSERT INTO `padres` (`id_padres`, `id_estudiante`, `identificacion_padre`, `nombres_padre`, `apellidos_padre`, `ocupacion_padre`, `telefono_padre`, `telefono_trabajo_padre`, `direccion_trabajo_padre`, `identificacion_madre`, `nombres_madre`, `apellidos_madre`, `ocupacion_madre`, `telefono_madre`, `telefono_trabajo_madre`, `direccion_trabajo_madre`) VALUES
-(1, 2, '1010', 'Flavio', 'Mindiola', 'yui', '678', '678', 'ghj', '1112', 'Nidia', 'Bossa', 'ama', '89', '45', 'hjk'),
-(2, 3, '1011', 'Pedro', 'Martinez', 'yui', '678', '678', 'ghj', '1113', 'Natalia', 'Ochoa', 'ama', '89', '56', 'hj'),
-(3, 4, '1012', 'Juan', 'Suarez', 'yui', '678', '678', 'ghj', '1114', 'Norma', 'Rivaldo', 'ama', '89', '567', 'hjk');
+INSERT INTO `padres` (`id_padre`, `identificacion_p`, `nombres_p`, `apellido1_p`, `apellido2_p`, `parentesco_p`, `sexo_p`, `telefono_p`, `direccion_p`, `barrio_p`, `ocupacion_p`, `telefono_trabajo_p`, `direccion_trabajo_p`) VALUES
+(1, '1010', 'Flavio', 'Mindiola', 'Suarez', 'Padre', 'm', '678', 'calle 4', 'El Prado1', 'yui', '678', 'ghj'),
+(2, '1011', 'Pedro', 'Martinez', 'Mejia', 'Padre', 'm', '678', 'calle 5', 'El Prado2', 'yui', '678', 'ghj'),
+(3, '1012', 'Juan', 'Suarez', 'Diaz', 'Padre', 'm', '678', 'calle 4', 'El Prado3', 'yui', '678', 'ghj');
 
 -- --------------------------------------------------------
 
@@ -1710,7 +1785,8 @@ CREATE TABLE `personas` (
   `apellido2` varchar(45) NOT NULL,
   `sexo` varchar(1) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `lugar_nacimiento` varchar(45) DEFAULT NULL,
+  `departamento_nacimiento` int(11) DEFAULT NULL,
+  `municipio_nacimiento` int(11) DEFAULT NULL,
   `tipo_sangre` varchar(2) DEFAULT NULL,
   `eps` varchar(45) DEFAULT NULL,
   `poblacion` varchar(45) DEFAULT NULL,
@@ -1724,13 +1800,13 @@ CREATE TABLE `personas` (
 -- Volcado de datos para la tabla `personas`
 --
 
-INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `lugar_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
-(1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
-(2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio', 'Cesar', 'Frias', 'm', '2000-04-10', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
-(3, '1066', 'cc', '1990-05-05', 20, 404, 'Hugo', 'Mairon', 'Sosa', 'm', '1990-05-05', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
-(4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian', 'Andres', 'Romero', 'm', '1998-06-06', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
-(5, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 'Valledupar', 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
-(6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 'Valledupar', 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona');
+INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `departamento_nacimiento`, `municipio_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
+(1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
+(2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio', 'Cesar', 'Frias', 'm', '2000-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
+(3, '1066', 'cc', '1990-05-05', 20, 404, 'Hugo', 'Mairon', 'Sosa', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
+(4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian', 'Andres', 'Romero', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
+(5, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
+(6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona');
 
 -- --------------------------------------------------------
 
@@ -1743,16 +1819,17 @@ CREATE TABLE `profesores` (
   `perfil` varchar(45) NOT NULL,
   `escalafon` varchar(45) NOT NULL,
   `fecha_inicio` date NOT NULL,
-  `tipo_contrato` varchar(45) NOT NULL
+  `tipo_contrato` varchar(45) NOT NULL,
+  `estado_profesor` varchar(8) NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_persona`, `perfil`, `escalafon`, `fecha_inicio`, `tipo_contrato`) VALUES
-(5, 'profesional', '10', '2017-01-01', '2017-12-12'),
-(6, 'profesional', '10', '2017-01-01', '2017-12-12');
+INSERT INTO `profesores` (`id_persona`, `perfil`, `escalafon`, `fecha_inicio`, `tipo_contrato`, `estado_profesor`) VALUES
+(5, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo'),
+(6, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -1827,7 +1904,7 @@ CREATE TRIGGER `eliminar_estudiantes_personas` AFTER DELETE ON `usuarios` FOR EA
 DELETE FROM estudiantes where id_persona=old.id_persona;
 DELETE FROM personas where id_persona=old.id_persona;
 DELETE FROM profesores where id_persona=old.id_persona;
-DELETE FROM padres where id_estudiante=old.id_persona;
+DELETE FROM estudiantes_padres where id_estudiante=old.id_persona;
 end
 $$
 DELIMITER ;
@@ -1840,7 +1917,7 @@ DELIMITER ;
 -- Indices de la tabla `acudientes`
 --
 ALTER TABLE `acudientes`
-  ADD PRIMARY KEY (`id_acudiente`);
+  ADD PRIMARY KEY (`id_persona`);
 
 --
 -- Indices de la tabla `anos_lectivos`
@@ -1937,6 +2014,18 @@ ALTER TABLE `estudiantes`
   ADD PRIMARY KEY (`id_persona`);
 
 --
+-- Indices de la tabla `estudiantes_acudientes`
+--
+ALTER TABLE `estudiantes_acudientes`
+  ADD PRIMARY KEY (`idestudiantes_acudientes`);
+
+--
+-- Indices de la tabla `estudiantes_padres`
+--
+ALTER TABLE `estudiantes_padres`
+  ADD PRIMARY KEY (`idestudiantes_padres`);
+
+--
 -- Indices de la tabla `grados`
 --
 ALTER TABLE `grados`
@@ -1969,6 +2058,12 @@ ALTER TABLE `logros_asignados`
   ADD KEY `fk_logros_grados_idx` (`id_grado`),
   ADD KEY `fk_logros_asignaturas_idx` (`id_asignatura`),
   ADD KEY `fk_logros_logros_idx` (`id_logro1`);
+
+--
+-- Indices de la tabla `madres`
+--
+ALTER TABLE `madres`
+  ADD PRIMARY KEY (`id_madre`);
 
 --
 -- Indices de la tabla `matriculas`
@@ -2004,7 +2099,7 @@ ALTER TABLE `notificaciones`
 -- Indices de la tabla `padres`
 --
 ALTER TABLE `padres`
-  ADD PRIMARY KEY (`id_padres`);
+  ADD PRIMARY KEY (`id_padre`);
 
 --
 -- Indices de la tabla `pagos`
@@ -2063,11 +2158,6 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de la tabla `acudientes`
---
-ALTER TABLE `acudientes`
-  MODIFY `id_acudiente` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT de la tabla `anos_lectivos`
 --
 ALTER TABLE `anos_lectivos`
@@ -2118,6 +2208,16 @@ ALTER TABLE `desempenos`
 ALTER TABLE `elecciones`
   MODIFY `id_eleccion` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `estudiantes_acudientes`
+--
+ALTER TABLE `estudiantes_acudientes`
+  MODIFY `idestudiantes_acudientes` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `estudiantes_padres`
+--
+ALTER TABLE `estudiantes_padres`
+  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT de la tabla `grados`
 --
 ALTER TABLE `grados`
@@ -2137,6 +2237,11 @@ ALTER TABLE `logros`
 --
 ALTER TABLE `logros_asignados`
   MODIFY `id_logro_asignacion` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `madres`
+--
+ALTER TABLE `madres`
+  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
@@ -2161,7 +2266,7 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `padres`
 --
 ALTER TABLE `padres`
-  MODIFY `id_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --

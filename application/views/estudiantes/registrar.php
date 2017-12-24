@@ -21,9 +21,11 @@
 	    		<div class="nav-tabs-custom">
 
 		            <ul class="nav nav-tabs">
-		              <li class="active"><a href="#tab_1" data-toggle="tab">Datos Personales</a></li>
-		              <li><a href="#tab_2" data-toggle="tab">Datos De Contacto</a></li>
-		              <li><a href="#tab_3" data-toggle="tab">Datos De Los Padres</a></li>
+		              <li class="active"><a href="#tab_1" data-toggle="tab"><i class='fa fa-newspaper-o'></i>&nbsp;Datos Personales</a></li>
+		              <li><a href="#tab_2" data-toggle="tab"><i class='fa fa-location-arrow'></i>&nbsp;Datos De Contacto</a></li>
+		              <li><a href="#tab_3" data-toggle="tab"><i class='fa fa-male'></i>&nbsp;Datos Del Padre</a></li>
+		              <li><a href="#tab_4" data-toggle="tab"><i class='fa fa-female'></i>&nbsp;Datos De La Madre</a></li>
+		              <li><a href="#tab_5" data-toggle="tab"><i class='fa fa-graduation-cap'></i>&nbsp;Datos Académicos</a></li>
 		              <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
 		            </ul>
 
@@ -66,7 +68,7 @@
 										  	</div>
 
 										  	<div class="form-group">
-							  					<label class="control-label col-md-3" for="departamento_expedicion">DEPARTAMENTO DE EXPEDICIÓN</label>
+							  					<label class="control-label col-md-3" for="departamento_expedicion">DPTO. DE EXPEDICIÓN</label>
 							  					<div class="col-md-7">
 								  					<div id="departamento_expedicion1">
 								  						<select class="form-control" id="departamento_expedicion" name="departamento_expedicion">
@@ -141,11 +143,31 @@
 										  	</div>
 
 										  	<div class="form-group">
-											 	<label class="control-label col-md-3" for="lugar_nacimiento">LUGAR DE NACIMIENTO</label>
-											 	<div class="col-md-7">
-											 		<input type="text" class="form-control" id="lugar_nacimiento" name="lugar_nacimiento" placeholder="Lugar de Nacimiento">
-											 	</div>	
+							  					<label class="control-label col-md-3" for="departamento_nacimiento">DPTO. DE NACIMIENTO</label>
+							  					<div class="col-md-7">
+								  					<div id="departamento_nacimiento1">
+								  						<select class="form-control" id="departamento_nacimiento" name="departamento_nacimiento">
+								    
+								  						</select>
+								  					</div>
+								  				</div>		
 											</div>
+
+											<div class="form-group">
+											 	<label class="control-label col-md-3" for="municipio_nacimiento">MUNICIPIO DE NACIMIENTO</label>
+											 	<div class="col-md-7">
+												 	<div id="municipio_nacimiento1">
+														<select class="form-control" id="municipio_nacimiento" name="municipio_nacimiento">
+													    
+														</select>
+													</div>
+												</div>	
+											</div>
+					                    </div>
+					                </div> 
+
+					                <div class="panel panel-default">
+					                    <div class="panel-body">
 
 											<div class="form-group">
 												<label class="control-label col-md-3" for="tipo_sangre">TIPO DE SANGRE:</label>
@@ -171,11 +193,33 @@
 											<div class="form-group">
 												<label class="control-label col-md-3" for="poblacion">POBLACIÓN</label>
 												<div class="col-md-7">
-													<input type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Población">
+													<select class="form-control" id="poblacion" name="poblacion">
+														<option value="Ninguna">Ninguna</option>
+														<option value="Indigena">Indigena</option>
+									  					<option value="Desplazados Por Fenomenos Naturales">Desplazados Por Fenomenos Naturales</option>
+									  					<option value="Desplazados Por Violencia">Desplazados Por Violencia</option>
+									  					<option value="Negritudes">Negritudes</option>
+									  					<option value="Otra">Otra</option>
+													 </select>
+												</div>	
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-md-3" for="discapacidad">DISCAPACIDAD</label>
+												<div class="col-md-7">
+													<select class="form-control" id="discapacidad" name="discapacidad">
+														<option value="Ninguna">Ninguna</option>
+														<option value="Cognitiva O Mental">Cognitiva O Mental</option>
+														<option value="Limitación Auditiva O Sorda">Limitación Auditiva O Sorda</option>
+														<option value="Limitación Fisica O Motora">Limitación Fisica O Motora</option>
+														<option value="Limitación Visual O Ciega">Limitación Visual O Ciega</option>
+														<option value="Limitación Vocal O Muda">Limitación Vocal O Muda</option>
+									  					<option value="Otra">Otra</option>
+													 </select>
 												</div>	
 											</div>
 					                    </div>
-					                </div>    
+					                </div>   
 					            </div>
 
 				            </div>        
@@ -223,30 +267,6 @@
 					                </div> 
 					            </div>
 
-					            <div class="col-md-6">
-					                <div class="panel panel-default">
-					                    <div class="panel-body">
-
-					                    	<div class="form-group">
-										    	<label class="control-label col-md-3" for="institucion_procedencia">INSTITUCIÓN DE PROCEDENCIA</label>
-										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="institucion_procedencia" name="institucion_procedencia"
-										           placeholder="Institución Procedencia">
-										        </div>   
-										  	</div>
-
-										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="discapacidad">DISCAPACIDAD</label>
-										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="discapacidad" name="discapacidad"
-										           placeholder="Discapacidad">
-										        </div>   
-										  	</div>
-
-					                    </div>
-					                </div>
-					            </div>
-
 					        </div> 
 					           
 	              		</div>
@@ -259,7 +279,7 @@
 					                    <div class="panel-body">
 
 					                    	<div class="form-group">
-										    	<label class="control-label col-md-3" for="identificacion_padre">IDENTIFICACIÓN DEL PADRE</label>
+										    	<label class="control-label col-md-3" for="identificacion_padre">IDENTIFICACIÓN</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="identificacion_padre" name="identificacion_padre"
 										           placeholder="Identificación del padre">
@@ -267,7 +287,7 @@
 										  	</div>
 
 										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="nombres_padre">NOMBRES DEL PADRE</label>
+										    	<label class="control-label col-md-3" for="nombres_padre">NOMBRES</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="nombres_padre" name="nombres_padre"
 										           placeholder="Nombres">
@@ -275,18 +295,18 @@
 										  	</div>
 
 										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="apellidos_padre">APELLIDOS DEL PADRE</label>
+										    	<label class="control-label col-md-3" for="apellido1_padre">1° APELLIDO</label>
 										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="apellidos_padre" name="apellidos_padre"
-										           placeholder="Apellidos">
+										    		<input type="text" class="form-control" id="apellido1_padre" name="apellido1_padre"
+										           placeholder="Primer Apellido">
 										        </div>   
 										  	</div>
 
 										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="ocupacion_padre">OCUPACIÓN DEL PADRE</label>
+										    	<label class="control-label col-md-3" for="apellido2_padre">2° APELLIDO</label>
 										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="ocupacion_padre" name="ocupacion_padre"
-										           placeholder="Ocupación">
+										    		<input type="text" class="form-control" id="apellido2_padre" name="apellido2_padre"
+										           placeholder="Segundo Apellido">
 										        </div>   
 										  	</div>
 
@@ -295,6 +315,39 @@
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="telefono_padre" name="telefono_padre"
 										           placeholder="Teléfono">
+										        </div>   
+										  	</div>
+
+										  	
+					                    </div>
+					                </div>
+					            </div>
+
+					            <div class="col-md-6">
+					                <div class="panel panel-default">
+					                    <div class="panel-body">
+
+					                    	<div class="form-group">
+										    	<label class="control-label col-md-3" for="direccion_padre">DIRECCIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccion_padre" name="direccion_padre"
+										           placeholder="Dirección">
+										        </div>   
+										  	</div>
+
+										  	<div class="form-group">
+										    	<label class="control-label col-md-3" for="barrio_padre">BARRIO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="barrio_padre" name="barrio_padre"
+										           placeholder="Barrio">
+										        </div>   
+										  	</div>
+
+										  	<div class="form-group">
+										    	<label class="control-label col-md-3" for="ocupacion_padre">OCUPACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="ocupacion_padre" name="ocupacion_padre"
+										           placeholder="Ocupación">
 										        </div>   
 										  	</div>
 
@@ -313,16 +366,25 @@
 										           placeholder="Dirección Trabajo">
 										        </div>   
 										  	</div>
+
+					                    	
 					                    </div>
-					                </div>
+					                </div> 
 					            </div>
 
-					            <div class="col-md-6">
+				            </div>
+
+						</div>
+
+						<div class="tab-pane" id="tab_4">
+							
+							<div class="row">
+								<div class="col-md-6">
 					                <div class="panel panel-default">
 					                    <div class="panel-body">
 
 					                    	<div class="form-group">
-										    	<label class="control-label col-md-3" for="identificacion_madre">IDENTIFICACIÓN DE LA MADRE</label>
+										    	<label class="control-label col-md-3" for="identificacion_madre">IDENTIFICACIÓN</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="identificacion_madre" name="identificacion_madre"
 										           placeholder="Identificación de la madre">
@@ -330,7 +392,7 @@
 										  	</div>
 
 										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="nombres_madre">NOMBRES DE LA MADRE</label>
+										    	<label class="control-label col-md-3" for="nombres_madre">NOMBRES</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="nombres_madre" name="nombres_madre"
 										           placeholder="Nombres">
@@ -338,18 +400,18 @@
 										  	</div>
 
 										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="apellidos_madre">APELLIDOS DE LA MADRE</label>
+										    	<label class="control-label col-md-3" for="apellido1_madre">1° APELLIDO</label>
 										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="apellidos_madre" name="apellidos_madre"
-										           placeholder="Apellidos">
+										    		<input type="text" class="form-control" id="apellido1_madre" name="apellido1_madre"
+										           placeholder="Primer Apellido">
 										        </div>   
 										  	</div>
 
 										  	<div class="form-group">
-										    	<label class="control-label col-md-3" for="ocupacion_madre">OCUPACIÓN DE LA MADRE</label>
+										    	<label class="control-label col-md-3" for="apellido2_madre">2° APELLIDO</label>
 										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="ocupacion_madre" name="ocupacion_madre"
-										           placeholder="Ocupación">
+										    		<input type="text" class="form-control" id="apellido2_madre" name="apellido2_madre"
+										           placeholder="Segundo Apellido">
 										        </div>   
 										  	</div>
 
@@ -358,6 +420,38 @@
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="telefono_madre" name="telefono_madre"
 										           placeholder="Teléfono">
+										        </div>   
+										  	</div>
+
+					                    </div>
+					                </div>
+					            </div>
+
+					            <div class="col-md-6">
+					                <div class="panel panel-default">
+					                    <div class="panel-body">
+
+										  	<div class="form-group">
+										    	<label class="control-label col-md-3" for="direccion_madre">DIRECCIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccion_madre" name="direccion_madre"
+										           placeholder="Dirección">
+										        </div>   
+										  	</div>
+
+										  	<div class="form-group">
+										    	<label class="control-label col-md-3" for="barrio_madre">BARRIO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="barrio_madre" name="barrio_madre"
+										           placeholder="Barrio">
+										        </div>   
+										  	</div>
+
+										  	<div class="form-group">
+										    	<label class="control-label col-md-3" for="ocupacion_madre">OCUPACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="ocupacion_madre" name="ocupacion_madre"
+										           placeholder="Ocupación">
 										        </div>   
 										  	</div>
 
@@ -376,6 +470,7 @@
 										           placeholder="Dirección Trabajo">
 										        </div>   
 										  	</div>
+
 					                    </div>
 					                </div> 
 					            </div>
@@ -383,6 +478,60 @@
 				            </div>
 
 						</div>
+
+						<div class="tab-pane" id="tab_5">
+	              			
+	              			<div class="row">
+		              			
+					            <div class="col-md-6">
+					                <div class="panel panel-default">
+					                    <div class="panel-body">
+
+					                    	<div class="form-group">
+										    	<label class="control-label col-md-3" for="institucion_procedencia">I.E. DE PROCEDENCIA</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="institucion_procedencia" name="institucion_procedencia"
+										           placeholder="Institución Procedencia">
+										        </div>   
+										  	</div>
+
+										  	<div class="form-group">
+											  	<label class="control-label col-md-3" for="grado_cursado">GRADO CURSADO</label>
+											  	<div class="col-md-7">
+												  	<select class="form-control" id="grado_cursado" name="grado_cursado">
+													    <option value="Prejardín">Prejardín</option>
+														<option value="Jardín">Jardín</option>
+														<option value="Transición">Transición</option>
+														<option value="Primero">Primero</option>
+														<option value="Segundo">Segundo</option>
+														<option value="Tercero">Tercero</option>
+														<option value="Cuarto">Cuarto</option>
+														<option value="Quinto">Quinto</option>
+														<option value="Sexto">Sexto</option>
+														<option value="Séptimo">Séptimo</option>
+														<option value="Octavo">Octavo</option>
+														<option value="Noveno">Noveno</option>
+														<option value="Décimo">Décimo</option>
+														<option value="Undécimo">Undécimo</option>
+												  	</select>
+												</div>  	
+											</div>
+
+										  	<div class="form-group">
+										    	<label class="control-label col-md-3" for="anio">AÑO</label>
+										    	<div class="col-md-4">
+										    		<input type="text" class="form-control" id="anio" name="anio"
+										           placeholder="Año">
+										        </div>   
+										  	</div>
+
+					                    </div>
+					                </div>
+					            </div>
+
+					        </div> 
+					           
+	              		</div>
 					</div>
 
 				</div>
