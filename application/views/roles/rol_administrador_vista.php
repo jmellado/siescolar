@@ -19,6 +19,7 @@
 
 	  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/estudiantes.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/profesores.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/acudientes.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grados.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/grupos.js" defer></script>
@@ -345,6 +346,12 @@
             <li><a href="<?php echo base_url(); ?>estudiantes_controller/index"><i class="fa fa-user-plus"></i> Registrar</a></li>
             <li><a href="<?php echo base_url(); ?>estudiantes_controller/index2"><i class="fa fa-list-alt"></i> Consultar</a></li>
           </ul>
+        </li>
+        <li>
+          <a href="<?php echo base_url(); ?>acudientes_controller/index">
+            <i class="fa fa-group"></i>
+            <span>Gestionar Acudientes</span>
+          </a>
         </li>
         <li class="treeview">
           <a href="#">

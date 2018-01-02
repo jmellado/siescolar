@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-12-2017 a las 01:48:39
+-- Tiempo de generación: 02-01-2018 a las 20:29:13
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -27,13 +27,31 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `acudientes` (
+  `id` int(11) NOT NULL,
   `id_persona` int(11) NOT NULL,
-  `parentesco` varchar(45) NOT NULL,
   `ocupacion` varchar(45) NOT NULL,
   `telefono_trabajo` varchar(10) NOT NULL,
   `direccion_trabajo` varchar(45) NOT NULL,
   `estado_acudiente` varchar(8) NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `administradores`
+--
+
+CREATE TABLE `administradores` (
+  `id_persona` int(11) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `administradores`
+--
+
+INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
+(12345, '2018-01-02 19:28:38');
 
 -- --------------------------------------------------------
 
@@ -345,7 +363,8 @@ INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedenci
 CREATE TABLE `estudiantes_acudientes` (
   `idestudiantes_acudientes` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `id_acudiente` int(11) NOT NULL
+  `id_acudiente` int(11) NOT NULL,
+  `parentesco` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1896,20 +1915,6 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 (6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1');
 
 --
--- Disparadores `usuarios`
---
-DELIMITER $$
-CREATE TRIGGER `eliminar_estudiantes_personas` AFTER DELETE ON `usuarios` FOR EACH ROW begin
--- Edit trigger body code below this line. Do not edit lines above this one
-DELETE FROM estudiantes where id_persona=old.id_persona;
-DELETE FROM personas where id_persona=old.id_persona;
-DELETE FROM profesores where id_persona=old.id_persona;
-DELETE FROM estudiantes_padres where id_estudiante=old.id_persona;
-end
-$$
-DELIMITER ;
-
---
 -- Índices para tablas volcadas
 --
 
@@ -1917,6 +1922,12 @@ DELIMITER ;
 -- Indices de la tabla `acudientes`
 --
 ALTER TABLE `acudientes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `administradores`
+--
+ALTER TABLE `administradores`
   ADD PRIMARY KEY (`id_persona`);
 
 --
@@ -2157,6 +2168,11 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
+--
+-- AUTO_INCREMENT de la tabla `acudientes`
+--
+ALTER TABLE `acudientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `anos_lectivos`
 --
