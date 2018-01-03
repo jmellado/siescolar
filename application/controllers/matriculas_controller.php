@@ -18,7 +18,6 @@ class Matriculas_controller extends CI_Controller {
 		{
 			redirect(base_url().'login_controller');
 		}
-		//$this->load->view('estudiantes/registrar2');
 		$this->template->load('roles/rol_administrador_vista', 'matriculas/matriculas_vista');
 	}
 
@@ -26,6 +25,8 @@ class Matriculas_controller extends CI_Controller {
 
         $this->form_validation->set_rules('id_persona', 'id persona', 'required|numeric');
         $this->form_validation->set_rules('id_curso', 'curso', 'required|numeric');
+        $this->form_validation->set_rules('id_acudiente', 'Acudiente', 'required|numeric');
+        $this->form_validation->set_rules('parentesco', 'Parentesco', 'required');
         $this->form_validation->set_rules('jornada', 'jornada', 'required|alpha_spaces');
         $this->form_validation->set_rules('observaciones', 'observaciones', 'required|alpha_spaces');
 
@@ -48,7 +49,9 @@ class Matriculas_controller extends CI_Controller {
         	$id_estudiante = $this->input->post('id_persona');
         	$id_curso = $this->input->post('id_curso');
         	$jornada = $this->input->post('jornada');
-        	$observaciones = ucwords($this->input->post('observaciones'));
+        	$id_acudiente = $this->input->post('id_acudiente');
+        	$parentesco = $this->input->post('parentesco');
+        	$observaciones = $this->input->post('observaciones');
         	$estado = 'Activo';
 
         	//array para insertar en la tabla grados----------
@@ -59,12 +62,21 @@ class Matriculas_controller extends CI_Controller {
 			'id_estudiante' =>$id_estudiante,
 			'id_curso' =>$id_curso,
 			'jornada' =>$jornada,
-			'observaciones' =>$observaciones,
+			'id_acudiente' =>$id_acudiente,
+			'parentesco' =>$parentesco,
+			'observaciones' =>ucwords(strtolower($observaciones)),
 			'estado_matricula' =>$estado);
+
+			//array para insertar en la tabla estudiantes_acudientes
+			$est_acud = array(
+        	'id_estudiante' =>$id_estudiante,	
+			'id_acudiente' =>$id_acudiente,
+			'parentesco' =>$parentesco,
+			'ano_lectivo' =>$ano_lectivo);
 
 			if ($this->matriculas_model->validar_existencia($id_estudiante,$ano_lectivo)){
 
-				$respuesta=$this->matriculas_model->insertar_matricula($matricula);
+				$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud);
 
 				if($respuesta==true){
 
@@ -75,15 +87,18 @@ class Matriculas_controller extends CI_Controller {
 
 					$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
 
-					for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+					if ($asignaturas_grados != false) {
+
+						for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
 
 
-						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
+							$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
 
-						if($resp == false){
-							echo "no se pudo registrar en la tabla notas";
+							if($resp == false){
+								echo "no se pudo registrar en la tabla notas";
+							}
+							
 						}
-						
 					}
 					//*************************************************************************************************
 
@@ -142,14 +157,14 @@ class Matriculas_controller extends CI_Controller {
 			}
 
 			
-	        $respuesta=$this->matriculas_model->eliminar_matricula($id);
+	        $respuesta=$this->matriculas_model->eliminar_matricula($id,$id_estudiante,$ano_lectivo);
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Eliminado Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -166,7 +181,9 @@ class Matriculas_controller extends CI_Controller {
     	$id_estudiante = $this->input->post('id_persona');
     	$id_curso = $this->input->post('id_curso');
     	$jornada = $this->input->post('jornada');
-    	$observaciones = ucwords($this->input->post('observaciones'));
+    	$id_acudiente = $this->input->post('id_acudiente');
+        $parentesco = $this->input->post('parentesco');
+    	$observaciones = $this->input->post('observaciones');
         $estado = 'Activo';
 
     	//array para insertar en la tabla matriculas----------
@@ -177,13 +194,21 @@ class Matriculas_controller extends CI_Controller {
 		'id_estudiante' =>$id_estudiante,
 		'id_curso' =>$id_curso,
 		'jornada' =>$jornada,
-		'observaciones' =>$observaciones,
+		'id_acudiente' =>$id_acudiente,
+		'parentesco' =>$parentesco,
+		'observaciones' =>ucwords(strtolower($observaciones)),
 		'estado_matricula' =>$estado);
 
+        //array para insertar en la tabla estudiantes_acudientes
+		$est_acud = array(
+    	'id_estudiante' =>$id_estudiante,	
+		'id_acudiente' =>$id_acudiente,
+		'parentesco' =>$parentesco,
+		'ano_lectivo' =>$ano_lectivo);
 
         if(is_numeric($id_matricula)){
 
-	    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula);
+	    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula,$est_acud,$id_estudiante,$ano_lectivo);
 
 	        if($respuesta==true){
 
@@ -199,15 +224,18 @@ class Matriculas_controller extends CI_Controller {
 
 				$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
 
-				for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+				if ($asignaturas_grados != false) {
+					
+					for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
 
-					$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
+						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
 
-					if($resp == false){
-						echo "no se pudo registrar en la tabla notas";
+						if($resp == false){
+							echo "no se pudo registrar en la tabla notas";
+						}
+							
 					}
-						
-				}
+				}	
 				//*************************************************************************************************
 
 	        }else{
@@ -258,6 +286,13 @@ class Matriculas_controller extends CI_Controller {
     	$jornada = $this->input->post('jornada');
 
     	$consulta = $this->matriculas_model->llenar_cursos($jornada);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_acudientes(){
+
+    	$consulta = $this->matriculas_model->llenar_acudientes();
     	echo json_encode($consulta);
     }
 

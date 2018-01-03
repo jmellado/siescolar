@@ -21,7 +21,7 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Estudiante Matriculado Satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Estudiante Matriculado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_matriculas")[0].reset();
 						$("#identificacion").val("");
 						bloquear_cajas_texto();
@@ -29,13 +29,13 @@ function inicio(){
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Estudiante No Matriculado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
 					else if(respuesta==="matricula ya existe"){
 						
-						toastr.success('El Estudiante Ya Se Encuentra Matriculado', 'Success Alert', {timeOut: 5000});
+						toastr.success('El Estudiante Ya Se Encuentra Matriculado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
@@ -46,7 +46,7 @@ function inicio(){
 					}
 					mostrarmatriculas("",1,5);
 					llenarcombo_cursos($("#jornadaMT").val(),null);
-						
+					llenarcombo_acudientes("");
 						
 				}
 
@@ -120,20 +120,24 @@ function inicio(){
 		id_personasele = $(this).parent().parent().children("td:eq(5)").text()
 		id_cursosele = $(this).parent().parent().children("td:eq(9)").text()
 		jornadasele = $(this).parent().parent().children("td:eq(12)").text();
-		observacionessele = $(this).parent().parent().children("td:eq(13)").text();
+		id_acudientesele = $(this).parent().parent().children("td:eq(13)").text();
+		parentescosele = $(this).parent().parent().children("td:eq(14)").text();
+		observacionessele = $(this).parent().parent().children("td:eq(15)").text();
 		
 		//alert(""+observacionessele+fecha_matriculasele+ano_lectivosele);
-
+		
 		llenarcombo_cursos(jornadasele,id_cursosele);
+		llenarcombo_acudientes(id_acudientesele);
 		$("#id_matriculasele").val(id_matriculasele);
         $("#fecha_matriculasele").val(fecha_matriculasele);
         $("#ano_lectivosele").val(ano_lectivosele);
         $("#id_personasele").val(id_personasele);
         $("#id_cursosele").val(id_cursosele);
         $("#jornadaseleMT").val(jornadasele);
+        $("#id_acudientesele").val(id_acudientesele);
+        $("#parentescosele").val(parentescosele);
         $("#observacionessele").val(observacionessele);
-        //desbloquear_cajas_texto();
-
+        
 	});
 
 	
@@ -147,8 +151,8 @@ function inicio(){
        		actualizar_matricula();
         }
         else{
-			alert("formulario incorrecto");
-			alert($("#form_matriculas_actualizar").validate().numberOfInvalids()+"errores");
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000})
+			//alert($("#form_matriculas_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
@@ -200,6 +204,20 @@ function inicio(){
     });
 
 
+    //Resetear Formulario Al Cerrar El Modal
+    $("#modal_agregar_matricula").on('hidden.bs.modal', function () {
+        $("#form_matriculas")[0].reset();
+        $("#form_matriculas").valid()==true;
+        $("#identificacion").val("");
+        bloquear_cajas_texto();
+    });
+
+
+    $("#modal_actualizar_matricula").on('hidden.bs.modal', function () {
+        $("#form_matriculas_actualizar")[0].reset();
+        $("#form_matriculas_actualizar").valid()==true;
+        llenarcombo_acudientes("");
+    });
 
 
 	$("#form_matriculas").validate({
@@ -215,15 +233,28 @@ function inicio(){
 
 			jornada:{
 				required: true,
-				maxlength: 30,
+				maxlength: 30
+				//lettersonly: true	
+
+			},
+
+			id_acudiente:{
+				required: true,
+				maxlength: 15	
+
+			},
+
+			parentesco:{
+				required: true,
+				maxlength: 30
 				//lettersonly: true	
 
 			},
 
 			observaciones:{
 				required: true,
-				maxlength: 80
-					
+				maxlength: 80,
+				minlength: 1	
 
 			}
 
@@ -245,8 +276,20 @@ function inicio(){
 
 			jornada:{
 				required: true,
-				maxlength: 30,
+				maxlength: 30
 				//lettersonly: true	
+
+			},
+
+			id_acudiente:{
+				required: true,
+				maxlength: 15	
+
+			},
+
+			parentesco:{
+				required: true,
+				maxlength: 30
 
 			},
 
@@ -282,7 +325,7 @@ function mostrarmatriculas(valor,pagina,cantidad){
 
 				html ="";
 				for (var i = 0; i < registros.matriculas.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.matriculas[i].id_matricula+"</td><td>"+registros.matriculas[i].fecha_matricula+"</td><td style='display:none'>"+registros.matriculas[i].ano_lectivo+"</td><td>"+registros.matriculas[i].nombre_ano_lectivo+"</td><td style='display:none'>"+registros.matriculas[i].id_estudiante+"</td><td>"+registros.matriculas[i].identificacion+"</td><td>"+registros.matriculas[i].nombres+"</td><td>"+registros.matriculas[i].apellido1+"</td><td style='display:none'>"+registros.matriculas[i].id_curso+"</td><td>"+registros.matriculas[i].nombre_grado+"</td><td>"+registros.matriculas[i].nombre_grupo+"</td><td>"+registros.matriculas[i].jornada+"</td><td style='display:none'>"+registros.matriculas[i].observaciones+"</td><td>"+registros.matriculas[i].estado_matricula+"</td><td><a class='btn btn-success' href="+registros.matriculas[i].id_matricula+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.matriculas[i].id_matricula+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.matriculas[i].id_matricula+"</td><td>"+registros.matriculas[i].fecha_matricula+"</td><td style='display:none'>"+registros.matriculas[i].ano_lectivo+"</td><td>"+registros.matriculas[i].nombre_ano_lectivo+"</td><td style='display:none'>"+registros.matriculas[i].id_estudiante+"</td><td>"+registros.matriculas[i].identificacion+"</td><td>"+registros.matriculas[i].nombres+"</td><td>"+registros.matriculas[i].apellido1+"</td><td style='display:none'>"+registros.matriculas[i].id_curso+"</td><td>"+registros.matriculas[i].nombre_grado+"</td><td>"+registros.matriculas[i].nombre_grupo+"</td><td>"+registros.matriculas[i].jornada+"</td><td style='display:none'>"+registros.matriculas[i].id_acudiente+"</td><td style='display:none'>"+registros.matriculas[i].parentesco+"</td><td style='display:none'>"+registros.matriculas[i].observaciones+"</td><td>"+registros.matriculas[i].estado_matricula+"</td><td><a class='btn btn-success' href="+registros.matriculas[i].id_matricula+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.matriculas[i].id_matricula+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_matriculas tbody").html(html);
@@ -444,14 +487,17 @@ function buscar_estudiante(valor){
 
 				if(respuesta==="estudiantenoexiste"){
 
-					toastr.success('Estudiante No Registrado', 'Success Alert', {timeOut: 5000});
+					toastr.success('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculas")[0].reset();
 					$("#id_persona").val("");
 					bloquear_cajas_texto();
 				}
 				else if(respuesta==="matricula ya existe"){
 
-					toastr.success('El Estudiante Ya Se Encuentra Matriculado', 'Success Alert', {timeOut: 5000});
+					toastr.success('El Estudiante Ya Se Encuentra Matriculado.', 'Success Alert', {timeOut: 3000});
+					$("#form_matriculas")[0].reset();
+					$("#id_persona").val("");
+					bloquear_cajas_texto();
 				}
 				else{
 
@@ -469,7 +515,7 @@ function buscar_estudiante(valor){
 	        			$("#apellido2").val(apellido2);
 
 	        			desbloquear_cajas_texto();
-						
+						llenarcombo_acudientes("");
 						
 					};
 				}	
@@ -480,9 +526,40 @@ function buscar_estudiante(valor){
 	});
 }
 
+
+function llenarcombo_acudientes(valor){
+
+	$.ajax({
+		url:base_url+"matriculas_controller/llenarcombo_acudientes",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if(registros[i]["id_persona"]==valor){
+
+						html +="<option value="+registros[i]["id_persona"]+" selected>"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_persona"]+">"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
+					}
+				};
+				
+				$("#acudiente1 select").html(html);
+		}
+
+	});
+}
+
+
 function bloquear_cajas_texto(){
 
 	$("#id_curso").attr("disabled", "disabled");
+	$("#id_acudiente").attr("disabled", "disabled");
+	$("#parentesco").attr("disabled", "disabled");
     $("#jornadaMT").attr("disabled", "disabled");
     $("#observaciones").attr("disabled", "disabled");
     $("#btn_registrar_matricula").attr("disabled", "disabled");
@@ -491,6 +568,8 @@ function bloquear_cajas_texto(){
 function desbloquear_cajas_texto(){
 
 	$("#id_curso").removeAttr("disabled");
+	$("#id_acudiente").removeAttr("disabled");
+	$("#parentesco").removeAttr("disabled");
     $("#jornadaMT").removeAttr("disabled");
     $("#observaciones").removeAttr("disabled");
     $("#btn_registrar_matricula").removeAttr("disabled");

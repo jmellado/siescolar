@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2018 a las 20:29:13
+-- Tiempo de generación: 03-01-2018 a las 21:06:13
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-01-02 19:28:38');
+(12345, '2018-01-03 20:05:44');
 
 -- --------------------------------------------------------
 
@@ -364,7 +364,8 @@ CREATE TABLE `estudiantes_acudientes` (
   `idestudiantes_acudientes` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_acudiente` int(11) NOT NULL,
-  `parentesco` varchar(45) NOT NULL
+  `parentesco` varchar(45) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -524,16 +525,19 @@ CREATE TABLE `matriculas` (
   `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
+  `jornada` varchar(6) NOT NULL,
+  `id_acudiente` int(11) NOT NULL,
+  `parentesco` varchar(45) NOT NULL,
   `observaciones` varchar(45) NOT NULL,
-  `estado_matricula` varchar(8) NOT NULL,
-  `jornada` varchar(6) NOT NULL
+  `estado_matricula` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Disparadores `matriculas`
 --
 DELIMITER $$
-CREATE TRIGGER `denegar_acceso_usuario` AFTER DELETE ON `matriculas` FOR EACH ROW begin
+CREATE TRIGGER `denegar_acceso_usuario` AFTER DELETE ON `matriculas` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
+begin
 -- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE usuarios set acceso="0" where id_persona=old.id_estudiante;
 end
@@ -544,6 +548,7 @@ CREATE TRIGGER `permitir_acceso_usuario` AFTER INSERT ON `matriculas` FOR EACH R
 begin
 -- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE usuarios set acceso="1" where id_persona=new.id_estudiante;
+UPDATE usuarios set acceso="1" where id_persona=new.id_acudiente and id_rol="4";
 end
 $$
 DELIMITER ;
@@ -1922,7 +1927,7 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 -- Indices de la tabla `acudientes`
 --
 ALTER TABLE `acudientes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`id_persona`);
 
 --
 -- Indices de la tabla `administradores`

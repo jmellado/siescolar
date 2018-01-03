@@ -3,8 +3,8 @@
 class Matriculas_model extends CI_Model {
 
 
-	public function insertar_matricula($matricula){
-		if ($this->db->insert('matriculas', $matricula)) 
+	public function insertar_matricula($matricula,$est_acud){
+		if ($this->db->insert('matriculas', $matricula) && $this->db->insert('estudiantes_acudientes', $est_acud)) 
 			return true;
 		else
 			return false;
@@ -45,7 +45,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('matriculas');
 
@@ -53,30 +53,46 @@ class Matriculas_model extends CI_Model {
 		
 	}
 
-	public function eliminar_matricula($id){
+	public function eliminar_matricula($id,$id_estudiante,$ano_lectivo){
 
-     	$this->db->where('id_matricula',$id);
-		$consulta = $this->db->delete('matriculas');
-       	if($consulta==true){
-
-           return true;
-       	}
-       	else{
-
-           return false;
-       	}
-    }
-
-    public function modificar_matricula($id,$matricula){
-
-	
+       	$this->db->trans_start();
 		$this->db->where('id_matricula',$id);
+		$this->db->delete('matriculas');
 
-		if ($this->db->update('matriculas', $matricula))
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->delete('estudiantes_acudientes');
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
 
 			return true;
-		else
+		}
+    }
+
+    public function modificar_matricula($id,$matricula,$est_acud,$id_estudiante,$ano_lectivo){
+
+		$this->db->trans_start();
+		$this->db->where('id_matricula',$id);
+		$this->db->update('matriculas', $matricula);
+
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->update('estudiantes_acudientes', $est_acud);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
 			return false;
+		}
+		else{
+
+			return true;
+		}
 	}
 
 
@@ -278,6 +294,14 @@ class Matriculas_model extends CI_Model {
        	}
     }
 
+    //Esta funcion me permite obtener los acudientes activos
+    public function llenar_acudientes(){
+
+    	$this->db->where('acudientes.estado_acudiente',"Activo");
+		$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
+		$query = $this->db->get('personas');
+		return $query->result();
+	}
 
 	
 
