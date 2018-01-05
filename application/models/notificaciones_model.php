@@ -3,16 +3,203 @@
 class Notificaciones_model extends CI_Model {
 
 
-	public function insertar_notificacion($notificacion){
-		if ($this->db->insert('notificaciones', $notificacion)) 
-			return true;
-		else
-			return false;
+	public function insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$rol_destinatario,$fecha_envio,$estado_lectura){
+
+		$estudiantes = $this->notificaciones_model->obtener_estudiantes();
+        $acudientes = $this->notificaciones_model->obtener_acudientes();
+        $profesores = $this->notificaciones_model->obtener_profesores();
+
+        if ($rol_destinatario == "1") {
+        
+			//NUEVA TRANSACCION
+			$this->db->trans_start();
+
+				if ($estudiantes != false) {
+	        			
+	    			for ($i=0; $i < count($estudiantes) ; $i++) {
+
+	    				//array para insertar en la tabla notificaciones----------
+			        	$notificacion = array(
+			        	'codigo_notificacion' =>$ultimo_id,
+			        	'categoria_notificacion' =>$categoria_notificacion,
+			        	'remitente' =>$remitente,	
+						'titulo' =>$titulo,
+						'tipo_notificacion' =>$tipo_notificacion,
+						'contenido' =>$contenido,
+						'destinatario' =>$estudiantes[$i]['id_persona'],
+						'rol_destinatario' =>$rol_destinatario,
+						'fecha_envio' =>$fecha_envio,
+						'estado_lectura' =>$estado_lectura);
+
+						$this->db->insert('notificaciones', $notificacion);
+
+	    			}
+
+	    		}
+	    		if ($acudientes != false) {
+	        			
+	    			for ($i=0; $i < count($acudientes) ; $i++) {
+
+	    				//array para insertar en la tabla notificaciones----------
+			        	$notificacion = array(
+			        	'codigo_notificacion' =>$ultimo_id,
+			        	'categoria_notificacion' =>$categoria_notificacion,
+			        	'remitente' =>$remitente,	
+						'titulo' =>$titulo,
+						'tipo_notificacion' =>$tipo_notificacion,
+						'contenido' =>$contenido,
+						'destinatario' =>$acudientes[$i]['id_persona'],
+						'rol_destinatario' =>$rol_destinatario,
+						'fecha_envio' =>$fecha_envio,
+						'estado_lectura' =>$estado_lectura);
+
+						$this->db->insert('notificaciones', $notificacion);
+
+	    			}
+
+	    		}
+			
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+		}
+		elseif ($rol_destinatario == "2") {
+
+			//NUEVA TRANSACCION
+			$this->db->trans_start();
+
+				if ($profesores != false) {
+	        			
+	    			for ($i=0; $i < count($profesores) ; $i++) {
+
+	    				//array para insertar en la tabla notificaciones----------
+			        	$notificacion = array(
+			        	'codigo_notificacion' =>$ultimo_id,
+			        	'categoria_notificacion' =>$categoria_notificacion,
+			        	'remitente' =>$remitente,	
+						'titulo' =>$titulo,
+						'tipo_notificacion' =>$tipo_notificacion,
+						'contenido' =>$contenido,
+						'destinatario' =>$profesores[$i]['id_persona'],
+						'rol_destinatario' =>$rol_destinatario,
+						'fecha_envio' =>$fecha_envio,
+						'estado_lectura' =>$estado_lectura);
+
+						$this->db->insert('notificaciones', $notificacion);
+
+	    			}
+
+	    		}
+			
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+			
+		}
+		elseif ($rol_destinatario == "3") {
+
+			//NUEVA TRANSACCION
+			$this->db->trans_start();
+
+				if ($estudiantes != false) {
+	        			
+	    			for ($i=0; $i < count($estudiantes) ; $i++) {
+
+	    				//array para insertar en la tabla notificaciones----------
+			        	$notificacion = array(
+			        	'codigo_notificacion' =>$ultimo_id,
+			        	'categoria_notificacion' =>$categoria_notificacion,
+			        	'remitente' =>$remitente,	
+						'titulo' =>$titulo,
+						'tipo_notificacion' =>$tipo_notificacion,
+						'contenido' =>$contenido,
+						'destinatario' =>$estudiantes[$i]['id_persona'],
+						'rol_destinatario' =>$rol_destinatario,
+						'fecha_envio' =>$fecha_envio,
+						'estado_lectura' =>$estado_lectura);
+
+						$this->db->insert('notificaciones', $notificacion);
+
+	    			}
+
+	    		}
+	    		if ($acudientes != false) {
+	        			
+	    			for ($i=0; $i < count($acudientes) ; $i++) {
+
+	    				//array para insertar en la tabla notificaciones----------
+			        	$notificacion = array(
+			        	'codigo_notificacion' =>$ultimo_id,
+			        	'categoria_notificacion' =>$categoria_notificacion,
+			        	'remitente' =>$remitente,	
+						'titulo' =>$titulo,
+						'tipo_notificacion' =>$tipo_notificacion,
+						'contenido' =>$contenido,
+						'destinatario' =>$acudientes[$i]['id_persona'],
+						'rol_destinatario' =>$rol_destinatario,
+						'fecha_envio' =>$fecha_envio,
+						'estado_lectura' =>$estado_lectura);
+
+						$this->db->insert('notificaciones', $notificacion);
+
+	    			}
+
+	    		}
+	    		if ($profesores != false) {
+	        			
+	    			for ($i=0; $i < count($profesores) ; $i++) {
+
+	    				//array para insertar en la tabla notificaciones----------
+			        	$notificacion = array(
+			        	'codigo_notificacion' =>$ultimo_id,
+			        	'categoria_notificacion' =>$categoria_notificacion,
+			        	'remitente' =>$remitente,	
+						'titulo' =>$titulo,
+						'tipo_notificacion' =>$tipo_notificacion,
+						'contenido' =>$contenido,
+						'destinatario' =>$profesores[$i]['id_persona'],
+						'rol_destinatario' =>$rol_destinatario,
+						'fecha_envio' =>$fecha_envio,
+						'estado_lectura' =>$estado_lectura);
+
+						$this->db->insert('notificaciones', $notificacion);
+
+	    			}
+
+	    		}
+			
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+			
+		}
+
 	}
 
-	public function validar_existencia($asunto){
+	public function validar_existencia($titulo){
 
-		$this->db->where('asunto',$asunto);
+		$this->db->where('titulo',$titulo);
 		$query = $this->db->get('notificaciones');
 
 		if ($query->num_rows() > 0) {
@@ -26,15 +213,16 @@ class Notificaciones_model extends CI_Model {
 
 	public function buscar_notificacion($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('notificaciones.asunto',$id,'after');
-		$this->db->or_like('notificaciones.fecha_evento',$id,'after');
-		$this->db->or_like('notificaciones.fecha_envio',$id,'after');
+		$this->db->where('categoria_notificacion',"Mensajes");
+		$this->db->group_by("codigo_notificacion"); 
+
+		$this->db->where("(notificaciones.titulo LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%')", NULL, FALSE);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
-		
-		$this->db->select('id_notificacion,autor,asunto,mensaje,destinatario,fecha_evento,hora_evento,DATE_FORMAT(hora_evento, "%r") as hora_evento1,fecha_envio,estado',false);
+
+		$this->db->select('codigo_notificacion,remitente,titulo,tipo_notificacion,contenido,destinatario,rol_destinatario,fecha_envio,estado_lectura');
 		$query = $this->db->get('notificaciones');
 
 		return $query->result();
@@ -43,7 +231,7 @@ class Notificaciones_model extends CI_Model {
 
 	public function eliminar_notificacion($id){
 
-     	$this->db->where('id_notificacion',$id);
+     	$this->db->where('codigo_notificacion',$id);
 		$consulta = $this->db->delete('notificaciones');
        	if($consulta==true){
 
@@ -55,10 +243,10 @@ class Notificaciones_model extends CI_Model {
        	}
     }
 
-    public function modificar_notificacion($id_notificacion,$notificacion){
+    public function modificar_notificacion($codigo_notificacion,$notificacion){
 
 	
-		$this->db->where('id_notificacion',$id_notificacion);
+		$this->db->where('codigo_notificacion',$codigo_notificacion);
 
 		if ($this->db->update('notificaciones', $notificacion))
 
@@ -70,11 +258,11 @@ class Notificaciones_model extends CI_Model {
 
 	public function obtener_ultimo_id(){
 
-		$this->db->select_max('id_notificacion');
+		$this->db->select_max('codigo_notificacion');
 		$query = $this->db->get('notificaciones');
 
     	$row = $query->result_array();
-        $data['query'] = 1 + $row[0]['id_notificacion'];
+        $data['query'] = 1 + $row[0]['codigo_notificacion'];
         return $data['query'];
 	}
 
@@ -98,11 +286,12 @@ class Notificaciones_model extends CI_Model {
 	}
 
 
-	public function obtener_informacion_notificacion($id_notificacion){
+	public function obtener_informacion_notificacion($codigo_notificacion){
 
-		$this->db->where('id_notificacion',$id_notificacion);
+		$this->db->where('codigo_notificacion',$codigo_notificacion);
+		$this->db->group_by("codigo_notificacion");
 
-		$this->db->select('id_notificacion,autor,asunto,mensaje,destinatario,fecha_evento,DATE_FORMAT(hora_evento, "%r") as hora_evento,fecha_envio,estado',false);
+		$this->db->select('codigo_notificacion,remitente,titulo,tipo_notificacion,contenido,destinatario,rol_destinatario,fecha_envio,estado_lectura');
 
 		$query = $this->db->get('notificaciones');
 
@@ -206,6 +395,35 @@ class Notificaciones_model extends CI_Model {
 		else
 			return false;
 	}
+
+
+	//Esta funcion me permite obtener los profesores activos
+    public function obtener_profesores(){
+
+    	$this->db->where('profesores.estado_profesor',"Activo");
+		$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');
+		$query = $this->db->get('personas');
+		return $query->result_array();
+	}
+
+	//Esta funcion me permite obtener los estudiantes matriculados
+    public function obtener_estudiantes(){
+
+		$this->db->join('matriculas', 'personas.id_persona = matriculas.id_estudiante');
+		$query = $this->db->get('personas');
+		return $query->result_array();
+	}
+
+	//Esta funcion me permite obtener los acudientes que tienen acudidos
+	public function obtener_acudientes(){
+
+		$this->db->join('matriculas', 'personas.id_persona = matriculas.id_acudiente');
+		$query = $this->db->get('personas');
+		return $query->result_array();
+	}
+
+
+	
 
 
 

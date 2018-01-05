@@ -47,9 +47,8 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-file-text-o'>&nbsp;</i>Asunto</th>
-									<th><i class='fa fa-calendar-times-o'>&nbsp;</i>Fecha Del Evento</th>
-									<th><i class='fa fa-clock-o'>&nbsp;</i>Hora Del Evento</th>
+									<th><i class='fa fa-file-text-o'>&nbsp;</i>Título</th>
+									<th><i class='fa fa-file-text-o'>&nbsp;</i>Tipo</th>
 									<th><i class='fa fa-mail-forward'>&nbsp;</i>Destinatario</th>
 									<th><i class='fa fa-calendar-check-o'>&nbsp;</i>Fecha De Envio</th>
 									<th></th>
@@ -100,44 +99,44 @@
 
                 		<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>notificaciones_controller/insertar" name="" method="post" id="form_notificaciones">
 
+                			<input type="hidden" id="remitente_m" name="remitente" value="<?php echo $this->session->userdata('id_persona')?>">
 
-				        	<div class="form-group">
-				        		<label class="control-label col-sm-3" for="asunto">ASUNTO</label>
-				        		<div class="col-sm-7">
-									<input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="mensaje">MENSAJE</label>
+                			<div class="form-group">
+								<label class="control-label col-sm-3" for="rol_destinatario">PARA:</label>
 								<div class="col-sm-7">
-									<textarea class="form-control" name="mensaje" id="mensaje" cols="50" rows="4" placeholder="Mensaje.." style="resize:none"></textarea>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="fecha_evento">FECHA DEL EVENTO</label>
-								<div class="col-sm-7">
-									<input type="date" class="form-control" id="fecha_evento" name="fecha_evento">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="hora">HORA DEL EVENTO</label>
-								<div class="col-sm-7">
-									<input type="time" class="form-control" id="hora_evento" name="hora_evento" max="19:30:00" min="08:00:00" required="required">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="destinatario">DESTINATARIO</label>
-								<div class="col-sm-7">
-									<select class="form-control" id="destinatario" name="destinatario">
+									<select class="form-control" id="rol_destinatario_m" name="rol_destinatario">
 											<option></option>
 											<option value="1">Estudiantes y Acudientes</option>
 											<option value="2">Profesores</option>
 											<option value="3">Estudiantes, Profesores y Acudientes</option>
 									</select>
+								</div>
+							</div>
+
+				        	<div class="form-group">
+				        		<label class="control-label col-sm-3" for="titulo">TÍTULO:</label>
+				        		<div class="col-sm-7">
+									<input type="text" class="form-control" id="titulo_m" name="titulo" placeholder="Título">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="tipo">TIPO:</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="tipo_m" name="tipo">
+											<option></option>
+											<option value="Mensaje General">Mensaje General</option>
+											<option value="Noticia">Noticia</option>
+											<option value="Circular">Circular</option>
+											<option value="Importante">Importante</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="mensaje">CONTENIDO:</label>
+								<div class="col-sm-9">
+									<textarea class="form-control" name="contenido" id="contenido_m" cols="50" rows="4" placeholder="Contenido.." style="resize:none"></textarea>
 								</div>
 							</div>
 
@@ -188,40 +187,12 @@
 
                 		<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>notificaciones_controller/modificar" name="" method="post" id="form_notificaciones_actualizar">
 
-                			<input type="hidden" class="form-control" id="id_notificacionsele" name="id_notificacion">
+                			<input type="hidden" class="form-control" id="codigo_notificacion_msele" name="codigo_notificacion">
 
-				        	<div class="form-group">
-				        		<label class="control-label col-sm-3" for="asunto">ASUNTO</label>
-				        		<div class="col-sm-7">
-									<input type="text" class="form-control" id="asuntosele" name="asunto" placeholder="Asunto">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="mensaje">MENSAJE</label>
+                			<div class="form-group">
+								<label class="control-label col-sm-3" for="rol_destinatario">PARA:</label>
 								<div class="col-sm-7">
-									<textarea class="form-control" id="mensajesele" name="mensaje" cols="50" rows="4" placeholder="Mensaje.." style="resize:none"></textarea>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="fecha_evento">FECHA DEL EVENTO</label>
-								<div class="col-sm-7">
-									<input type="date" class="form-control" id="fecha_eventosele" name="fecha_evento">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="hora">HORA DEL EVENTO</label>
-								<div class="col-sm-7">
-									<input type="time" class="form-control" id="hora_eventosele" name="hora_evento" max="19:30:00" min="08:00:00" required="required">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="destinatario">DESTINATARIO</label>
-								<div class="col-sm-7">
-									<select class="form-control" id="destinatariosele" name="destinatario">
+									<select class="form-control" id="rol_destinatario_msele" name="rol_destinatario" disabled>
 											<option></option>
 											<option value="1">Estudiantes y Acudientes</option>
 											<option value="2">Profesores</option>
@@ -230,7 +201,33 @@
 								</div>
 							</div>
 
-							
+				        	<div class="form-group">
+				        		<label class="control-label col-sm-3" for="titulo">TÍTULO:</label>
+				        		<div class="col-sm-7">
+									<input type="text" class="form-control" id="titulo_msele" name="titulo" placeholder="Título">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="tipo">TIPO:</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="tipo_msele" name="tipo">
+											<option></option>
+											<option value="Mensaje General">Mensaje General</option>
+											<option value="Noticia">Noticia</option>
+											<option value="Circular">Circular</option>
+											<option value="Importante">Importante</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="contenido">CONTENIDO:</label>
+								<div class="col-sm-9">
+									<textarea class="form-control" id="contenido_msele" name="contenido" cols="50" rows="4" placeholder="Contenido.." style="resize:none"></textarea>
+								</div>
+							</div>
+
 				        </form>
 
 				        <div class="form-group">

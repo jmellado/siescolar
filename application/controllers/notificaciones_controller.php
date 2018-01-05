@@ -35,10 +35,10 @@ class Notificaciones_controller extends CI_Controller {
 
 	public function insertar(){
 
-        $this->form_validation->set_rules('asunto', 'asunto', 'required|alpha_spaces');
-        $this->form_validation->set_rules('mensaje', 'mensaje', 'required|alpha_spaces');
-        $this->form_validation->set_rules('fecha_evento', 'fecha evento', 'required');
-        $this->form_validation->set_rules('hora_evento', 'hora', 'required');
+		$this->form_validation->set_rules('rol_destinatario', 'Destinatario', 'required');
+        $this->form_validation->set_rules('titulo', 'Titulo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('contenido', 'Contenido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('tipo', 'Tipo', 'required');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -51,45 +51,112 @@ class Notificaciones_controller extends CI_Controller {
 
         	//obtengo el ultimo id de notificaciones + 1 
         	$ultimo_id = $this->notificaciones_model->obtener_ultimo_id();
-        	$autor = "Siescolar";
-        	$asunto = ucwords(strtolower($this->input->post('asunto')));
-        	$mensaje = ucwords(strtolower($this->input->post('mensaje')));
-        	$destinatario = $this->input->post('destinatario');
-        	$fecha_evento = $this->input->post('fecha_evento');
-        	$hora_evento = $this->input->post('hora_evento');
+        	$categoria_notificacion = "Mensajes";
+        	$remitente = $this->input->post('remitente');
+        	$titulo = ucwords(strtolower($this->input->post('titulo')));
+        	$tipo_notificacion = $this->input->post('tipo');
+        	$contenido = ucwords(strtolower($this->input->post('contenido')));
+        	$rol_destinatario = $this->input->post('rol_destinatario');
         	$fecha_envio = $fecha;
-        	$estado = "0";
+        	$estado_lectura = "0";
 
-        	  //array para insertar en la tabla notificaciones----------
-        	$notificacion = array(
-        	'id_notificacion' =>$ultimo_id,
-        	'autor' =>$autor,	
-			'asunto' =>$asunto,
-			'mensaje' =>$mensaje,
-			'destinatario' =>$destinatario,
-			'fecha_evento' =>$fecha_evento,
-			'hora_evento' =>$hora_evento,
-			'fecha_envio' =>$fecha,
-			'estado' =>$estado);
+        	$estudiantes = $this->notificaciones_model->obtener_estudiantes();
+        	$acudientes = $this->notificaciones_model->obtener_acudientes();
+        	$profesores = $this->notificaciones_model->obtener_profesores();
 
-			if ($this->notificaciones_model->validar_existencia($asunto)){
+        	if ($rol_destinatario == "1") {     //Estudiantes y Acudientes
 
-				$respuesta=$this->notificaciones_model->insertar_notificacion($notificacion);
+        		if ($estudiantes != false && $acudientes != false) {
+        		
+	        		$respuesta = $this->notificaciones_model->insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$rol_destinatario,$fecha_envio,$estado_lectura);
 
-				if($respuesta==true){
+	        		if($respuesta == true){
 
-					echo "registroguardado";
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
 				}
 				else{
-
-					echo "registronoguardado";
+					echo "no-e-a";
 				}
 
-			}
-			else{
+        		
+        	}
+        	elseif ($rol_destinatario == "2") {   //Profesores
 
-				echo "asunto ya existe";
-			}
+
+        		if ($profesores != false) {
+        			
+        			$respuesta = $this->notificaciones_model->insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$rol_destinatario,$fecha_envio,$estado_lectura);
+
+        			if($respuesta==true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+
+        		}
+        		else{
+
+        			echo "no-p";
+        		}
+
+        		
+        	}
+        	elseif ($rol_destinatario == "3") {   //Estudiantes, Acudientes y Profesores
+
+        		if ($estudiantes != false && $acudientes != false && $profesores != false) {
+
+        			$respuesta = $this->notificaciones_model->insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$rol_destinatario,$fecha_envio,$estado_lectura);
+
+        			if($respuesta==true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+        		}
+        		elseif ($estudiantes != false && $acudientes != false && $profesores == false) {
+        			
+        			$respuesta = $this->notificaciones_model->insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$rol_destinatario,$fecha_envio,$estado_lectura);
+
+        			if($respuesta==true){
+
+						echo "registroguardado-ea";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+        		}
+        		elseif ($estudiantes == false && $acudientes == false && $profesores != false) {
+        			
+        			$respuesta = $this->notificaciones_model->insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$rol_destinatario,$fecha_envio,$estado_lectura);
+
+        			if($respuesta==true){
+
+						echo "registroguardado-p";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+        		}
+        		else{
+
+        			echo "no-e-a-p";
+        		}
+        		
+        	}
+
 
         }
 
@@ -143,78 +210,39 @@ class Notificaciones_controller extends CI_Controller {
 
     public function modificar(){
 
-    	$id_notificacion = $this->input->post('id_notificacion');
-    	$asunto = ucwords(strtolower($this->input->post('asunto')));
-    	$mensaje = ucwords(strtolower($this->input->post('mensaje')));
-    	$destinatario = $this->input->post('destinatario');
-    	$fecha_evento = $this->input->post('fecha_evento');
-    	$hora_evento = $this->input->post('hora_evento');
-    	$estado = "0";
+    	$codigo_notificacion = $this->input->post('codigo_notificacion');
+    	$titulo = ucwords(strtolower($this->input->post('titulo')));
+    	$tipo_notificacion = $this->input->post('tipo');
+    	$contenido = ucwords(strtolower($this->input->post('contenido')));
+    	$estado_lectura = "0";
 
     	//array para insertar en la tabla notificaciones----------
     	$notificacion = array(
-    	'id_notificacion' =>$id_notificacion,	
-		'asunto' =>$asunto,
-		'mensaje' =>$mensaje,
-		'destinatario' =>$destinatario,
-		'fecha_evento' =>$fecha_evento,
-		'hora_evento' =>$hora_evento,
-		'estado' =>$estado);
+    	'codigo_notificacion' =>$codigo_notificacion,	
+		'titulo' =>$titulo,
+		'tipo_notificacion' =>$tipo_notificacion,
+		'contenido' =>$contenido,
+		'estado_lectura' =>$estado_lectura);
 
 
-		$notif = $this->notificaciones_model->obtener_informacion_notificacion($id_notificacion);
-		$asunto_buscado = $notif[0]['asunto'];
+        if(is_numeric($codigo_notificacion)){
 
-        if(is_numeric($id_notificacion)){
+        	$respuesta=$this->notificaciones_model->modificar_notificacion($codigo_notificacion,$notificacion);
 
-        	if ($asunto_buscado == $asunto){
+			if($respuesta==true){
 
-	        	$respuesta=$this->notificaciones_model->modificar_notificacion($id_notificacion,$notificacion);
+				echo "Mensaje Actualizado";
 
-				 if($respuesta==true){
+            }else{
 
-					echo "Mensaje Actualizado";
+				echo "El Mensaje No Se Pudo Actualizar";
 
-	             }else{
-
-					echo "El Mensaje No Se Pudo Actualizar";
-
-	             }
-	        }
-	        else{
-
-	        	if($this->notificaciones_model->validar_existencia($asunto)){
-
-	        		$respuesta=$this->notificaciones_model->modificar_notificacion($id_notificacion,$notificacion);
-
-	        		if($respuesta==true){
-
-	        			echo "Mensaje Actualizado";
-
-	        		}else{
-
-	        			echo "El Mensaje No Se Pudo Actualizar";
-	        		}
-
-
-
-	        	}else{
-
-	        		echo "Ya Fue Enviado Un Mensaje Con El Mismo Asunto";
-
-	        	}
-
-				
-			}    
-                
+            }    
          
         }else{
             
             echo "digite valor numerico para identificar una notificacion";
         }
-
-
-
 
     }
 

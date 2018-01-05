@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-01-2018 a las 21:06:13
+-- Tiempo de generación: 05-01-2018 a las 23:02:48
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-01-03 20:05:44');
+(12345, '2018-01-05 22:02:29');
 
 -- --------------------------------------------------------
 
@@ -1721,14 +1721,21 @@ CREATE TABLE `notas` (
 
 CREATE TABLE `notificaciones` (
   `id_notificacion` int(11) NOT NULL,
-  `autor` varchar(45) NOT NULL,
-  `asunto` varchar(100) NOT NULL,
-  `mensaje` varchar(300) NOT NULL,
+  `codigo_notificacion` int(11) NOT NULL,
+  `categoria_notificacion` varchar(45) NOT NULL,
+  `remitente` int(11) NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  `tipo_notificacion` varchar(45) NOT NULL,
+  `contenido` varchar(300) NOT NULL,
   `destinatario` varchar(45) NOT NULL,
-  `fecha_evento` date NOT NULL,
-  `hora_evento` time NOT NULL,
+  `rol_destinatario` varchar(45) NOT NULL,
+  `id_asignatura` int(11) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `hora_inicio` time DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `hora_fin` time DEFAULT NULL,
   `fecha_envio` datetime NOT NULL,
-  `estado` varchar(1) NOT NULL
+  `estado_lectura` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

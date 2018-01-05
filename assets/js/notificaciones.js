@@ -3,7 +3,6 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrarnotificaciones("",1,5);
-	//llenarcombo_anos_lectivos();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_notificaciones").submit(function (event) {
@@ -21,20 +20,52 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Mensaje Enviado Satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Mensaje Enviado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+						$("#form_notificaciones")[0].reset();
+
+
+					}
+					else if(respuesta==="registroguardado-p") {
+						
+						toastr.success('Mensaje Enviado Satisfactoriamente A Profesores; Estudiantes Y Acudientes No Registrados.', 'Success Alert', {timeOut: 3000});
+						$("#form_notificaciones")[0].reset();
+
+
+					}
+					else if(respuesta==="registroguardado-ea") {
+						
+						toastr.success('Mensaje Enviado Satisfactoriamente A Estudiantes Y Acudientes; Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
 						$("#form_notificaciones")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('Mensaje No Enviado', 'Success Alert', {timeOut: 5000});
+						toastr.success('Mensaje No Enviado.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else if(respuesta==="no-p"){
+						
+						toastr.success('Mensaje No Enviado; Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else if(respuesta==="no-e-a"){
+						
+						toastr.success('Mensaje No Enviado; Estudiantes Y Acudientes No Registrados.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else if(respuesta==="no-e-a-p"){
+						
+						toastr.success('Mensaje No Enviado; Estudiantes, Acudientes y Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
 						
 
 					}
 					else if(respuesta==="asunto ya existe"){
 						
-						toastr.success('Ya Fue Enviado Un Mensaje Con El Mismo Asunto', 'Success Alert', {timeOut: 5000});
+						toastr.success('Ya Fue Enviado Un Mensaje Con El Mismo Asunto.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
@@ -109,20 +140,19 @@ function inicio(){
 	$("body").on("click","#lista_notificaciones a",function(event){
 		event.preventDefault();
 		$("#modal_actualizar_notificacion").modal();
-		id_notificacionsele = $(this).attr("href");
-		asuntosele = $(this).parent().parent().children("td:eq(2)").text();
-		mensajesele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		fecha_eventosele = $(this).parent().parent().children("td:eq(4)").text();
-		hora_eventosele = $(this).parent().parent().children("td:eq(5)").text();
-		destinatariosele = $(this).parent().parent().children("td:eq(7)").text();
+		codigo_notificacionsele = $(this).attr("href");
+		titulosele = $(this).parent().parent().children("td:eq(2)").text();
+		tiposele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		contenidosele = $(this).parent().parent().children("td:eq(4)").text();
+		rol_destinatariosele = $(this).parent().parent().children("td:eq(5)").text();
+		fecha_enviosele = $(this).parent().parent().children("td:eq(7)").text();
 		
 
-		$("#id_notificacionsele").val(id_notificacionsele);
-        $("#asuntosele").val(asuntosele);
-        $("#mensajesele").val(mensajesele);
-        $("#fecha_eventosele").val(fecha_eventosele);
-        $("#hora_eventosele").val(hora_eventosele);
-        $("#destinatariosele").val(destinatariosele);
+		$("#codigo_notificacion_msele").val(codigo_notificacionsele);
+        $("#titulo_msele").val(titulosele);
+        $("#tipo_msele").val(tiposele);
+        $("#contenido_msele").val(contenidosele);
+        $("#rol_destinatario_msele").val(rol_destinatariosele);
         
         
 	});
@@ -143,7 +173,18 @@ function inicio(){
     });
 
 
+    //Resetear Formulario Al Cerrar El Modal
+    $("#modal_agregar_notificacion").on('hidden.bs.modal', function () {
+        $("#form_notificaciones")[0].reset();
+        $("#form_notificaciones").valid()==true;
+    });
 
+
+    //Resetear Formulario Al Cerrar El Modal
+    $("#modal_actualizar_notificacion").on('hidden.bs.modal', function () {
+        $("#form_notificaciones_actualizar")[0].reset();
+        $("#form_notificaciones_actualizar").valid()==true;
+    });
 
 
 
@@ -151,28 +192,27 @@ function inicio(){
 
     	rules:{
 
-			asunto:{
+			titulo:{
 				required: true,
 				maxlength: 100
 				//lettersonly: true	
 
 			},
 
-			mensaje:{
+			contenido:{
 				required: true,
 				maxlength: 300,
 					
 
 			},
 
-			fecha_evento:{
-				required: true,
-				date: true
+			tipo:{
+				required: true
 		
 
 			},
 
-			destinatario:{
+			rol_destinatario:{
 				required: true
 
 			}
@@ -188,28 +228,27 @@ function inicio(){
 
     	rules:{
 
-			asunto:{
+			titulo:{
 				required: true,
 				maxlength: 45
 				//lettersonly: true	
 
 			},
 
-			mensaje:{
+			contenido:{
 				required: true,
 				maxlength: 300,
 					
 
 			},
 
-			fecha_evento:{
-				required: true,
-				date: true
+			tipo:{
+				required: true
 		
 
 			},
 
-			destinatario:{
+			rol_destinatario:{
 				required: true
 
 			}
@@ -244,16 +283,16 @@ function mostrarnotificaciones(valor,pagina,cantidad){
 				i = 1;
 				html ="";
 				$.each(response.notificaciones,function(key,item){
-					if (item.destinatario == 1) {
+					if (item.rol_destinatario == 1) {
 						destino = "Estudiantes y Acudientes";
 					}
-					if (item.destinatario == 2) {
+					if (item.rol_destinatario == 2) {
 						destino = "Profesores";
 					}
-					if (item.destinatario == 3) {
+					if (item.rol_destinatario == 3) {
 						destino = "Estudiantes, Profesores y Acudientes";
 					}
-					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.id_notificacion+"</td><td>"+item.asunto+"</td><td style='display:none'>"+item.mensaje+"</td><td>"+item.fecha_evento+"</td><td style='display:none'>"+item.hora_evento+"</td><td>"+item.hora_evento1+"</td><td style='display:none'>"+item.destinatario+"</td><td>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.id_notificacion+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+item.id_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.codigo_notificacion+"</td><td>"+item.titulo+"</td><td>"+item.tipo_notificacion+"</td><td style='display:none'>"+item.contenido+"</td><td style='display:none'>"+item.rol_destinatario+"</td><td>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.codigo_notificacion+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+item.codigo_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
 					i++;
 				});
 				
