@@ -306,27 +306,33 @@ class Notificaciones_model extends CI_Model {
 	}
 
 
-	public function buscar_notificacion_usuarios($id,$rol,$inicio = FALSE,$cantidad = FALSE){
+	public function buscar_notificacion_usuarios($id,$rol,$id_persona,$inicio = FALSE,$cantidad = FALSE){
 
 		if ($rol == "profesor") {
-			$this->db->where("(destinatario = 2 OR destinatario = 3)");
+			$this->db->where("(rol_destinatario = 2 OR rol_destinatario = 3)");
+			$this->db->where('destinatario',$id_persona);
+			$this->db->where('categoria_notificacion',"Mensajes");
 		}
 		elseif ($rol == "estudiante") {
-			$this->db->where("(destinatario = 1 OR destinatario = 3)");
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('destinatario',$id_persona);
+			$this->db->where('categoria_notificacion',"Mensajes");
 		}
-		else{
-			$this->db->where("(destinatario = 1 OR destinatario = 3)");
+		elseif ($rol == "acudiente") {
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('destinatario',$id_persona);
+			$this->db->where('categoria_notificacion',"Mensajes");
 		}
 
 		$this->db->order_by('fecha_envio', 'desc');
 
-		$this->db->where("(notificaciones.asunto LIKE '".$id."%' OR notificaciones.fecha_evento LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%')", NULL, FALSE);
+		$this->db->where("(notificaciones.titulo LIKE '".$id."%' OR notificaciones.tipo_notificacion LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%')", NULL, FALSE);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
-		$this->db->select('id_notificacion,autor,asunto,mensaje,destinatario,fecha_evento,hora_evento,DATE_FORMAT(hora_evento, "%r") as hora_evento1,fecha_envio,estado',false);
+		$this->db->select('id_notificacion,codigo_notificacion,categoria_notificacion,remitente,titulo,tipo_notificacion,contenido,destinatario,rol_destinatario,fecha_envio,estado_lectura');
 		$query = $this->db->get('notificaciones');
 
 		return $query->result();
@@ -334,20 +340,23 @@ class Notificaciones_model extends CI_Model {
 	}
 
 
-	public function total_notificaciones($rol){
+	public function total_notificaciones($rol,$id_persona){
 
 		if ($rol == "profesor") {
 			
-			$this->db->where("(destinatario = 2 OR destinatario = 3)");
-			$this->db->where('estado',0);
+			$this->db->where("(rol_destinatario = 2 OR rol_destinatario = 3)");
+			$this->db->where('estado_lectura',0);
+			$this->db->where('destinatario',$id_persona);
 		}
 		elseif ($rol == "estudiante") {
-			$this->db->where("(destinatario = 1 OR destinatario = 3)");
-			$this->db->where('estado',0);
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('estado_lectura',0);
+			$this->db->where('destinatario',$id_persona);
 		}
-		else{
-			$this->db->where("(destinatario = 1 OR destinatario = 3)");
-			$this->db->where('estado',0);
+		elseif ($rol == "acudiente") {
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('estado_lectura',0);
+			$this->db->where('destinatario',$id_persona);
 		}
 
 		$query = $this->db->get('notificaciones');
@@ -355,39 +364,54 @@ class Notificaciones_model extends CI_Model {
 	}
 
 
-	public function vistaprevia_notificaciones($rol){
+	public function vistaprevia_notificaciones($rol,$id_persona){
 
 
 		if ($rol == "profesor") {
 			
-			$this->db->where('destinatario',2);
-			$this->db->or_where('destinatario',3);
+			$this->db->where("(rol_destinatario = 2 OR rol_destinatario = 3)");
+			$this->db->where('destinatario',$id_persona);
 		}
 		elseif ($rol == "estudiante") {
-			$this->db->where('destinatario',1);
-			$this->db->or_where('destinatario',3);
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('destinatario',$id_persona);
 		}
-		else{
-			$this->db->where('destinatario',1);
-			$this->db->or_where('destinatario',3);
+		elseif ($rol == "acudiente") {
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('destinatario',$id_persona);
 		}
 
 		$this->db->order_by('fecha_envio', 'desc');
-		$this->db->limit(3);
+		$this->db->limit(5);
 
 		$query = $this->db->get('notificaciones');
 		return $query->result();
 	}
 
 
-	public function actualizar_estado_notificacion(){
+	public function actualizar_estado_notificacion($rol,$id_persona){
 
 		$notificacion = array(
 
-			'estado' => '1'
-			);
-	
-		$this->db->where('estado',0);
+			'estado_lectura' => '1'
+		);
+		
+		if ($rol == "profesor") {
+
+			$this->db->where("(rol_destinatario = 2 OR rol_destinatario = 3)");
+			$this->db->where('estado_lectura',0);
+			$this->db->where('destinatario',$id_persona);
+		}
+		elseif ($rol == "estudiante") {
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('estado_lectura',0);
+			$this->db->where('destinatario',$id_persona);
+		}
+		elseif ($rol == "acudiente") {
+			$this->db->where("(rol_destinatario = 1 OR rol_destinatario = 3)");
+			$this->db->where('estado_lectura',0);
+			$this->db->where('destinatario',$id_persona);
+		}
 
 		if ($this->db->update('notificaciones', $notificacion))
 

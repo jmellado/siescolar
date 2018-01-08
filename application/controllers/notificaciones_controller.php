@@ -254,12 +254,13 @@ class Notificaciones_controller extends CI_Controller {
 		$cantidad =$this->input->post('cantidad'); 
 		$inicio = ($numero_pagina -1)*$cantidad;
 		$rol =$this->input->post('rol');
+		$id_persona =$this->input->post('id_persona');
 		
 		$data = array(
 
-			'notificaciones' => $this->notificaciones_model->buscar_notificacion_usuarios($id,$rol,$inicio,$cantidad),
+			'notificaciones' => $this->notificaciones_model->buscar_notificacion_usuarios($id,$rol,$id_persona,$inicio,$cantidad),
 
-		    'totalregistros' => count($this->notificaciones_model->buscar_notificacion_usuarios($id,$rol)),
+		    'totalregistros' => count($this->notificaciones_model->buscar_notificacion_usuarios($id,$rol,$id_persona)),
 
 		    'cantidad' => $cantidad
 
@@ -273,11 +274,12 @@ class Notificaciones_controller extends CI_Controller {
 
 	public function total_notificaciones(){
 
-    	$rol =$this->input->post('rol'); 
+    	$rol =$this->input->post('rol');
+    	$id_persona =$this->input->post('id_persona'); 
 
     	$data = array(
 
-		    'totalnotificaciones' => count($this->notificaciones_model->total_notificaciones($rol))
+		    'totalnotificaciones' => count($this->notificaciones_model->total_notificaciones($rol,$id_persona))
 
 		);
 	    echo json_encode($data);
@@ -287,14 +289,15 @@ class Notificaciones_controller extends CI_Controller {
 
     public function vistaprevia_notificaciones(){
 
-    	$rol =$this->input->post('rol'); 
-    	$estado = $this->notificaciones_model->actualizar_estado_notificacion();
+    	$rol =$this->input->post('rol');
+    	$id_persona =$this->input->post('id_persona'); 
+    	$estado = $this->notificaciones_model->actualizar_estado_notificacion($rol,$id_persona);
 
     	if($estado){
 
     		$data = array(
 
-				'notificaciones' => $this->notificaciones_model->vistaprevia_notificaciones($rol)
+				'notificaciones' => $this->notificaciones_model->vistaprevia_notificaciones($rol,$id_persona)
 
 			);
 		    echo json_encode($data);

@@ -3,7 +3,8 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	rol = $("#rol").val();
-	mostrarnotificaciones_usuarios("",1,5,rol);
+	id_persona = $("#id_persona").val()
+	mostrarnotificaciones_usuarios("",1,5,rol,id_persona);
 	total_notificaciones();
 
 
@@ -11,14 +12,14 @@ function inicio(){
 
     	buscar = $("#buscar_notificacion").val();
 		valorcantidad = $("#cantidad_notificacion").val();
-		mostrarnotificaciones_usuarios(buscar,1,valorcantidad,rol);
+		mostrarnotificaciones_usuarios(buscar,1,valorcantidad,rol,id_persona);
 		
     });
 
     $("#cantidad_notificacion").change(function(){
     	valorcantidad = $(this).val();
     	buscar = $("#buscar_notificacion").val();
-    	mostrarnotificaciones_usuarios(buscar,1,valorcantidad,rol);
+    	mostrarnotificaciones_usuarios(buscar,1,valorcantidad,rol,id_persona);
     });
 
     $("body").on("click", ".paginacion_notificacionP li a", function(event){
@@ -26,7 +27,7 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_notificacion").val();
     	valorcantidad = $("#cantidad_notificacion").val();
-		mostrarnotificaciones_usuarios(buscar,numero_pagina,valorcantidad,rol);
+		mostrarnotificaciones_usuarios(buscar,numero_pagina,valorcantidad,rol,id_persona);
 
 
     });
@@ -34,19 +35,19 @@ function inicio(){
 	$("body").on("click","#lista_notificacionesP a",function(event){
 		event.preventDefault();
 		$("#modal_actualizar_notificacion").modal();
-		id_notificacionsele = $(this).attr("href");
-		asuntosele = $(this).parent().parent().children("td:eq(2)").text();
-		mensajesele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		fecha_eventosele = $(this).parent().parent().children("td:eq(4)").text();
-		hora_eventosele = $(this).parent().parent().children("td:eq(5)").text();
-		destinatariosele = $(this).parent().parent().children("td:eq(7)").text();
+		codigo_notificacionsele = $(this).attr("href");
+		titulosele = $(this).parent().parent().children("td:eq(2)").text();
+		tiposele = $(this).parent().parent().children("td:eq(3)").text();
+		contenidosele = $(this).parent().parent().children("td:eq(4)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		rol_destinatariosele = $(this).parent().parent().children("td:eq(5)").text();
+		fecha_enviosele = $(this).parent().parent().children("td:eq(7)").text();
 		
 
-		$("#id_notificacionsele").val(id_notificacionsele);
-        $("#asuntosele").val(asuntosele);
-        $("#mensajesele").val(mensajesele);
-        $("#fecha_eventosele").val(fecha_eventosele);
-        $("#hora_eventosele").val(hora_eventosele);
+		$("#codigo_notificacionsele").val(codigo_notificacionsele);
+        $("#titulo_msele").val(titulosele);
+        $("#tipo_msele").val(tiposele);
+        $("#contenido_msele").val(contenidosele);
+        $("#fecha_envio_msele").val(fecha_enviosele);
         //$("#destinatariosele").val(destinatariosele);
         
         
@@ -65,11 +66,12 @@ function total_notificaciones(){
 	msj.innerHTML = "";
 
 	rol = $("#rol").val();
-	
+	id_persona = $("#id_persona").val();
+
 	$.ajax({
 		url:base_url+"notificaciones_controller/total_notificaciones",
 		type:"post",
-		data:{rol:rol},
+		data:{rol:rol,id_persona:id_persona},
 		success:function(respuesta) {
 
 				//alert(""+respuesta);
@@ -87,7 +89,7 @@ function total_notificaciones(){
 					var msj = document.getElementById('mensaje_notificaciones');
 					msj.innerHTML = notifi;
 
-					mostrarnotificaciones_usuarios("",1,5,rol);
+					mostrarnotificaciones_usuarios("",1,5,rol,id_persona);
 				}
 				else{
 					$("#total_notificaciones").hide();
@@ -103,12 +105,13 @@ function total_notificaciones(){
 function VistaPrevia_Notificaciones(){
 
 	rol = $("#rol").val();
+	id_persona = $("#id_persona").val();
 	$("#total_notificaciones").hide(); 
 
 	$.ajax({
 		url:base_url+"notificaciones_controller/vistaprevia_notificaciones",
 		type:"post",
-		data:{rol:rol},
+		data:{rol:rol,id_persona:id_persona},
 		success:function(respuesta) {
 
 				//alert(""+respuesta);
@@ -116,7 +119,13 @@ function VistaPrevia_Notificaciones(){
 
 				html ="";
 				for (var i = 0; i < registros.notificaciones.length; i++) {
-					html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_profesor'><i class='fa fa-users text-aqua'></i>"+registros.notificaciones[i].asunto+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+					if (registros.notificaciones[i].categoria_notificacion == "Mensajes") {
+						$categoria = "<i class='fa fa-envelope-o text-aqua'></i>";
+					}
+					if (registros.notificaciones[i].categoria_notificacion == "Eventos") {
+						$categoria = "<i class='fa fa-calendar text-aqua'></i>";
+					}
+					html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_profesor'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
 				};
 
 				$("#listado_notificaciones").html(html);
@@ -128,28 +137,28 @@ function VistaPrevia_Notificaciones(){
 }
 
 
-function mostrarnotificaciones_usuarios(valor,pagina,cantidad,rol){
+function mostrarnotificaciones_usuarios(valor,pagina,cantidad,rol,id_persona){
 
 	$.ajax({
 		url:base_url+"notificaciones_controller/mostrarnotificaciones_usuarios",
 		type:"post",
-		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,rol:rol},
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,rol:rol,id_persona:id_persona},
 		dataType:"json",
 		success:function(response) {
-				
+				//alert(""+response);
 				i = 1;
 				html ="";
 				$.each(response.notificaciones,function(key,item){
-					if (item.destinatario == 1) {
+					if (item.rol_destinatario == 1) {
 						destino = "Estudiantes y Acudientes";
 					}
-					if (item.destinatario == 2) {
+					if (item.rol_destinatario == 2) {
 						destino = "Profesores";
 					}
-					if (item.destinatario == 3) {
+					if (item.rol_destinatario == 3) {
 						destino = "Estudiantes, Profesores y Acudientes";
 					}
-					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.id_notificacion+"</td><td>"+item.asunto+"</td><td style='display:none'>"+item.mensaje+"</td><td>"+item.fecha_evento+"</td><td style='display:none'>"+item.hora_evento+"</td><td>"+item.hora_evento1+"</td><td style='display:none'>"+item.destinatario+"</td><td style='display:none'>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.id_notificacion+"><i class='fa fa-search'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+item.id_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.codigo_notificacion+"</td><td>"+item.titulo+"</td><td>"+item.tipo_notificacion+"</td><td style='display:none'>"+item.contenido+"</td><td style='display:none'>"+item.rol_destinatario+"</td><td style='display:none'>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.codigo_notificacion+"><i class='fa fa-eye'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+item.codigo_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
 					i++;
 				});
 				

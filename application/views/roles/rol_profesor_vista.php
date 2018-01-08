@@ -271,8 +271,8 @@
 
         <li>
           <a href="<?php echo base_url(); ?>notificaciones_controller/index_profesor">
-            <i class="fa fa-bell"></i>
-            <span>Notificaciones</span>
+            <i class="fa fa-envelope"></i>
+            <span>Mis Mensajes</span>
           </a>
         </li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
@@ -295,6 +295,7 @@
         <div class="box-body">
 
           <input type="hidden" id="rol" name="rol" value="<?php echo $this->session->userdata('rol')?>">
+          <input type="hidden" id="id_persona" name="id_persona" value="<?php echo $this->session->userdata('id_persona')?>">
           <?php echo $contents; ?>
 
         </div>
