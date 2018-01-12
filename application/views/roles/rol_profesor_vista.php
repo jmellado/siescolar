@@ -23,6 +23,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros_profesor.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones_usuarios.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/inbox.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
@@ -273,6 +274,13 @@
           <a href="<?php echo base_url(); ?>notificaciones_controller/index_profesor">
             <i class="fa fa-envelope"></i>
             <span>Mis Mensajes</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="<?php echo base_url(); ?>inbox_controller/index">
+            <i class="fa fa-send"></i>
+            <span>Inbox</span>
           </a>
         </li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
