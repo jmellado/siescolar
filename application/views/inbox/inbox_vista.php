@@ -1,6 +1,13 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
+	    .table-responsive
+		{
+			height: 150px;
+		    overflow-y: auto;
+
+		}
 	</style>
 
 
@@ -37,7 +44,7 @@
 			        			<div class="panel panel-default">
 			        				<div class="panel-body">
 
-			        					<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>inbox_controller/insertar" name="" method="post" id="form_mensajes">
+			        					<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>inbox_controller/insertar_mensajes" name="" method="post" id="form_mensajes">
 
 			        						<input type="hidden" id="remitente_m" name="remitente" value="<?php echo $this->session->userdata('id_persona')?>">
 
@@ -274,7 +281,7 @@
 </div>
 
 
-<!-- Modal  agregar nuev grado -->
+<!-- Modal  agregar destinatarios -->
 <div id="modal_agregar_destinatario_m" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -311,13 +318,7 @@
 								</select>
 							</div>
 						</div>
-					</div>
-
-					<!--<div class="form-group">
-						<div class="col-sm-offset-4 col-sm-5">
-							<button type="submit" name="btn_registrar_grado" id="btn_registrar_grado" class="btn btn-primary btn-lg btn-block">Registrar</button>
-						</div>
-					</div>-->	
+					</div>	
 
 				</div>
 
@@ -377,7 +378,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="btn_agregar_estudiantes">Agregar Estudiantes</button>
+        <button type="button" class="btn btn-success" id="btn_agregar_estudiantes_m"><i class='fa fa-plus'></i>&nbsp;Agregar Estudiantes</button>
       </div>
     </div>
 

@@ -29,4 +29,74 @@ class Inbox_model extends CI_Model {
 	}
 
 
+	public function obtener_ultimo_id(){
+
+		$this->db->select_max('codigo_notificacion');
+		$query = $this->db->get('notificaciones');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['codigo_notificacion'];
+        return $data['query'];
+	}
+
+
+	public function obtener_fecha_actual(){
+
+		$CI = & get_instance();
+		$CI->load->helper('date');
+
+		$fecha_horaGMT = now();  //Obtenemos la fecha actual en formato GMT
+
+		$esVerano = date('I', $fecha_horaGMT); //Obtenemos TRUE si es horario de verano
+		$zona_horaria = 'UM5'; //zona horaria de bogota
+
+		$fechaLocal = gmt_to_local($fecha_horaGMT, $zona_horaria, $esVerano); //Convertimos la fecha GMT a local a partir del código de zona horaria
+
+		$fechaLocal_Formateada = mdate("%Y/%m/%d %h:%i:%s %a", $fechaLocal); //Formato español (dd/mm/yyyy HH:mm:ss)
+
+		return $fechaLocal_Formateada; 
+
+	}
+
+
+	public function insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$destinatario,$rol_destinatario,$id_asignatura,$fecha_envio,$estado_lectura){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+		for ($i=0; $i < count($destinatario) ; $i++) {
+
+			//array para insertar en la tabla notificaciones
+        	$notificacion = array(
+        	'codigo_notificacion' =>$ultimo_id,
+        	'categoria_notificacion' =>$categoria_notificacion,
+        	'remitente' =>$remitente,	
+			'titulo' =>$titulo,
+			'tipo_notificacion' =>$tipo_notificacion,
+			'contenido' =>$contenido,
+			'destinatario' =>$destinatario[$i],
+			'rol_destinatario' =>$rol_destinatario,
+			'id_asignatura' =>$id_asignatura,
+			'fecha_envio' =>$fecha_envio,
+			'estado_lectura' =>$estado_lectura);
+
+			$this->db->insert('notificaciones', $notificacion);
+
+		}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+
+	}
+
+
 }

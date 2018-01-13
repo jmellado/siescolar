@@ -5,6 +5,56 @@ function inicio(){
 	
 	id_persona = $("#id_persona").val();
 
+
+	$("#form_mensajes").submit(function (event) {
+		
+		event.preventDefault();
+		if($("#form_mensajes").valid()==true){
+
+			$.ajax({
+
+				url:$("#form_mensajes").attr("action"),
+				type:$("#form_mensajes").attr("method"),
+				data:$("#form_mensajes").serialize(),
+				success:function(respuesta) {
+
+					if (respuesta==="registroguardado") {
+						
+						toastr.success('Mensaje Enviado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+						$("#form_mensajes")[0].reset();
+
+					}
+					else if(respuesta==="registronoguardado"){
+						
+						toastr.error('Mensaje No Enviado.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else if(respuesta==="nohaydestinatarios"){
+						
+						toastr.warning('Debe Seleccionar Destinatarios.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else{
+
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+						
+					}
+
+						
+				}
+
+			});
+
+		}else{
+
+			toastr.warning('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+		}
+
+	});
+
+
 	$("#btn_buscar_destinatario_m").click(function(){
 
 		$("#modal_agregar_destinatario_m").modal();
@@ -76,6 +126,50 @@ function inicio(){
     $("#check_todos").change(function () {
     	
       $("input:checkbox").prop('checked', $(this).prop("checked"));
+  	});
+
+
+  	$("#btn_agregar_estudiantes_m").click(function(event){
+
+  		var acudientes = document.getElementsByName("acudiente[]");
+  		var acudientes_seleccionados = [];
+  		
+  		if (acudientes.length > 0) {
+
+  			for(i = 0; i < acudientes.length; i++){
+
+       			if(acudientes[i].checked){
+
+	       			acudientes_seleccionados.push(acudientes[i].value);
+	       			$("#total_destinatario_m").val(acudientes_seleccionados.length+" Estudiantes");
+	       		}
+       			
+       		}
+
+       		if (acudientes_seleccionados.length > 0) {
+
+	       		html ="";
+	       		html +="<input type='text' value='"+$("#id_asignaturaI").val()+"' name='id_asignatura_destinatario'>";
+
+	       		for(j = 0; j < acudientes_seleccionados.length; j++){
+
+	       			html +="<input type='text' value='"+acudientes_seleccionados[j]+"' name='destinatario[]'>";
+	       		}
+
+	       		$("#lista_destinatarios_m").html(html);
+	       		$("#modal_agregar_destinatario_m").modal("hide");
+	       	}
+	       	else{
+	       		toastr.warning('Debe Seleccionar Mínimo Un Estudiante.', 'Success Alert', {timeOut: 2000});
+	       	}
+
+  		}
+  		else{
+
+  			toastr.warning('Debe Seleccionar Mínimo Un Estudiante.', 'Success Alert', {timeOut: 2000});
+  		}
+
+
   	});
 
 
