@@ -7,7 +7,7 @@ function inicio(){
 
 	$("#btn_buscar_destinatario_m").click(function(){
 
-		$("#modal_agregar_destinatario").modal();
+		$("#modal_agregar_destinatario_m").modal();
 		llenarcombo_cursos_profesorI(id_persona);
        
     });
@@ -20,15 +20,21 @@ function inicio(){
 
     	mostrarestudiantesI("","","","");
     	$("#paginacion_estudianteI").hide();
+    	$("#check_todos").prop('checked',0);
     });
 
     $("#id_asignaturaI").change(function(){
     	
-    	//mostrarestudiantesI("","","","");
-    	$("#paginacion_estudianteI").hide();
+    	if ($(this).val() == "") {
+	    	mostrarestudiantesI("","","","");
+	    	$("#check_todos").prop('checked',0);
+	    	$("#paginacion_estudianteI").hide();
+	    }
+	    else{
 
-    	id_curso = $("#id_cursoI").val();
-    	mostrarestudiantesI("",1,5,id_curso);
+	    	id_curso = $("#id_cursoI").val();
+	    	mostrarestudiantesI("",1,5,id_curso);
+	    }
     });
 
     /*$("#btn_buscar_notificacion").click(function(event){
@@ -39,32 +45,49 @@ function inicio(){
     $("#buscar_estudianteI").keyup(function(event){
 
     	buscar = $("#buscar_estudianteI").val();
-		valorcantidad = $("#cantidad_estudianteI").val();
+		//valorcantidad = $("#cantidad_estudianteI").val();
 		id_curso = $("#id_cursoI").val();
-		mostrarestudiantesI(buscar,1,valorcantidad,id_curso);
+		$("#check_todos").prop('checked',0);
+		$("#paginacion_estudianteI").hide();
+		mostrarestudiantesI(buscar,1,5,id_curso);
 		
     });
 
-    $("#cantidad_estudianteI").change(function(){
+    /*$("#cantidad_estudianteI").change(function(){
     	valorcantidad = $(this).val();
     	buscar = $("#buscar_estudianteI").val();
     	id_curso = $("#id_cursoI").val();
+    	$("#paginacion_estudianteI").hide();
     	mostrarestudiantesI(buscar,1,valorcantidad,id_curso);
-    });
+    });*/
 
     //Resetear Formulario Al Cerrar El Modal
-    $("#modal_agregar_destinatario").on('hidden.bs.modal', function () {
+    $("#modal_agregar_destinatario_m").on('hidden.bs.modal', function () {
         
         $("#id_cursoI").val("");
         $("#id_asignaturaI").val("");
+        $("#buscar_estudianteI").val("");
+        $("#check_todos").prop('checked',0);
+        $("#paginacion_estudianteI").hide();
         mostrarestudiantesI("","","","");
     });
+
+
+    $("#check_todos").change(function () {
+    	
+      $("input:checkbox").prop('checked', $(this).prop("checked"));
+  	});
 
 
 
 	$("#form_mensajes").validate({
 
     	rules:{
+
+    		total_destinatario:{
+				required: true	
+
+			},
 
 			titulo:{
 				required: true,
@@ -95,6 +118,11 @@ function inicio(){
 
     	rules:{
 
+    		total_destinatario:{
+				required: true	
+
+			},
+
 			titulo:{
 				required: true,
 				maxlength: 100
@@ -124,6 +152,11 @@ function inicio(){
 	$("#form_eventos").validate({
 
     	rules:{
+
+    		total_destinatario:{
+				required: true	
+
+			},
 
 			titulo:{
 				required: true,
@@ -243,7 +276,7 @@ function mostrarestudiantesI(valor,pagina,cantidad,id_curso){
 
 				html ="";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td><input type='checkbox' name='destinatario[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_estudiantesI tbody").html(html);

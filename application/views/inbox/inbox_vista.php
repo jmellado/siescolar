@@ -42,10 +42,10 @@
 			        						<input type="hidden" id="remitente_m" name="remitente" value="<?php echo $this->session->userdata('id_persona')?>">
 
 				                			<div class="form-group">
-												<label class="control-label col-sm-3" for="destinatario">PARA:</label>
+												<label class="control-label col-sm-3" for="total_destinatario">PARA:</label>
 												<div class="col-sm-7">
 													<div class="input-group">
-														<input type="text" class="form-control" id="destinatario_m" name="destinatario[]">
+														<input type="text" class="form-control" id="total_destinatario_m" name="total_destinatario" placeholder="Agregar Estudiantes" readonly>
 
 														<span class="input-group-btn">
 															<button type="button" name="btn_buscar_destinatario" id="btn_buscar_destinatario_m" class="btn btn-warning">
@@ -56,6 +56,8 @@
 													</div>
 												</div>
 											</div>
+
+											<div id="lista_destinatarios_m" style='display:none'></div>
 
 								        	<div class="form-group">
 								        		<label class="control-label col-sm-3" for="titulo">TÍTULO:</label>
@@ -115,10 +117,10 @@
 			        						<input type="hidden" id="remitente_t" name="remitente" value="<?php echo $this->session->userdata('id_persona')?>">
 
 				                			<div class="form-group">
-												<label class="control-label col-sm-3" for="destinatario">PARA:</label>
+												<label class="control-label col-sm-3" for="total_destinatario">PARA:</label>
 												<div class="col-sm-7">
 													<div class="input-group">
-														<input type="text" class="form-control" id="destinatario_t" name="destinatario[]">
+														<input type="text" class="form-control" id="total_destinatario_t" name="total_destinatario" placeholder="Agregar Estudiantes" readonly>
 
 														<span class="input-group-btn">
 															<button type="button" name="btn_buscar_destinatario" id="btn_buscar_destinatario_t" class="btn btn-warning">
@@ -129,6 +131,8 @@
 													</div>
 												</div>
 											</div>
+
+											<div id="lista_destinatarios_t" style='display:none'></div>
 
 								        	<div class="form-group">
 								        		<label class="control-label col-sm-3" for="titulo">TÍTULO:</label>
@@ -182,10 +186,10 @@
 			        						<input type="hidden" id="remitente_e" name="remitente" value="<?php echo $this->session->userdata('id_persona')?>">
 
 				                			<div class="form-group">
-												<label class="control-label col-sm-3" for="destinatario">PARA:</label>
+												<label class="control-label col-sm-3" for="total_destinatario">PARA:</label>
 												<div class="col-sm-7">
 													<div class="input-group">
-														<input type="text" class="form-control" id="destinatario_e" name="destinatario[]">
+														<input type="text" class="form-control" id="total_destinatario_e" name="total_destinatario" placeholder="Agregar Estudiantes" readonly>
 
 														<span class="input-group-btn">
 															<button type="button" name="btn_buscar_destinatario" id="btn_buscar_destinatario_e" class="btn btn-warning">
@@ -196,6 +200,8 @@
 													</div>
 												</div>
 											</div>
+
+											<div id="lista_destinatarios_e" style='display:none'></div>
 
 								        	<div class="form-group">
 								        		<label class="control-label col-sm-3" for="titulo">TÍTULO:</label>
@@ -269,14 +275,14 @@
 
 
 <!-- Modal  agregar nuev grado -->
-<div id="modal_agregar_destinatario" class="modal fade" role="dialog">
+<div id="modal_agregar_destinatario_m" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;MENSAJE PARA:</h4>
+        <h4 class="modal-title"><i class='fa fa-envelope'></i>&nbsp;MENSAJES</h4>
       </div>
       <div class="modal-body">
         
@@ -330,21 +336,21 @@
 
 		    				<div class="box-body">
 
-		    					<div class="form-group">
-								  <label for="cantidad_estudiante">Mostrar Por:</label>
-								  <select class="selectpicker" id="cantidad_estudianteI" name="cantidad_estudiante">
+		    					<!--<div class="form-group">
+								  <label for="cantidad_estudiante" style='display:none'>Mostrar Por:</label>
+								  <select class="selectpicker" id="cantidad_estudianteI" name="cantidad_estudiante" style='display:none'>
 								    <option value="5">5</option>
 				  					<option value="10">10</option>
 				  					<option value="15">15</option>
 				  					<option value="20">20</option>
 								  </select>
-								</div>
+								</div>-->
 
 								<div class="table-responsive">
 								<table border='1' id="lista_estudiantesI" class="table table-bordered table-condensed table-hover table-striped">
 									<thead>
 										<tr>
-											<th></th>
+											<th><input type='checkbox' id="check_todos"></th>
 											<th><i class='fa fa-sort-amount-asc'></i></th>
 											<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
 											<th><i class='fa fa-file-text-o'></i>&nbsp;1° Apellido</th>
@@ -371,7 +377,7 @@
 
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <button type="button" class="btn btn-success" id="btn_agregar_estudiantes">Agregar Estudiantes</button>
       </div>
     </div>
 
