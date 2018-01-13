@@ -54,7 +54,7 @@ function inicio(){
 
 	});
 
-
+	//***************************************************** FUNCIONES MENSAJES *************************************************************
 	$("#btn_buscar_destinatario_m").click(function(){
 
 		$("#modal_agregar_destinatario_m").modal();
@@ -62,27 +62,27 @@ function inicio(){
        
     });
 
-    $("#id_cursoI").change(function(){
+    $("#id_curso_m").change(function(){
     	id_curso = $(this).val();
     	id_persona = $("#id_persona").val();
  
     	llenarcombo_asignaturas_profesorI(id_persona,id_curso);
 
     	mostrarestudiantesI("","","","");
-    	$("#paginacion_estudianteI").hide();
-    	$("#check_todos").prop('checked',0);
+    	$("#paginacion_estudiante_m").hide();
+    	$("#check_todos_m").prop('checked',0);
     });
 
-    $("#id_asignaturaI").change(function(){
+    $("#id_asignatura_m").change(function(){
     	
     	if ($(this).val() == "") {
 	    	mostrarestudiantesI("","","","");
-	    	$("#check_todos").prop('checked',0);
-	    	$("#paginacion_estudianteI").hide();
+	    	$("#check_todos_m").prop('checked',0);
+	    	$("#paginacion_estudiante_m").hide();
 	    }
 	    else{
 
-	    	id_curso = $("#id_cursoI").val();
+	    	id_curso = $("#id_curso_m").val();
 	    	mostrarestudiantesI("",1,5,id_curso);
 	    }
     });
@@ -92,13 +92,13 @@ function inicio(){
        mostrarnotificaciones("",1,5);
     });*/
 
-    $("#buscar_estudianteI").keyup(function(event){
+    $("#buscar_estudiante_m").keyup(function(event){
 
-    	buscar = $("#buscar_estudianteI").val();
+    	buscar = $("#buscar_estudiante_m").val();
 		//valorcantidad = $("#cantidad_estudianteI").val();
-		id_curso = $("#id_cursoI").val();
-		$("#check_todos").prop('checked',0);
-		$("#paginacion_estudianteI").hide();
+		id_curso = $("#id_curso_m").val();
+		$("#check_todos_m").prop('checked',0);
+		$("#paginacion_estudiante_m").hide();
 		mostrarestudiantesI(buscar,1,5,id_curso);
 		
     });
@@ -114,16 +114,16 @@ function inicio(){
     //Resetear Formulario Al Cerrar El Modal
     $("#modal_agregar_destinatario_m").on('hidden.bs.modal', function () {
         
-        $("#id_cursoI").val("");
-        $("#id_asignaturaI").val("");
-        $("#buscar_estudianteI").val("");
-        $("#check_todos").prop('checked',0);
-        $("#paginacion_estudianteI").hide();
+        $("#id_curso_m").val("");
+        $("#id_asignatura_m").val("");
+        $("#buscar_estudiante_m").val("");
+        $("#check_todos_m").prop('checked',0);
+        $("#paginacion_estudiante_m").hide();
         mostrarestudiantesI("","","","");
     });
 
 
-    $("#check_todos").change(function () {
+    $("#check_todos_m").change(function () {
     	
       $("input:checkbox").prop('checked', $(this).prop("checked"));
   	});
@@ -149,7 +149,7 @@ function inicio(){
        		if (acudientes_seleccionados.length > 0) {
 
 	       		html ="";
-	       		html +="<input type='text' value='"+$("#id_asignaturaI").val()+"' name='id_asignatura_destinatario'>";
+	       		html +="<input type='text' value='"+$("#id_asignatura_m").val()+"' name='id_asignatura_destinatario'>";
 
 	       		for(j = 0; j < acudientes_seleccionados.length; j++){
 
@@ -172,7 +172,7 @@ function inicio(){
 
   	});
 
-
+  	
 
 	$("#form_mensajes").validate({
 

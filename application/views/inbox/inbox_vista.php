@@ -302,7 +302,7 @@
 						<div class="form-group">
 							<label for="id_grado">CURSO</label>
 							<div id="cursos_inbox1">
-								<select class="form-control" id="id_cursoI" name="id_curso">
+								<select class="form-control" id="id_curso_m" name="id_curso">
 											    
 								</select>
 							</div>
@@ -313,7 +313,7 @@
 						<div class="form-group">
 							<label for="id_asignatura">ASIGNATURA</label>
 							<div id="asignaturas_inbox1">
-								<select class="form-control" id="id_asignaturaI" name="id_asignatura">
+								<select class="form-control" id="id_asignatura_m" name="id_asignatura">
 											    
 								</select>
 							</div>
@@ -329,7 +329,7 @@
 			    				<div class="box-title"><i class='fa fa-list'></i>&nbsp;Nombre Del Estudiante</div>
 			    				<div class="box-tools pull-right">
 							      <div class="has-feedback">
-							        <input type="text" class="form-control input-sm" id="buscar_estudianteI" name="buscar_estudianteI" placeholder="Buscar...">
+							        <input type="text" class="form-control input-sm" id="buscar_estudiante_m" name="buscar_estudiante" placeholder="Buscar...">
 							        <span class="glyphicon glyphicon-search form-control-feedback"></span>
 							      </div>
 							    </div>
@@ -351,7 +351,7 @@
 								<table border='1' id="lista_estudiantesI" class="table table-bordered table-condensed table-hover table-striped">
 									<thead>
 										<tr>
-											<th><input type='checkbox' id="check_todos"></th>
+											<th><input type='checkbox' id="check_todos_m"></th>
 											<th><i class='fa fa-sort-amount-asc'></i></th>
 											<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
 											<th><i class='fa fa-file-text-o'></i>&nbsp;1° Apellido</th>
@@ -363,7 +363,7 @@
 								</table>
 								</div>
 
-								<div id="paginacion_estudianteI" class="text-center paginacion_estudianteI">
+								<div id="paginacion_estudiante_m" class="text-center paginacion_estudianteI">
 								
 								</div>
 
