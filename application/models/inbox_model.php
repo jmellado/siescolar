@@ -14,7 +14,7 @@ class Inbox_model extends CI_Model {
 		$this->db->where("(personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
-			$this->db->limit($cantidad,$inicio);
+			//$this->db->limit($cantidad,$inicio);
 		}
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
@@ -117,6 +117,49 @@ class Inbox_model extends CI_Model {
 			'rol_destinatario' =>$rol_destinatario,
 			'id_asignatura' =>$id_asignatura,
 			'fecha_fin' =>$fecha_limite,
+			'fecha_envio' =>$fecha_envio,
+			'estado_lectura' =>$estado_lectura);
+
+			$this->db->insert('notificaciones', $notificacion);
+
+		}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+
+	}
+
+
+	public function insertar_eventos($ultimo_id,$categoria_notificacion,$remitente,$titulo,$contenido,$destinatario,$rol_destinatario,$id_asignatura,$fecha_inicio,$hora_inicio,$fecha_fin,$hora_fin,$fecha_envio,$estado_lectura){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+		for ($i=0; $i < count($destinatario) ; $i++) {
+
+			//array para insertar en la tabla notificaciones
+        	$notificacion = array(
+        	'codigo_notificacion' =>$ultimo_id,
+        	'categoria_notificacion' =>$categoria_notificacion,
+        	'remitente' =>$remitente,	
+			'titulo' =>$titulo,
+			'contenido' =>$contenido,
+			'destinatario' =>$destinatario[$i],
+			'rol_destinatario' =>$rol_destinatario,
+			'id_asignatura' =>$id_asignatura,
+			'fecha_inicio' =>$fecha_inicio,
+			'hora_inicio' =>$hora_inicio,
+			'fecha_fin' =>$fecha_fin,
+			'hora_fin' =>$hora_fin,
 			'fecha_envio' =>$fecha_envio,
 			'estado_lectura' =>$estado_lectura);
 

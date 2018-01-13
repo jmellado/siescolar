@@ -159,4 +159,67 @@ class Inbox_controller extends CI_Controller {
     }  
 
 
+    public function insertar_eventos(){
+
+		$this->form_validation->set_rules('remitente', 'Remitente', 'required');
+        $this->form_validation->set_rules('titulo', 'Titulo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('contenido', 'Contenido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('total_destinatario', 'Destinatario', 'required');
+        $this->form_validation->set_rules('fecha_inicio', 'Fecha De Inicio', 'required');
+        $this->form_validation->set_rules('hora_inicio', 'Hora De Inicio', 'required');
+        $this->form_validation->set_rules('fecha_fin', 'Fecha Final', 'required');
+        $this->form_validation->set_rules('hora_fin', 'Hora Final', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$fecha = $this->inbox_model->obtener_fecha_actual();
+
+        	//obtengo el ultimo id de notificaciones + 1 
+        	$ultimo_id = $this->inbox_model->obtener_ultimo_id();
+        	$categoria_notificacion = "Eventos";
+        	$remitente = $this->input->post('remitente');
+        	$titulo = ucwords(strtolower($this->input->post('titulo')));
+        	$contenido = ucwords(strtolower($this->input->post('contenido')));
+        	$destinatario = $this->input->post('destinatario');
+        	$rol_destinatario = "4";
+        	$id_asignatura = $this->input->post('id_asignatura_destinatario');
+        	$fecha_inicio = $this->input->post('fecha_inicio');
+        	$hora_inicio = $this->input->post('hora_inicio');
+        	$fecha_fin = $this->input->post('fecha_fin');
+        	$hora_fin = $this->input->post('hora_fin');
+        	$fecha_envio = $fecha;
+        	$estado_lectura = "0";
+
+        	if ($destinatario != "") {
+        		
+        		$respuesta = $this->inbox_model->insertar_eventos($ultimo_id,$categoria_notificacion,$remitente,$titulo,$contenido,$destinatario,$rol_destinatario,$id_asignatura,$fecha_inicio,$hora_inicio,$fecha_fin,$hora_fin,$fecha_envio,$estado_lectura);
+
+        		if($respuesta == true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
+
+        	}
+        	else{
+
+        		echo "nohaydestinatarios";
+        	}
+
+
+
+        }
+
+    }
+
+
 }
