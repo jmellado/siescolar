@@ -119,7 +119,7 @@
 			        			<div class="panel panel-default">
 			        				<div class="panel-body">
 
-			        					<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>inbox_controller/insertar" name="" method="post" id="form_tareas">
+			        					<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>inbox_controller/insertar_tareas" name="" method="post" id="form_tareas">
 
 			        						<input type="hidden" id="remitente_t" name="remitente" value="<?php echo $this->session->userdata('id_persona')?>">
 
@@ -348,7 +348,7 @@
 								</div>-->
 
 								<div class="table-responsive">
-								<table border='1' id="lista_estudiantesI" class="table table-bordered table-condensed table-hover table-striped">
+								<table border='1' id="lista_estudiantes_m" class="table table-bordered table-condensed table-hover table-striped">
 									<thead>
 										<tr>
 											<th><input type='checkbox' id="check_todos_m"></th>
@@ -363,7 +363,7 @@
 								</table>
 								</div>
 
-								<div id="paginacion_estudiante_m" class="text-center paginacion_estudianteI">
+								<div id="paginacion_estudiante_m" class="text-center paginacion_estudiante_m">
 								
 								</div>
 
@@ -379,6 +379,101 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" id="btn_agregar_estudiantes_m"><i class='fa fa-plus'></i>&nbsp;Agregar Estudiantes</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal  agregar destinatarios -->
+<div id="modal_agregar_destinatario_t" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class='fa fa-pencil'></i>&nbsp;TAREAS</h4>
+      </div>
+      <div class="modal-body">
+        
+      	<div class="panel panel-default">
+		    <div class="panel-body">
+
+		        <div class="row">	
+
+					<div class="col-md-offset-1 col-md-5">
+						<div class="form-group">
+							<label for="id_grado">CURSO</label>
+							<div id="cursos_inbox1">
+								<select class="form-control" id="id_curso_t" name="id_curso">
+											    
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="id_asignatura">ASIGNATURA</label>
+							<div id="asignaturas_inbox1">
+								<select class="form-control" id="id_asignatura_t" name="id_asignatura">
+											    
+								</select>
+							</div>
+						</div>
+					</div>	
+
+				</div>
+
+				<div class="row">
+			    	<div class="col-md-12">
+			    		<div class="box box-default">
+			    			<div class="box-header with-border">
+			    				<div class="box-title"><i class='fa fa-list'></i>&nbsp;Nombre Del Estudiante</div>
+			    				<div class="box-tools pull-right">
+							      <div class="has-feedback">
+							        <input type="text" class="form-control input-sm" id="buscar_estudiante_t" name="buscar_estudiante" placeholder="Buscar...">
+							        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+							      </div>
+							    </div>
+			    			</div>
+
+		    				<div class="box-body">
+
+								<div class="table-responsive">
+								<table border='1' id="lista_estudiantes_t" class="table table-bordered table-condensed table-hover table-striped">
+									<thead>
+										<tr>
+											<th><input type='checkbox' id="check_todos_t"></th>
+											<th><i class='fa fa-sort-amount-asc'></i></th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;1° Apellido</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;2° Apellido</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								</div>
+
+								<div id="paginacion_estudiante_t" class="text-center paginacion_estudiante_t">
+								
+								</div>
+
+		    				</div>
+
+			    		</div>
+			    	</div>
+			    </div>
+
+		    </div>
+		</div>        
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btn_agregar_estudiantes_t"><i class='fa fa-plus'></i>&nbsp;Agregar Estudiantes</button>
       </div>
     </div>
 

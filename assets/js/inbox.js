@@ -54,12 +54,60 @@ function inicio(){
 
 	});
 
+	$("#form_tareas").submit(function (event) {
+		
+		event.preventDefault();
+		if($("#form_tareas").valid()==true){
+
+			$.ajax({
+
+				url:$("#form_tareas").attr("action"),
+				type:$("#form_tareas").attr("method"),
+				data:$("#form_tareas").serialize(),
+				success:function(respuesta) {
+
+					if (respuesta==="registroguardado") {
+						
+						toastr.success('Tarea Creada Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+						$("#form_tareas")[0].reset();
+
+					}
+					else if(respuesta==="registronoguardado"){
+						
+						toastr.error('Tarea No Creada.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else if(respuesta==="nohaydestinatarios"){
+						
+						toastr.warning('Debe Seleccionar Destinatarios.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else{
+
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+						
+					}
+
+						
+				}
+
+			});
+
+		}else{
+
+			toastr.warning('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+		}
+
+	});
+
 	//***************************************************** FUNCIONES MENSAJES *************************************************************
 	$("#btn_buscar_destinatario_m").click(function(){
 
 		$("#modal_agregar_destinatario_m").modal();
 		llenarcombo_cursos_profesorI(id_persona);
-       
+        $("#check_todos_m").prop('checked',0);
     });
 
     $("#id_curso_m").change(function(){
@@ -68,7 +116,7 @@ function inicio(){
  
     	llenarcombo_asignaturas_profesorI(id_persona,id_curso);
 
-    	mostrarestudiantesI("","","","");
+    	mostrarestudiantes_m("","","","");
     	$("#paginacion_estudiante_m").hide();
     	$("#check_todos_m").prop('checked',0);
     });
@@ -76,14 +124,14 @@ function inicio(){
     $("#id_asignatura_m").change(function(){
     	
     	if ($(this).val() == "") {
-	    	mostrarestudiantesI("","","","");
+	    	mostrarestudiantes_m("","","","");
 	    	$("#check_todos_m").prop('checked',0);
 	    	$("#paginacion_estudiante_m").hide();
 	    }
 	    else{
 
 	    	id_curso = $("#id_curso_m").val();
-	    	mostrarestudiantesI("",1,5,id_curso);
+	    	mostrarestudiantes_m("",1,5,id_curso);
 	    }
     });
 
@@ -99,7 +147,7 @@ function inicio(){
 		id_curso = $("#id_curso_m").val();
 		$("#check_todos_m").prop('checked',0);
 		$("#paginacion_estudiante_m").hide();
-		mostrarestudiantesI(buscar,1,5,id_curso);
+		mostrarestudiantes_m(buscar,1,5,id_curso);
 		
     });
 
@@ -119,7 +167,7 @@ function inicio(){
         $("#buscar_estudiante_m").val("");
         $("#check_todos_m").prop('checked',0);
         $("#paginacion_estudiante_m").hide();
-        mostrarestudiantesI("","","","");
+        mostrarestudiantes_m("","","","");
     });
 
 
@@ -172,7 +220,114 @@ function inicio(){
 
   	});
 
-  	
+  	//***************************************************** FUNCIONES TAREAS *************************************************************
+
+  	$("#btn_buscar_destinatario_t").click(function(){
+
+		$("#modal_agregar_destinatario_t").modal();
+		llenarcombo_cursos_profesorI(id_persona);
+		$("#check_todos_t").prop('checked',0);
+       
+    });
+
+    $("#id_curso_t").change(function(){
+    	id_curso = $(this).val();
+    	id_persona = $("#id_persona").val();
+ 
+    	llenarcombo_asignaturas_profesorI(id_persona,id_curso);
+
+    	mostrarestudiantes_t("","","","");
+    	$("#paginacion_estudiante_t").hide();
+    	$("#check_todos_t").prop('checked',0);
+    });
+
+    $("#id_asignatura_t").change(function(){
+    	
+    	if ($(this).val() == "") {
+	    	mostrarestudiantes_t("","","","");
+	    	$("#check_todos_t").prop('checked',0);
+	    	$("#paginacion_estudiante_t").hide();
+	    }
+	    else{
+
+	    	id_curso = $("#id_curso_t").val();
+	    	mostrarestudiantes_t("",1,5,id_curso);
+	    }
+    });
+
+    $("#buscar_estudiante_t").keyup(function(event){
+
+    	buscar = $("#buscar_estudiante_t").val();
+		//valorcantidad = $("#cantidad_estudianteI").val();
+		id_curso = $("#id_curso_t").val();
+		$("#check_todos_t").prop('checked',0);
+		$("#paginacion_estudiante_t").hide();
+		mostrarestudiantes_t(buscar,1,5,id_curso);
+		
+    });
+
+    //Resetear Formulario Al Cerrar El Modal
+    $("#modal_agregar_destinatario_t").on('hidden.bs.modal', function () {
+        
+        $("#id_curso_t").val("");
+        $("#id_asignatura_t").val("");
+        $("#buscar_estudiante_t").val("");
+        $("#check_todos_t").prop('checked',0);
+        $("#paginacion_estudiante_t").hide();
+        mostrarestudiantes_t("","","","");
+    });
+
+
+    $("#check_todos_t").change(function () {
+    	
+      $("input:checkbox").prop('checked', $(this).prop("checked"));
+  	});
+
+
+  	$("#btn_agregar_estudiantes_t").click(function(event){
+
+  		var acudientes = document.getElementsByName("acudiente[]");
+  		var acudientes_seleccionados = [];
+  		
+  		if (acudientes.length > 0) {
+
+  			for(i = 0; i < acudientes.length; i++){
+
+       			if(acudientes[i].checked){
+
+	       			acudientes_seleccionados.push(acudientes[i].value);
+	       			$("#total_destinatario_t").val(acudientes_seleccionados.length+" Estudiantes");
+	       		}
+       			
+       		}
+
+       		if (acudientes_seleccionados.length > 0) {
+
+	       		html ="";
+	       		html +="<input type='text' value='"+$("#id_asignatura_t").val()+"' name='id_asignatura_destinatario'>";
+
+	       		for(j = 0; j < acudientes_seleccionados.length; j++){
+
+	       			html +="<input type='text' value='"+acudientes_seleccionados[j]+"' name='destinatario[]'>";
+	       		}
+
+	       		$("#lista_destinatarios_t").html(html);
+	       		$("#modal_agregar_destinatario_t").modal("hide");
+	       	}
+	       	else{
+	       		toastr.warning('Debe Seleccionar Mínimo Un Estudiante.', 'Success Alert', {timeOut: 2000});
+	       	}
+
+  		}
+  		else{
+
+  			toastr.warning('Debe Seleccionar Mínimo Un Estudiante.', 'Success Alert', {timeOut: 2000});
+  		}
+
+
+  	});
+
+
 
 	$("#form_mensajes").validate({
 
@@ -357,7 +512,7 @@ function llenarcombo_asignaturas_profesorI(valor,valor2){
 }
 
 
-function mostrarestudiantesI(valor,pagina,cantidad,id_curso){
+function mostrarestudiantes_m(valor,pagina,cantidad,id_curso){
 
 	$.ajax({
 		url:base_url+"inbox_controller/mostrarestudiantes",
@@ -373,7 +528,7 @@ function mostrarestudiantesI(valor,pagina,cantidad,id_curso){
 					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
-				$("#lista_estudiantesI tbody").html(html);
+				$("#lista_estudiantes_m tbody").html(html);
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -434,7 +589,93 @@ function mostrarestudiantesI(valor,pagina,cantidad,id_curso){
 				}
 				
 				paginador +="</ul>";
-				$(".paginacion_estudianteI").html(paginador);
+				$(".paginacion_estudiante_m").html(paginador);
+
+			}
+
+	});
+
+}
+
+
+function mostrarestudiantes_t(valor,pagina,cantidad,id_curso){
+
+	$.ajax({
+		url:base_url+"inbox_controller/mostrarestudiantes",
+		type:"post",
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_curso:id_curso},
+		success:function(respuesta) {
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
+				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
+				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
+
+				html ="";
+				for (var i = 0; i < registros.estudiantes.length; i++) {
+					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
+				};
+				
+				$("#lista_estudiantes_t tbody").html(html);
+
+				linkseleccionado = Number(pagina);
+				//total de registros
+			    totalregistros = registros.totalregistros;
+				//cantidad de registros por pagina
+				cantidadregistros = registros.cantidad;
+				//numero de links o paginas dependiendo de la cantidad de registros y el numero a mostrar
+				numerolinks = Math.ceil(totalregistros/cantidadregistros);
+
+				paginador="<ul class='pagination'>";
+
+				if(linkseleccionado>1)
+				{
+					paginador+="<li><a href='1'>&laquo;</a></li>";
+					paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
+				}
+				//muestro de los enlaces 
+				//cantidad de link hacia atras y adelante
+	 			cant = 2;
+	 			//inicio de donde se va a mostrar los links
+				pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
+				//condicion en la cual establecemos el fin de los links
+				if (numerolinks > cant)
+				{
+					//conocer los links que hay entre el seleccionado y el final
+					pagRestantes = numerolinks - linkseleccionado;
+					//defino el fin de los links
+					pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
+				}
+				else 
+				{
+					pagFin = numerolinks;
+				}
+
+				for (var i = pagInicio; i <= pagFin; i++) {
+					if (i == linkseleccionado)
+						paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
+					else
+						paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
+				}
+				//condicion para mostrar el boton sigueinte y ultimo
+				if(linkseleccionado<numerolinks)
+				{
+					paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
+					paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
+				}
+				
+				paginador +="</ul>";
+				$(".paginacion_estudiante_t").html(paginador);
 
 			}
 

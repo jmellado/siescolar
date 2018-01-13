@@ -59,7 +59,7 @@ class Inbox_model extends CI_Model {
 	}
 
 
-	public function insertar_notificacion($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$destinatario,$rol_destinatario,$id_asignatura,$fecha_envio,$estado_lectura){
+	public function insertar_mensajes($ultimo_id,$categoria_notificacion,$remitente,$titulo,$tipo_notificacion,$contenido,$destinatario,$rol_destinatario,$id_asignatura,$fecha_envio,$estado_lectura){
 
 		//NUEVA TRANSACCION
 		$this->db->trans_start();
@@ -77,6 +77,46 @@ class Inbox_model extends CI_Model {
 			'destinatario' =>$destinatario[$i],
 			'rol_destinatario' =>$rol_destinatario,
 			'id_asignatura' =>$id_asignatura,
+			'fecha_envio' =>$fecha_envio,
+			'estado_lectura' =>$estado_lectura);
+
+			$this->db->insert('notificaciones', $notificacion);
+
+		}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+
+	}
+
+
+	public function insertar_tareas($ultimo_id,$categoria_notificacion,$remitente,$titulo,$contenido,$destinatario,$rol_destinatario,$id_asignatura,$fecha_limite,$fecha_envio,$estado_lectura){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+		for ($i=0; $i < count($destinatario) ; $i++) {
+
+			//array para insertar en la tabla notificaciones
+        	$notificacion = array(
+        	'codigo_notificacion' =>$ultimo_id,
+        	'categoria_notificacion' =>$categoria_notificacion,
+        	'remitente' =>$remitente,	
+			'titulo' =>$titulo,
+			'contenido' =>$contenido,
+			'destinatario' =>$destinatario[$i],
+			'rol_destinatario' =>$rol_destinatario,
+			'id_asignatura' =>$id_asignatura,
+			'fecha_fin' =>$fecha_limite,
 			'fecha_envio' =>$fecha_envio,
 			'estado_lectura' =>$estado_lectura);
 
