@@ -225,6 +225,14 @@ function inicio(){
   	});
 
 
+  	$("#btn_cancelar_mensaje").click(function(event){
+       	$("#total_destinatario_m").val("");
+       	$("#titulo_m").val("");
+       	$("#contenido_m").val("");
+       	$("#tipo_m").val("");
+    });
+
+
   	$("#btn_agregar_estudiantes_m").click(function(event){
 
   		var acudientes = document.getElementsByName("acudiente[]");
@@ -332,6 +340,14 @@ function inicio(){
   	});
 
 
+  	$("#btn_cancelar_tarea").click(function(event){
+       	$("#total_destinatario_t").val("");
+       	$("#titulo_t").val("");
+       	$("#contenido_t").val("");
+       	$("#fecha_limite_t").val("");
+    });
+
+
   	$("#btn_agregar_estudiantes_t").click(function(event){
 
   		var acudientes = document.getElementsByName("acudiente[]");
@@ -437,6 +453,17 @@ function inicio(){
     	
       $("input:checkbox").prop('checked', $(this).prop("checked"));
   	});
+
+
+  	$("#btn_cancelar_evento").click(function(event){
+       	$("#total_destinatario_e").val("");
+       	$("#titulo_e").val("");
+       	$("#contenido_e").val("");
+       	$("#fecha_inicio_e").val("");
+       	$("#hora_inicio_e").val("");
+       	$("#fecha_fin_e").val("");
+       	$("#hora_fin_e").val("");
+    });
 
 
   	$("#btn_agregar_estudiantes_e").click(function(event){
