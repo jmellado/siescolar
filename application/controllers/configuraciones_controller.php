@@ -6,6 +6,7 @@ class Configuraciones_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('configuraciones_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 	}
 
@@ -19,6 +20,18 @@ class Configuraciones_controller extends CI_Controller {
 		}
 		
 		$this->template->load('roles/rol_administrador_vista', 'configuraciones/datos_institucion_vista');
+	}
+
+
+	public function periodos_evaluacion()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_administrador_vista', 'configuraciones/periodos_evaluacion_vista');
 	}
 
 
@@ -176,5 +189,131 @@ class Configuraciones_controller extends CI_Controller {
 						
 		}
 	    
+	}
+
+
+	//**************************** FUNCIONES PERIODOS DE EVALUACION ****************************************
+	public function insertar_periodo(){
+
+        $this->form_validation->set_rules('periodo', 'Periodo', 'required');
+        $this->form_validation->set_rules('fecha_inicial', 'Fecha Inicio', 'required');
+        $this->form_validation->set_rules('fecha_final', 'Fecha Fin', 'required');
+        $this->form_validation->set_rules('estado_periodo', 'Estado Periodo', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	//obtengo el ultimo id de grados + 1 
+        	$ultimo_id = $this->configuraciones_model->obtener_ultimo_idactividad();
+
+        	$nombre_actividad = $this->input->post('periodo');
+        	$id_categoria = "1";
+        	$descripcion_actividad = "Fechas Para El Ingreso De Calificaciones.";
+        	$fecha_inicial = $this->input->post('fecha_inicial');
+        	$fecha_final = $this->input->post('fecha_final');
+        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	$estado_actividad = $this->input->post('estado_periodo');
+
+        	//array para insertar en la tabla cronogramas
+        	$actividad = array(
+        	'id_actividad' =>$ultimo_id,	
+			'nombre_actividad' =>$nombre_actividad,
+			'id_categoria' =>$id_categoria,
+			'descripcion_actividad' =>$descripcion_actividad,
+			'fecha_inicial' =>$fecha_inicial,
+			'fecha_final' =>$fecha_final,
+			'ano_lectivo' =>$ano_lectivo,
+			'estado_actividad' =>$estado_actividad);
+
+			if ($this->configuraciones_model->validar_existencia_actividad($nombre_actividad,$ano_lectivo)){
+
+				$respuesta=$this->configuraciones_model->insertar_periodo($actividad);
+
+				if($respuesta==true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
+			}
+			else{
+
+				echo "periodo ya existe";
+			}
+
+        }
+
+	}
+
+
+	public function mostrarperiodos(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'periodos' => $this->configuraciones_model->buscar_periodo($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->configuraciones_model->buscar_periodo($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function modificar_periodo(){
+
+        $this->form_validation->set_rules('fecha_inicial', 'Fecha Inicio', 'required');
+        $this->form_validation->set_rules('fecha_final', 'Fecha Fin', 'required');
+        $this->form_validation->set_rules('estado_periodo', 'Estado Periodo', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$id_actividad = $this->input->post('id_periodo');
+        	$fecha_inicial = $this->input->post('fecha_inicial');
+        	$fecha_final = $this->input->post('fecha_final');
+        	$estado_actividad = $this->input->post('estado_periodo');
+
+        	//array para insertar en la tabla cronogramas
+        	$actividad = array(
+        	'id_actividad' =>$id_actividad,	
+			'fecha_inicial' =>$fecha_inicial,
+			'fecha_final' =>$fecha_final,
+			'estado_actividad' =>$estado_actividad);
+
+			
+			$respuesta=$this->configuraciones_model->modificar_periodo($id_actividad,$actividad);
+
+			if($respuesta==true){
+
+				echo "Registro Actualizado Satisfactoriamente.";
+			}
+			else{
+
+				echo "Registro No Actualizado.";
+			}
+
+        }
+
 	}	
 }
