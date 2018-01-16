@@ -10,10 +10,11 @@ class Pensum_model extends CI_Model {
 			return false;
 	}
 
-	public function validar_existencia($id_grado,$id_asignatura){
+	public function validar_existencia($id_grado,$id_asignatura,$ano_lectivo){
 
 		$this->db->where('id_grado',$id_grado);
 		$this->db->where('id_asignatura',$id_asignatura);
+		$this->db->where('ano_lectivo',$ano_lectivo);
 		$query = $this->db->get('pensum');
 
 		if ($query->num_rows() > 0) {
@@ -32,6 +33,10 @@ class Pensum_model extends CI_Model {
 		$this->db->or_like('pensum.intensidad_horaria',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('pensum.estado_pensum',$id,'after');
+
+		$this->db->order_by('pensum.ano_lectivo', 'desc');
+		$this->db->order_by('pensum.id_grado', 'asc');
+		$this->db->order_by('pensum.estado_pensum', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);

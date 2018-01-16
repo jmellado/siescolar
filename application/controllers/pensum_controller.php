@@ -37,18 +37,23 @@ class Pensum_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de pensum + 1 
-        	 $ultimo_id = $this->pensum_model->obtener_ultimo_id();
+        	$ultimo_id = $this->pensum_model->obtener_ultimo_id();
+        	$id_grado = $this->input->post('id_grado');
+        	$id_asignatura = $this->input->post('id_asignatura');
+        	$intensidad_horaria = $this->input->post('intensidad_horaria');
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+        	$estado_pensum = $this->input->post('estado_pensum');
 
-        	  //array para insertar en la tabla pensum----------
+        	//array para insertar en la tabla pensum-
         	$pensum = array(
         	'id_pensum' =>$ultimo_id,	
-			'id_grado' =>$this->input->post('id_grado'),
-			'id_asignatura' =>$this->input->post('id_asignatura'),
-			'intensidad_horaria' =>$this->input->post('intensidad_horaria'),
-			'ano_lectivo' =>$this->input->post('ano_lectivo'),
-			'estado_pensum' =>$this->input->post('estado_pensum'));
+			'id_grado' =>$id_grado,
+			'id_asignatura' =>$id_asignatura,
+			'intensidad_horaria' =>$intensidad_horaria,
+			'ano_lectivo' =>$ano_lectivo,
+			'estado_pensum' =>$estado_pensum);
 
-			if ($this->pensum_model->validar_existencia($this->input->post('id_grado'),$this->input->post('id_asignatura'))){
+			if ($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
 
 				$respuesta=$this->pensum_model->insertar_pensum($pensum);
 
@@ -130,11 +135,11 @@ class Pensum_controller extends CI_Controller {
 		$id = $this->input->post('id_pensum');
 		$grado_buscado = $this->pensum_model->obtener_id_grado($id);
 		$asignatura_buscada = $this->pensum_model->obtener_id_asignatura($id);
-		//$ano_lectivo_buscado = $this->pensum_model->obtener_ano_lectivo($id);
+		$ano_lectivo_buscado = $this->pensum_model->obtener_ano_lectivo($id);
 
         if(is_numeric($id)){
 
-        	if ($grado_buscado == $this->input->post('id_grado') && $asignatura_buscada == $this->input->post('id_asignatura')){
+        	if ($grado_buscado == $this->input->post('id_grado') && $asignatura_buscada == $this->input->post('id_asignatura') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
 	        	$respuesta=$this->pensum_model->modificar_pensum($this->input->post('id_pensum'),$pensum);
 
@@ -150,7 +155,7 @@ class Pensum_controller extends CI_Controller {
 	        }
 	        else{
 
-	        	if($this->pensum_model->validar_existencia($this->input->post('id_grado'),$this->input->post('id_asignatura'))){
+	        	if($this->pensum_model->validar_existencia($this->input->post('id_grado'),$this->input->post('id_asignatura'),$this->input->post('ano_lectivo'))){
 
 	        		$respuesta=$this->pensum_model->modificar_pensum($this->input->post('id_pensum'),$pensum);
 
