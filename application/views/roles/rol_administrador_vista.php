@@ -322,6 +322,20 @@
 
         <li class="treeview">
           <a href="#">
+            <i class="fa fa-check-square"></i>
+            <span>Elecciones</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>elecciones_controller/index"><i class="fa fa-clipboard"></i>Gestionar Elecciones</a></li>
+            
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-gears"></i>
             <span>Configuraciones</span>
             <span class="pull-right-container">

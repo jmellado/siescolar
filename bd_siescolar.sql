@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-01-2018 a las 23:02:48
+-- Tiempo de generación: 18-01-2018 a las 01:46:24
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-01-05 22:02:29');
+(12345, '2018-01-18 00:45:15');
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,7 @@ CREATE TABLE `candidatos_eleccion` (
   `id_estudiante` int(11) NOT NULL,
   `numero` varchar(10) NOT NULL,
   `partido` varchar(45) NOT NULL,
-  `observaciones` varchar(45) NOT NULL,
+  `votos` varchar(45) NOT NULL,
   `estado_candidato` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -322,11 +322,13 @@ INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `
 
 CREATE TABLE `elecciones` (
   `id_eleccion` int(11) NOT NULL,
-  `nombre_eleccion` varchar(45) NOT NULL,
-  `descripcion` varchar(45) DEFAULT NULL,
+  `nombre_eleccion` varchar(100) NOT NULL,
+  `descripcion` varchar(300) NOT NULL,
   `fecha_inicio` date NOT NULL,
+  `hora_inicio` time NOT NULL,
   `fecha_fin` date NOT NULL,
-  `fecha_eleccion` date NOT NULL,
+  `hora_fin` time NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
   `estado_eleccion` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -440,8 +442,8 @@ CREATE TABLE `grupos` (
 CREATE TABLE `listado_votantes` (
   `id_eleccion` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `voto` varchar(45) NOT NULL,
-  `fecha_voto` date NOT NULL,
+  `codigo_voto` varchar(45) NOT NULL,
+  `fecha_voto` datetime NOT NULL,
   `estado_votante` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
