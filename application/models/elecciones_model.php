@@ -120,7 +120,172 @@ class Elecciones_model extends CI_Model {
 
 	}
 
+	//***************************************************** FUNCIONES PARA  CANDIDATOS *******************************************************
 
+
+	public function insertar_candidato($candidato){
+		if ($this->db->insert('candidatos_eleccion', $candidato)) 
+			return true;
+		else
+			return false;
+	}
+
+
+	public function validar_existencia_candidato($id_candidato,$id_eleccion){
+
+		$this->db->where('id_eleccion',$id_eleccion);
+		$this->db->where('id_estudiante',$id_candidato);
+		$query = $this->db->get('candidatos_eleccion');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function validar_existencia_numerocandidato($id_eleccion,$numero){
+
+		$this->db->where('id_eleccion',$id_eleccion);
+		$this->db->where('numero',$numero);
+		$query = $this->db->get('candidatos_eleccion');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function buscar_candidato($id,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->where("(elecciones.nombre_eleccion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR candidatos_eleccion.partido LIKE '".$id."%' OR candidatos_eleccion.numero LIKE '".$id."%' OR candidatos_eleccion.estado_candidato LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('candidatos_eleccion.id_eleccion', 'asc');
+		$this->db->order_by('candidatos_eleccion.partido', 'asc');
+		$this->db->order_by('candidatos_eleccion.numero', 'asc');
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('elecciones', 'candidatos_eleccion.id_eleccion = elecciones.id_eleccion');
+		$this->db->join('personas', 'candidatos_eleccion.id_estudiante = personas.id_persona');
+		$this->db->select('candidatos_eleccion.id_candidato_eleccion,candidatos_eleccion.id_eleccion,elecciones.nombre_eleccion,candidatos_eleccion.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2,candidatos_eleccion.partido,candidatos_eleccion.numero,candidatos_eleccion.estado_candidato');
+		
+		$query = $this->db->get('candidatos_eleccion');
+
+		return $query->result();
+		
+	}
+
+
+	public function llenar_elecciones(){
+
+		$this->load->model('funciones_globales_model');
+		$id_ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$id_ano_lectivo);
+		$this->db->where('estado_eleccion','Activo');
+		$query = $this->db->get('elecciones');
+		return $query->result();
+	}
+
+
+	public function buscar_estudiantes_matriculados($id,$ano_lectivo){
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('matriculas');
+
+		return $query->result();
+		
+	}
+
+
+	public function modificar_candidato($id_candidato_eleccion,$candidato){
+
+	
+		$this->db->where('id_candidato_eleccion',$id_candidato_eleccion);
+
+		if ($this->db->update('candidatos_eleccion', $candidato))
+
+			return true;
+		else
+			return false;
+	}
+
+
+	public function eliminar_candidato($id_candidato_eleccion){
+
+     	$this->db->where('id_candidato_eleccion',$id_candidato_eleccion);
+		$consulta = $this->db->delete('candidatos_eleccion');
+       	if($consulta==true){
+
+           return true;
+       	}
+       	else{
+
+           return false;
+       	}
+    }
+
+
+	public function obtener_informacion_candidato($id_candidato_eleccion){
+
+		$this->db->where('id_candidato_eleccion',$id_candidato_eleccion);
+		$query = $this->db->get('candidatos_eleccion');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+        	
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function validar_votos_candidato($id_candidato_eleccion){
+
+		$this->db->where('id_candidato_eleccion',$id_candidato_eleccion);
+		$query = $this->db->get('candidatos_eleccion');
+
+		if ($query->num_rows() > 0) {
+			$row = $query->result_array();
+
+			if ($row[0]['votos'] > 0) {
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		else{
+			
+			return false;
+			
+		}
+
+	}
 
 
 }

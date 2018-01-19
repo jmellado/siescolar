@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-01-2018 a las 01:46:24
+-- Tiempo de generación: 19-01-2018 a las 19:41:04
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-01-18 00:45:15');
+(12345, '2018-01-19 18:40:03');
 
 -- --------------------------------------------------------
 
@@ -113,6 +113,7 @@ CREATE TABLE `asignaturas` (
 --
 
 CREATE TABLE `candidatos_eleccion` (
+  `id_candidato_eleccion` int(11) NOT NULL,
   `id_eleccion` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `numero` varchar(10) NOT NULL,
@@ -440,6 +441,7 @@ CREATE TABLE `grupos` (
 --
 
 CREATE TABLE `listado_votantes` (
+  `id_listado` int(11) NOT NULL,
   `id_eleccion` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `codigo_voto` varchar(45) NOT NULL,
@@ -1968,7 +1970,8 @@ ALTER TABLE `asignaturas`
 -- Indices de la tabla `candidatos_eleccion`
 --
 ALTER TABLE `candidatos_eleccion`
-  ADD PRIMARY KEY (`id_eleccion`);
+  ADD PRIMARY KEY (`id_candidato_eleccion`),
+  ADD KEY `fk_candidatos_elecciones` (`id_eleccion`);
 
 --
 -- Indices de la tabla `cargas_academicas`
@@ -2066,7 +2069,8 @@ ALTER TABLE `grupos`
 -- Indices de la tabla `listado_votantes`
 --
 ALTER TABLE `listado_votantes`
-  ADD PRIMARY KEY (`id_eleccion`);
+  ADD PRIMARY KEY (`id_listado`),
+  ADD KEY `fk_votantes_elecciones` (`id_eleccion`);
 
 --
 -- Indices de la tabla `logros`
@@ -2203,6 +2207,11 @@ ALTER TABLE `areas`
 ALTER TABLE `asignaturas`
   MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `candidatos_eleccion`
+--
+ALTER TABLE `candidatos_eleccion`
+  MODIFY `id_candidato_eleccion` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `cargas_academicas`
 --
 ALTER TABLE `cargas_academicas`
@@ -2257,6 +2266,11 @@ ALTER TABLE `grados`
 --
 ALTER TABLE `grupos`
   MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `listado_votantes`
+--
+ALTER TABLE `listado_votantes`
+  MODIFY `id_listado` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `logros`
 --
