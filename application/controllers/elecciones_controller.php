@@ -32,6 +32,17 @@ class Elecciones_controller extends CI_Controller {
 	}
 
 
+	public function votantes()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'elecciones/votantes_vista');
+	}
+
+
 	public function insertar_eleccion(){
 
         $this->form_validation->set_rules('nombre_eleccion', 'Nombre', 'required|alpha_spaces');
@@ -434,5 +445,149 @@ class Elecciones_controller extends CI_Controller {
 
 
 	}
+
+
+	//****************************************************** FUNCIONES PARA VOTANTES ***************************************************
+
+	public function insertar_votante(){
+
+        $this->form_validation->set_rules('id_eleccion', 'Eleccion', 'required');
+        $this->form_validation->set_rules('id_curso', 'Cursos', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$id_eleccion = $this->input->post('id_eleccion');
+        	$cursos = $this->input->post('id_curso');
+
+        	if ($cursos != "") {
+        		
+        		$respuesta=$this->elecciones_model->insertar_votante($id_eleccion,$cursos);
+
+				if($respuesta==true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+        	}
+        	else{
+
+        		echo "nohaycursos";
+        	}
+
+
+        }
+
+    }
+
+
+    public function mostrarvotantes(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'votantes' => $this->elecciones_model->buscar_votante($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->elecciones_model->buscar_votante($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function eliminar_votante(){
+
+	  	$id_eleccion =$this->input->post('id'); 
+
+        if(is_numeric($id_eleccion)){
+
+			if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+
+		        $respuesta=$this->elecciones_model->eliminar_votante($id_eleccion);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Elección Eliminada Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Eleccion.";
+	        }  	
+          
+        }else{
+          
+          	echo "digite valor numerico para identificar una elección";
+        }
+    }
+
+
+    public function mostrarcursos_votantes(){
+
+		$id = $this->input->post('id_buscar'); 
+		
+		$data = array(
+
+			'votantes' => $this->elecciones_model->buscar_curso_votante($id)
+
+		);
+	    echo json_encode($data);
+
+	}
+
+
+	public function eliminarcurso_votante(){
+
+	  	$id_eleccion =$this->input->post('id');
+	  	$id_curso =$this->input->post('id_curso');
+
+        if(is_numeric($id_eleccion)){
+
+			if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+
+		        $respuesta=$this->elecciones_model->eliminarcurso_votante($id_eleccion,$id_curso);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Curso Votante Eliminado Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Eleccion.";
+	        }  	
+          
+        }else{
+          
+          	echo "digite valor numerico para identificar una elección";
+        }
+    }
+
+
+	public function llenarcombo_cursos(){
+
+    	$consulta = $this->elecciones_model->llenar_cursos();
+    	echo json_encode($consulta);
+    }
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-01-2018 a las 19:41:04
+-- Tiempo de generación: 25-01-2018 a las 18:56:31
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-01-19 18:40:03');
+(12345, '2018-01-25 17:51:59');
 
 -- --------------------------------------------------------
 
@@ -443,9 +443,10 @@ CREATE TABLE `grupos` (
 CREATE TABLE `listado_votantes` (
   `id_listado` int(11) NOT NULL,
   `id_eleccion` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `codigo_voto` varchar(45) NOT NULL,
-  `fecha_voto` datetime NOT NULL,
+  `fecha_voto` datetime DEFAULT NULL,
   `estado_votante` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1841,7 +1842,8 @@ INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedi
 (3, '1066', 'cc', '1990-05-05', 20, 404, 'Hugo', 'Mairon', 'Sosa', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
 (4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian', 'Andres', 'Romero', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
 (5, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
-(6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona');
+(6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona'),
+(7, '0901-72200', 'cc', '2018-01-25', 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco');
 
 -- --------------------------------------------------------
 
@@ -1886,7 +1888,8 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`, `descripcion`) VALUES
 (1, 'administrador', NULL),
 (2, 'estudiante', NULL),
 (3, 'profesor', NULL),
-(4, 'acudiente', NULL);
+(4, 'acudiente', NULL),
+(5, 'votante', NULL);
 
 -- --------------------------------------------------------
 
@@ -1928,7 +1931,8 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 (3, 3, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
 (4, 4, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
 (5, 5, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1');
+(6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
+(7, 1, 5, 'adminvotante', '8cb2237d0679ca88db6464eac60da96345513964', '1');
 
 --
 -- Índices para tablas volcadas
@@ -2325,12 +2329,12 @@ ALTER TABLE `pensum`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `salones`
 --
@@ -2340,7 +2344,7 @@ ALTER TABLE `salones`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Restricciones para tablas volcadas
 --

@@ -331,6 +331,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>elecciones_controller/index"><i class="fa fa-clipboard"></i>Gestionar Elecciones</a></li>
             <li><a href="<?php echo base_url(); ?>elecciones_controller/candidatos"><i class="fa fa-users"></i>Gestionar Candidatos</a></li>
+            <li><a href="<?php echo base_url(); ?>elecciones_controller/votantes"><i class="fa fa-list"></i>Votantes</a></li>
           </ul>
         </li>
 

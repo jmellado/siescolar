@@ -288,4 +288,217 @@ class Elecciones_model extends CI_Model {
 	}
 
 
+	//***************************************************** FUNCIONES PARA  VOTANTES *******************************************************
+
+	public function insertar_votante($id_eleccion,$cursos){
+
+		
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+		for ($i=0; $i < count($cursos) ; $i++) {
+
+			if ($this->elecciones_model->validar_existencia_curso_votante($id_eleccion,$cursos[$i])) {
+				
+				$estudiantes = $this->elecciones_model->EstudiantesMatriculadosCurso($cursos[$i]);
+
+				if ($estudiantes != false) {
+					
+					for ($j=0; $j < count($estudiantes) ; $j++) {
+
+						$codigo_voto = $id_eleccion.substr($estudiantes[$j]['nombres'], 1, 2).$i.$j.$id_eleccion.substr($estudiantes[$j]['apellido1'], 1, 2);
+
+						$votante = array(
+							'id_eleccion' => $id_eleccion,
+							'id_curso' => $cursos[$i],
+							'id_estudiante' => $estudiantes[$j]['id_estudiante'],
+							'codigo_voto' => $codigo_voto,
+							'estado_votante' => "no"
+						);
+
+						$this->db->insert('listado_votantes', $votante);
+
+					}
+
+
+				}
+
+
+
+			}
+
+
+		}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+
+
+	}
+
+
+	public function buscar_votante($id,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->where("(elecciones.nombre_eleccion LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('elecciones.id_eleccion', 'asc');
+		$this->db->group_by("elecciones.id_eleccion"); 
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
+		$this->db->select('listado_votantes.id_eleccion,elecciones.nombre_eleccion,elecciones.descripcion');
+		
+		$query = $this->db->get('listado_votantes');
+
+		return $query->result();
+		
+	}
+
+
+	public function llenar_cursos(){
+
+		$this->load->model('funciones_globales_model');
+		$id_ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.ano_lectivo',$id_ano_lectivo);
+		
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('salones', 'cursos.id_salon = salones.id_salon');
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+
+		$query = $this->db->get('cursos');
+
+		return $query->result();
+	}
+
+
+	public function validar_existencia_curso_votante($id_eleccion,$id_curso){
+
+		$this->db->where('id_eleccion',$id_eleccion);
+		$this->db->where('id_curso',$id_curso);
+		$query = $this->db->get('listado_votantes');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function EstudiantesMatriculadosCurso($id_curso){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_curso',$id_curso);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select('matriculas.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2');
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
+
+	}
+
+
+	public function eliminar_votante($id_eleccion){
+
+     	$this->db->where('id_eleccion',$id_eleccion);
+		$consulta = $this->db->delete('listado_votantes');
+       	if($consulta==true){
+
+           return true;
+       	}
+       	else{
+
+           return false;
+       	}
+    }
+
+
+    public function validar_votos_eleccion($id_eleccion){
+
+		$this->db->where('id_eleccion',$id_eleccion);
+
+		$this->db->select('sum(IFNULL(votos, 0)) as votos',false);
+
+		$query = $this->db->get('candidatos_eleccion');
+
+		if ($query->num_rows() > 0) {
+			$row = $query->result_array();
+
+			if ($row[0]['votos'] > 0) {
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		else{
+			
+			return false;
+			
+		}
+
+	}
+
+
+	public function buscar_curso_votante($id_eleccion){
+
+
+		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
+
+		$this->db->order_by('listado_votantes.id_curso', 'asc'); 
+
+		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
+		$this->db->join('cursos', 'listado_votantes.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_curso = grupos.id_grupo');
+
+		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,elecciones.nombre_eleccion,grados.nombre_grado,grupos.nombre_grupo');
+		
+		$query = $this->db->get('listado_votantes');
+
+		return $query->result();
+		
+	}
+
+
+	public function eliminarcurso_votante($id_eleccion,$id_curso){
+
+     	$this->db->where('id_eleccion',$id_eleccion);
+     	$this->db->where('id_curso',$id_curso);
+		$consulta = $this->db->delete('listado_votantes');
+       	if($consulta==true){
+
+           return true;
+       	}
+       	else{
+
+           return false;
+       	}
+    }
+
+
 }
