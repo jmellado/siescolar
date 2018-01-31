@@ -17,6 +17,7 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery-1.12.4.min.js"></script>
   
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/login.js" defer></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/votacion.js" defer></script>
 
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plantillas/AdminLTE/bootstrap/css/bootstrap.min.css">
@@ -146,7 +147,7 @@
           </a>
         </li>
         
-        <li><a href="#"><i class="fa fa-bar-chart"></i> <span>Resultados Elecciones</span></a></li>
+        <!--<li><a href="#"><i class="fa fa-bar-chart"></i> <span>Resultados Elecciones</span></a></li>-->
         <li class="header"></li>
         
       </ul>

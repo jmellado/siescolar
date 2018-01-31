@@ -501,4 +501,125 @@ class Elecciones_model extends CI_Model {
     }
 
 
+    //****************************************************** FUNCIONES PARA LA VOTACION ***************************************************
+
+
+    public function obtener_informacion_porcodigo($codigo_voto){
+
+		$this->db->where('codigo_voto',$codigo_voto);
+		$query = $this->db->get('listado_votantes');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+        	
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function obtener_fecha_actual(){
+
+		$CI = & get_instance();
+		$CI->load->helper('date');
+
+		$fecha_horaGMT = now();  //Obtenemos la fecha actual en formato GMT
+
+		$esVerano = date('I', $fecha_horaGMT); //Obtenemos TRUE si es horario de verano
+		$zona_horaria = 'UM5'; //zona horaria de bogota
+
+		$fechaLocal = gmt_to_local($fecha_horaGMT, $zona_horaria, $esVerano); //Convertimos la fecha GMT a local a partir del código de zona horaria
+
+		$fechaLocal_Formateada = mdate("%Y-%m-%d %H:%i:%s %a", $fechaLocal); //Formato español (dd/mm/yyyy HH:mm:ss)
+
+		return $fechaLocal_Formateada; 
+
+	}
+
+
+	public function validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual){
+
+		$estado_eleccion = "Activo";
+
+		$sql= "SELECT nombre_eleccion FROM elecciones WHERE id_eleccion ='". $id_eleccion."' AND estado_eleccion ='".$estado_eleccion."' AND '".$fecha_actual."' >= fecha_inicio AND '".$fecha_actual."' <= fecha_fin AND '".$hora_actual."' >= hora_inicio AND '".$hora_actual."' <= hora_fin";
+
+		$query = $this->db->query($sql);
+
+		if ($query->num_rows() > 0) 
+			return true;
+		else
+			return false;
+		
+	}
+
+
+	public function candidatos_eleccion($id_eleccion){
+
+		$this->db->where('candidatos_eleccion.id_eleccion',$id_eleccion);
+
+		$this->db->order_by('candidatos_eleccion.numero', 'asc');
+
+		$this->db->join('elecciones', 'candidatos_eleccion.id_eleccion = elecciones.id_eleccion');
+		$this->db->join('personas', 'candidatos_eleccion.id_estudiante = personas.id_persona');
+		$this->db->join('anos_lectivos', 'elecciones.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->select('candidatos_eleccion.id_candidato_eleccion,candidatos_eleccion.id_eleccion,elecciones.nombre_eleccion,candidatos_eleccion.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2,candidatos_eleccion.partido,candidatos_eleccion.numero,candidatos_eleccion.estado_candidato,elecciones.ano_lectivo,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('candidatos_eleccion');
+
+		return $query->result();
+		
+	}
+
+
+	public function buscar_datos_institucion(){
+
+		$query = $this->db->get('datos_institucion');
+
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function registrar_voto($candidato_elegido,$codigo_voto){
+
+		
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+			$ele = $this->elecciones_model->obtener_informacion_candidato($candidato_elegido);
+			$votos = $ele[0]['votos'] + 1;
+
+			$fecha = $this->elecciones_model->obtener_fecha_actual();
+    		$fecha_voto = substr($fecha, 0,19);
+
+    		$candidato = array('votos' => $votos);
+    		$this->db->where('id_candidato_eleccion',$candidato_elegido);
+			$this->db->update('candidatos_eleccion', $candidato);
+
+			$votante = array('fecha_voto' => $fecha_voto, 'estado_votante' => "si");
+    		$this->db->where('codigo_voto',$codigo_voto);
+			$this->db->update('listado_votantes', $votante);
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
+
 }

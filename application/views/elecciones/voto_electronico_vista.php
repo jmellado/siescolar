@@ -26,7 +26,7 @@
 			    		<div class="panel panel-default">
 			    			<div class="panel-body">
 
-			    				<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>elecciones_controller/insertar_candidato" name="" method="post" id="form_ingresar_eleccion">
+			    				<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>elecciones_controller/validar_ingreso_votacion" name="" method="post" id="form_ingresar_eleccion">
 
 									<div class="form-group">
 										<label class="control-label col-sm-4" for="codigo_eleccion">CÓDIGO DE INGRESO</label>

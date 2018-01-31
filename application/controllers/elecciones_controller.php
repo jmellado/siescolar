@@ -590,4 +590,136 @@ class Elecciones_controller extends CI_Controller {
     	echo json_encode($consulta);
     }
 
+
+    //****************************************************** FUNCIONES PARA LA VOTACION ***************************************************
+
+
+    public function validar_ingreso_votacion(){
+
+        $this->form_validation->set_rules('codigo_eleccion', 'Código De Ingreso', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$codigo_eleccion = $this->input->post('codigo_eleccion');
+
+        	$consulta = $this->elecciones_model->obtener_informacion_porcodigo($codigo_eleccion);
+
+        	if ($consulta != false) {
+        		
+        		$id_eleccion = $consulta[0]['id_eleccion'];
+        		$estado_votante = $consulta[0]['estado_votante'];
+        		$fecha = $this->elecciones_model->obtener_fecha_actual();
+
+        		$fecha_actual = substr($fecha, 0,10);
+        		$hora_actual = substr($fecha, 11,8);
+
+        		if ($estado_votante == "no") {
+        			
+        			if ($this->elecciones_model->validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual)) {
+        				
+        				echo "ok";
+        			}
+        			else{
+
+        				echo "votacioncerrada";
+        			}
+
+        		}
+        		else{
+
+        			echo "yavoto";
+        		}
+
+        	}
+        	else{
+
+        		echo "noexiste";
+        	}
+
+
+        }
+
+    }
+
+
+    public function votacion(){
+
+    	$codigo_eleccion = $this->input->get('codigo_eleccion');
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'votante')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		//Validanos nuevamente el codigo de ingreso 
+		$consulta = $this->elecciones_model->obtener_informacion_porcodigo($codigo_eleccion);
+
+    	if ($consulta != false) {
+    		
+    		$id_eleccion = $consulta[0]['id_eleccion'];
+    		$estado_votante = $consulta[0]['estado_votante'];
+    		$fecha = $this->elecciones_model->obtener_fecha_actual();
+
+    		$fecha_actual = substr($fecha, 0,10);
+    		$hora_actual = substr($fecha, 11,8);
+
+    		if ($estado_votante == "no") {
+    			
+    			if ($this->elecciones_model->validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual)) {
+    				
+    				$data['candidatos'] = $this->elecciones_model->candidatos_eleccion($id_eleccion);
+    				$data['institucion'] = $this->elecciones_model->buscar_datos_institucion();
+    				$data['codigo_eleccion'] = $codigo_eleccion;
+
+    				$this->template->load('roles/rol_votante_vista', 'elecciones/votacion_vista',$data);
+    			}
+    			else{
+
+    				redirect(base_url().'rol_votante/elecciones');
+    			}
+
+    		}
+    		else{
+
+    			redirect(base_url().'rol_votante/elecciones');
+    		}
+
+    	}
+    	else{
+
+    		redirect(base_url().'rol_votante/elecciones');
+    	}
+
+    }
+
+
+    public function registrar_voto(){
+
+		$candidato_elegido = $this->input->post('candidato_elegido');
+		$codigo_eleccion = $this->input->post('codigo_eleccion');
+		
+		$respuesta=$this->elecciones_model->registrar_voto($candidato_elegido,$codigo_eleccion);
+
+		if($respuesta==true){
+
+			echo "registroguardado";
+		}
+		else{
+
+			echo "registronoguardado";
+		}
+
+	}
+
+
+
+
+
+
+
 }
