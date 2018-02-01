@@ -469,7 +469,8 @@ class Elecciones_model extends CI_Model {
 
 		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
 
-		$this->db->order_by('listado_votantes.id_curso', 'asc'); 
+		$this->db->order_by('listado_votantes.id_curso', 'asc');
+		$this->db->group_by("listado_votantes.id_curso");  
 
 		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
 		$this->db->join('cursos', 'listado_votantes.id_curso = cursos.id_curso');

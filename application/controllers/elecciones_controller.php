@@ -464,23 +464,31 @@ class Elecciones_controller extends CI_Controller {
         	$id_eleccion = $this->input->post('id_eleccion');
         	$cursos = $this->input->post('id_curso');
 
-        	if ($cursos != "") {
-        		
-        		$respuesta=$this->elecciones_model->insertar_votante($id_eleccion,$cursos);
+        	if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
 
-				if($respuesta==true){
+	        	if ($cursos != "") {
+	        		
+	        		$respuesta=$this->elecciones_model->insertar_votante($id_eleccion,$cursos);
 
-					echo "registroguardado";
-				}
-				else{
+					if($respuesta==true){
 
-					echo "registronoguardado";
-				}
-        	}
-        	else{
+						echo "registroguardado";
+					}
+					else{
 
-        		echo "nohaycursos";
-        	}
+						echo "registronoguardado";
+					}
+	        	}
+	        	else{
+
+	        		echo "nohaycursos";
+	        	}
+
+	        }
+	        else{
+
+	        	echo "registrodenegado";
+	        }
 
 
         }
@@ -530,7 +538,7 @@ class Elecciones_controller extends CI_Controller {
 	          	}
 	        }
 	        else{
-	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Eleccion.";
+	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Elección.";
 	        }  	
           
         }else{
@@ -574,7 +582,7 @@ class Elecciones_controller extends CI_Controller {
 	          	}
 	        }
 	        else{
-	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Eleccion.";
+	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Elección.";
 	        }  	
           
         }else{

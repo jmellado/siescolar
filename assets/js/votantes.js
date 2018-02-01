@@ -38,6 +38,12 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="registrodenegado"){
+						
+						toastr.warning('No Se Pueden Registrar Más Votantes; Ya Existen Votos Registrados Para Esta Elección.', 'Success Alert', {timeOut: 5000});
+							
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
