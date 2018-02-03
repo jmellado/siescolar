@@ -623,4 +623,26 @@ class Elecciones_model extends CI_Model {
 	}
 
 
+	//********************************************** FUNCIONES PARA LOS RESULTADOS DE LAS ELECCIONES *******************************
+
+
+	public function buscar_resultados($id_eleccion){
+
+		$this->db->where('candidatos_eleccion.id_eleccion',$id_eleccion);
+
+		$this->db->order_by('candidatos_eleccion.votos', 'desc');
+		$this->db->order_by('candidatos_eleccion.numero', 'asc');
+
+		$this->db->join('elecciones', 'candidatos_eleccion.id_eleccion = elecciones.id_eleccion');
+		$this->db->join('personas', 'candidatos_eleccion.id_estudiante = personas.id_persona');
+		$this->db->join('anos_lectivos', 'elecciones.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->select('candidatos_eleccion.id_candidato_eleccion,candidatos_eleccion.id_eleccion,elecciones.nombre_eleccion,candidatos_eleccion.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2,candidatos_eleccion.partido,candidatos_eleccion.numero,IF(candidatos_eleccion.votos = "","0", candidatos_eleccion.votos) as votos,candidatos_eleccion.estado_candidato,elecciones.ano_lectivo,anos_lectivos.nombre_ano_lectivo',false);
+		
+		$query = $this->db->get('candidatos_eleccion');
+
+		return $query->result();
+		
+	}
+
+
 }

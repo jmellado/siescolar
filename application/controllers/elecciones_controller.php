@@ -725,7 +725,34 @@ class Elecciones_controller extends CI_Controller {
 	}
 
 
+	//********************************************** FUNCIONES PARA LOS RESULTADOS DE LAS ELECCIONES *******************************
 
+
+	public function resultados()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'elecciones/resultados_vista');
+	}
+
+
+	public function mostrarresultados(){
+
+		$id_eleccion = $this->input->post('id_eleccion'); 
+		
+		$data = array(
+
+			'elecciones' => $this->elecciones_model->buscar_resultados($id_eleccion),
+
+			'total_votantes' => count($this->elecciones_model->buscar_curso_votante($id_eleccion))
+
+		);
+	    echo json_encode($data);
+
+	}
 
 
 
