@@ -281,15 +281,18 @@ class Elecciones_controller extends CI_Controller {
         }
         else{
 
+        	$id_candidato_eleccion = $this->elecciones_model->obtener_ultimo_id_candidato_eleccion();
         	$id_eleccion = $this->input->post('id_eleccion');
         	$id_candidato = $this->input->post('id_candidato');
         	$partido = ucwords(strtolower($this->input->post('partido')));
         	$numero = $this->input->post('numero');
+        	$foto_candidato = "foto_candidato";
         	$estado_candidato = "Activo";
 
 
         	//array para insertar en la tabla candidatos
         	$candidato = array(
+        	'id_candidato_eleccion' => $id_candidato_eleccion,
         	'id_eleccion' =>$id_eleccion,	
 			'id_estudiante' =>$id_candidato,
 			'numero' =>$numero,
@@ -305,6 +308,9 @@ class Elecciones_controller extends CI_Controller {
 					if($respuesta==true){
 
 						echo "registroguardado";
+						$respuesta=$this->elecciones_model->subir_foto_candidato($id_candidato_eleccion,$foto_candidato);
+						echo $respuesta;
+
 					}
 					else{
 
@@ -367,7 +373,7 @@ class Elecciones_controller extends CI_Controller {
 	              	if (!unlink("./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")) {
 	              		echo "Error Al Borrar La Imagen.";
 	              	}
-	              	
+
 	          	}else{
 	              
 	              	echo "No Se Pudo Eliminar.";

@@ -122,7 +122,7 @@
       	<div class="panel panel-default">
 		    <div class="panel-body">
 
-		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>elecciones_controller/insertar_candidato" name="" method="post" id="form_candidatos">
+		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>elecciones_controller/insertar_candidato" name="" method="post" id="form_candidatos" enctype="multipart/form-data">
 
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="id_eleccion">ELECCIÓN</label>
@@ -157,6 +157,13 @@
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="numero" name="numero"
 								 placeholder="Número Tarjetón" min="1" max="300">
+						</div>		 
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="numero">FOTO CANDIDATO</label>
+						<div class="col-sm-4">
+							<input type="file" name="foto_candidato" accept="image/*" size="50" required>
 						</div>		 
 					</div>
 

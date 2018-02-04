@@ -207,8 +207,8 @@ class Elecciones_model extends CI_Model {
 		$this->db->where("(elecciones.nombre_eleccion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR candidatos_eleccion.partido LIKE '".$id."%' OR candidatos_eleccion.numero LIKE '".$id."%' OR candidatos_eleccion.estado_candidato LIKE '".$id."%')", NULL, FALSE);
 
 		$this->db->order_by('candidatos_eleccion.id_eleccion', 'asc');
-		$this->db->order_by('candidatos_eleccion.partido', 'asc');
 		$this->db->order_by('candidatos_eleccion.numero', 'asc');
+		$this->db->order_by('candidatos_eleccion.partido', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
@@ -323,6 +323,32 @@ class Elecciones_model extends CI_Model {
 			return false;
 			
 		}
+
+	}
+
+
+	public function subir_foto_candidato($id_candidato_eleccion,$foto_candidato){
+
+		$config = [
+			'upload_path' => './uploads/imagenes/elecciones/candidatos',
+			'allowed_types' => 'png|jpg',
+			'file_name' => $id_candidato_eleccion.'.jpg',
+			'overwrite' => 'true',
+			'max_size' => '6000'
+		];
+
+		//Cargamos la librería de subida y le pasamos la configuración
+		$this->load->library('upload', $config);
+
+		//si el fchero es subido correctamente
+		if ($this->upload->do_upload($foto_candidato)) {
+			echo"";
+		}
+		else{
+
+			echo $this->upload->display_errors();
+		}
+
 
 	}
 

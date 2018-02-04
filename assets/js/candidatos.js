@@ -7,14 +7,19 @@ function inicio(){
 
 	$("#form_candidatos").submit(function (event) {
 		
-		event.preventDefault(); 
+		event.preventDefault();
+		var formData = new FormData($("#form_candidatos")[0]);
+
 		if($("#form_candidatos").valid()==true){
 
 			$.ajax({
 
 				url:$("#form_candidatos").attr("action"),
 				type:$("#form_candidatos").attr("method"),
-				data:$("#form_candidatos").serialize(),   
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,   
 				success:function(respuesta) {
 
 					//alert(""+respuesta);
