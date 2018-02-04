@@ -85,13 +85,28 @@ class Elecciones_controller extends CI_Controller {
 			'ano_lectivo' =>$ano_lectivo,
 			'estado_eleccion' =>$estado_eleccion);
 
+			$id_candidato_eleccion = $this->elecciones_model->obtener_ultimo_id_candidato_eleccion();
+
+			//array para insertar el candidato voto en blanco en la tabla candidatos eleccion
+        	$candidato_voto_blanco = array(
+        	'id_candidato_eleccion' => $id_candidato_eleccion,
+        	'id_eleccion' =>$id_eleccion,	
+			'id_estudiante' =>"7",
+			'numero' =>"00",
+			'partido' =>"En Blanco",
+			'estado_candidato' =>"Activo");
+
 			if ($this->elecciones_model->validar_existencia($nombre_eleccion,$ano_lectivo)){
 
-				$respuesta=$this->elecciones_model->insertar_eleccion($eleccion);
+				$respuesta=$this->elecciones_model->insertar_eleccion($eleccion,$candidato_voto_blanco);
 
 				if($respuesta==true){
 
 					echo "registroguardado";
+
+					if(!copy("./uploads/imagenes/elecciones/voto_blanco.png","./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")){
+						echo "Error Al Copiar La Imagen.";
+					}
 				}
 				else{
 
@@ -142,15 +157,21 @@ class Elecciones_controller extends CI_Controller {
 
 			if($this->elecciones_model->validar_eleccion_candidatos($id_eleccion)){
 
-		        $respuesta=$this->elecciones_model->eliminar_eleccion($id_eleccion);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Elección Eliminada Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
+				if($this->elecciones_model->validar_eleccion_votantes($id_eleccion)){
+
+			        $respuesta=$this->elecciones_model->eliminar_eleccion($id_eleccion);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Elección Eliminada Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar; Existen Votantes Registrados En Esta Elección.";
+		        }
 	        }
 	        else{
 	        	echo "No Se Puede Eliminar; Existen Candidatos Registrados En Esta Elección.";
@@ -342,6 +363,11 @@ class Elecciones_controller extends CI_Controller {
 	          	if($respuesta==true){
 	              
 	              	echo "Candidato Eliminado Correctamente.";
+
+	              	if (!unlink("./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")) {
+	              		echo "Error Al Borrar La Imagen.";
+	              	}
+	              	
 	          	}else{
 	              
 	              	echo "No Se Pudo Eliminar.";

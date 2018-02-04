@@ -3,11 +3,24 @@
 class Elecciones_model extends CI_Model {
 
 
-	public function insertar_eleccion($eleccion){
-		if ($this->db->insert('elecciones', $eleccion)) 
-			return true;
-		else
+	public function insertar_eleccion($eleccion,$candidato_voto_blanco){
+		
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+			$this->db->insert('elecciones', $eleccion);
+			$this->db->insert('candidatos_eleccion', $candidato_voto_blanco);
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
 			return false;
+		}
+		else{
+
+			return true;
+		}
 	}
 
 
@@ -110,6 +123,32 @@ class Elecciones_model extends CI_Model {
 
 		$this->db->where('id_eleccion',$id_eleccion);
 		$query = $this->db->get('candidatos_eleccion');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function obtener_ultimo_id_candidato_eleccion(){
+
+		$this->db->select_max('id_candidato_eleccion');
+		$query = $this->db->get('candidatos_eleccion');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['id_candidato_eleccion'];
+        return $data['query'];
+	}
+
+
+	public function validar_eleccion_votantes($id_eleccion){
+
+		$this->db->where('id_eleccion',$id_eleccion);
+		$query = $this->db->get('listado_votantes');
 
 		if ($query->num_rows() > 0) {
 			return false;
