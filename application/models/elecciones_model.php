@@ -542,7 +542,7 @@ class Elecciones_model extends CI_Model {
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_curso = grupos.id_grupo');
 
-		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,elecciones.nombre_eleccion,grados.nombre_grado,grupos.nombre_grupo');
+		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,elecciones.nombre_eleccion,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 		
 		$query = $this->db->get('listado_votantes');
 

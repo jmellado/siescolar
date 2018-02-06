@@ -333,7 +333,7 @@ function mostrarcursos_votantes(valor){
 				if (registros.votantes.length > 0) {
 
 					for (var i = 0; i < registros.votantes.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.votantes[i].id_eleccion+"</td><td>"+registros.votantes[i].nombre_eleccion+"</td><td style='display:none'>"+registros.votantes[i].id_curso+"</td><td>"+registros.votantes[i].nombre_grado+" "+registros.votantes[i].nombre_grupo+"</td><td><button type='button' class='btn btn-danger' value="+registros.votantes[i].id_eleccion+"><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.votantes[i].id_eleccion+"</td><td>"+registros.votantes[i].nombre_eleccion+"</td><td style='display:none'>"+registros.votantes[i].id_curso+"</td><td>"+registros.votantes[i].nombre_grado+" "+registros.votantes[i].nombre_grupo+" "+registros.votantes[i].jornada+"</td><td><button type='button' class='btn btn-danger' value="+registros.votantes[i].id_eleccion+"><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_cursos_votantes tbody").html(html);
