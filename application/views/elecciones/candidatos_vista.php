@@ -156,22 +156,22 @@
 						<label class="control-label col-sm-3" for="numero">NÚMERO TARJETÓN</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="numero" name="numero"
-								 placeholder="Número Tarjetón" min="1" max="300">
+								 placeholder="Número Tarjetón" min="1" max="99">
 						</div>		 
 					</div>
 
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="numero">FOTO CANDIDATO</label>
 						<div class="col-sm-4">
-							<input type="file" name="foto_candidato" accept="image/*" size="50" required>
+							<input class="btn btn-default" type="file" name="foto_candidato" accept="image/*" required>
 						</div>		 
 					</div>
-
+				
 					<div class="form-group">
 						<div class="col-sm-offset-4 col-sm-5">
 							<button type="submit" name="btn_registrar_candidato" id="btn_registrar_candidato" class="btn btn-primary btn-lg btn-block">Registrar</button>
 						</div>
-					</div>		
+					</div>
 
 		        </form>
 		    </div>
@@ -270,7 +270,7 @@
         <div class="panel panel-default">
 		    <div class="panel-body">
 
-		        <form class="form-horizontal" role="form" id="form_candidatos_actualizar">
+		        <form class="form-horizontal" role="form" id="form_candidatos_actualizar" enctype="multipart/form-data">
 
 		        	<input type="hidden" class="form-control" id="id_candidato_eleccion" name="id_candidato_eleccion">
 										    
@@ -306,6 +306,13 @@
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="numerosele" name="numero"
 								 placeholder="Número Tarjetón" min="1" max="300">
+						</div>		 
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="numero">FOTO CANDIDATO</label>
+						<div class="col-sm-4">
+							<input class="btn btn-default" type="file" name="foto_candidato" accept="image/*" size="50">
 						</div>		 
 					</div>
 					

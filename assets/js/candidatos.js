@@ -268,8 +268,8 @@ function inicio(){
 			numero:{
 				required: true,
 				digits: true,
-				maxlength: 3,
-				minlength: 1
+				maxlength: 2,
+				minlength: 2
 
 			}
 
@@ -434,10 +434,15 @@ function mostrarestudiantes_matriculados(valor){
 
 function actualizar_candidato(){
 
+	var formData = new FormData($("#form_candidatos_actualizar")[0]);
+
 	$.ajax({
 		url:base_url+"elecciones_controller/modificar_candidato",
 		type:"post",
-        data:$("#form_candidatos_actualizar").serialize(),
+        data:formData,
+        cache:false,
+		contentType:false,
+		processData:false, 
 		success:function(respuesta) {
 				
 

@@ -396,6 +396,7 @@ class Elecciones_controller extends CI_Controller {
     	$id_candidato_eleccion = $this->input->post('id_candidato_eleccion');
     	$partido = ucwords(strtolower($this->input->post('partido')));
         $numero = $this->input->post('numero');
+        $foto_candidato = "foto_candidato";
 
     	//array para modificar en la tabla candidatos
         $candidato = array(
@@ -416,6 +417,12 @@ class Elecciones_controller extends CI_Controller {
 
 					echo "registroactualizado";
 
+					if ($_FILES['foto_candidato']['name'] != ""){
+
+						$respuesta=$this->elecciones_model->subir_foto_candidato($id_candidato_eleccion,$foto_candidato);
+						echo $respuesta;
+					}
+
 	             }else{
 
 					echo "registronoactualizado";
@@ -431,6 +438,12 @@ class Elecciones_controller extends CI_Controller {
 	        		if($respuesta==true){
 
 	        			echo "registroactualizado";
+
+	        			if ($_FILES['foto_candidato']['name'] != ""){
+
+							$respuesta=$this->elecciones_model->subir_foto_candidato($id_candidato_eleccion,$foto_candidato);
+							echo $respuesta;
+						}
 
 	        		}else{
 
