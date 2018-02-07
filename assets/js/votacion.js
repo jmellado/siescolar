@@ -32,6 +32,11 @@ function inicio(){
 						toastr.warning('El Código Ingresado No Existe.', 'Success Alert', {timeOut: 3000});
 							
 					}
+					else if(respuesta==="votacioncerrada"){
+						
+						toastr.warning('La Votación Se Encuentra Cerrada.', 'Success Alert', {timeOut: 3000});
+							
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
