@@ -359,26 +359,33 @@ class Elecciones_controller extends CI_Controller {
 
 	public function eliminar_candidato(){
 
-	  	$id_candidato_eleccion =$this->input->post('id'); 
+	  	$id_candidato_eleccion =$this->input->post('id');
+	  	$id_eleccion =$this->input->post('id_eleccion');  
 
         if(is_numeric($id_candidato_eleccion)){
 
 			if($this->elecciones_model->validar_votos_candidato($id_candidato_eleccion)){
 
-		        $respuesta=$this->elecciones_model->eliminar_candidato($id_candidato_eleccion);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Candidato Eliminado Correctamente.";
+				if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
 
-	              	if (!unlink("./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")) {
-	              		echo "Error Al Borrar La Imagen.";
-	              	}
+			        $respuesta=$this->elecciones_model->eliminar_candidato($id_candidato_eleccion);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Candidato Eliminado Correctamente.";
 
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
+		              	if (!unlink("./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")) {
+		              		echo "Error Al Borrar La Imagen.";
+		              	}
+
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar; Las Votaciones Para La Elección En La Cual El Candidato Es Aspirante Ya Iniciaron.";
+		        }
 	        }
 	        else{
 	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Este Candidato.";

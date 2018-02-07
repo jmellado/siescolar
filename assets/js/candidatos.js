@@ -110,9 +110,10 @@ function inicio(){
     $("body").on("click","#lista_candidatos button",function(event){
 		event.preventDefault();
 		idsele = $(this).attr("value");
-		
+		id_eleccionsele = $(this).parent().parent().children("td:eq(2)").text();
+
 		if(confirm("Esta Seguro De Eliminar Este Candidato.?")){
-			eliminar_candidato(idsele);
+			eliminar_candidato(idsele,id_eleccionsele);
 
 		}
 
@@ -480,12 +481,12 @@ function actualizar_candidato(){
 }
 
 
-function eliminar_candidato(valor){
+function eliminar_candidato(valor,valor2){
 
 	$.ajax({
 		url:base_url+"elecciones_controller/eliminar_candidato",
 		type:"post",
-        data:{id:valor},
+        data:{id:valor,id_eleccion:valor2},
 		success:function(respuesta) {
 				
 				
