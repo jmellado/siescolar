@@ -566,6 +566,65 @@ class Elecciones_model extends CI_Model {
        	}
     }
 
+    //****** 3 Funciones Para Poder Imprimir El Listado De Votantes.****
+    public function cursos_votantes_eleccion($id_eleccion){
+
+
+		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
+
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados.nombre_grado', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->group_by("listado_votantes.id_curso");  
+
+		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
+		$this->db->join('cursos', 'listado_votantes.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_curso = grupos.id_grupo');
+
+		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,elecciones.nombre_eleccion,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('listado_votantes');
+
+		return $query->result_array();
+		
+	}
+
+
+	public function estudiantes_votantes_eleccion($id_eleccion,$id_curso){
+
+
+		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
+		$this->db->where('listado_votantes.id_curso',$id_curso);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.nombres', 'asc'); 
+
+		$this->db->join('personas', 'listado_votantes.id_estudiante = personas.id_persona');
+
+		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,listado_votantes.codigo_voto,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		
+		$query = $this->db->get('listado_votantes');
+
+		return $query->result_array();
+		
+	}
+
+
+	public function datos_institucion(){
+
+		$query = $this->db->get('datos_institucion');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+	//******Funciones Para Poder Imprimir El Listado De Votantes.****
+
 
     //****************************************************** FUNCIONES PARA LA VOTACION ***************************************************
 

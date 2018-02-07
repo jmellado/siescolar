@@ -84,11 +84,12 @@
 								<th><i class='fa fa-check-square'></i>&nbsp;Elección</th>
 								<th></th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<td colspan='4'></td>
+								<td colspan='5'></td>
 							</tr>
 						</tfoot>
 						<tbody>

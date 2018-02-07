@@ -95,7 +95,7 @@ function inicio(){
     });
 
 
-    $("body").on("click","#lista_votantes button",function(event){
+    $("body").on("click","#lista_votantes .btn-eliminar",function(event){
 		event.preventDefault();
 		id_eleccionsele = $(this).attr("value");
 		
@@ -112,6 +112,14 @@ function inicio(){
 		$("#modal_cursos_votantes").modal();
 		id_eleccionsele = $(this).attr("href");
 		mostrarcursos_votantes(id_eleccionsele);
+	});
+
+
+	$("body").on("click","#lista_votantes .btn-imprimir",function(event){
+		event.preventDefault();
+		id_eleccionsele = $(this).attr("value");
+		
+		window.open(base_url+'elecciones_controller/generar_listadovotantes'+'?id_eleccion='+id_eleccionsele, '_blank');
 	});
 
 
@@ -174,13 +182,13 @@ function mostrarvotantes(valor,pagina,cantidad){
 				if (registros.votantes.length > 0) {
 
 					for (var i = 0; i < registros.votantes.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.votantes[i].id_eleccion+"</td><td>"+registros.votantes[i].nombre_eleccion+"</td><td style='display:none'>"+registros.votantes[i].descripcion+"</td><td><a class='btn btn-success' href="+registros.votantes[i].id_eleccion+" title='Ver Cursos Asociados'><i class='fa fa-th-large'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.votantes[i].id_eleccion+" title='Eliminar Elección'><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.votantes[i].id_eleccion+"</td><td>"+registros.votantes[i].nombre_eleccion+"</td><td style='display:none'>"+registros.votantes[i].descripcion+"</td><td><a class='btn btn-success' href="+registros.votantes[i].id_eleccion+" title='Ver Cursos Asociados'><i class='fa fa-th-large'></i></a></td><td><button type='button' class='btn btn-warning btn-imprimir' value="+registros.votantes[i].id_eleccion+" title='Imprimir Listado De Votantes De La Elección'><i class='fa fa-print'></i></button></td><td><button type='button' class='btn btn-danger btn-eliminar' value="+registros.votantes[i].id_eleccion+" title='Eliminar Elección'><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_votantes tbody").html(html);
 				}
 				else{
-					html ="<tr><td colspan='4'><p style='text-align:center'>No Hay Elecciones Con Votantes..</p></td></tr>";
+					html ="<tr><td colspan='5'><p style='text-align:center'>No Hay Elecciones Con Votantes..</p></td></tr>";
 					$("#lista_votantes tbody").html(html);
 				}
 
