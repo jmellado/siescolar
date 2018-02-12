@@ -28,8 +28,7 @@ class Grados_model extends CI_Model {
 	public function buscar_grado($id,$inicio = FALSE,$cantidad = FALSE){
 
 		$this->db->like('grados.nombre_grado',$id,'after');
-		$this->db->or_like('grados.ciclo_grado',$id,'after');
-		$this->db->or_like('grados.jornada',$id,'after');
+		$this->db->or_like('niveles_educacion.nombre_nivel',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('grados.estado_grado',$id,'after');
 
@@ -38,7 +37,8 @@ class Grados_model extends CI_Model {
 		}
 
 		$this->db->join('anos_lectivos', 'grados.ano_lectivo = anos_lectivos.id_ano_lectivo');
-		$this->db->select('grados.id_grado,grados.nombre_grado,grados.ciclo_grado,grados.jornada,grados.ano_lectivo,grados.estado_grado,anos_lectivos.nombre_ano_lectivo');
+		$this->db->join('niveles_educacion', 'grados.nivel_educacion = niveles_educacion.id_nivel');
+		$this->db->select('grados.id_grado,grados.nombre_grado,grados.nivel_educacion,grados.ano_lectivo,grados.estado_grado,anos_lectivos.nombre_ano_lectivo,niveles_educacion.nombre_nivel');
 		
 		$query = $this->db->get('grados');
 
@@ -118,7 +118,19 @@ class Grados_model extends CI_Model {
 	}
 
 
+	public function llenar_niveles(){
 
+		$query = $this->db->get('niveles_educacion');
+		return $query->result();
+	}
+
+
+	public function llenar_gradoseducacion($id_nivel){
+
+		$this->db->where('nivel_educacion',$id_nivel);
+		$query = $this->db->get('grados_educacion');
+		return $query->result();
+	}
 
 
 

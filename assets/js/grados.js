@@ -3,7 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	mostrargrados("",1,5);
-	//llenarcombo_anos_lectivos();
+	llenarcombo_niveles_educacion();
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_grados").submit(function (event) {
@@ -21,26 +21,27 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_grados")[0].reset();
-
+						llenarcombo_niveles_educacion("","");
+						llenarcombo_grados_educacion("","");
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
-					else if(respuesta==="grado ya existe"){
+					else if(respuesta==="gradoyaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Grado Ya Registrado.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrargrados("",1,5);
@@ -90,7 +91,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_grado").val();
     	valorcantidad = $("#cantidad_grado").val();
-		mostrargrados(buscar,numero_pagina,valorcantidad);
+
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrargrados(buscar,numero_pagina,valorcantidad);
+		}
 
 
     });
@@ -99,7 +104,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Grado.?")){
 			eliminar_grado(idsele);
 
 		}
@@ -110,19 +115,17 @@ function inicio(){
 		event.preventDefault();
 		$("#modal_actualizar_grado").modal();
 		id_gradosele = $(this).attr("href");
-		nombre_gradosele = $(this).parent().parent().children("td:eq(1)").text();
-		ciclo_gradosele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		jornadasele = $(this).parent().parent().children("td:eq(3)").text();
-		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
-		estado_gradosele = $(this).parent().parent().children("td:eq(6)").text();
+		nombre_gradosele = $(this).parent().parent().children("td:eq(2)").text();
+		nivel_educacionsele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		ano_lectivosele = $(this).parent().parent().children("td:eq(5)").text();
+		estado_gradosele = $(this).parent().parent().children("td:eq(7)").text();
 		
 		//alert(municipio_expedicionsele);
 
-		//llenarcombo_municipios(departamento_expedicionsele);
+		llenarcombo_grados_educacion(nivel_educacionsele,nombre_gradosele);
 		$("#id_gradosele").val(id_gradosele);
         $("#nombre_gradosele").val(nombre_gradosele);
-        $("#ciclo_gradosele").val(ciclo_gradosele);
-        $("#jornadasele").val(jornadasele);
+        $("#nivel_educacionsele").val(nivel_educacionsele);
         $("#ano_lectivosele").val(ano_lectivosele);
         $("#estado_gradosele").val(estado_gradosele);
         
@@ -134,21 +137,41 @@ function inicio(){
     $("#btn_actualizar_grado").click(function(event){
 
     	if($("#form_grados_actualizar").valid()==true){
-       	actualizar_grado();
-       	//bloquear_cajas_texto();
+	       	actualizar_grado();
+	       	//bloquear_cajas_texto();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_grados_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+       	else{
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_grados_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
     });
 
 
+    $("#nivel_educacion").change(function(){
+    	id_nivel = $(this).val();
+    	llenarcombo_grados_educacion(id_nivel,null);
+    });
 
 
+    $("#nivel_educacionsele").change(function(){
+    	id_nivel = $(this).val();
+    	llenarcombo_grados_educacion(id_nivel,null);
+    });
+
+
+    $("#modal_agregar_grado").on('hidden.bs.modal', function () {
+        $("#form_grados")[0].reset();
+        $("#form_grados").valid()==true;
+    });
+
+
+    $("#modal_actualizar_grado").on('hidden.bs.modal', function () {
+        $("#form_grados_actualizar")[0].reset();
+        $("#form_grados_actualizar").valid()==true;
+    });
 
 
 	$("#form_grados").validate({
@@ -162,16 +185,9 @@ function inicio(){
 
 			},
 
-			ciclo_grado:{
+			nivel_educacion:{
 				required: true,
-				maxlength: 45,
-				//lettersonly: true	
-
-			},
-
-			jornada:{
-				required: true,
-				maxlength: 30,
+				maxlength: 45
 				//lettersonly: true	
 
 			},
@@ -206,16 +222,9 @@ function inicio(){
 
 			},
 
-			ciclo_grado:{
+			nivel_educacion:{
 				required: true,
-				maxlength: 45,
-				//lettersonly: true	
-
-			},
-
-			jornada:{
-				required: true,
-				maxlength: 30,
+				maxlength: 45
 				//lettersonly: true	
 
 			},
@@ -258,11 +267,19 @@ function mostrargrados(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.grados.length; i++) {
-					html +="<tr><td>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td>"+registros.grados[i].ciclo_grado+"</td><td>"+registros.grados[i].jornada+"</td><td style='display:none'>"+registros.grados[i].ano_lectivo+"</td><td>"+registros.grados[i].nombre_ano_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_grados tbody").html(html);
+
+				if (registros.grados.length > 0) {
+
+					for (var i = 0; i < registros.grados.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.grados[i].id_grado+"</td><td>"+registros.grados[i].nombre_grado+"</td><td style='display:none'>"+registros.grados[i].nivel_educacion+"</td><td>"+registros.grados[i].nombre_nivel+"</td><td style='display:none'>"+registros.grados[i].ano_lectivo+"</td><td>"+registros.grados[i].nombre_ano_lectivo+"</td><td>"+registros.grados[i].estado_grado+"</td><td><a class='btn btn-success' href="+registros.grados[i].id_grado+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.grados[i].id_grado+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_grados tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='7'><p style='text-align:center'>No Hay Grados Registrados..</p></td></tr>";
+					$("#lista_grados tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -363,8 +380,27 @@ function actualizar_grado(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_grado").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Grado Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Grado No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="gradoyaexiste"){
+					
+					toastr.warning('Grado Ya Registrado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_grados_actualizar")[0].reset();
 
 				mostrargrados("",1,5);
@@ -392,6 +428,58 @@ function llenarcombo_anos_lectivos(){
 				};
 				
 				$("#ano_lectivo1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_niveles_educacion(){
+
+	$.ajax({
+		url:base_url+"grados_controller/llenarcombo_niveles_educacion",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_nivel"]+">"+registros[i]["nombre_nivel"]+"</option>";
+				};
+				
+				$("#niveles_educacion1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_grados_educacion(valor,valor2){
+
+	$.ajax({
+		url:base_url+"grados_controller/llenarcombo_grados_educacion",
+		type:"post",
+		data:{id_nivel:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if (registros[i]["nombre_grado"] == valor2) {
+
+						html +="<option value="+registros[i]["nombre_grado"]+" selected>"+registros[i]["nombre_grado"]+"</option>";
+					}
+					else{
+
+						html +="<option value="+registros[i]["nombre_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
+					}
+					
+				};
+				
+				$("#grados_educacion1 select").html(html);
 		}
 
 	});

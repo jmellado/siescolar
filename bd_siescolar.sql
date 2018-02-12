@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-01-2018 a las 18:56:31
+-- Tiempo de generación: 12-02-2018 a las 21:34:54
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-01-25 17:51:59');
+(12345, '2018-02-12 20:34:19');
 
 -- --------------------------------------------------------
 
@@ -415,11 +415,42 @@ DELIMITER ;
 CREATE TABLE `grados` (
   `id_grado` int(11) NOT NULL,
   `nombre_grado` varchar(30) NOT NULL,
-  `ciclo_grado` varchar(45) NOT NULL,
-  `jornada` varchar(30) NOT NULL,
+  `nivel_educacion` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `estado_grado` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `grados_educacion`
+--
+
+CREATE TABLE `grados_educacion` (
+  `id_grado_educacion` int(11) NOT NULL,
+  `nombre_grado` varchar(45) NOT NULL,
+  `nivel_educacion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `grados_educacion`
+--
+
+INSERT INTO `grados_educacion` (`id_grado_educacion`, `nombre_grado`, `nivel_educacion`) VALUES
+(1, 'Primero', 2),
+(2, 'Segundo', 2),
+(3, 'Tercero', 2),
+(4, 'Cuarto', 2),
+(5, 'Quinto', 2),
+(6, 'Sexto', 3),
+(7, 'Séptimo', 3),
+(8, 'Octavo', 3),
+(9, 'Noveno', 3),
+(10, 'Décimo', 4),
+(11, 'Undécimo', 4),
+(12, 'Prejardín', 1),
+(13, 'Jardín', 1),
+(14, 'Transición', 1);
 
 -- --------------------------------------------------------
 
@@ -1699,6 +1730,27 @@ INSERT INTO `municipios` (`id_municipio`, `nombre_municipio`, `id_departamento`)
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `niveles_educacion`
+--
+
+CREATE TABLE `niveles_educacion` (
+  `id_nivel` int(11) NOT NULL,
+  `nombre_nivel` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `niveles_educacion`
+--
+
+INSERT INTO `niveles_educacion` (`id_nivel`, `nombre_nivel`) VALUES
+(1, 'Preescolar'),
+(2, 'Básica Primaria'),
+(3, 'Básica Secundaria'),
+(4, 'Media');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `notas`
 --
 
@@ -2064,6 +2116,13 @@ ALTER TABLE `grados`
   ADD PRIMARY KEY (`id_grado`);
 
 --
+-- Indices de la tabla `grados_educacion`
+--
+ALTER TABLE `grados_educacion`
+  ADD PRIMARY KEY (`id_grado_educacion`),
+  ADD KEY `fk_niveles_idx` (`nivel_educacion`);
+
+--
 -- Indices de la tabla `grupos`
 --
 ALTER TABLE `grupos`
@@ -2111,6 +2170,12 @@ ALTER TABLE `matriculas`
 ALTER TABLE `municipios`
   ADD PRIMARY KEY (`id_municipio`),
   ADD KEY `fk_municpios_departamentos_idx` (`id_departamento`);
+
+--
+-- Indices de la tabla `niveles_educacion`
+--
+ALTER TABLE `niveles_educacion`
+  ADD PRIMARY KEY (`id_nivel`);
 
 --
 -- Indices de la tabla `notas`
@@ -2266,6 +2331,11 @@ ALTER TABLE `estudiantes_padres`
 ALTER TABLE `grados`
   MODIFY `id_grado` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `grados_educacion`
+--
+ALTER TABLE `grados_educacion`
+  MODIFY `id_grado_educacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
@@ -2300,6 +2370,11 @@ ALTER TABLE `matriculas`
 --
 ALTER TABLE `municipios`
   MODIFY `id_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1121;
+--
+-- AUTO_INCREMENT de la tabla `niveles_educacion`
+--
+ALTER TABLE `niveles_educacion`
+  MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
@@ -2382,6 +2457,12 @@ ALTER TABLE `cursos`
   ADD CONSTRAINT `fk_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_grupos` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_salones` FOREIGN KEY (`id_salon`) REFERENCES `salones` (`id_salon`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `grados_educacion`
+--
+ALTER TABLE `grados_educacion`
+  ADD CONSTRAINT `fk_niveles` FOREIGN KEY (`nivel_educacion`) REFERENCES `niveles_educacion` (`id_nivel`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `listado_votantes`

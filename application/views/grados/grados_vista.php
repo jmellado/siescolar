@@ -34,17 +34,6 @@
     		</div>	
     	</div>
 
-        <!--<div class="col-lg-6">
-            <form class="form-inline" role="form">
-				<div class="form-group">
-					<label class="sr-only" for="buscar_grado">Email</label>
-					<input type="text" class="form-control" id="buscar_grado" name="buscar_grado"
-					           placeholder="Introduce tu nombre">
-				</div>
-
-				<button type="submit" name="btn_buscar_grado" id="btn_buscar_grado" class="btn btn-primary">Buscar</button>
-			</form></br></br>
-        </div>-->
     </div>
 
     <div class="row">
@@ -68,15 +57,19 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
-									<th><i class='fa fa-repeat'></i>&nbsp;Ciclo</th>
-									<th><i class='fa fa-calendar-o'></i>&nbsp;Jornada</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre Del Grado</th>
+									<th><i class='fa fa-level-up'></i>&nbsp;Nivel De Educación</th>
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='7'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>
@@ -113,34 +106,25 @@
 
 		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>grados_controller/insertar" name="" method="post" id="form_grados">
 
-		        	<div class="form-group">
-						<label class="control-label col-sm-3" for="nombre_grado">NOMBRE</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="nombre_grado" name="nombre_grado"
-								 placeholder="Nombre">
-						</div>		 
-					</div>
-
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="ciclo_grado">CICLO</label>
+						<label class="control-label col-sm-3" for="nivel_educacion">NIVEL DE EDUCACIÓN</label>
 						<div class="col-sm-7">
-							<select class="form-control" id="ciclo_grado" name="ciclo_grado">
-									<option value="Preescolar">Preescolar</option>
-									<option value="Básica primaria">Básica-primaria</option>
-									<option value="Básica secundaria">Básica-secundaria</option>
-									<option value="Media">Media</option>
-							</select>
+							<div id="niveles_educacion1">
+								<select class="form-control" id="nivel_educacion" name="nivel_educacion">
+									
+								</select>
+							</div>
 						</div>	
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
+						<label class="control-label col-sm-3" for="nombre_grado">NOMBRE DEL GRADO</label>
 						<div class="col-sm-7">
-							<select class="form-control" id="jornada" name="jornada">
-									<option value="Mañana">Mañana</option>
-									<option value="Tarde">Tarde</option>
-									<option value="Noche">Noche</option>
-							</select>
+							<div id="grados_educacion1">
+								<select class="form-control" id="nombre_grado" name="nombre_grado">
+									
+								</select>
+							</div>
 						</div>	
 					</div>
 
@@ -202,35 +186,26 @@
 		        <form class="form-horizontal" role="form" id="form_grados_actualizar">
 										    
 					<input type="hidden" class="form-control" id="id_gradosele" name="id_grado">
-					
-		        	<div class="form-group">
-						<label class="control-label col-sm-3" for="nombre_grado">NOMBRE</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="nombre_gradosele" name="nombre_grado"
-								 placeholder="Nombre">
-						</div>		 
-					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="ciclo_grado">CICLO</label>
+						<label class="control-label col-sm-3" for="nivel_educacion">NIVEL DE EDUCACIÓN</label>
 						<div class="col-sm-7">
-							<select class="form-control" id="ciclo_gradosele" name="ciclo_grado">
-									<option value="Preescolar">Preescolar</option>
-									<option value="Básica primaria">Básica-primaria</option>
-									<option value="Básica secundaria">Básica-secundaria</option>
-									<option value="Media">Media</option>
-							</select>
+							<div id="niveles_educacion1">
+								<select class="form-control" id="nivel_educacionsele" name="nivel_educacion">
+									
+								</select>
+							</div>
 						</div>	
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
+						<label class="control-label col-sm-3" for="nombre_grado">NOMBRE DEL GRADO</label>
 						<div class="col-sm-7">
-							<select class="form-control" id="jornadasele" name="jornada">
-									<option value="Mañana">Mañana</option>
-									<option value="Tarde">Tarde</option>
-									<option value="Noche">Noche</option>
-							</select>
+							<div id="grados_educacion1">
+								<select class="form-control" id="nombre_gradosele" name="nombre_grado">
+									
+								</select>
+							</div>
 						</div>	
 					</div>
 

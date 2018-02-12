@@ -24,8 +24,7 @@ class Grados_controller extends CI_Controller {
 	public function insertar(){
 
         $this->form_validation->set_rules('nombre_grado', 'nombre', 'required|alpha_spaces');
-        $this->form_validation->set_rules('ciclo_grado', 'ciclo', 'required|alpha_spaces');
-        $this->form_validation->set_rules('jornada', 'jornada', 'required|alpha_spaces');
+        $this->form_validation->set_rules('nivel_educacion', 'nivel de educación', 'required|alpha_spaces');
         $this->form_validation->set_rules('ano_lectivo', 'año lectivo', 'required|min_length[1]|max_length[4]');
         $this->form_validation->set_rules('estado_grado', 'estado', 'required|alpha_spaces');
 
@@ -37,14 +36,13 @@ class Grados_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de grados + 1 
-        	 $ultimo_id = $this->grados_model->obtener_ultimo_id();
+        	$ultimo_id = $this->grados_model->obtener_ultimo_id();
 
-        	  //array para insertar en la tabla grados----------
+        	//array para insertar en la tabla grados----------
         	$grado = array(
         	'id_grado' =>$ultimo_id,	
 			'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
-			'ciclo_grado' =>$this->input->post('ciclo_grado'),
-			'jornada' =>$this->input->post('jornada'),
+			'nivel_educacion' =>$this->input->post('nivel_educacion'),
 			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_grado' =>$this->input->post('estado_grado'));
 
@@ -64,7 +62,7 @@ class Grados_controller extends CI_Controller {
 			}
 			else{
 
-				echo "grado ya existe";
+				echo "gradoyaexiste";
 			}
 
         }
@@ -104,10 +102,10 @@ class Grados_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Grado Eliminado Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -122,8 +120,7 @@ class Grados_controller extends CI_Controller {
         $grado = array(
         'id_grado' =>$this->input->post('id_grado'),	
 		'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
-		'ciclo_grado' =>$this->input->post('ciclo_grado'),
-		'jornada' =>$this->input->post('jornada'),
+		'nivel_educacion' =>$this->input->post('nivel_educacion'),
 		'ano_lectivo' =>$this->input->post('ano_lectivo'),
 		'estado_grado' =>$this->input->post('estado_grado'));
 
@@ -139,11 +136,11 @@ class Grados_controller extends CI_Controller {
 
 				 if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	             }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	             }
 	        }
@@ -155,18 +152,18 @@ class Grados_controller extends CI_Controller {
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 	        		}
 
 
 
 	        	}else{
 
-	        		echo "grado ya existe";
+	        		echo "gradoyaexiste";
 
 	        	}
 
@@ -182,6 +179,21 @@ class Grados_controller extends CI_Controller {
 
 
 
+    }
+
+
+    public function llenarcombo_niveles_educacion(){
+
+    	$consulta = $this->grados_model->llenar_niveles();
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_grados_educacion(){
+
+    	$id_nivel = $this->input->post('id_nivel');
+    	$consulta = $this->grados_model->llenar_gradoseducacion($id_nivel);
+    	echo json_encode($consulta);
     }
 
     
