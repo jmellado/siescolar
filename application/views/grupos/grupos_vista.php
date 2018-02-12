@@ -57,13 +57,18 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre Del Grupo</th>
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='6'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>

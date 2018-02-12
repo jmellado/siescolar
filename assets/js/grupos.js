@@ -21,26 +21,26 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_grupos")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
-					else if(respuesta==="grupo ya existe"){
+					else if(respuesta==="grupoyaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Grupo Ya Registrado.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrargrupos("",1,5);
@@ -90,8 +90,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_grupo").val();
     	valorcantidad = $("#cantidad_grupo").val();
-		mostrargrupos(buscar,numero_pagina,valorcantidad);
 
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrargrupos(buscar,numero_pagina,valorcantidad);
+		}
 
     });
 
@@ -99,7 +102,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Grupo.?")){
 			eliminar_grupo(idsele);
 
 		}
@@ -110,9 +113,9 @@ function inicio(){
 		event.preventDefault();
 		$("#modal_actualizar_grupo").modal();
 		id_gruposele = $(this).attr("href");
-		nombre_gruposele = $(this).parent().parent().children("td:eq(1)").text();
-		ano_lectivosele = $(this).parent().parent().children("td:eq(2)").text();
-		estado_gruposele = $(this).parent().parent().children("td:eq(4)").text();
+		nombre_gruposele = $(this).parent().parent().children("td:eq(2)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
+		estado_gruposele = $(this).parent().parent().children("td:eq(5)").text();
 		
 		//alert(municipio_expedicionsele);
 
@@ -130,20 +133,29 @@ function inicio(){
     $("#btn_actualizar_grupo").click(function(event){
 
     	if($("#form_grupos_actualizar").valid()==true){
-       	actualizar_grupo();
-       	//bloquear_cajas_texto();
+       		actualizar_grupo();
+       		//bloquear_cajas_texto();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_grupos_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+       	else{
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_grupos_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
     });
 
 
+    $("#modal_agregar_grupo").on('hidden.bs.modal', function () {
+        $("#form_grupos")[0].reset();
+        $("#form_grupos").valid()==true;
+    });
 
+
+    $("#modal_actualizar_grupo").on('hidden.bs.modal', function () {
+        $("#form_grupos_actualizar")[0].reset();
+        $("#form_grupos_actualizar").valid()==true;
+    });
 
 
 
@@ -226,11 +238,19 @@ function mostrargrupos(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.grupos.length; i++) {
-					html +="<tr><td>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td style='display:none'>"+registros.grupos[i].ano_lectivo+"</td><td>"+registros.grupos[i].nombre_ano_lectivo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_grupos tbody").html(html);
+
+				if (registros.grupos.length > 0) {
+
+					for (var i = 0; i < registros.grupos.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.grupos[i].id_grupo+"</td><td>"+registros.grupos[i].nombre_grupo+"</td><td style='display:none'>"+registros.grupos[i].ano_lectivo+"</td><td>"+registros.grupos[i].nombre_ano_lectivo+"</td><td>"+registros.grupos[i].estado_grupo+"</td><td><a class='btn btn-success' href="+registros.grupos[i].id_grupo+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.grupos[i].id_grupo+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_grupos tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='6'><p style='text-align:center'>No Hay Grupos Registrados..</p></td></tr>";
+					$("#lista_grupos tbody").html(html);
+				}	
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -331,8 +351,27 @@ function actualizar_grupo(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_grupo").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Grupo Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Grupo No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="grupoyaexiste"){
+					
+					toastr.warning('Grupo Ya Registrado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_grupos_actualizar")[0].reset();
 
 				mostrargrupos("",1,5);

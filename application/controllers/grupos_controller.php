@@ -35,9 +35,9 @@ class Grupos_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de grupos + 1 
-        	 $ultimo_id = $this->grupos_model->obtener_ultimo_id();
+        	$ultimo_id = $this->grupos_model->obtener_ultimo_id();
 
-        	  //array para insertar en la tabla grados----------
+        	//array para insertar en la tabla grados----------
         	$grupo = array(
         	'id_grupo' =>$ultimo_id,	
 			'nombre_grupo' =>ucwords($this->input->post('nombre_grupo')),
@@ -60,7 +60,7 @@ class Grupos_controller extends CI_Controller {
 			}
 			else{
 
-				echo "grupo ya existe";
+				echo "grupoyaexiste";
 			}
 
         }
@@ -100,10 +100,10 @@ class Grupos_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Grupo Eliminado Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -133,11 +133,11 @@ class Grupos_controller extends CI_Controller {
 
 				 if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	             }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	             }
 	        }
@@ -149,16 +149,16 @@ class Grupos_controller extends CI_Controller {
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 	        		}
 
 
 	        	}else{
 
-	        		echo "grupo ya existe";
+	        		echo "grupoyaexiste";
 	        	}
 
 				
