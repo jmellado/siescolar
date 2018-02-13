@@ -21,27 +21,25 @@ function inicio(){
 					
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_profesores")[0].reset();
-
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 							
-
 					}
-					else if(respuesta==="profesor ya existe"){
+					else if(respuesta==="profesoryaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Profesor Ya Registrado.', 'Success Alert', {timeOut: 5000});
 						
 							
-
 					}
 					else{
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrarprofesores("",1,5);
@@ -52,7 +50,7 @@ function inicio(){
 
 			});
 		}else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 5000});
 			//alert($("#form_profesores").validate().numberOfInvalids()+"errores");
 		}
 
@@ -89,8 +87,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_profesor").val();
     	valorcantidad = $("#cantidad_profesor").val();
-		mostrarprofesores(buscar,numero_pagina,valorcantidad);
 
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrarprofesores(buscar,numero_pagina,valorcantidad);
+		}	
 
     });
 
@@ -98,7 +99,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Profesor.?")){
 			eliminar_profesor(idsele);
 
 		}
@@ -120,11 +121,12 @@ function inicio(){
 		telefonosele = $(this).parent().parent().children("td:eq(9)").text();
 		correosele = $(this).parent().parent().children("td:eq(10)").text();
 		direccionsele = $(this).parent().parent().children("td:eq(11)").text();
-		perfilsele = $(this).parent().parent().children("td:eq(12)").text();
-		escalafonsele = $(this).parent().parent().children("td:eq(13)").text();
-		fecha_iniciosele = $(this).parent().parent().children("td:eq(14)").text();
-		tipo_contratosele = $(this).parent().parent().children("td:eq(15)").text();
-		//alert(municipio_expedicionsele);
+		barriosele = $(this).parent().parent().children("td:eq(12)").text();
+		perfilsele = $(this).parent().parent().children("td:eq(13)").text();
+		escalafonsele = $(this).parent().parent().children("td:eq(14)").text();
+		fecha_iniciosele = $(this).parent().parent().children("td:eq(15)").text();
+		tipo_contratosele = $(this).parent().parent().children("td:eq(16)").text();
+		//alert(barriosele);
 
 		//llenarcombo_municipios(departamento_expedicionsele);
 		$("#id_personasele").val(id_personasele);
@@ -138,6 +140,7 @@ function inicio(){
         $("#telefonosele").val(telefonosele);
         $("#correosele").val(correosele);
         $("#direccionsele").val(direccionsele);
+        $("#barriosele").val(barriosele);
         $("#perfilsele").val(perfilsele);
         $("#escalafonsele").val(escalafonsele);
         $("#fecha_iniciosele").val(fecha_iniciosele);
@@ -154,11 +157,23 @@ function inicio(){
        	
         }
         else{
-			alert("formulario incorrecto");
-			alert($("#form_profesores_actualizar").validate().numberOfInvalids()+"errores");
+			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_profesores_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
+    });
+
+
+   $("#modal_agregar_profesor").on('hidden.bs.modal', function () {
+        $("#form_profesores")[0].reset();
+        $("#form_profesores").valid()==true;
+    });
+
+
+    $("#modal_actualizar_profesor").on('hidden.bs.modal', function () {
+        $("#form_profesores_actualizar")[0].reset();
+        $("#form_profesores_actualizar").valid()==true;
     });
 
    	
@@ -227,6 +242,12 @@ function inicio(){
 			},
 
 			direccion:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio:{
 				required: true,
 				maxlength: 50	
 
@@ -332,6 +353,12 @@ function inicio(){
 
 			},
 
+			barrio:{
+				required: true,
+				maxlength: 50	
+
+			},
+
 			perfil:{
 				required: true,
 				maxlength: 40	
@@ -389,11 +416,19 @@ function mostrarprofesores(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.profesores.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.profesores[i].id_persona+"</td><td>"+registros.profesores[i].identificacion+"</td><td style='display:none'>"+registros.profesores[i].tipo_id+"</td><td>"+registros.profesores[i].nombres+"</td><td>"+registros.profesores[i].apellido1+"</td><td>"+registros.profesores[i].apellido2+"</td><td>"+registros.profesores[i].sexo+"</td><td>"+registros.profesores[i].fecha_nacimiento+"</td><td>"+registros.profesores[i].telefono+"</td><td>"+registros.profesores[i].email+"</td><td>"+registros.profesores[i].direccion+"</td><td style='display:none'>"+registros.profesores[i].perfil+"</td><td style='display:none'>"+registros.profesores[i].escalafon+"</td><td style='display:none'>"+registros.profesores[i].fecha_inicio+"</td><td style='display:none'>"+registros.profesores[i].tipo_contrato+"</td><td><a class='btn btn-success' href="+registros.profesores[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.profesores[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_profesores tbody").html(html);
+
+				if (registros.profesores.length > 0) {
+
+					for (var i = 0; i < registros.profesores.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.profesores[i].id_persona+"</td><td>"+registros.profesores[i].identificacion+"</td><td style='display:none'>"+registros.profesores[i].tipo_id+"</td><td>"+registros.profesores[i].nombres+"</td><td>"+registros.profesores[i].apellido1+"</td><td>"+registros.profesores[i].apellido2+"</td><td>"+registros.profesores[i].sexo+"</td><td>"+registros.profesores[i].fecha_nacimiento+"</td><td>"+registros.profesores[i].telefono+"</td><td>"+registros.profesores[i].email+"</td><td>"+registros.profesores[i].direccion+"</td><td style='display:none'>"+registros.profesores[i].barrio+"</td><td style='display:none'>"+registros.profesores[i].perfil+"</td><td style='display:none'>"+registros.profesores[i].escalafon+"</td><td style='display:none'>"+registros.profesores[i].fecha_inicio+"</td><td style='display:none'>"+registros.profesores[i].tipo_contrato+"</td><td><a class='btn btn-success' href="+registros.profesores[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.profesores[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_profesores tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='12'><p style='text-align:center'>No Hay Profesores Registrados..</p></td></tr>";
+					$("#lista_profesores tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -494,8 +529,27 @@ function actualizar_profesor(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_profesor").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Información Actualizada Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Información No Actualizada.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="profesoryaexiste"){
+					
+					toastr.warning('Profesor Ya Registrado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_profesores_actualizar")[0].reset();
 
 				mostrarprofesores("",1,5);

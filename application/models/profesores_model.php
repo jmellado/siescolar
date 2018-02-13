@@ -2,11 +2,23 @@
 
 class Profesores_model extends CI_Model {
 
-	public function insertar_profesor($profesor,$profesor2,$profesor3){
-		if ($this->db->insert('personas', $profesor) && $this->db->insert('profesores', $profesor2) && $this->db->insert('usuarios', $profesor3)) 
-			return true;
-		else
+	public function insertar_profesor($profesor,$profesor2,$usuario){
+		
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+		$this->db->insert('personas', $profesor);
+		$this->db->insert('profesores', $profesor2);
+		$this->db->insert('usuarios', $usuario);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
 			return false;
+		}
+		else{
+
+			return true;
+		}
 	}
 
 	public function validar_existencia($id){
@@ -27,11 +39,14 @@ class Profesores_model extends CI_Model {
 
 		$this->db->like('nombres',$id,'after');
 		$this->db->or_like('apellido1',$id,'after');
-		$this->db->or_like('apellido2',$id);
-		$this->db->or_like('identificacion',$id);
+		$this->db->or_like('apellido2',$id,'after');
+		$this->db->or_like('identificacion',$id,'after');
+		$this->db->or_like('sexo',$id,'after');
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
+
 		$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');  //nada mas add is line
 		$query = $this->db->get('personas');
 
@@ -44,51 +59,78 @@ class Profesores_model extends CI_Model {
 
 	}
 
-	public function modificar_profesor($id,$profesor){
+	public function modificar_profesor($id_persona,$profesor,$profesor2,$usuario){
 
-		$this->db->where('id_persona',$id);
+		$this->db->trans_start();
+		$this->db->where('id_persona',$id_persona);
+		$this->db->update('personas', $profesor);
 
-		if ($this->db->update('personas', $profesor))
+		$this->db->where('id_persona',$id_persona);
+		$this->db->update('profesores', $profesor2);
+
+		$this->db->where('id_persona',$id_persona);
+		$this->db->where('id_rol','3');
+		$this->db->update('usuarios', $usuario);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
 
 			return true;
-		else
-			return false;
+		}
+
 	}
 
-	public function modificar_profesor2($id,$profesor2){
+	public function eliminar_profesor($id_persona,$senal = FALSE){
 
-		$this->db->where('id_persona',$id);
+		if ($senal == "2") {
+			
+			$this->db->trans_start();
+	       	$this->db->where('id_persona',$id_persona);
+	       	$this->db->where('id_rol','3');
+			$this->db->delete('usuarios');
 
-		if ($this->db->update('profesores', $profesor2))
+			$this->db->where('id_persona',$id_persona);
+			$this->db->delete('profesores');
+			$this->db->trans_complete();
 
-			return true;
-		else
-			return false;
-	}
+			if ($this->db->trans_status() === FALSE){
 
-	public function modificar_profesor3($id,$profesor3){
+				return false;
+			}
+			else{
 
-		$this->db->where('id_persona',$id);
+				return true;
+			}
 
-		if ($this->db->update('usuarios', $profesor3))
+		}
+		else{
 
-			return true;
-		else
-			return false;
-	}
+	       	$this->db->trans_start();
+	       	$this->db->where('id_persona',$id_persona);
+	       	$this->db->where('id_rol','3');
+			$this->db->delete('usuarios');
 
-	public function eliminar_profesor($id){
+			$this->db->where('id_persona',$id_persona);
+			$this->db->delete('profesores');
 
-     	$this->db->where('id_persona',$id);
-		$consulta = $this->db->delete('usuarios');
-       	if($consulta==true){
+			$this->db->where('id_persona',$id_persona);
+			$this->db->delete('personas');
+			$this->db->trans_complete();
 
-           return true;
-       	}
-       	else{
+			if ($this->db->trans_status() === FALSE){
 
-           return false;
-       	}
+				return false;
+			}
+			else{
+
+				return true;
+			}
+		}
+
     }
 
    
@@ -115,6 +157,22 @@ class Profesores_model extends CI_Model {
 		}
 		else{
 			return false;
+		}
+
+	}
+
+
+	public function EsAcudiente($id){
+
+		$this->db->where('personas.id_persona',$id);
+		$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
 		}
 
 	}
