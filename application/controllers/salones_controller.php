@@ -68,7 +68,7 @@ class Salones_controller extends CI_Controller {
 			}
 			else{
 
-				echo "salon ya existe";
+				echo "salonyaexiste";
 			}
 
         }
@@ -108,10 +108,10 @@ class Salones_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Salón Eliminado Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -151,11 +151,11 @@ class Salones_controller extends CI_Controller {
 
 				if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	            }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	            }
 	         	
@@ -169,17 +169,17 @@ class Salones_controller extends CI_Controller {
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 	        		}
 	        		
 	        	}
 	        	else{
 
-	        		echo "salon ya existe";
+	        		echo "salonyaexiste";
 	        	}
 	
 			}    

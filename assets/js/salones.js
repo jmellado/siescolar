@@ -21,26 +21,26 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_salones")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
-					else if(respuesta==="salon ya existe"){
+					else if(respuesta==="salonyaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Salón Ya Registrado.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrarsalones("",1,5);
@@ -103,7 +103,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Salón.?")){
 			eliminar_salon(idsele);
 
 		}
@@ -114,10 +114,10 @@ function inicio(){
 		event.preventDefault();
 		$("#modal_actualizar_salon").modal();
 		id_salonsele = $(this).attr("href");
-		nombre_salonsele = $(this).parent().parent().children("td:eq(1)").text();
-		observacionsele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
-		estado_salonsele = $(this).parent().parent().children("td:eq(5)").text();
+		nombre_salonsele = $(this).parent().parent().children("td:eq(2)").text();
+		observacionsele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
+		estado_salonsele = $(this).parent().parent().children("td:eq(6)").text();
 		
 		$("#id_salonsele").val(id_salonsele);
         $("#nombre_salonsele").val(nombre_salonsele);
@@ -242,11 +242,19 @@ function mostrarsalones(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.salones.length; i++) {
-					html +="<tr><td>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_salones tbody").html(html);
+
+				if (registros.salones.length > 0) {
+
+					for (var i = 0; i < registros.salones.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.salones[i].id_salon+"</td><td>"+registros.salones[i].nombre_salon+"</td><td>"+registros.salones[i].observacion+"</td><td style='display:none'>"+registros.salones[i].ano_lectivo+"</td><td>"+registros.salones[i].nombre_ano_lectivo+"</td><td>"+registros.salones[i].estado_salon+"</td><td><a class='btn btn-success' href="+registros.salones[i].id_salon+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.salones[i].id_salon+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_salones tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='7'><p style='text-align:center'>No Hay Salones Registrados..</p></td></tr>";
+					$("#lista_salones tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -349,7 +357,26 @@ function actualizar_salon(){
 				//alert(respuesta);
 				$("#modal_actualizar_salon").modal('hide');
 				
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Salón Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Salón No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="salonyaexiste"){
+					
+					toastr.warning('Salón Ya Registrado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_salones_actualizar")[0].reset();
 
 				mostrarsalones("",1,5);

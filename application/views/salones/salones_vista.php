@@ -57,7 +57,7 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre Del Salón</th>
 									<th><i class='fa fa-eye'></i>&nbsp;Observaciones</th>
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
@@ -65,6 +65,11 @@
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='7'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>
@@ -113,7 +118,7 @@
 						<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="observacion" name="observacion"
-								 placeholder="observaciones">
+								 placeholder="Observaciones">
 						</div>		 
 					</div>
 
@@ -188,7 +193,7 @@
 						<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="observacionsele" name="observacion"
-								 placeholder="observaciones">
+								 placeholder="Observaciones">
 						</div>		 
 					</div>
 
