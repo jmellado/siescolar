@@ -19,7 +19,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><i class='fa fa-clipboard'></i>&nbsp;GESTIÓN DE MATRICULAS</h1>
+            <h1 class="page-header"><i class='fa fa-clipboard'></i>&nbsp;GESTIÓN DE MATRÍCULAS</h1>
         </div>
     </div>
 
@@ -68,19 +68,25 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha Matricula</th>
-									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año Lectivo</th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Identificación</th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido1</th>
+									
+									
+									<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificación</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres Y Apellidos</th>
 									<th><i class='fa fa-graduation-cap'></i>&nbsp;Grado</th>
 									<th><i class='fa fa-object-group'></i>&nbsp;Grupo</th>
 									<th><i class='fa fa-calendar-o'></i>&nbsp;Jornada</th>
-									<th><i class='fa fa-shield'></i>&nbsp;Estado Matricula</th>
+									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año Lectivo</th>
+									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha Matrícula</th>
+									<th><i class='fa fa-shield'></i>&nbsp;Estado Matrícula</th>
 									<th></th>
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='11'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>
@@ -254,7 +260,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR MATRICULAS</h4>
+        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR MATRÍCULAS</h4>
       </div>
       <div class="modal-body">
         
@@ -288,7 +294,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="jornada">JORNADA</label>
 						<div class="col-sm-4">
-							<select class="form-control" id="jornadaseleMT" name="jornada">
+							<select class="form-control" id="jornadaseleMT" name="jornada" disabled>
 									<option value="Mañana">Mañana</option>
 									<option value="Tarde">Tarde</option>
 									<option value="Noche">Noche</option>
@@ -300,8 +306,8 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="id_curso">CURSO</label>
 						<div class="col-sm-6">
-							<div id="curso1">
-								<select class="form-control" id="id_cursosele" name="id_curso">
+							<div id="curso_actualizar1">
+								<select class="form-control" id="id_cursosele" name="id_curso" disabled>
 												    
 								</select>
 							</div>

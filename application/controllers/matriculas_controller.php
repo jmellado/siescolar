@@ -161,7 +161,7 @@ class Matriculas_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "Eliminado Correctamente.";
+              	echo "Matrícula Eliminada Correctamente.";
           	}else{
               
               	echo "No Se Pudo Eliminar.";
@@ -212,7 +212,7 @@ class Matriculas_controller extends CI_Controller {
 
 	        if($respuesta==true){
 
-	        	echo "registro actualizado";
+	        	echo "registroactualizado";
 
 	        	//******************************eliminar materias********************************************
 				if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
@@ -240,7 +240,7 @@ class Matriculas_controller extends CI_Controller {
 
 	        }else{
 
-	        	echo "registro no se pudo actualizar";
+	        	echo "registronoactualizado";
 	        }
 
          
@@ -293,6 +293,16 @@ class Matriculas_controller extends CI_Controller {
     public function llenarcombo_acudientes(){
 
     	$consulta = $this->matriculas_model->llenar_acudientes();
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_cursos_actualizar(){
+
+    	$jornada = $this->input->post('jornada');
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+
+    	$consulta = $this->matriculas_model->llenar_cursos_actualizar($jornada,$ano_lectivo);
     	echo json_encode($consulta);
     }
 

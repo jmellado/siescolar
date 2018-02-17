@@ -35,6 +35,9 @@ class Matriculas_model extends CI_Model {
 		$this->db->or_like('matriculas.jornada',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 
+		$this->db->order_by('matriculas.ano_lectivo', 'desc');
+		$this->db->order_by('matriculas.fecha_matricula', 'asc');
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
@@ -304,7 +307,21 @@ class Matriculas_model extends CI_Model {
 	}
 
 	
+	public function llenar_cursos_actualizar($jornada,$ano_lectivo){
 
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+		
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('salones', 'cursos.id_salon = salones.id_salon');
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+
+		$query = $this->db->get('cursos');
+		return $query->result_array();
+
+	}
 
 
 }
