@@ -68,6 +68,11 @@
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='10'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>

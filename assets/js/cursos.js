@@ -26,38 +26,38 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_cursos")[0].reset();
 						//llenarcombo_salones();
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('Registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
 					else if(respuesta==="salon ya existe"){
 						
-						toastr.success('El Salon Seleccionado Ya Fue Asignado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('El Salon Seleccionado Ya Fue Asignado.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else if(respuesta==="gradogrupo ya existe"){
 						
-						toastr.success('El Grado y Grupo Seleccionados Ya Estan Registrados', 'Success Alert', {timeOut: 5000});
+						toastr.warning('El Grado y Grupo Seleccionados Ya Estan Registrados.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else if(respuesta==="director ya existe"){
 						
-						toastr.success('El Director Seleccionado Ya Tiene Un Curso Asignado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('El Director Seleccionado Ya Tiene Un Curso Asignado.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					bloquear_CampoAnoLectivo();
@@ -120,7 +120,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Curso.?")){
 			eliminar_curso(idsele);
 
 		}
@@ -164,11 +164,23 @@ function inicio(){
 
        	}
        	else{
-			alert("formulario incorrecto");
-			alert($("#form_cursos_actualizar").validate().numberOfInvalids()+"errores");
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_cursos_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
+    });
+
+
+    $("#modal_agregar_curso").on('hidden.bs.modal', function () {
+        $("#form_cursos")[0].reset();
+        $("#form_cursos").valid()==true;
+    });
+
+
+    $("#modal_actualizar_curso").on('hidden.bs.modal', function () {
+        $("#form_cursos_actualizar")[0].reset();
+        $("#form_cursos_actualizar").valid()==true;
     });
 
 
@@ -301,11 +313,19 @@ function mostrarcursos(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.cursos.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.cursos[i].id_curso+"</td><td style='display:none'>"+registros.cursos[i].id_grado+"</td><td style='display:none'>"+registros.cursos[i].id_grupo+"</td><td style='display:none'>"+registros.cursos[i].id_salon+"</td><td>"+registros.cursos[i].nombre_grado+"</td><td>"+registros.cursos[i].nombre_grupo+"</td><td>"+registros.cursos[i].nombre_salon+"</td><td style='display:none'>"+registros.cursos[i].director+"</td><td>"+registros.cursos[i].nombres+" "+registros.cursos[i].apellido1+"</td><td>"+registros.cursos[i].cupo_maximo+"</td><td>"+registros.cursos[i].jornada+"</td><td style='display:none'>"+registros.cursos[i].ano_lectivo+"</td><td>"+registros.cursos[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.cursos[i].id_curso+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.cursos[i].id_curso+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_cursos tbody").html(html);
+
+				if (registros.cursos.length > 0) {
+
+					for (var i = 0; i < registros.cursos.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.cursos[i].id_curso+"</td><td style='display:none'>"+registros.cursos[i].id_grado+"</td><td style='display:none'>"+registros.cursos[i].id_grupo+"</td><td style='display:none'>"+registros.cursos[i].id_salon+"</td><td>"+registros.cursos[i].nombre_grado+"</td><td>"+registros.cursos[i].nombre_grupo+"</td><td>"+registros.cursos[i].nombre_salon+"</td><td style='display:none'>"+registros.cursos[i].director+"</td><td>"+registros.cursos[i].nombres+" "+registros.cursos[i].apellido1+"</td><td>"+registros.cursos[i].cupo_maximo+"</td><td>"+registros.cursos[i].jornada+"</td><td style='display:none'>"+registros.cursos[i].ano_lectivo+"</td><td>"+registros.cursos[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.cursos[i].id_curso+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.cursos[i].id_curso+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_cursos tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='10'><p style='text-align:center'>No Hay Cursos Registrados..</p></td></tr>";
+					$("#lista_cursos tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -408,7 +428,35 @@ function actualizar_curso(){
 				//alert(respuesta);
 				$("#modal_actualizar_curso").modal('hide');
 
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Curso Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Curso No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="cuponovalido"){
+					
+					toastr.warning('El Cupo Ingresado No Satisface El Número De Alumnos Actualmente Matriculados En Este Curso.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="directoryaexiste"){
+					
+					toastr.warning('El Director Seleccionado Ya Tiene Asignado Un Curso.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="salonyaexiste"){
+					
+					toastr.warning('El Aula Seleccionada Ya Fue Asignada.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
 
 				$("#form_cursos_actualizar")[0].reset();
 

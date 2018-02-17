@@ -136,10 +136,10 @@ class Cursos_controller extends CI_Controller {
 		        
 	          	if($respuesta==true){
 	              
-	              	echo "eliminado correctamente";
+	              	echo "Curso Eliminado Correctamente.";
 	          	}else{
 	              
-	              	echo "no se pudo eliminar";
+	              	echo "No Se Pudo Eliminar.";
 	          	}
 	        }
 	        else{
@@ -197,17 +197,17 @@ class Cursos_controller extends CI_Controller {
 
 					 if($respuesta==true){
 
-						echo "registro actualizado";
+						echo "registroactualizado";
 
 		             }else{
 
-						echo "registro no se pudo actualizar";
+						echo "registronoactualizado";
 
 		             }
         		}
         		else{
 
-        			echo "El Cupo Ingresado No Satisface Los Alumnos Actualmente Matriculados En Este Curso.";
+        			echo "cuponovalido";
         		}
 
 	        }
@@ -223,19 +223,19 @@ class Cursos_controller extends CI_Controller {
 
 							 if($respuesta==true){
 
-								echo "registro actualizado";
+								echo "registroactualizado";
 
 				             }else{
-								echo "registro no se pudo actualizar";
+								echo "registronoactualizado";
 				             }
 		        		}
 		        		else{
-		        			echo "El Cupo Ingresado No Satisface Los Alumnos Actualmente Matriculados En Este Curso.";
+		        			echo "cuponovalido";
 		        		}
 
 					}
 					else{
-						echo "El Director Seleccionado Ya Tiene Asignado Un Curso";
+						echo "directoryaexiste";
 					}
 					
 
@@ -251,22 +251,22 @@ class Cursos_controller extends CI_Controller {
 
 								 if($respuesta==true){
 
-									echo "registro actualizado";
+									echo "registroactualizado";
 
 					             }else{
 
-									echo "registro no se pudo actualizar";
+									echo "registronoactualizado";
 
 					             }
 			        		}
 			        		else{
-			        			echo "El Cupo Ingresado No Satisface Los Alumnos Actualmente Matriculados En Este Curso.";
+			        			echo "cuponovalido";
 			        		}
 
 							
 						}
 						else{
-							echo "El Aula Seleccionda Ya Fue Asignada";
+							echo "salonyaexiste";
 						}
 									
 					}
@@ -282,29 +282,29 @@ class Cursos_controller extends CI_Controller {
 
 									 if($respuesta==true){
 
-										echo "registro actualizado";
+										echo "registroactualizado";
 
 						             }else{
 
-										echo "registro no se pudo actualizar";
+										echo "registronoactualizado";
 
 						             }
 				        		}
 				        		else{
 
-				        			echo "El Cupo Ingresado No Satisface Los Alumnos Actualmente Matriculados En Este Curso.";
+				        			echo "cuponovalido";
 				        		}
 
 							}
 							else{
 
-								echo "El Director Seleccionado Ya Tiene Asignado Un Curso";
+								echo "directoryaexiste";
 
 							}
 						}
 						else{
 
-							echo "El Aula Seleccionda Ya Fue Asignada";
+							echo "salonyaexiste";
 
 						}
 
