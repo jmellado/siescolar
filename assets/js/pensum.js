@@ -23,26 +23,26 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_pensum")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
-					else if(respuesta==="pensum ya existe"){
+					else if(respuesta==="pensumyaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Asignatura Ya Registrada En Este Pensum.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrarpensum("",1,5);
@@ -55,7 +55,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -92,7 +92,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_pensum").val();
     	valorcantidad = $("#cantidad_pensum").val();
-		mostrarpensum(buscar,numero_pagina,valorcantidad);
+
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrarpensum(buscar,numero_pagina,valorcantidad);
+		}
 
 
     });
@@ -101,7 +105,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar La Asignatura De Este Pensum.?")){
 			eliminar_pensum(idsele);
 
 		}
@@ -136,20 +140,29 @@ function inicio(){
     $("#btn_actualizar_pensum").click(function(event){
 
     	if($("#form_pensum_actualizar").valid()==true){
-       	actualizar_pensum();
-       	//bloquear_cajas_texto();
+	       	actualizar_pensum();
+	       	//bloquear_cajas_texto();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_pensum_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+       	else{
+			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_pensum_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
     });
 
 
+    $("#modal_agregar_pensum").on('hidden.bs.modal', function () {
+        $("#form_pensum")[0].reset();
+        $("#form_pensum").valid()==true;
+    });
 
+
+    $("#modal_actualizar_pensum").on('hidden.bs.modal', function () {
+        $("#form_pensum_actualizar")[0].reset();
+        $("#form_pensum_actualizar").valid()==true;
+    });
 
 
 
@@ -260,11 +273,19 @@ function mostrarpensum(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.pensum.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.pensum[i].id_pensum+"</td><td style='display:none'>"+registros.pensum[i].id_grado+"</td><td>"+registros.pensum[i].nombre_grado+"</td><td style='display:none'>"+registros.pensum[i].id_asignatura+"</td><td>"+registros.pensum[i].nombre_asignatura+"</td><td>"+registros.pensum[i].intensidad_horaria+"</td><td style='display:none'>"+registros.pensum[i].ano_lectivo+"</td><td>"+registros.pensum[i].nombre_ano_lectivo+"</td><td>"+registros.pensum[i].estado_pensum+"</td><td><a class='btn btn-success' href="+registros.pensum[i].id_pensum+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.pensum[i].id_pensum+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_pensum tbody").html(html);
+
+				if (registros.pensum.length > 0) {
+
+					for (var i = 0; i < registros.pensum.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.pensum[i].id_pensum+"</td><td style='display:none'>"+registros.pensum[i].id_grado+"</td><td>"+registros.pensum[i].nombre_grado+"</td><td style='display:none'>"+registros.pensum[i].id_asignatura+"</td><td>"+registros.pensum[i].nombre_asignatura+"</td><td>"+registros.pensum[i].intensidad_horaria+"</td><td style='display:none'>"+registros.pensum[i].ano_lectivo+"</td><td>"+registros.pensum[i].nombre_ano_lectivo+"</td><td>"+registros.pensum[i].estado_pensum+"</td><td><a class='btn btn-success' href="+registros.pensum[i].id_pensum+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.pensum[i].id_pensum+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_pensum tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='8'><p style='text-align:center'>No Hay Pensum Registrados..</p></td></tr>";
+					$("#lista_pensum tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -365,8 +386,27 @@ function actualizar_pensum(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_pensum").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Pensum Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Pensum No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="pensumyaexiste"){
+					
+					toastr.warning('Asignatura Ya Registrada En Este Pensum.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_pensum_actualizar")[0].reset();
 
 				mostrarpensum("",1,5);

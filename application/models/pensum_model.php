@@ -35,7 +35,8 @@ class Pensum_model extends CI_Model {
 		$this->db->or_like('pensum.estado_pensum',$id,'after');
 
 		$this->db->order_by('pensum.ano_lectivo', 'desc');
-		$this->db->order_by('pensum.id_grado', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 		$this->db->order_by('pensum.estado_pensum', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
@@ -45,6 +46,7 @@ class Pensum_model extends CI_Model {
 		$this->db->join('grados', 'pensum.id_grado = grados.id_grado');
 		$this->db->join('asignaturas', 'pensum.id_asignatura = asignaturas.id_asignatura');
 		$this->db->join('anos_lectivos', 'pensum.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('pensum.id_pensum,pensum.id_grado,pensum.id_asignatura,pensum.intensidad_horaria,pensum.ano_lectivo,pensum.estado_pensum,grados.nombre_grado,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo');
 		
@@ -150,6 +152,9 @@ class Pensum_model extends CI_Model {
 
 		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_asignatura','Activo');
+
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+		
 		$query = $this->db->get('asignaturas');
 		return $query->result();
 	}

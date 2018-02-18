@@ -69,7 +69,7 @@ class Pensum_controller extends CI_Controller {
 			}
 			else{
 
-				echo "pensum ya existe";
+				echo "pensumyaexiste";
 			}
 
         }
@@ -109,10 +109,10 @@ class Pensum_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Asignatura Eliminada De Este Pensum Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -123,56 +123,62 @@ class Pensum_controller extends CI_Controller {
 
     public function modificar(){
 
+    	$id_pensum = $this->input->post('id_pensum');
+    	$id_grado = $this->input->post('id_grado');
+    	$id_asignatura = $this->input->post('id_asignatura');
+    	$intensidad_horaria = $this->input->post('intensidad_horaria');
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+    	$estado_pensum = $this->input->post('estado_pensum');
+
     	//array para insertar en la tabla pensum----------
         $pensum = array(
-        'id_pensum' =>$this->input->post('id_pensum'),	
-		'id_grado' =>$this->input->post('id_grado'),
-		'id_asignatura' =>$this->input->post('id_asignatura'),
-		'intensidad_horaria' =>$this->input->post('intensidad_horaria'),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'),
-		'estado_pensum' =>$this->input->post('estado_pensum'));
+        'id_pensum' =>$id_pensum,	
+		'id_grado' =>$id_grado,
+		'id_asignatura' =>$id_asignatura,
+		'intensidad_horaria' =>$intensidad_horaria,
+		'ano_lectivo' =>$ano_lectivo,
+		'estado_pensum' =>$estado_pensum);
 
-		$id = $this->input->post('id_pensum');
-		$grado_buscado = $this->pensum_model->obtener_id_grado($id);
-		$asignatura_buscada = $this->pensum_model->obtener_id_asignatura($id);
-		$ano_lectivo_buscado = $this->pensum_model->obtener_ano_lectivo($id);
+		$grado_buscado = $this->pensum_model->obtener_id_grado($id_pensum);
+		$asignatura_buscada = $this->pensum_model->obtener_id_asignatura($id_pensum);
+		$ano_lectivo_buscado = $this->pensum_model->obtener_ano_lectivo($id_pensum);
 
-        if(is_numeric($id)){
+        if(is_numeric($id_pensum)){
 
-        	if ($grado_buscado == $this->input->post('id_grado') && $asignatura_buscada == $this->input->post('id_asignatura') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+        	if ($grado_buscado == $id_grado && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-	        	$respuesta=$this->pensum_model->modificar_pensum($this->input->post('id_pensum'),$pensum);
+	        	$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
 
 				 if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	             }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	             }
 	        }
 	        else{
 
-	        	if($this->pensum_model->validar_existencia($this->input->post('id_grado'),$this->input->post('id_asignatura'),$this->input->post('ano_lectivo'))){
+	        	if($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
 
-	        		$respuesta=$this->pensum_model->modificar_pensum($this->input->post('id_pensum'),$pensum);
+	        		$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 	        		}
 
 
 
 	        	}else{
 
-	        		echo "pensum ya existe";
+	        		echo "pensumyaexiste";
 
 	        	}
 
