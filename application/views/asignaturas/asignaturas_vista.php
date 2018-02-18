@@ -57,7 +57,7 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre De La Asignatura</th>
 									<th><i class='fa fa-crop'></i>&nbsp;Area</th>
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
@@ -65,6 +65,11 @@
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='7'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>

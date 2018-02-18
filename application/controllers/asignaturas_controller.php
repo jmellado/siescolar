@@ -36,17 +36,21 @@ class Asignaturas_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de asignaturas + 1 
-        	 $ultimo_id = $this->asignaturas_model->obtener_ultimo_id();
+        	$ultimo_id = $this->asignaturas_model->obtener_ultimo_id();
+        	$nombre_asignatura = ucwords(strtolower(trim($this->input->post('nombre_asignatura'))));
+        	$id_area = $this->input->post('id_area');
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+        	$estado_asignatura = $this->input->post('estado_asignatura');
 
-        	  //array para insertar en la tabla asignaturas----------
+        	//array para insertar en la tabla asignaturas----------
         	$asignatura = array(
         	'id_asignatura' =>$ultimo_id,	
-			'nombre_asignatura' =>ucwords($this->input->post('nombre_asignatura')),
-			'id_area' =>$this->input->post('id_area'),
-			'ano_lectivo' =>$this->input->post('ano_lectivo'),
-			'estado_asignatura' =>$this->input->post('estado_asignatura'));
+			'nombre_asignatura' =>$nombre_asignatura,
+			'id_area' =>$id_area,
+			'ano_lectivo' =>$ano_lectivo,
+			'estado_asignatura' =>$estado_asignatura);
 
-			if ($this->asignaturas_model->validar_existencia($this->input->post('nombre_asignatura'),$this->input->post('ano_lectivo'))){
+			if ($this->asignaturas_model->validar_existencia($nombre_asignatura,$ano_lectivo)){
 
 				$respuesta=$this->asignaturas_model->insertar_asignatura($asignatura);
 
@@ -62,7 +66,7 @@ class Asignaturas_controller extends CI_Controller {
 			}
 			else{
 
-				echo "asignatura ya existe";
+				echo "asignaturayaexiste";
 			}
 
         }
@@ -102,10 +106,10 @@ class Asignaturas_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Asignatura Eliminada Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -116,54 +120,59 @@ class Asignaturas_controller extends CI_Controller {
 
     public function modificar(){
 
+    	$id_asignatura = $this->input->post('id_asignatura');
+    	$nombre_asignatura = ucwords(strtolower(trim($this->input->post('nombre_asignatura'))));
+    	$id_area = $this->input->post('id_area');
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+    	$estado_asignatura = $this->input->post('estado_asignatura');
+
     	//array para insertar en la tabla asignaturas----------
         $asignatura = array(
-        'id_asignatura' =>$this->input->post('id_asignatura'),	
-		'nombre_asignatura' =>ucwords($this->input->post('nombre_asignatura')),
-		'id_area' =>$this->input->post('id_area'),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'),
-		'estado_asignatura' =>$this->input->post('estado_asignatura'));
+        'id_asignatura' =>$id_asignatura,	
+		'nombre_asignatura' =>$nombre_asignatura,
+		'id_area' =>$id_area,
+		'ano_lectivo' =>$ano_lectivo,
+		'estado_asignatura' =>$estado_asignatura);
 
-		$id = $this->input->post('id_asignatura');
-		$nombre_buscado = $this->asignaturas_model->obtener_nombre_asignatura($id);
-		$ano_lectivo_buscado = $this->asignaturas_model->obtener_ano_lectivo($id);
+		$nombre_buscado = $this->asignaturas_model->obtener_nombre_asignatura($id_asignatura);
+		$ano_lectivo_buscado = $this->asignaturas_model->obtener_ano_lectivo($id_asignatura);
 
-        if(is_numeric($id)){
+        if(is_numeric($id_asignatura)){
 
-        	if ($nombre_buscado == $this->input->post('nombre_asignatura') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+        	if ($nombre_buscado == $nombre_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-	        	$respuesta=$this->asignaturas_model->modificar_asignatura($this->input->post('id_asignatura'),$asignatura);
+	        	$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
 
 				 if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	             }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	             }
 	        }
 	        else{
 
-	        	if($this->asignaturas_model->validar_existencia($this->input->post('nombre_asignatura'),$this->input->post('ano_lectivo'))){
+	        	if($this->asignaturas_model->validar_existencia($nombre_asignatura,$ano_lectivo)){
 
-	        		$respuesta=$this->asignaturas_model->modificar_asignatura($this->input->post('id_asignatura'),$asignatura);
+	        		$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 	        		}
 
 
 
 	        	}else{
 
-	        		echo "asignatura ya existe";
+	        		echo "asignaturayaexiste";
 
 	        	}
 

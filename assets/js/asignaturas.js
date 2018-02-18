@@ -22,20 +22,20 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_asignaturas")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
-					else if(respuesta==="asignatura ya existe"){
+					else if(respuesta==="asignaturayaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Asignatura Ya Registrada.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
@@ -54,7 +54,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -91,8 +91,11 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_asignatura").val();
     	valorcantidad = $("#cantidad_asignatura").val();
-		mostrarasignaturas(buscar,numero_pagina,valorcantidad);
 
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+
+			mostrarasignaturas(buscar,numero_pagina,valorcantidad);
+		}
 
     });
 
@@ -100,7 +103,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Esta Asignatura.?")){
 			eliminar_asignatura(idsele);
 
 		}
@@ -111,10 +114,10 @@ function inicio(){
 		event.preventDefault();
 		$("#modal_actualizar_asignatura").modal();
 		id_asignaturasele = $(this).attr("href");
-		nombre_asignaturasele = $(this).parent().parent().children("td:eq(1)").text();
-		id_areasele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
-		estado_asignaturasele = $(this).parent().parent().children("td:eq(6)").text();
+		nombre_asignaturasele = $(this).parent().parent().children("td:eq(2)").text();
+		id_areasele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		ano_lectivosele = $(this).parent().parent().children("td:eq(5)").text();
+		estado_asignaturasele = $(this).parent().parent().children("td:eq(7)").text();
 		
 		//alert(municipio_expedicionsele);
 
@@ -133,20 +136,29 @@ function inicio(){
     $("#btn_actualizar_asignatura").click(function(event){
 
     	if($("#form_asignaturas_actualizar").valid()==true){
-       	actualizar_asignatura();
-       	//bloquear_cajas_texto();
+	       	actualizar_asignatura();
+	       	//bloquear_cajas_texto();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_asignaturas_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+      	else{
+			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			//alert($("#form_asignaturas_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
        
     });
 
 
+    $("#modal_agregar_asignatura").on('hidden.bs.modal', function () {
+        $("#form_asignaturas")[0].reset();
+        $("#form_asignaturas").valid()==true;
+    });
 
+
+    $("#modal_actualizar_asignatura").on('hidden.bs.modal', function () {
+        $("#form_asignaturas_actualizar")[0].reset();
+        $("#form_asignaturas_actualizar").valid()==true;
+    });
 
 
 
@@ -243,11 +255,19 @@ function mostrarasignaturas(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.asignaturas.length; i++) {
-					html +="<tr><td>"+registros.asignaturas[i].id_asignatura+"</td><td>"+registros.asignaturas[i].nombre_asignatura+"</td><td style='display:none'>"+registros.asignaturas[i].id_area+"</td><td>"+registros.asignaturas[i].nombre_area+"</td><td style='display:none'>"+registros.asignaturas[i].ano_lectivo+"</td><td>"+registros.asignaturas[i].nombre_ano_lectivo+"</td><td>"+registros.asignaturas[i].estado_asignatura+"</td><td><a class='btn btn-success' href="+registros.asignaturas[i].id_asignatura+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.asignaturas[i].id_asignatura+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_asignaturas tbody").html(html);
+
+				if (registros.asignaturas.length > 0) {
+
+					for (var i = 0; i < registros.asignaturas.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.asignaturas[i].id_asignatura+"</td><td>"+registros.asignaturas[i].nombre_asignatura+"</td><td style='display:none'>"+registros.asignaturas[i].id_area+"</td><td>"+registros.asignaturas[i].nombre_area+"</td><td style='display:none'>"+registros.asignaturas[i].ano_lectivo+"</td><td>"+registros.asignaturas[i].nombre_ano_lectivo+"</td><td>"+registros.asignaturas[i].estado_asignatura+"</td><td><a class='btn btn-success' href="+registros.asignaturas[i].id_asignatura+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.asignaturas[i].id_asignatura+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_asignaturas tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='7'><p style='text-align:center'>No Hay Asignaturas Registradas..</p></td></tr>";
+					$("#lista_asignaturas tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
@@ -348,8 +368,27 @@ function actualizar_asignatura(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_asignatura").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Asignatura Actualizada Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Asignatura No Actualizada.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="asignaturayaexiste"){
+					
+					toastr.warning('Asignatura Ya Registrada.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_asignaturas_actualizar")[0].reset();
 
 				mostrarasignaturas("",1,5);
