@@ -35,16 +35,19 @@ class Areas_controller extends CI_Controller {
         else{
 
         	//obtengo el ultimo id de areas + 1 
-        	 $ultimo_id = $this->areas_model->obtener_ultimo_id();
+        	$ultimo_id = $this->areas_model->obtener_ultimo_id();
+        	$nombre_area = ucwords(strtolower(trim($this->input->post('nombre_area'))));
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+        	$estado_area = $this->input->post('estado_area');
 
-        	  //array para insertar en la tabla areas----------
+        	//array para insertar en la tabla areas----------
         	$area = array(
         	'id_area' =>$ultimo_id,	
-			'nombre_area' =>ucwords($this->input->post('nombre_area')),
-			'ano_lectivo' =>$this->input->post('ano_lectivo'),
-			'estado_area' =>$this->input->post('estado_area'));
+			'nombre_area' =>$nombre_area,
+			'ano_lectivo' =>$ano_lectivo,
+			'estado_area' =>$estado_area);
 
-			if ($this->areas_model->validar_existencia($this->input->post('nombre_area'))){
+			if ($this->areas_model->validar_existencia($nombre_area)){
 
 				$respuesta=$this->areas_model->insertar_area($area);
 
@@ -60,7 +63,7 @@ class Areas_controller extends CI_Controller {
 			}
 			else{
 
-				echo "area ya existe";
+				echo "areayaexiste";
 			}
 
         }
@@ -100,65 +103,70 @@ class Areas_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Área Eliminada Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
           
-          	echo "digite valor numerico para identificar un grado";
+          	echo "digite valor numerico para identificar un Área";
         }
     }
 
     public function modificar(){
 
+    	$id_area = $this->input->post('id_area');
+    	$nombre_area = ucwords(strtolower(trim($this->input->post('nombre_area'))));
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+    	$estado_area = $this->input->post('estado_area');
+
     	//array para insertar en la tabla areas----------
         $area = array(
-        'id_area' =>$this->input->post('id_area'),	
-		'nombre_area' =>ucwords($this->input->post('nombre_area')),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'),
-		'estado_area' =>$this->input->post('estado_area'));
+        'id_area' =>$id_area,	
+		'nombre_area' =>$nombre_area,
+		'ano_lectivo' =>$ano_lectivo,
+		'estado_area' =>$estado_area);
 
-		$id = $this->input->post('id_area');
-		$nombre_buscado = $this->areas_model->obtener_nombre_area($id);
-        if(is_numeric($id)){
+		$nombre_buscado = $this->areas_model->obtener_nombre_area($id_area);
 
-        	if ($nombre_buscado == $this->input->post('nombre_area')){
+        if(is_numeric($id_area)){
 
-	        	$respuesta=$this->areas_model->modificar_area($this->input->post('id_area'),$area);
+        	if ($nombre_buscado == $nombre_area){
+
+	        	$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
 				 if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	             }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	             }
 	        }
 	        else{
 
-	        	if($this->areas_model->validar_existencia($this->input->post('nombre_area'))){
+	        	if($this->areas_model->validar_existencia($nombre_area)){
 
-	        		$respuesta=$this->areas_model->modificar_area($this->input->post('id_area'),$area);
+	        		$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 
 	        		}
 
 	        	}
 	        	else{
 
-	        		echo "area ya existe";
+	        		echo "areayaexiste";
 
 	        	}
 
@@ -168,7 +176,7 @@ class Areas_controller extends CI_Controller {
          
         }else{
             
-            echo "digite valor numerico para identificar un area";
+            echo "digite valor numerico para identificar un Área";
         }
 
 

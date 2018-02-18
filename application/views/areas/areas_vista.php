@@ -8,7 +8,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><i class='fa fa-crop'></i>&nbsp;GESTIÓN DE AREAS</h1>
+            <h1 class="page-header"><i class='fa fa-crop'></i>&nbsp;GESTIÓN DE ÁREAS</h1>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
 
     	<div class="col-lg-3">
     		<div class="form-group">
-    			<button type="submit" name="btn_agregar_area" id="btn_agregar_area" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Area</button>
+    			<button type="submit" name="btn_agregar_area" id="btn_agregar_area" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Área</button>
     		</div>	
     	</div>
 
@@ -39,12 +39,12 @@
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-primary">
-    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Areas</div>
+    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Lista De Áreas</div>
     				<div class="panel-body">
 
     					<div class="form-group">
 						  <label for="cantidad_area">Mostrar Por:</label>
-						  <select class="selectpicker" id="cantidad_area" name="cantidad_area" >
+						  <select class="selectpicker" id="cantidad_area" name="cantidad_area">
 						    <option value="5">5</option>
 		  					<option value="10">10</option>
 		  					<option value="15">15</option>
@@ -57,13 +57,18 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
+									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre Del Área</th>
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 									<th></th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<td colspan='6'></td>
+								</tr>
+							</tfoot>
 							<tbody>
 							</tbody>
 						</table>
@@ -91,7 +96,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR AREAS</h4>
+        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR ÁREAS</h4>
       </div>
       <div class="modal-body">
         
@@ -156,7 +161,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR AREAS</h4>
+        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR ÁREAS</h4>
       </div>
       <div class="modal-body">
         

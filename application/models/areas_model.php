@@ -30,6 +30,8 @@ class Areas_model extends CI_Model {
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('areas.estado_area',$id,'after');
 
+		$this->db->order_by('areas.nombre_area', 'asc');
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
