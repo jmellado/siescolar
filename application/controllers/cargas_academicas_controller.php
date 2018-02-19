@@ -77,7 +77,7 @@ class Cargas_academicas_controller extends CI_Controller {
 			}
 			else{
 
-				echo "cargas_academicas ya existe";
+				echo "cargas_academicasyaexiste";
 			}
 
         }
@@ -117,10 +117,10 @@ class Cargas_academicas_controller extends CI_Controller {
 	        
           	if($respuesta==true){
               
-              	echo "eliminado correctamente";
+              	echo "Carga Académica Eliminada Correctamente.";
           	}else{
               
-              	echo "no se pudo eliminar";
+              	echo "No Se Pudo Eliminar.";
           	}
           
         }else{
@@ -159,11 +159,11 @@ class Cargas_academicas_controller extends CI_Controller {
 
 				 if($respuesta==true){
 
-					echo "registro actualizado";
+					echo "registroactualizado";
 
 	             }else{
 
-					echo "registro no se pudo actualizar";
+					echo "registronoactualizado";
 
 	             }
 	        }
@@ -175,18 +175,18 @@ class Cargas_academicas_controller extends CI_Controller {
 
 	        		if($respuesta==true){
 
-	        			echo "registro actualizado";
+	        			echo "registroactualizado";
 
 	        		}else{
 
-	        			echo "registro no se pudo actualizar";
+	        			echo "registronoactualizado";
 	        		}
 
 
 
 	        	}else{
 
-	        		echo "Carga Academica Ya Asignada";
+	        		echo "cargas_academicasyaexiste";
 
 	        	}
 

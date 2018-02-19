@@ -36,6 +36,12 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('cursos.jornada',$id,'after');
 
+		$this->db->order_by('cargas_academicas.ano_lectivo', 'desc');
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
@@ -46,6 +52,7 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'cargas_academicas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('cargas_academicas.id_carga_academica,cargas_academicas.id_profesor,cargas_academicas.id_curso,cargas_academicas.id_asignatura,cargas_academicas.ano_lectivo,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo,cursos.jornada');
 		
@@ -114,6 +121,8 @@ class Cargas_academicas_model extends CI_Model {
 
 		$this->db->where('id_grado',$id_grado);
 
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
 		$this->db->join('asignaturas', 'pensum.id_asignatura = asignaturas.id_asignatura');
 		$this->db->select('pensum.id_asignatura,asignaturas.nombre_asignatura');
 
@@ -123,6 +132,8 @@ class Cargas_academicas_model extends CI_Model {
 
 
 	public function llenar_profesores(){
+
+		$this->db->order_by('personas.apellido1', 'asc');
 
 		$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');
 
@@ -140,8 +151,12 @@ class Cargas_academicas_model extends CI_Model {
 
 		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 		
