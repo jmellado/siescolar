@@ -136,10 +136,13 @@ class Matriculas_model extends CI_Model {
 
 		$this->db->where('cursos.jornada',$jornada);
 		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 		
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('salones', 'cursos.id_salon = salones.id_salon');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.cupo_maximo');
 
@@ -321,6 +324,164 @@ class Matriculas_model extends CI_Model {
 		$query = $this->db->get('cursos');
 		return $query->result_array();
 
+	}
+
+
+	//****************************************** FUNCIONES PARA MATRICULAR ESTUDIANTES ANTIGUOS ***************************************
+
+	//Esta Funcion Permite Comprobar Si El Estudiante Es Nuevo O Antiguo.
+	public function comprobar_NuevoAntiguo($identificacion){
+
+		$this->db->where('personas.identificacion',$identificacion);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+	//Esta Funcion Permite Obtener La Ultima Matricula De Un Estudiante.
+	public function UltimaMatricula($identificacion){
+
+		$this->db->where('personas.identificacion',$identificacion);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select_max('id_matricula');
+
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			$row = $query->result_array();
+			return $row[0]['id_matricula'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function obtener_informacion_grado($id_grado){
+
+		$this->db->where('id_grado',$id_grado);
+		$query = $this->db->get('grados');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+	// Esta Funcion Permite Obtener El Proximo Grado A Cursar Por Un Estudiante.
+	public function obtener_proximo_grado($nombre_grado){
+
+		$this->db->where('nombre_grado',$nombre_grado);
+		$query = $this->db->get('grados_educacion');
+
+		if ($query->num_rows() > 0) {
+
+			$consulta = $query->result_array();
+			$id_grado_educacion = $consulta[0]['id_grado_educacion'];
+
+			if ($id_grado_educacion == "14") {
+				
+				$id_grado_educacion_proximo = "1";
+
+				$this->db->where('id_grado_educacion',$id_grado_educacion_proximo);
+				$query2 = $this->db->get('grados_educacion');
+
+				if ($query2->num_rows() > 0) {
+
+					$row1 = $query2->result_array();
+					return $row1[0]['nombre_grado'];
+				}
+				else{
+					return false;
+				}
+
+
+			}
+			else {
+				
+				$id_grado_educacion_proximo = $id_grado_educacion + 1;
+
+				$this->db->where('id_grado_educacion',$id_grado_educacion_proximo);
+				$query2 = $this->db->get('grados_educacion');
+
+				if ($query2->num_rows() > 0) {
+
+					$row2 = $query2->result_array();
+					return $row2[0]['nombre_grado'];
+				}
+				else{
+					return false;
+				}
+			}
+
+			
+		}
+		else{
+			return false;
+		}
+
+	}
+
+  	//Esta Funcion Permite Obtener Los Cursos Que Puede Cursar Un Estudiante Antiguo, Dependiendo Del Estado Su Ultima Matricula.
+	public function llenar_cursosA($jornada,$nombre_grado){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+		$this->db->where('grados.nombre_grado',$nombre_grado);
+
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('salones', 'cursos.id_salon = salones.id_salon');
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.cupo_maximo');
+
+		$query = $this->db->get('cursos');
+		$row = $query->result_array();
+		$total = $query->num_rows();
+		$listaArray = array();
+
+		for ($i=0; $i < $total ; $i++) { 
+			
+			$id_curso = $row[$i]['id_curso'];
+			$cupo_maximo = $row[$i]['cupo_maximo'];
+			$total_curso_matricula = $this->matriculas_model->total_cursos_matricula($id_curso);
+
+			if ($total_curso_matricula < $cupo_maximo) {
+			
+				$this->db->where('id_curso',$id_curso);
+
+				$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+				$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+				$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+
+				$query2 = $this->db->get('cursos');
+
+				$listaArray[] =$query2->row();
+
+			}
+		}
+
+		return $listaArray;
 	}
 
 

@@ -269,7 +269,13 @@ class Matriculas_controller extends CI_Controller {
 
 			if($this->matriculas_model->validar_existencia_por_identificacion($id,$ano_lectivo)){
 
-				echo json_encode($consulta);	
+				if($this->matriculas_model->comprobar_NuevoAntiguo($id)){
+
+					echo json_encode($consulta);
+				}
+				else{
+					echo "estudianteantiguo";
+				}	
 						
 			}else{
 
@@ -306,6 +312,87 @@ class Matriculas_controller extends CI_Controller {
     	echo json_encode($consulta);
     }
 
-    
+
+    //****************************************** FUNCIONES PARA MATRICULAR ESTUDIANTES ANTIGUOS ***************************************
+
+    public function buscar_estudianteA(){
+
+		$id = $this->input->post('id'); 
+		//obtengo la fecha actual 
+       	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		
+		$consulta = $this->matriculas_model->buscar_estudiante($id);
+		if($consulta==false){
+			echo "estudiantenoexiste";
+		}
+		else{
+
+			if($this->matriculas_model->validar_existencia_por_identificacion($id,$ano_lectivo)){
+
+				if(!$this->matriculas_model->comprobar_NuevoAntiguo($id)){
+
+					//echo json_encode($consulta);
+
+					$ultima_matricula = $this->matriculas_model->UltimaMatricula($id);
+					$matricula = $this->matriculas_model->obtener_informacion_matricula($ultima_matricula);
+					$id_curso = $matricula[0]['id_curso'];
+					$estado_matricula = $matricula[0]['estado_matricula'];
+
+					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
+					$grado = $this->matriculas_model->obtener_informacion_grado($id_grado);
+					$nombre_grado = $grado[0]['nombre_grado'];
+
+					if ($estado_matricula == "Aprobado") {
+
+						$data = array(
+
+							'datos' => $consulta,
+
+							'proximo_grado' => $this->matriculas_model->obtener_proximo_grado($nombre_grado),
+
+						    'estadomatricula' => $estado_matricula
+						);
+
+						echo json_encode($data);
+						
+					}
+					else{
+
+						$data = array(
+
+							'datos' => $consulta,
+
+							'proximo_grado' => $nombre_grado,
+
+						    'estadomatricula' => $estado_matricula
+						);
+
+						echo json_encode($data);
+
+					}
+				}
+				else{
+
+					echo "estudiantenuevo";
+				}	
+						
+			}else{
+
+				echo "matricula ya existe";
+			}
+			
+		}
+	    
+	}
+
+
+	public function llenarcombo_cursosA(){
+
+    	$jornada = $this->input->post('jornada');
+    	$nombre_grado = $this->input->post('nombre_grado');
+
+    	$consulta = $this->matriculas_model->llenar_cursosA($jornada,$nombre_grado);
+    	echo json_encode($consulta);
+    }
 
 }

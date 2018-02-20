@@ -4,7 +4,7 @@
 
 	    #modal_agregar_matricula .modal-body
 		{
-  			height:480px;
+  			height:505px;
   			overflow:auto;
 		}
 		#modal_actualizar_matricula .modal-body
@@ -118,128 +118,261 @@
       </div>
       <div class="modal-body">
 
-        <div class="box box-primary"><!--primergrupo-->
-		    <div class="box-body"><!--primergrupo-->
+      	<div class="nav-tabs-custom">
 
-		    	<div class="row">
-			      	<div class="col-sm-offset-4 col-sm-4">
-			      		<div class="form-group">
-					        <div class="input-group custom-search-form">
-					            <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Identificación Estudiante" onkeypress="return valida(event)">
-					                <span class="input-group-btn">
-					                    <button class="btn btn-primary" type="button" name="btn_buscar_estudiante" id="btn_buscar_estudiante">
-					                        <i class="fa fa-search"></i>
-					                    </button>
-					                </span>
-					        </div>
+      		<ul class="nav nav-tabs">
+              <li class="active"><a href="#tab_1" data-toggle="tab"><i class='fa fa-plus-square'></i>&nbsp;Nuevos</a></li>
+              <li><a href="#tab_2" data-toggle="tab"><i class='fa fa-circle-o-notch'></i>&nbsp;Antiguos</a></li>
+              <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+            </ul>
+
+	        <div class="tab-content"><!--primergrupo-->   <!--box box-primary-->
+			    <div class="tab-pane active" id="tab_1"><!--primergrupo-->		<!--box box-primary-->
+
+			    	<div class="row">
+				      	<div class="col-sm-offset-4 col-sm-4">
+				      		<div class="form-group">
+						        <div class="input-group custom-search-form">
+						            <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Identificación Estudiante" onkeypress="return valida(event)">
+						                <span class="input-group-btn">
+						                    <button class="btn btn-primary" type="button" name="btn_buscar_estudiante" id="btn_buscar_estudiante">
+						                        <i class="fa fa-search"></i>
+						                    </button>
+						                </span>
+						        </div>
+						    </div>
 					    </div>
-				    </div>
-				</div>    
+					</div>    
 
-		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>matriculas_controller/insertar" name="" method="post" id="form_matriculas">
+			        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>matriculas_controller/insertar" name="" method="post" id="form_matriculas">
 
-		        	<div class="row">
-		        		<div class="col-sm-6">
-				            <div class="panel panel-default">
-		    					<div class="panel-body">
-									<input type="hidden" class="form-control" id="id_persona" name="id_persona">
-									
-						        	<div class="form-group">
-						        		<label class="control-label col-sm-4" for="nombres">NOMBRES</label>
-						        		<div class="col-sm-7">
-											<input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" disabled>
+			        	<div class="row">
+			        		<div class="col-sm-6">
+					            <div class="panel panel-default">
+			    					<div class="panel-body">
+										<input type="hidden" class="form-control" id="id_persona" name="id_persona">
+										
+							        	<div class="form-group">
+							        		<label class="control-label col-sm-4" for="nombres">NOMBRES</label>
+							        		<div class="col-sm-7">
+												<input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" disabled>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group">
-										<label class="control-label col-sm-4" for="apellido1">1° APELLIDO</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" id="apellido1" name="apellido1" placeholder="Primer Apellido" disabled>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="apellido1">1° APELLIDO</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="apellido1" name="apellido1" placeholder="Primer Apellido" disabled>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group">
-										<label class="control-label col-sm-4" for="apellido2">2° APELLIDO</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Segundo Apellido" disabled>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="apellido2">2° APELLIDO</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Segundo Apellido" disabled>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group">
-										<label class="control-label col-sm-4" for="jornada">JORNADA</label>
-										<div class="col-sm-6">
-											<select class="form-control" id="jornadaMT" name="jornada" disabled>
-													<option value="Mañana">Mañana</option>
-													<option value="Tarde">Tarde</option>
-													<option value="Noche">Noche</option>
-													<option value="Unica">Única</option>
-											</select>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="control-label col-sm-4" for="id_curso">CURSO</label>
-										<div class="col-sm-6">
-											<div id="curso1">
-												<select class="form-control" id="id_curso" name="id_curso" disabled>
-																    
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="jornada">JORNADA</label>
+											<div class="col-sm-6">
+												<select class="form-control" id="jornadaMT" name="jornada" disabled>
+														<option value="Mañana">Mañana</option>
+														<option value="Tarde">Tarde</option>
+														<option value="Noche">Noche</option>
+														<option value="Unica">Única</option>
 												</select>
 											</div>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>		
 
-						<div class="col-sm-6">
-							<div class="panel panel-default">
-		    					<div class="panel-body">
-									<div class="form-group">
-										<label class="control-label col-sm-4" for="id_acudiente">ACUDIENTE</label>
-										<div class="col-sm-7">
-											<div id="acudiente1">
-												<select class="form-control" id="id_acudiente" name="id_acudiente" disabled>
-																    
-												</select>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="id_curso">CURSO</label>
+											<div class="col-sm-6">
+												<div id="curso1">
+													<select class="form-control" id="id_curso" name="id_curso" disabled>
+																	    
+													</select>
+												</div>
 											</div>
 										</div>
 									</div>
-
-									<div class="form-group">
-									  	<label class="control-label col-sm-4" for="parentesco">PARENTESCO</label>
-									  	<div class="col-sm-6">
-										  	<select class="form-control" id="parentesco" name="parentesco" disabled>
-										  		<option value=""></option>
-											    <option value="Padre">Padre</option>
-												<option value="Madre">Madre</option>
-												<option value="Hermano(a)">Hermano(a)</option>
-												<option value="Tio(a)">Tio(a)</option>
-												<option value="Primo(a)">Primo(a)</option>
-												<option value="Abuelo(a)">Abuelo(a)</option>
-												<option value="Cuñado(a)">Cuñado(a)</option>
-												<option value="Padrino">Padrino</option>
-												<option value="Madrina">Madrina</option>
-										  	</select>
-										</div>  	 	
-									</div>
-
-									<div class="col-sm-12">
-						        		<div class="form-group">
-											<label for="observaciones">OBSERVACIONES</label>
-											<textarea class="form-control" name="observaciones" id="observaciones" cols="50" rows="3" placeholder="Observaciones.." disabled style="resize:none"></textarea>
-										</div>	
-						        	</div>
 								</div>
 							</div>		
+
+							<div class="col-sm-6">
+								<div class="panel panel-default">
+			    					<div class="panel-body">
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="id_acudiente">ACUDIENTE</label>
+											<div class="col-sm-7">
+												<div id="acudiente1">
+													<select class="form-control" id="id_acudiente" name="id_acudiente" disabled>
+																	    
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+										  	<label class="control-label col-sm-4" for="parentesco">PARENTESCO</label>
+										  	<div class="col-sm-6">
+											  	<select class="form-control" id="parentesco" name="parentesco" disabled>
+											  		<option value=""></option>
+												    <option value="Padre">Padre</option>
+													<option value="Madre">Madre</option>
+													<option value="Hermano(a)">Hermano(a)</option>
+													<option value="Tio(a)">Tio(a)</option>
+													<option value="Primo(a)">Primo(a)</option>
+													<option value="Abuelo(a)">Abuelo(a)</option>
+													<option value="Cuñado(a)">Cuñado(a)</option>
+													<option value="Padrino">Padrino</option>
+													<option value="Madrina">Madrina</option>
+											  	</select>
+											</div>  	 	
+										</div>
+
+										<div class="col-sm-12">
+							        		<div class="form-group">
+												<label for="observaciones">OBSERVACIONES</label>
+												<textarea class="form-control" name="observaciones" id="observaciones" cols="50" rows="3" placeholder="Observaciones.." disabled style="resize:none"></textarea>
+											</div>	
+							        	</div>
+									</div>
+								</div>		
+							</div>	
+
+							<div class="col-sm-offset-4 col-sm-4">
+								<button type="submit" name="btn_registrar_matricula" id="btn_registrar_matricula" class="btn btn-primary btn-lg btn-block" disabled="">Registrar</button>
+							</div>
+
 						</div>	
+			        </form>
+			    </div>
 
-						<div class="col-sm-offset-4 col-sm-4">
-							<button type="submit" name="btn_registrar_matricula" id="btn_registrar_matricula" class="btn btn-primary btn-lg btn-block" disabled="">Registrar</button>
-						</div>
+			    <div class="tab-pane" id="tab_2">
 
-					</div>	
-		        </form>
-		    </div>    
+			    	<div class="row">
+				      	<div class="col-sm-offset-4 col-sm-4">
+				      		<div class="form-group">
+						        <div class="input-group custom-search-form">
+						            <input type="text" class="form-control" id="identificacionA" name="identificacionA" placeholder="Identificación Estudiante" onkeypress="return valida(event)">
+						                <span class="input-group-btn">
+						                    <button class="btn btn-primary" type="button" name="btn_buscar_estudiante" id="btn_buscar_estudianteA">
+						                        <i class="fa fa-search"></i>
+						                    </button>
+						                </span>
+						        </div>
+						    </div>
+					    </div>
+					</div>    
+
+			        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>matriculas_controller/insertar" name="" method="post" id="form_matriculasA">
+
+			        	<div class="row">
+			        		<div class="col-sm-6">
+					            <div class="panel panel-default">
+			    					<div class="panel-body">
+										<input type="hidden" class="form-control" id="id_personaA" name="id_persona">
+										<input type="hidden" class="form-control" id="nombre_gradoA" name="nombre_grado">
+										
+							        	<div class="form-group">
+							        		<label class="control-label col-sm-4" for="nombres">NOMBRES</label>
+							        		<div class="col-sm-7">
+												<input type="text" class="form-control" id="nombresA" name="nombres" placeholder="Nombres" disabled>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="apellido1">1° APELLIDO</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="apellido1A" name="apellido1" placeholder="Primer Apellido" disabled>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="apellido2">2° APELLIDO</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="apellido2A" name="apellido2" placeholder="Segundo Apellido" disabled>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="jornada">JORNADA</label>
+											<div class="col-sm-6">
+												<select class="form-control" id="jornadaMTA" name="jornada" disabled>
+														<option value="Mañana">Mañana</option>
+														<option value="Tarde">Tarde</option>
+														<option value="Noche">Noche</option>
+														<option value="Unica">Única</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="id_curso">CURSO</label>
+											<div class="col-sm-6">
+												<div id="curso1A">
+													<select class="form-control" id="id_cursoA" name="id_curso" disabled>
+																	    
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>		
+
+							<div class="col-sm-6">
+								<div class="panel panel-default">
+			    					<div class="panel-body">
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="id_acudiente">ACUDIENTE</label>
+											<div class="col-sm-7">
+												<div id="acudiente1">
+													<select class="form-control" id="id_acudienteA" name="id_acudiente" disabled>
+																	    
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+										  	<label class="control-label col-sm-4" for="parentesco">PARENTESCO</label>
+										  	<div class="col-sm-6">
+											  	<select class="form-control" id="parentescoA" name="parentesco" disabled>
+											  		<option value=""></option>
+												    <option value="Padre">Padre</option>
+													<option value="Madre">Madre</option>
+													<option value="Hermano(a)">Hermano(a)</option>
+													<option value="Tio(a)">Tio(a)</option>
+													<option value="Primo(a)">Primo(a)</option>
+													<option value="Abuelo(a)">Abuelo(a)</option>
+													<option value="Cuñado(a)">Cuñado(a)</option>
+													<option value="Padrino">Padrino</option>
+													<option value="Madrina">Madrina</option>
+											  	</select>
+											</div>  	 	
+										</div>
+
+										<div class="col-sm-12">
+							        		<div class="form-group">
+												<label for="observaciones">OBSERVACIONES</label>
+												<textarea class="form-control" name="observaciones" id="observacionesA" cols="50" rows="3" placeholder="Observaciones.." disabled style="resize:none"></textarea>
+											</div>	
+							        	</div>
+									</div>
+								</div>		
+							</div>	
+
+							<div class="col-sm-offset-4 col-sm-4">
+								<button type="submit" name="btn_registrar_matricula" id="btn_registrar_matriculaA" class="btn btn-primary btn-lg btn-block" disabled="">Registrar</button>
+							</div>
+
+						</div>	
+			        </form>
+
+			    </div>    
+			</div>
 		</div>
 		    
       </div><!-- Modalbody -->

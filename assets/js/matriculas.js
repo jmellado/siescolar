@@ -65,6 +65,7 @@ function inicio(){
 
 		$("#modal_agregar_matricula").modal();
 		llenarcombo_cursos($("#jornadaMT").val(),null);
+		llenarcombo_cursosA($("#jornadaMTA").val(),$("#nombre_gradoA").val());
        
     });
 
@@ -209,6 +210,11 @@ function inicio(){
         $("#form_matriculas").valid()==true;
         $("#identificacion").val("");
         bloquear_cajas_texto();
+
+        $("#form_matriculasA")[0].reset();
+        $("#form_matriculasA").valid()==true;
+        $("#identificacionA").val("");
+        bloquear_cajas_textoA();
     });
 
 
@@ -308,6 +314,145 @@ function inicio(){
 	}, "Solo Valores Alfabeticos");
 
 
+	//************************* FUNCIONES PARA LA MATRICULA DE ESTUDIANTES ANTIGUOS *****************************
+
+
+	$("#form_matriculasA").submit(function (event) {
+		//validar()
+		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
+		if($("#form_matriculasA").valid()==true){
+
+			$.ajax({
+
+				url:$("#form_matriculasA").attr("action"),
+				type:$("#form_matriculasA").attr("method"),
+				data:$("#form_matriculasA").serialize(),   //captura la info de la cajas de texto
+				success:function(respuesta) {
+
+					//alert(""+respuesta);
+					if (respuesta==="registroguardado") {
+						
+						toastr.success('Estudiante Matriculado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+						$("#form_matriculasA")[0].reset();
+						$("#identificacionA").val("");
+						bloquear_cajas_textoA();
+
+					}
+					else if(respuesta==="registronoguardado"){
+						
+						toastr.error('Estudiante No Matriculado.', 'Success Alert', {timeOut: 5000});
+						
+
+					}
+					else if(respuesta==="matricula ya existe"){
+						
+						toastr.warning('El Estudiante Ya Se Encuentra Matriculado.', 'Success Alert', {timeOut: 5000});
+						
+
+					}
+					else{
+
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						
+					}
+					mostrarmatriculas("",1,5);
+					llenarcombo_cursosA($("#jornadaMTA").val(),$("#nombre_gradoA").val());
+					llenarcombo_acudientes("");
+						
+				}
+
+			});
+
+		}else{
+
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+		}
+
+	});
+
+
+	$("#btn_buscar_estudianteA").click(function(event){
+    	
+    	if($("#identificacionA").val()==""){
+
+    		toastr.warning('Favor Digite Un Numero De Identificación', 'Success Alert', {timeOut: 3000});
+
+       	}
+       	else{
+
+       		id = $("#identificacionA").val();
+       		buscar_estudianteA(id);
+		}
+		
+       
+    });
+
+
+    $("#identificacionA").keyup(function(event){
+
+       	if(event.keyCode == 13) {
+
+       		if($("#identificacionA").val()==""){
+	        	toastr.warning('Favor Digite Un Numero De Identificación', 'Success Alert', {timeOut: 3000});
+	       	}
+	       	else{
+	       		id = $("#identificacionA").val();
+       			buscar_estudianteA(id);
+	       	}
+    	}
+		
+    });
+
+
+    $("#jornadaMTA").change(function(){
+    	jornada = $(this).val();
+    	nombre_grado = $("#nombre_gradoA").val();
+    	llenarcombo_cursosA(jornada,nombre_grado);
+    });
+
+
+	$("#form_matriculasA").validate({
+
+    	rules:{
+
+			id_curso:{
+				required: true,
+				maxlength: 15
+				//lettersonly: true	
+
+			},
+
+			jornada:{
+				required: true,
+				maxlength: 30
+				//lettersonly: true	
+
+			},
+
+			id_acudiente:{
+				required: true,
+				maxlength: 15	
+
+			},
+
+			parentesco:{
+				required: true,
+				maxlength: 30
+				//lettersonly: true	
+
+			},
+
+			observaciones:{
+				required: true,
+				maxlength: 80,
+				minlength: 1	
+
+			}
+
+		}
+
+
+	});
 }
 
 
@@ -507,14 +652,21 @@ function buscar_estudiante(valor){
 
 				if(respuesta==="estudiantenoexiste"){
 
-					toastr.success('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
+					toastr.error('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculas")[0].reset();
 					$("#id_persona").val("");
 					bloquear_cajas_texto();
 				}
 				else if(respuesta==="matricula ya existe"){
 
-					toastr.success('El Estudiante Ya Se Encuentra Matriculado.', 'Success Alert', {timeOut: 3000});
+					toastr.warning('El Estudiante Ya Se Encuentra Matriculado.', 'Success Alert', {timeOut: 3000});
+					$("#form_matriculas")[0].reset();
+					$("#id_persona").val("");
+					bloquear_cajas_texto();
+				}
+				else if(respuesta==="estudianteantiguo"){
+
+					toastr.error('El N° De Identificación Corresponde A Un Estudiante Antiguo.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculas")[0].reset();
 					$("#id_persona").val("");
 					bloquear_cajas_texto();
@@ -654,4 +806,126 @@ function bloquear_cajas_texto_actualizar(){
     $("#ano_lectivosele").attr("disabled", "disabled");
     $("#jornadaseleMT").attr("disabled", "disabled");
     $("#id_cursosele").attr("disabled", "disabled");
+}
+
+
+//************************************** FUNCIONES PARA LA MATRICULA DE ESTUDIANTES ANTIGUOS **********************************
+
+
+function buscar_estudianteA(valor){
+
+	$.ajax({
+		url:base_url+"matriculas_controller/buscar_estudianteA",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+				//toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				
+
+				if(respuesta==="estudiantenoexiste"){
+
+					toastr.error('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
+					$("#form_matriculasA")[0].reset();
+					$("#id_personaA").val("");
+					$("#nombre_gradoA").val("");
+					bloquear_cajas_textoA();
+				}
+				else if(respuesta==="matricula ya existe"){
+
+					toastr.warning('El Estudiante Ya Se Encuentra Matriculado.', 'Success Alert', {timeOut: 3000});
+					$("#form_matriculasA")[0].reset();
+					$("#id_personaA").val("");
+					$("#nombre_gradoA").val("");
+					bloquear_cajas_textoA();
+				}
+				else if(respuesta==="estudiantenuevo"){
+
+					toastr.error('El N° De Identificación No Corresponde A Un Estudiante Antiguo.', 'Success Alert', {timeOut: 3000});
+					$("#form_matriculasA")[0].reset();
+					$("#id_personaA").val("");
+					$("#nombre_gradoA").val("");
+					bloquear_cajas_textoA();
+				}
+				else{
+
+					registros = JSON.parse(respuesta);
+					
+					for (var i = 0; i < registros.datos.length; i++) {
+
+						id_persona = registros.datos[i].id_persona;
+						nombres =    registros.datos[i].nombres;
+						apellido1 =  registros.datos[i].apellido1;
+						apellido2 =  registros.datos[i].apellido2;
+						jornada   =  $("#jornadaMTA").val();
+						nombre_grado = registros.proximo_grado;
+
+						$("#id_personaA").val(id_persona);
+	        			$("#nombresA").val(nombres);
+	        			$("#apellido1A").val(apellido1);
+	        			$("#apellido2A").val(apellido2);
+	        			$("#nombre_gradoA").val(nombre_grado);
+
+	        			desbloquear_cajas_textoA();
+						llenarcombo_acudientes("");
+						llenarcombo_cursosA(jornada,nombre_grado);
+						
+					};
+				}	
+				
+		
+		}
+
+	});
+}
+
+
+function llenarcombo_cursosA(jornada,nombre_grado){
+
+	$.ajax({
+		url:base_url+"matriculas_controller/llenarcombo_cursosA",
+		type:"post",
+		data:{jornada:jornada,nombre_grado:nombre_grado},
+		success:function(respuesta) {
+				//toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_curso"]==id_cursosele){
+
+						html +="<option value="+registros[i]["id_curso"]+" selected>"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
+					}
+					else{
+
+						html +="<option value="+registros[i]["id_curso"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
+					}	
+				};
+				
+				$("#curso1A select").html(html);
+		}
+
+	});
+}
+
+
+function bloquear_cajas_textoA(){
+
+	$("#id_cursoA").attr("disabled", "disabled");
+	$("#id_acudienteA").attr("disabled", "disabled");
+	$("#parentescoA").attr("disabled", "disabled");
+    $("#jornadaMTA").attr("disabled", "disabled");
+    $("#observacionesA").attr("disabled", "disabled");
+    $("#btn_registrar_matriculaA").attr("disabled", "disabled");
+}
+
+function desbloquear_cajas_textoA(){
+
+	$("#id_cursoA").removeAttr("disabled");
+	$("#id_acudienteA").removeAttr("disabled");
+	$("#parentescoA").removeAttr("disabled");
+    $("#jornadaMTA").removeAttr("disabled");
+    $("#observacionesA").removeAttr("disabled");
+    $("#btn_registrar_matriculaA").removeAttr("disabled");
+
 }
