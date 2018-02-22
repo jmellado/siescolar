@@ -117,6 +117,7 @@ class Imprimir_model extends CI_Model {
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('personas', 'cursos.director = personas.id_persona');
+		$this->db->join('anos_lectivos', 'cursos.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
 		$query = $this->db->get('cursos');
 
@@ -157,8 +158,12 @@ class Imprimir_model extends CI_Model {
 		$this->db->where('cursos.jornada',$jornada);
 		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 		
@@ -179,6 +184,27 @@ class Imprimir_model extends CI_Model {
 		else{
 			return false;
 		}
+
+	}
+
+
+	//************************************************** FUNCIONES PARA IMPRIMIR PLANILLAS *************************************************
+
+
+	public function EstudiantesMatriculadosPorCurso($id_curso){
+
+		$this->db->where('matriculas.id_curso',$id_curso);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select('matriculas.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2');
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
 
 	}
 
