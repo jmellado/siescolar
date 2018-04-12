@@ -73,6 +73,9 @@ class Notificaciones_controller extends CI_Controller {
 	        		if($respuesta == true){
 
 						echo "registroguardado";
+
+                        //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                        $respuesta_firebase = $this->notificaciones_model->enviar_notificacionFirebase($titulo,$contenido);
 					}
 					else{
 
@@ -118,6 +121,9 @@ class Notificaciones_controller extends CI_Controller {
         			if($respuesta==true){
 
 						echo "registroguardado";
+
+                        //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                        $respuesta_firebase = $this->notificaciones_model->enviar_notificacionFirebase($titulo,$contenido);
 					}
 					else{
 
@@ -131,6 +137,9 @@ class Notificaciones_controller extends CI_Controller {
         			if($respuesta==true){
 
 						echo "registroguardado-ea";
+
+                        //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                        $respuesta_firebase = $this->notificaciones_model->enviar_notificacionFirebase($titulo,$contenido);
 					}
 					else{
 

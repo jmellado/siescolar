@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-02-2018 a las 21:34:54
+-- Tiempo de generación: 12-04-2018 a las 20:33:04
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-02-12 20:34:19');
+(12345, '2018-04-12 18:13:40');
 
 -- --------------------------------------------------------
 
@@ -1970,21 +1970,22 @@ CREATE TABLE `usuarios` (
   `id_rol` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `acceso` varchar(1) NOT NULL
+  `acceso` varchar(1) NOT NULL,
+  `token` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `password`, `acceso`) VALUES
-(1, 1, 1, 'siescolar', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(2, 2, 2, 'jfirias', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(3, 3, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(4, 4, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(5, 5, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1'),
-(7, 1, 5, 'adminvotante', '8cb2237d0679ca88db6464eac60da96345513964', '1');
+INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `password`, `acceso`, `token`) VALUES
+(1, 1, 1, 'siescolar', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(2, 2, 2, 'jfirias', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(3, 3, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(4, 4, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(5, 5, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(7, 1, 5, 'adminvotante', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL);
 
 --
 -- Índices para tablas volcadas
