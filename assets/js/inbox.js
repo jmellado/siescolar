@@ -707,7 +707,7 @@ function mostrarestudiantes_m(valor,pagina,cantidad,id_curso){
 
 				html ="";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_persona+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_estudiantes_m tbody").html(html);
@@ -793,7 +793,7 @@ function mostrarestudiantes_t(valor,pagina,cantidad,id_curso){
 
 				html ="";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_persona+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_estudiantes_t tbody").html(html);
@@ -879,7 +879,7 @@ function mostrarestudiantes_e(valor,pagina,cantidad,id_curso){
 
 				html ="";
 				for (var i = 0; i < registros.estudiantes.length; i++) {
-					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_acudiente+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
+					html +="<tr><td><input type='checkbox' name='acudiente[]' value='"+registros.estudiantes[i].id_persona+"'></td><td>"+[i+1]+"</td><td>"+registros.estudiantes[i].nombres+"</td><td>"+registros.estudiantes[i].apellido1+"</td><td>"+registros.estudiantes[i].apellido2+"</td><td style='display:none'><a class='btn btn-success' href="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.estudiantes[i].id_acudiente+"><i class='fa fa-trash'></i></button></td></tr>";
 				};
 				
 				$("#lista_estudiantes_e tbody").html(html);

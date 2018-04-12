@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-04-2018 a las 20:33:04
+-- Tiempo de generación: 12-04-2018 a las 23:50:13
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-04-12 18:13:40');
+(12345, '2018-04-12 21:49:45');
 
 -- --------------------------------------------------------
 
@@ -1786,6 +1786,7 @@ CREATE TABLE `notificaciones` (
   `contenido` varchar(300) NOT NULL,
   `destinatario` varchar(45) NOT NULL,
   `rol_destinatario` varchar(45) NOT NULL,
+  `id_estudiante` int(11) DEFAULT NULL,
   `id_asignatura` int(11) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,

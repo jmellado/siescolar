@@ -66,6 +66,8 @@ class Inbox_model extends CI_Model {
 
 		for ($i=0; $i < count($destinatario) ; $i++) {
 
+			$id_acudiente = $this->inbox_model->consultar_acudiente($destinatario[$i]);
+
 			//array para insertar en la tabla notificaciones
         	$notificacion = array(
         	'codigo_notificacion' =>$ultimo_id,
@@ -74,8 +76,9 @@ class Inbox_model extends CI_Model {
 			'titulo' =>$titulo,
 			'tipo_notificacion' =>$tipo_notificacion,
 			'contenido' =>$contenido,
-			'destinatario' =>$destinatario[$i],
+			'destinatario' =>$id_acudiente,
 			'rol_destinatario' =>$rol_destinatario,
+			'id_estudiante' =>$destinatario[$i],
 			'id_asignatura' =>$id_asignatura,
 			'fecha_envio' =>$fecha_envio,
 			'estado_lectura' =>$estado_lectura);
@@ -106,6 +109,8 @@ class Inbox_model extends CI_Model {
 
 		for ($i=0; $i < count($destinatario) ; $i++) {
 
+			$id_acudiente = $this->inbox_model->consultar_acudiente($destinatario[$i]);
+
 			//array para insertar en la tabla notificaciones
         	$notificacion = array(
         	'codigo_notificacion' =>$ultimo_id,
@@ -113,8 +118,9 @@ class Inbox_model extends CI_Model {
         	'remitente' =>$remitente,	
 			'titulo' =>$titulo,
 			'contenido' =>$contenido,
-			'destinatario' =>$destinatario[$i],
+			'destinatario' =>$id_acudiente,
 			'rol_destinatario' =>$rol_destinatario,
+			'id_estudiante' =>$destinatario[$i],
 			'id_asignatura' =>$id_asignatura,
 			'fecha_fin' =>$fecha_limite,
 			'fecha_envio' =>$fecha_envio,
@@ -146,6 +152,8 @@ class Inbox_model extends CI_Model {
 
 		for ($i=0; $i < count($destinatario) ; $i++) {
 
+			$id_acudiente = $this->inbox_model->consultar_acudiente($destinatario[$i]);
+
 			//array para insertar en la tabla notificaciones
         	$notificacion = array(
         	'codigo_notificacion' =>$ultimo_id,
@@ -153,8 +161,9 @@ class Inbox_model extends CI_Model {
         	'remitente' =>$remitente,	
 			'titulo' =>$titulo,
 			'contenido' =>$contenido,
-			'destinatario' =>$destinatario[$i],
+			'destinatario' =>$id_acudiente,
 			'rol_destinatario' =>$rol_destinatario,
+			'id_estudiante' =>$destinatario[$i],
 			'id_asignatura' =>$id_asignatura,
 			'fecha_inicio' =>$fecha_inicio,
 			'hora_inicio' =>$hora_inicio,
@@ -178,6 +187,28 @@ class Inbox_model extends CI_Model {
 			return true;
 		}
 
+
+	}
+
+
+	//Esta funcion me permite consultar el acudiente(id) de un estudiante matriculado
+	public function consultar_acudiente($id_estudiante){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_estudiante',$id_estudiante);
+
+		$this->db->select('matriculas.id_acudiente');
+		
+		$query = $this->db->get('matriculas');
+
+		$row = $query->result_array();
+
+		$id_acudiente = $row[0]['id_acudiente'];
+
+		return $id_acudiente;
 
 	}
 
