@@ -82,6 +82,9 @@ class Inbox_controller extends CI_Controller {
         		if($respuesta == true){
 
 					echo "registroguardado";
+
+                    //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario);
 				}
 				else{
 
@@ -139,6 +142,9 @@ class Inbox_controller extends CI_Controller {
         		if($respuesta == true){
 
 					echo "registroguardado";
+
+                    //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario);
 				}
 				else{
 
@@ -202,6 +208,9 @@ class Inbox_controller extends CI_Controller {
         		if($respuesta == true){
 
 					echo "registroguardado";
+
+                    //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario);
 				}
 				else{
 

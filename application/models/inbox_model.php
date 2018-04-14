@@ -213,4 +213,81 @@ class Inbox_model extends CI_Model {
 	}
 
 
+	//Esta Funcion Me Permite Enviar Una Notificacion A Todos Los Acudientes Conectados En La App Movil
+	public function enviar_notificacionFirebase($titulo,$contenido,$destinatario){
+
+		$TokensAcudientes = $this->inbox_model->obtener_TokensAcudientes($destinatario);
+
+		if ($TokensAcudientes != false) {
+
+			//clave del servidor FCM
+ 			$apiKey = 'AAAAhVC_IAs:APA91bFIRUkXQpUEUKbZ_PdYJtHc2zt_g7kAcD6tct8ZfU0xI_c0pjmBTrW5PPuhJBG8AzNtuQJvcSUtal8sZnZpAcMHdkkTcOFOHWiJB6oHyeFr6q3sTSeuzes2v0XUmIYY6qnqQ4na';
+
+ 			$headers = array(
+				"Authorization:key=$apiKey",
+				'Content-Type:application/json'
+			);
+
+			//datos
+			$notificacion = array(
+				'body' => $contenido,
+				'title' => $titulo,
+			);
+
+			$data = array(
+			   'registration_ids' => $TokensAcudientes,
+			   'data' => $notificacion
+			);
+
+			// Petición
+			$ch = curl_init();
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+			curl_setopt( $ch, CURLOPT_URL, "https://fcm.googleapis.com/fcm/send" );
+			curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
+			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+			// Conectamos y recuperamos la respuesta
+			$response = curl_exec($ch);
+			//echo($response);
+			 
+			// Cerramos conexión
+			curl_close($ch);
+		}
+
+
+	}
+
+
+	//Con esta Funcion obtengo un array con los tokens de los acudientes seleccionados
+	//Recibo un array con los id de los estudiantes
+	//Luego consulto el id del acudiente de cada estudiante
+	//Po ultimo consulto el token de cada acudiente y lo voy almacenando en el array tokens el cual es retornado
+	public function obtener_TokensAcudientes($destinatario){
+
+		//array sencillo para los tokens
+		$tokens = array();
+
+		for ($i=0; $i < count($destinatario) ; $i++) {
+
+			$id_acudiente = $this->inbox_model->consultar_acudiente($destinatario[$i]);
+
+			$this->db->where('usuarios.id_rol',4);
+			$this->db->where('usuarios.id_persona',$id_acudiente);
+
+			$this->db->select('usuarios.token');
+
+			$query = $this->db->get('usuarios');
+
+			$row = $query->result_array();
+
+			$tokens[] = $row[0]['token'];
+		}
+		
+		//array con los token de los dispositvos a los cuales va ir dirgido la notificacion
+		return $tokens;
+	}
+
+
 }
