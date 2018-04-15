@@ -315,5 +315,171 @@ class Configuraciones_controller extends CI_Controller {
 
         }
 
-	}	
+	}
+
+
+	//**************************** FUNCIONES AÑO LECTIVO ****************************************
+
+
+	public function anio_lectivo()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_administrador_vista', 'configuraciones/ano_lectivo_vista');
+	}
+
+
+	public function insertar_anolectivo(){
+
+        $this->form_validation->set_rules('anolectivo', 'Año Lectivo', 'required');
+        $this->form_validation->set_rules('fecha_inicio', 'Fecha Inicio', 'required');
+        $this->form_validation->set_rules('fecha_fin', 'Fecha Fin', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	//obtengo el ultimo id de anolectivo + 1 
+        	$ultimo_id = $this->configuraciones_model->obtener_ultimo_idanolectivo();
+
+        	$nombre_ano_lectivo = $this->input->post('anolectivo');
+        	$fecha_inicio = $this->input->post('fecha_inicio');
+        	$fecha_fin = $this->input->post('fecha_fin');
+        	$estado_ano_lectivo = "Activo";
+        	$seleccionado = "No";
+
+        	//array para insertar en la tabla anos_lectivos
+        	$anolectivo = array(
+        	'id_ano_lectivo' =>$ultimo_id,	
+			'nombre_ano_lectivo' =>$nombre_ano_lectivo,
+			'fecha_inicio' =>$fecha_inicio,
+			'fecha_fin' =>$fecha_fin,
+			'estado_ano_lectivo' =>$estado_ano_lectivo,
+			'seleccionado' =>$seleccionado);
+
+			if ($this->configuraciones_model->validar_existencia_anolectivo($nombre_ano_lectivo)){
+
+				$respuesta=$this->configuraciones_model->insertar_anolectivo($anolectivo);
+
+				if($respuesta==true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
+			}
+			else{
+
+				echo "anolectivoyaexiste";
+			}
+
+        }
+
+	}
+
+
+	public function mostraranoslectivos(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'anoslectivos' => $this->configuraciones_model->buscar_anolectivo($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->configuraciones_model->buscar_anolectivo($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function modificar_anolectivo(){
+
+        $this->form_validation->set_rules('id_anolectivo', 'Id Año Lectivo', 'required');
+        $this->form_validation->set_rules('fecha_inicio', 'Fecha Inicio', 'required');
+        $this->form_validation->set_rules('fecha_fin', 'Fecha Fin', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$id_ano_lectivo = $this->input->post('id_anolectivo');
+        	$fecha_inicio = $this->input->post('fecha_inicio');
+        	$fecha_fin = $this->input->post('fecha_fin');
+        	$estado_ano_lectivo = "Activo";
+
+        	//array para insertar en la tabla anos_lectivos
+        	$anolectivo = array(
+        	'id_ano_lectivo' =>$id_ano_lectivo,	
+			'fecha_inicio' =>$fecha_inicio,
+			'fecha_fin' =>$fecha_fin,
+			'estado_ano_lectivo' =>$estado_ano_lectivo);
+
+			$respuesta=$this->configuraciones_model->modificar_anolectivo($id_ano_lectivo,$anolectivo);
+
+			if($respuesta==true){
+
+				echo "registroactualizado";
+			}
+			else{
+
+				echo "registronoactualizado";
+			}
+
+        }
+
+	}
+
+
+	//Esta funcion me permite llenar el combo anolectivo con el ultimo anolectivo +1
+	public function llenarcombo_anolectivo(){
+
+    	$consulta = $this->configuraciones_model->llenar_anolectivo();
+    	echo json_encode($consulta);
+    }
+
+
+    public function seleccionar_anolectivo(){
+
+	  	$id_anolectivo =$this->input->post('id_anolectivo'); 
+
+        if(is_numeric($id_anolectivo)){
+
+			
+	        $respuesta=$this->configuraciones_model->seleccionar_anolectivo($id_anolectivo);
+	        
+          	if($respuesta==true){
+              
+              	echo "registroseleccionado";
+          	}else{
+              
+              	echo "registronoseleccionado";
+          	}
+          
+        }else{
+          
+          	echo "Digite valor numerico para identificar un Ano lectivo";
+        }
+    }	
 }

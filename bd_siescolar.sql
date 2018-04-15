@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-04-2018 a las 23:50:13
+-- Tiempo de generación: 15-04-2018 a las 06:58:17
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-04-12 21:49:45');
+(12345, '2018-04-15 04:54:29');
 
 -- --------------------------------------------------------
 
@@ -61,23 +61,19 @@ INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
 
 CREATE TABLE `anos_lectivos` (
   `id_ano_lectivo` int(11) NOT NULL,
-  `nombre_ano_lectivo` year(4) NOT NULL
+  `nombre_ano_lectivo` year(4) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `estado_ano_lectivo` varchar(8) NOT NULL,
+  `seleccionado` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `anos_lectivos`
 --
 
-INSERT INTO `anos_lectivos` (`id_ano_lectivo`, `nombre_ano_lectivo`) VALUES
-(1, 2010),
-(2, 2011),
-(3, 2012),
-(4, 2013),
-(5, 2014),
-(6, 2015),
-(7, 2016),
-(8, 2017),
-(9, 2018);
+INSERT INTO `anos_lectivos` (`id_ano_lectivo`, `nombre_ano_lectivo`, `fecha_inicio`, `fecha_fin`, `estado_ano_lectivo`, `seleccionado`) VALUES
+(1, 2018, '2018-01-13', '2018-12-10', 'Activo', 'Si');
 
 -- --------------------------------------------------------
 
@@ -2266,7 +2262,7 @@ ALTER TABLE `acudientes`
 -- AUTO_INCREMENT de la tabla `anos_lectivos`
 --
 ALTER TABLE `anos_lectivos`
-  MODIFY `id_ano_lectivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_ano_lectivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --

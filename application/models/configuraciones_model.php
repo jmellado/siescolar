@@ -128,4 +128,113 @@ class Configuraciones_model extends CI_Model {
 			return false;
 	}
 
+
+	//**************************** FUNCIONES AÑO LECTIVO ****************************************
+
+	public function validar_existencia_anolectivo($nombre_ano_lectivo){
+
+		$this->db->where('nombre_ano_lectivo',$nombre_ano_lectivo);
+		$query = $this->db->get('anos_lectivos');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function obtener_ultimo_idanolectivo(){
+
+		$this->db->select_max('id_ano_lectivo');
+		$query = $this->db->get('anos_lectivos');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['id_ano_lectivo'];
+        return $data['query'];
+	}
+
+
+	public function insertar_anolectivo($anolectivo){
+		if ($this->db->insert('anos_lectivos', $anolectivo)) 
+			return true;
+		else
+			return false;
+	}
+
+
+	public function buscar_anolectivo($id,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->like('nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('fecha_inicio',$id,'after');
+		$this->db->or_like('fecha_fin',$id,'after');
+		$this->db->or_like('estado_ano_lectivo',$id,'after');
+		$this->db->or_like('seleccionado',$id,'after');
+
+		$this->db->order_by('nombre_ano_lectivo', 'asc');
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->select('id_ano_lectivo,nombre_ano_lectivo,fecha_inicio,fecha_fin,estado_ano_lectivo,seleccionado');
+		
+		$query = $this->db->get('anos_lectivos');
+
+		return $query->result();
+		
+	}
+
+
+	public function llenar_anolectivo(){
+
+		$this->db->select_max('nombre_ano_lectivo');
+		$query = $this->db->get('anos_lectivos');
+
+		$row = $query->result_array();
+		$nuevo_anolectivo = 1 + $row[0]['nombre_ano_lectivo'];
+
+		//Utilizo un array para enviar el nuevo anolectivo en forma de result() o result_array()
+		$array_anolectivo[] = array('nombre_ano_lectivo' => $nuevo_anolectivo);
+
+		return $array_anolectivo;
+	}
+
+
+	public function modificar_anolectivo($id_ano_lectivo,$anolectivo){
+
+		$this->db->where('id_ano_lectivo',$id_ano_lectivo);
+
+		if ($this->db->update('anos_lectivos', $anolectivo))
+
+			return true;
+		else
+			return false;
+	}
+
+
+	public function seleccionar_anolectivo($id_ano_lectivo){
+
+		$seleccionado = array('seleccionado' => "Si");
+		$noseleccionado = array('seleccionado' => "No");
+
+		$this->db->trans_start();
+		$this->db->update('anos_lectivos', $noseleccionado);
+
+		$this->db->where('id_ano_lectivo',$id_ano_lectivo);
+		$this->db->update('anos_lectivos', $seleccionado);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+    }
 }

@@ -37,6 +37,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/periodos_evaluacion.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/ano_lectivo.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
@@ -346,6 +347,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>configuraciones_controller/datos_institucion"><i class="fa fa-clipboard"></i>Datos Institución</a></li>
+            <li><a href="<?php echo base_url(); ?>configuraciones_controller/anio_lectivo"><i class="fa fa-calendar-times-o"></i>Año Lectivo</a></li>
             <li><a href="<?php echo base_url(); ?>configuraciones_controller/periodos_evaluacion"><i class="fa fa-calendar"></i>Períodos Evaluación</a></li>
           </ul>
         </li>
