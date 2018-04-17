@@ -36,6 +36,12 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="registrodenegado"){
+						
+						toastr.warning('Año Lectivo No Registrado; Solo Puede Tener Dos Años Lectivos Activos.', 'Success Alert', {timeOut: 5000});
+						$("#form_anoslectivos")[0].reset();	
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
@@ -376,6 +382,11 @@ function actualizar_anolectivo(){
 				else if(respuesta==="registronoactualizado"){
 					
 					toastr.error('Año Lectivo No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('No Se Pudo Actualizar; El Año Lectivo Se Encuentra Cerrado.', 'Success Alert', {timeOut: 3000});
 					
 				}
 				else{

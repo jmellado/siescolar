@@ -221,6 +221,7 @@ class Configuraciones_model extends CI_Model {
 		$noseleccionado = array('seleccionado' => "No");
 
 		$this->db->trans_start();
+		$this->db->where('seleccionado',"Si");
 		$this->db->update('anos_lectivos', $noseleccionado);
 
 		$this->db->where('id_ano_lectivo',$id_ano_lectivo);
@@ -237,4 +238,40 @@ class Configuraciones_model extends CI_Model {
 		}
 
     }
+
+
+    //Esta Funcion me permite obtener el numero total de anoslectivos con estado activo
+    public function anoslectivosActivos(){
+
+    	$this->db->where('estado_ano_lectivo',"Activo");
+		$query = $this->db->get('anos_lectivos');
+
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	// Esta Funcion me permite obtener el estado de un anolectivo
+	public function estado_anolectivo($id_ano_lectivo){
+
+		$this->db->where('id_ano_lectivo',$id_ano_lectivo);
+		$query = $this->db->get('anos_lectivos');
+
+		if ($query->num_rows() > 0) {
+
+			$row = $query->result_array();
+			$estado = $row[0]['estado_ano_lectivo'];
+
+			return $estado;
+		}
+		else{
+			return false;
+		}
+
+	}
 }

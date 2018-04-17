@@ -364,23 +364,32 @@ class Configuraciones_controller extends CI_Controller {
 			'estado_ano_lectivo' =>$estado_ano_lectivo,
 			'seleccionado' =>$seleccionado);
 
-			if ($this->configuraciones_model->validar_existencia_anolectivo($nombre_ano_lectivo)){
+			$anoslectivosActivos = $this->configuraciones_model->anoslectivosActivos();
 
-				$respuesta=$this->configuraciones_model->insertar_anolectivo($anolectivo);
+			if ($anoslectivosActivos < 2) {
+				
+				if ($this->configuraciones_model->validar_existencia_anolectivo($nombre_ano_lectivo)){
 
-				if($respuesta==true){
+					$respuesta=$this->configuraciones_model->insertar_anolectivo($anolectivo);
 
-					echo "registroguardado";
+					if($respuesta==true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "anolectivoyaexiste";
 				}
 
 			}
 			else{
-
-				echo "anolectivoyaexiste";
+				echo "registrodenegado";
 			}
 
         }
@@ -427,24 +436,31 @@ class Configuraciones_controller extends CI_Controller {
         	$id_ano_lectivo = $this->input->post('id_anolectivo');
         	$fecha_inicio = $this->input->post('fecha_inicio');
         	$fecha_fin = $this->input->post('fecha_fin');
-        	$estado_ano_lectivo = "Activo";
 
         	//array para insertar en la tabla anos_lectivos
         	$anolectivo = array(
         	'id_ano_lectivo' =>$id_ano_lectivo,	
 			'fecha_inicio' =>$fecha_inicio,
-			'fecha_fin' =>$fecha_fin,
-			'estado_ano_lectivo' =>$estado_ano_lectivo);
+			'fecha_fin' =>$fecha_fin);
 
-			$respuesta=$this->configuraciones_model->modificar_anolectivo($id_ano_lectivo,$anolectivo);
+			$estado_anolectivo = $this->configuraciones_model->estado_anolectivo($id_ano_lectivo);
 
-			if($respuesta==true){
+			if ($estado_anolectivo == "Activo") {
+			
+				$respuesta=$this->configuraciones_model->modificar_anolectivo($id_ano_lectivo,$anolectivo);
 
-				echo "registroactualizado";
+				if($respuesta==true){
+
+					echo "registroactualizado";
+				}
+				else{
+
+					echo "registronoactualizado";
+				}
+
 			}
 			else{
-
-				echo "registronoactualizado";
+				echo "anolectivocerrado";
 			}
 
         }
