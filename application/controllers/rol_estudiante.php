@@ -8,6 +8,7 @@ class Rol_estudiante extends CI_Controller {
 		{
 			redirect(base_url().'login_controller');
 		}
-		$this->load->view('roles/rol_estudiante_vista');
+		$data['contents'] = null;
+		$this->load->view('roles/rol_estudiante_vista',$data);
 	}
 }
