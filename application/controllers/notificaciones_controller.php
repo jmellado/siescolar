@@ -45,6 +45,18 @@ class Notificaciones_controller extends CI_Controller {
     }
 
 
+    public function index_acudiente()
+    {
+
+        if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'acudiente')
+        {
+            redirect(base_url().'login_controller');
+        }
+
+        $this->template->load('roles/rol_acudiente_vista', 'notificaciones/notificaciones_usuarios_vista');
+    }
+
+
 	public function insertar(){
 
 		$this->form_validation->set_rules('rol_destinatario', 'Destinatario', 'required');

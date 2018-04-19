@@ -31,6 +31,9 @@ class Login_controller extends CI_Controller {
 			case 'votante':
 				redirect(site_url("rol_votante/elecciones"));
 				break;
+			case 'acudiente':
+				redirect(site_url("rol_acudiente"));
+				break;
 			default:		
 				//$data['titulo'] = 'Login con roles de usuario en codeigniter';
 				$this->load->view('login/login_vista');
