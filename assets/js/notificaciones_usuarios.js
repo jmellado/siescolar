@@ -125,7 +125,16 @@ function VistaPrevia_Notificaciones(){
 					if (registros.notificaciones[i].categoria_notificacion == "Eventos") {
 						$categoria = "<i class='fa fa-calendar text-aqua'></i>";
 					}
-					html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_profesor'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+
+					if (rol == "profesor") {
+						html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_profesor'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+					}
+					else if (rol == "estudiante") {
+						html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_estudiante'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+					}
+					else if (rol == "acudiente") {
+						html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_acudiente'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+					}	
 				};
 
 				$("#listado_notificaciones").html(html);
