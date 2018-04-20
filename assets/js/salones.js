@@ -372,6 +372,11 @@ function actualizar_salon(){
 					toastr.warning('Salón Ya Registrado.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="salonencursos"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Este Salón; Actualmente Se Encuentra Asociado A Un Curso.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

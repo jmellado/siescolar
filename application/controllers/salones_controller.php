@@ -37,8 +37,8 @@ class Salones_controller extends CI_Controller {
         	//obtengo el ultimo id de salones + 1 
         	$ultimo_id = $this->salones_model->obtener_ultimo_id();
 
-        	$nombre_salon = $this->input->post('nombre_salon');
-	    	$observacion = $this->input->post('observacion');
+        	$nombre_salon = ucwords(strtolower(trim($this->input->post('nombre_salon'))));
+	    	$observacion = ucwords(strtolower(trim($this->input->post('observacion'))));
 	    	$ano_lectivo = $this->input->post('ano_lectivo');
 	    	$estado_salon = $this->input->post('estado_salon');
         	$disponibilidad = 'si';
@@ -103,16 +103,21 @@ class Salones_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->salones_model->eliminar_salon($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "Salón Eliminado Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->salones_model->ValidarExistencia_SalonEnCursos($id)){
+
+		        $respuesta=$this->salones_model->eliminar_salon($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Salón Eliminado Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Este Salón; Actualmente Se Encuentra Asociado A Un Curso.";
+	        }
           
         }else{
           
@@ -123,8 +128,8 @@ class Salones_controller extends CI_Controller {
     public function modificar(){
 
     	$id_salon = $this->input->post('id_salon');
-    	$nombre_salon = $this->input->post('nombre_salon');
-    	$observacion = $this->input->post('observacion');
+    	$nombre_salon = ucwords(strtolower(trim($this->input->post('nombre_salon'))));
+    	$observacion = ucwords(strtolower(trim($this->input->post('observacion'))));
     	$ano_lectivo = $this->input->post('ano_lectivo');
     	$estado_salon = $this->input->post('estado_salon');
     	$disponibilidad = 'si';
@@ -132,8 +137,8 @@ class Salones_controller extends CI_Controller {
     	//array para insertar en la tabla salones----------
         $salon = array(
         'id_salon' =>$id_salon,	
-		'nombre_salon' =>ucwords($nombre_salon),
-		'observacion' =>ucwords($observacion),
+		'nombre_salon' =>$nombre_salon,
+		'observacion' =>$observacion,
 		'ano_lectivo' =>$ano_lectivo,
 		'estado_salon' =>$estado_salon,
 		'disponibilidad' =>$disponibilidad);
@@ -144,50 +149,55 @@ class Salones_controller extends CI_Controller {
 		
         if(is_numeric($id_salon)){
 
-        	if ($nombre_buscado == $nombre_salon && $ano_lectivo_buscado == $ano_lectivo){
+        	if ($this->salones_model->ValidarExistencia_SalonEnCursos($id_salon)){
 
-        		
-	        	$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
+	        	if ($nombre_buscado == $nombre_salon && $ano_lectivo_buscado == $ano_lectivo){
 
-				if($respuesta==true){
-
-					echo "registroactualizado";
-
-	            }else{
-
-					echo "registronoactualizado";
-
-	            }
-	         	
-	        }
-	        else{
-
-	        	if($this->salones_model->validar_existencia($nombre_salon,$ano_lectivo)){
-
-	        	
-	        		$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
-
-	        		if($respuesta==true){
-
-	        			echo "registroactualizado";
-
-	        		}else{
-
-	        			echo "registronoactualizado";
-	        		}
 	        		
-	        	}
-	        	else{
+		        	$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
 
-	        		echo "salonyaexiste";
-	        	}
-	
-			}    
-                
+					if($respuesta==true){
+
+						echo "registroactualizado";
+
+		            }else{
+
+						echo "registronoactualizado";
+
+		            }
+		         	
+		        }
+		        else{
+
+		        	if($this->salones_model->validar_existencia($nombre_salon,$ano_lectivo)){
+
+		        	
+		        		$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
+
+		        		if($respuesta==true){
+
+		        			echo "registroactualizado";
+
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
+		        		
+		        	}
+		        	else{
+
+		        		echo "salonyaexiste";
+		        	}
+		
+				}    
+            }
+            else{
+            	echo "salonencursos";
+            }    
          
         }else{
             
-            echo "digite valor numerico para identificar un salon";
+            echo "digite valor numerico para identificar un salón";
         }
 
     }
