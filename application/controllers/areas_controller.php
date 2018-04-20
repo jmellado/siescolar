@@ -98,16 +98,21 @@ class Areas_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->areas_model->eliminar_area($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "Área Eliminada Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->areas_model->ValidarExistencia_AreaEnAsignaturas($id)){
+
+		        $respuesta=$this->areas_model->eliminar_area($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Área Eliminada Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Esta Área; Actualmente Tiene Asignaturas Asociadas.";
+	        }
           
         }else{
           
@@ -133,46 +138,51 @@ class Areas_controller extends CI_Controller {
 
         if(is_numeric($id_area)){
 
-        	if ($nombre_buscado == $nombre_area){
+        	if ($this->areas_model->ValidarExistencia_AreaEnAsignaturas($id_area)){
 
-	        	$respuesta=$this->areas_model->modificar_area($id_area,$area);
+	        	if ($nombre_buscado == $nombre_area){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+		             }else{
 
-	             }
-	        }
-	        else{
+						echo "registronoactualizado";
 
-	        	if($this->areas_model->validar_existencia($nombre_area)){
+		             }
+		        }
+		        else{
 
-	        		$respuesta=$this->areas_model->modificar_area($id_area,$area);
+		        	if($this->areas_model->validar_existencia($nombre_area)){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
-	        			echo "registroactualizado";
+		        		if($respuesta==true){
 
-	        		}else{
+		        			echo "registroactualizado";
 
-	        			echo "registronoactualizado";
+		        		}else{
 
-	        		}
+		        			echo "registronoactualizado";
 
-	        	}
-	        	else{
+		        		}
 
-	        		echo "areayaexiste";
+		        	}
+		        	else{
 
-	        	}
+		        		echo "areayaexiste";
 
-				
-			}    
-                
+		        	}
+
+					
+				}
+			}
+			else{
+				echo "areaenasignaturas";
+			}          
          
         }else{
             

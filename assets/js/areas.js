@@ -368,6 +368,11 @@ function actualizar_area(){
 					toastr.warning('Área Ya Registrada.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="areaenasignaturas"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Esta Área; Actualmente Tiene Asignaturas Asociadas.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

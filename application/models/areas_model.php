@@ -100,14 +100,18 @@ class Areas_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_AreaEnAsignaturas($id_area){
 
+		$this->db->where('id_area',$id_area);
+		$query = $this->db->get('asignaturas');
 
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
 
-
-
-
-
-
-
+	}
 
 }
