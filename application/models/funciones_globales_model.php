@@ -5,6 +5,7 @@ class Funciones_globales_model extends CI_Model {
 
 	public function llenar_anos_lectivos(){
 
+		$this->db->where('estado_ano_lectivo','Activo');
 		$query = $this->db->get('anos_lectivos');
 		return $query->result();
 	}
@@ -58,7 +59,7 @@ class Funciones_globales_model extends CI_Model {
 
 	}
 
-	public function obtener_anio_actual(){
+	/*public function obtener_anio_actual(){
 
 		$fecha = $this->funciones_globales_model->obtener_fecha_actual();
 
@@ -70,7 +71,7 @@ class Funciones_globales_model extends CI_Model {
 		
 		return $row[0]['id_ano_lectivo'];
 
-	}
+	}*/
 
 	public function obtener_fecha_actual_corta(){
 
@@ -87,6 +88,24 @@ class Funciones_globales_model extends CI_Model {
 		$fechaLocal_Formateada = mdate("%Y/%m/%d", $fechaLocal); //Formato español (dd/mm/yyyy HH:mm:ss)
 
 		return $fechaLocal_Formateada; 
+
+	}
+
+	public function obtener_anio_actual(){
+
+		$this->db->where('estado_ano_lectivo','Activo');
+		$query = $this->db->get('anos_lectivos');
+
+		if ($query->num_rows() > 0) {
+
+			$row = $query->result_array();
+			$id_ano_lectivo = $row[0]['id_ano_lectivo'];
+
+			return $id_ano_lectivo;
+		}
+		else{
+			return false;
+		}
 
 	}
 }

@@ -79,7 +79,7 @@ function llenarcombo_grupos(){
 	});
 }
 
-function llenarcombo_anos_lectivos(){
+/*function llenarcombo_anos_lectivos(){
 
 	$.ajax({
 		url:base_url+"funciones_globales_controller/llenarcombo_anos_lectivos",
@@ -104,7 +104,7 @@ function llenarcombo_anos_lectivos(){
 		}
 
 	});
-}
+}*/
 
 function obtener_anio_actual(){
 
@@ -112,4 +112,26 @@ function obtener_anio_actual(){
 	anio=f.getFullYear();
 
 	return anio;
+}
+
+
+function llenarcombo_anos_lectivos(){
+
+	$.ajax({
+		url:base_url+"funciones_globales_controller/llenarcombo_anos_lectivos",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+" selected>"+registros[i]["nombre_ano_lectivo"]+"</option>";
+				};
+				
+				$("#ano_lectivo1 select").html(html);
+		}
+
+	});
 }
