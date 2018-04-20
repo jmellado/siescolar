@@ -118,12 +118,18 @@ class Grupos_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_GrupoEnCursos($id_grupo){
 
+		$this->db->where('id_grupo',$id_grupo);
+		$query = $this->db->get('cursos');
 
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
 
-
-
-
-
+	}
 
 }

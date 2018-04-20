@@ -40,7 +40,7 @@ class Grupos_controller extends CI_Controller {
         	//array para insertar en la tabla grados----------
         	$grupo = array(
         	'id_grupo' =>$ultimo_id,	
-			'nombre_grupo' =>ucwords($this->input->post('nombre_grupo')),
+			'nombre_grupo' =>ucwords(strtolower(trim($this->input->post('nombre_grupo')))),
 			'ano_lectivo' =>$this->input->post('ano_lectivo'),
 			'estado_grupo' =>$this->input->post('estado_grupo'));
 
@@ -95,16 +95,21 @@ class Grupos_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->grupos_model->eliminar_grupo($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "Grupo Eliminado Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
+
+		        $respuesta=$this->grupos_model->eliminar_grupo($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Grupo Eliminado Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Este Grupo; Actualmente Se Encuentra Asociado A Un Curso.";
+	        }
           
         }else{
           
@@ -127,43 +132,48 @@ class Grupos_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-        	if ($nombre_buscado == $this->input->post('nombre_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+        	if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
 
-	        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+	        	if ($nombre_buscado == $this->input->post('nombre_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+		             }else{
 
-	             }
-	        }
-	        else{
+						echo "registronoactualizado";
 
-	        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
+		             }
+		        }
+		        else{
 
-	        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+		        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
-	        			echo "registroactualizado";
-	        		}else{
+		        		if($respuesta==true){
 
-	        			echo "registronoactualizado";
-	        		}
+		        			echo "registroactualizado";
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
 
 
-	        	}else{
+		        	}else{
 
-	        		echo "grupoyaexiste";
-	        	}
+		        		echo "grupoyaexiste";
+		        	}
 
-				
-			}    
-                
+					
+				}    
+            }
+            else{
+            	echo "grupoencursos";
+            }    
          
         }else{
             

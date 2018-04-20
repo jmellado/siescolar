@@ -367,6 +367,11 @@ function actualizar_grupo(){
 					toastr.warning('Grupo Ya Registrado.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="grupoencursos"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Este Grupo; Actualmente Se Encuentra Asociado A Un Curso.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
