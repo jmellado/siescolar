@@ -97,16 +97,27 @@ class Grados_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->grados_model->eliminar_grado($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "Grado Eliminado Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->grados_model->ValidarExistencia_GradoEnCursos($id)){
+
+				if ($this->grados_model->ValidarExistencia_GradoEnPensum($id)){
+
+			        $respuesta=$this->grados_model->eliminar_grado($id);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Grado Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar Este Grado; Actualmente Se Encuentra Asociado A Un Pensum.";
+		        }
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Este Grado; Actualmente Se Encuentra Asociado A Un Curso.";
+	        }
           
         }else{
           
@@ -130,44 +141,56 @@ class Grados_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-        	if ($nombre_buscado == $this->input->post('nombre_grado') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+        	if ($this->grados_model->ValidarExistencia_GradoEnCursos($id)){
 
-	        	$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
+        		if ($this->grados_model->ValidarExistencia_GradoEnPensum($id)){
 
-				 if($respuesta==true){
+		        	if ($nombre_buscado == $this->input->post('nombre_grado') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
-					echo "registroactualizado";
+			        	$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
 
-	             }else{
+						 if($respuesta==true){
 
-					echo "registronoactualizado";
+							echo "registroactualizado";
 
-	             }
-	        }
-	        else{
+			             }else{
 
-	        	if($this->grados_model->validar_existencia($this->input->post('nombre_grado'),$this->input->post('ano_lectivo'))){
+							echo "registronoactualizado";
 
-	        		$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
+			             }
+			        }
+			        else{
 
-	        		if($respuesta==true){
+			        	if($this->grados_model->validar_existencia($this->input->post('nombre_grado'),$this->input->post('ano_lectivo'))){
 
-	        			echo "registroactualizado";
+			        		$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
 
-	        		}else{
+			        		if($respuesta==true){
 
-	        			echo "registronoactualizado";
-	        		}
+			        			echo "registroactualizado";
+
+			        		}else{
+
+			        			echo "registronoactualizado";
+			        		}
 
 
 
-	        	}else{
+			        	}else{
 
-	        		echo "gradoyaexiste";
+			        		echo "gradoyaexiste";
 
-	        	}
+			        	}
 
-				
+						
+					}
+				}
+				else{
+					echo "gradoenpensum";
+				}
+			}
+			else{
+				echo "gradoencursos";
 			}    
                 
          

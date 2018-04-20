@@ -396,6 +396,16 @@ function actualizar_grado(){
 					toastr.warning('Grado Ya Registrado.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="gradoencursos"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Este Grado; Actualmente Se Encuentra Asociado A Un Curso.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="gradoenpensum"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Este Grado; Actualmente Se Encuentra Asociado A Un Pensum.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

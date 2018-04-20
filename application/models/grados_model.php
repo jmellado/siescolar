@@ -133,7 +133,34 @@ class Grados_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_GradoEnCursos($id_grado){
 
+		$this->db->where('id_grado',$id_grado);
+		$query = $this->db->get('cursos');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function ValidarExistencia_GradoEnPensum($id_grado){
+
+		$this->db->where('id_grado',$id_grado);
+		$query = $this->db->get('pensum');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
 
 
 }
