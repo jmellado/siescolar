@@ -160,11 +160,42 @@ class Pensum_model extends CI_Model {
 	}
 
 
+	// Esta Funcion Me Permite Validar Si El Pensum Ya Fue Asociado, Para Ello Verifico En La Tabla Notas,
+	// Si El Grado Del Pensum Esta Registrado
+	public function ValidarExistencia_PensumEnNotas($id_grado,$id_pensum = FALSE){
+
+		if ($id_pensum !== FALSE) {
+			$id_grado = $this->pensum_model->obtener_GradoDelPensum($id_pensum);
+		}
+
+		$this->db->where('id_grado',$id_grado);
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
 
 
+	public function obtener_GradoDelPensum($id_pensum){
 
+		$this->db->where('id_pensum',$id_pensum);
+		$query = $this->db->get('pensum');
 
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_grado'];
+		}
+		else{
+			return false;
+		}
 
+	}
 
 
 }

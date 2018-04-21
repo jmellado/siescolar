@@ -40,6 +40,12 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="pensumennotas"){
+						
+						toastr.warning('No Se Pueden Agregar Asignaturas A Este Pensum; Actualmente El Pensum Ya Fue Asociado A Un Estudiante.', 'Success Alert', {timeOut: 5000});
+							
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
@@ -400,6 +406,11 @@ function actualizar_pensum(){
 				else if(respuesta==="pensumyaexiste"){
 					
 					toastr.warning('Asignatura Ya Registrada En Este Pensum.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="pensumennotas"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Este Pensum; Actualmente Se Encuentra Asociado A Un Estudiante.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else{

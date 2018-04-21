@@ -53,23 +53,30 @@ class Pensum_controller extends CI_Controller {
 			'ano_lectivo' =>$ano_lectivo,
 			'estado_pensum' =>$estado_pensum);
 
-			if ($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
+			if ($this->pensum_model->ValidarExistencia_PensumEnNotas($id_grado,FALSE)){
 
-				$respuesta=$this->pensum_model->insertar_pensum($pensum);
+				if ($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
 
-				if($respuesta==true){
+					$respuesta=$this->pensum_model->insertar_pensum($pensum);
 
-					echo "registroguardado";
+					if($respuesta==true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "pensumyaexiste";
 				}
 
 			}
 			else{
-
-				echo "pensumyaexiste";
+				echo "pensumennotas";
 			}
 
         }
@@ -104,16 +111,21 @@ class Pensum_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->pensum_model->eliminar_pensum($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "Asignatura Eliminada De Este Pensum Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->pensum_model->ValidarExistencia_PensumEnNotas(FALSE,$id)){
+
+		        $respuesta=$this->pensum_model->eliminar_pensum($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Asignatura Eliminada De Este Pensum Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Este Pensum; Actualmente Se Encuentra Asociado A Un Estudiante.";
+	        }
           
         }else{
           
@@ -145,46 +157,51 @@ class Pensum_controller extends CI_Controller {
 
         if(is_numeric($id_pensum)){
 
-        	if ($grado_buscado == $id_grado && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
+        	if ($this->pensum_model->ValidarExistencia_PensumEnNotas(FALSE,$id_pensum)){
 
-	        	$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
+	        	if ($grado_buscado == $id_grado && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+		             }else{
 
-	             }
-	        }
-	        else{
+						echo "registronoactualizado";
 
-	        	if($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
+		             }
+		        }
+		        else{
 
-	        		$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
+		        	if($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
 
-	        			echo "registroactualizado";
+		        		if($respuesta==true){
 
-	        		}else{
+		        			echo "registroactualizado";
 
-	        			echo "registronoactualizado";
-	        		}
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
 
 
 
-	        	}else{
+		        	}else{
 
-	        		echo "pensumyaexiste";
+		        		echo "pensumyaexiste";
 
-	        	}
+		        	}
 
-				
-			}    
-                
+					
+				}    
+            }
+            else{
+            	echo "pensumennotas";
+            }    
          
         }else{
             
