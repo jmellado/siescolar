@@ -135,10 +135,18 @@ class Asignaturas_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_AsignaturaEnPensum($id_asignatura){
 
+		$this->db->where('id_asignatura',$id_asignatura);
+		$query = $this->db->get('pensum');
 
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
 
-
-
+	}
 
 }

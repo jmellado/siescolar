@@ -101,16 +101,21 @@ class Asignaturas_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->asignaturas_model->eliminar_asignatura($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "Asignatura Eliminada Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->asignaturas_model->ValidarExistencia_AsignaturaEnPensum($id)){
+
+		        $respuesta=$this->asignaturas_model->eliminar_asignatura($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Asignatura Eliminada Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Esta Asignatura; Actualmente Se Encuentra Asociada A Un Pensum.";
+	        }
           
         }else{
           
@@ -139,54 +144,56 @@ class Asignaturas_controller extends CI_Controller {
 
         if(is_numeric($id_asignatura)){
 
-        	if ($nombre_buscado == $nombre_asignatura && $ano_lectivo_buscado == $ano_lectivo){
+        	if ($this->asignaturas_model->ValidarExistencia_AsignaturaEnPensum($id_asignatura)){
 
-	        	$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
+	        	if ($nombre_buscado == $nombre_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+		             }else{
 
-	             }
-	        }
-	        else{
+						echo "registronoactualizado";
 
-	        	if($this->asignaturas_model->validar_existencia($nombre_asignatura,$ano_lectivo)){
+		             }
+		        }
+		        else{
 
-	        		$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
+		        	if($this->asignaturas_model->validar_existencia($nombre_asignatura,$ano_lectivo)){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
 
-	        			echo "registroactualizado";
+		        		if($respuesta==true){
 
-	        		}else{
+		        			echo "registroactualizado";
 
-	        			echo "registronoactualizado";
-	        		}
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
 
 
 
-	        	}else{
+		        	}else{
 
-	        		echo "asignaturayaexiste";
+		        		echo "asignaturayaexiste";
 
-	        	}
+		        	}
 
-				
+					
+				}
+			}
+			else{
+				echo "asignaturaenpensum";
 			}    
                 
-         
         }else{
             
             echo "digite valor numerico para identificar una asignatura";
         }
-
-
-
 
     }
 

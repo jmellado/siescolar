@@ -168,7 +168,7 @@ function inicio(){
 
 			nombre_asignatura:{
 				required: true,
-				maxlength: 15
+				maxlength: 50
 				//lettersonly: true	
 
 			},
@@ -205,7 +205,7 @@ function inicio(){
 
 			nombre_asignatura:{
 				required: true,
-				maxlength: 15
+				maxlength: 50
 				//lettersonly: true	
 
 			},
@@ -382,6 +382,11 @@ function actualizar_asignatura(){
 				else if(respuesta==="asignaturayaexiste"){
 					
 					toastr.warning('Asignatura Ya Registrada.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="asignaturaenpensum"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Esta Asignatura; Actualmente Se Encuentra Asociada A Un Pensum.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else{
