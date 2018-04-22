@@ -395,4 +395,43 @@ class Matriculas_controller extends CI_Controller {
     	echo json_encode($consulta);
     }
 
+
+    //********************************* FUNCIONES PARA EL CONSOLIDADO DE MATRICULAS ****************************************
+
+
+    public function consolidar_matriculas()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'matriculas/consolidar_matriculas_vista');
+	}
+
+
+	public function consolidar(){
+
+		$PeriodosActivos = $this->matriculas_model->PeriodosActivos();
+
+		if ($PeriodosActivos == 0) {
+
+			$respuesta = $this->matriculas_model->modificar_estado_matricula();
+
+			if($respuesta==true){
+              
+              	echo "consolidadorealizado";
+          	}else{
+              
+              	echo "consolidadonorealizado";
+          	}
+
+		}
+		else{
+
+			echo "consolidadodenegado";
+		}
+	}
+
+
 }

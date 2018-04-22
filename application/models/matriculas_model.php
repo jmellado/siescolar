@@ -485,4 +485,139 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	//********************************* FUNCIONES PARA EL CONSOLIDADO DE MATRICULAS ****************************************
+
+
+	//Esta funcion me permite obtener todos los estudiantes matriculados en un respectivo año lectivo
+	public function buscar_estudiantes_matriculados($ano_lectivo){
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
+		
+	}
+
+
+	//Esta funcion me permite calcular el estado de la matricula de un estudiante.
+	// Calculando su promedio general, el numero de asignaturas aprobadas y reprobadas
+	public function calcular_estado_matricula($ano_lectivo,$id_estudiante){
+
+		//array sencillo para las asignaturas aprobadas y reprobadas
+		$asignaturas_aprobadas = array();
+		$asignaturas_reprobadas = array();
+		$totalnotas = 0;
+
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.nota_final, 0.0) as nota_final',false);
+
+		$query = $this->db->get('notas');
+
+		$NotasAsignaturas = $query->result_array();
+
+		for ($i=0; $i < count($NotasAsignaturas); $i++) {
+
+			$totalnotas = $totalnotas + $NotasAsignaturas[$i]['nota_final'];
+
+			if ($NotasAsignaturas[$i]['nota_final'] >= 3.0 && $NotasAsignaturas[$i]['nota_final'] <= 5.0) {
+				
+				$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['nota_final'];
+			}
+			else{
+
+				$asignaturas_reprobadas[] = $NotasAsignaturas[$i]['nota_final'];
+			}
+			
+		}
+
+		$promedio = $totalnotas / count($NotasAsignaturas);
+
+		if ($promedio >= 3.0 && $promedio <= 5.0) {
+
+			return "Aprobado";
+		}
+		else{
+
+			if (count($asignaturas_reprobadas) > 2) {
+
+				return "Reprobado";
+			}
+			else{
+
+				return "Nivelacion";
+			}
+		}
+	}
+
+
+	// Esta funcion me permite actualizar el estado de la matricula en la tabla matriculas.
+	public function modificar_estado_matricula(){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$estudiantes = $this->matriculas_model->buscar_estudiantes_matriculados($ano_lectivo);
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+			for ($i=0; $i < count($estudiantes); $i++) { 
+				
+				$id_estudiante = $estudiantes[$i]['id_estudiante'];
+				$estado_matricula = $this->matriculas_model->calcular_estado_matricula($ano_lectivo,$id_estudiante);
+
+				$matriculas = array('estado_matricula' => $estado_matricula);
+
+				$this->db->where('ano_lectivo',$ano_lectivo);
+				$this->db->where('id_estudiante',$id_estudiante);
+				$this->db->update('matriculas', $matriculas);
+			}
+
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+	}
+
+
+	//Esta Funcion me permite obtener el numero total de periodos de evaluacion con estado activo
+    public function PeriodosActivos(){
+
+    	$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		
+    	$this->db->where('id_categoria',"1");
+    	$this->db->where('ano_lectivo',$ano_lectivo);
+    	$this->db->where('estado_actividad',"Activo");
+
+		$query = $this->db->get('cronogramas');
+
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		}
+		else{
+			return 0;
+		}
+
+	}
+
+
 }

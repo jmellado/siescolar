@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-04-2018 a las 06:58:17
+-- Tiempo de generación: 22-04-2018 a las 18:16:01
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-04-15 04:54:29');
+(12345, '2018-04-22 16:15:33');
 
 -- --------------------------------------------------------
 
@@ -561,7 +561,7 @@ CREATE TABLE `matriculas` (
   `id_acudiente` int(11) NOT NULL,
   `parentesco` varchar(45) NOT NULL,
   `observaciones` varchar(45) NOT NULL,
-  `estado_matricula` varchar(8) NOT NULL
+  `estado_matricula` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
