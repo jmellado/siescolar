@@ -366,7 +366,7 @@ class Configuraciones_controller extends CI_Controller {
 
 			$anoslectivosActivos = $this->configuraciones_model->anoslectivosActivos();
 
-			if ($anoslectivosActivos < 2) {
+			if ($anoslectivosActivos == 0) {
 				
 				if ($this->configuraciones_model->validar_existencia_anolectivo($nombre_ano_lectivo)){
 

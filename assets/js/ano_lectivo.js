@@ -38,7 +38,7 @@ function inicio(){
 					}
 					else if(respuesta==="registrodenegado"){
 						
-						toastr.warning('Año Lectivo No Registrado; Solo Puede Tener Dos Años Lectivos Activos.', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Año Lectivo No Registrado; Solo Puede Tener Un Año Lectivo Activo.', 'Success Alert', {timeOut: 5000});
 						$("#form_anoslectivos")[0].reset();	
 
 					}
