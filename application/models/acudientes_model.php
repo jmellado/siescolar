@@ -290,5 +290,18 @@ class Acudientes_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_AcudienteEnMatriculas($id_acudiente){
+
+		$this->db->where('id_acudiente',$id_acudiente);
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
 
 }

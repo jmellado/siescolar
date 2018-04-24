@@ -272,58 +272,64 @@ class Acudientes_controller extends CI_Controller {
 
         if(is_numeric($id_persona)){
 
-			$row = $this->acudientes_model->obtener_informacion_persona($id_persona,"2");
-			$identificacion = $row[0]['identificacion'];
+        	if ($this->acudientes_model->ValidarExistencia_AcudienteEnMatriculas($id_persona)){
 
-			
-			if (!$this->acudientes_model->validar_existencia_rol($identificacion,"estudiantes")) {
+				$row = $this->acudientes_model->obtener_informacion_persona($id_persona,"2");
+				$identificacion = $row[0]['identificacion'];
+
 				
-				$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"2");
-	        
-	          	if($respuesta==true){
-	              
-	              	echo "Eliminado Correctamente";
-	          	}else{
-	              
-	              	echo "No se Pudo Eliminar";
-	          	}
-			}
-			elseif (!$this->acudientes_model->validar_existencia_rol($identificacion,"profesores")) {
-				
-				$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"2");
-	        
-	          	if($respuesta==true){
-	              
-	              	echo "Eliminado Correctamente";
-	          	}else{
-	              
-	              	echo "No se Pudo Eliminar";
-	          	}
-			}
-			elseif (!$this->acudientes_model->validar_existencia_rol($identificacion,"administradores")) {
-				
-				$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"2");
-	        
-	          	if($respuesta==true){
-	              
-	              	echo "Eliminado Correctamente";
-	          	}else{
-	              
-	              	echo "No se Pudo Eliminar";
-	          	}
+				if (!$this->acudientes_model->validar_existencia_rol($identificacion,"estudiantes")) {
+					
+					$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"2");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Eliminado Correctamente";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+				}
+				elseif (!$this->acudientes_model->validar_existencia_rol($identificacion,"profesores")) {
+					
+					$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"2");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Eliminado Correctamente";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+				}
+				elseif (!$this->acudientes_model->validar_existencia_rol($identificacion,"administradores")) {
+					
+					$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"2");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Eliminado Correctamente";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+				}
+				else{
+
+					$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"1");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Eliminado Correctamente";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+
+				}
 			}
 			else{
-
-				$respuesta=$this->acudientes_model->eliminar_acudiente($id_persona,"1");
-	        
-	          	if($respuesta==true){
-	              
-	              	echo "Eliminado Correctamente";
-	          	}else{
-	              
-	              	echo "No se Pudo Eliminar";
-	          	}
-
+				echo "No Se Puede Eliminar Este Acudiente; Actualmente Se Encuentra Asociado A Una Matrícula.";
 			}
           
         }else{
