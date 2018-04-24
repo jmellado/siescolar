@@ -209,4 +209,95 @@ class Imprimir_model extends CI_Model {
 	}
 
 
+	//****************************** FUNCIONES PARA IMPRIMIR CONSTANCIAS ***************************
+
+	public function buscar_estudiante($identificacion){
+
+		$this->db->where('personas.identificacion',$identificacion);
+
+		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+
+		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function validar_existencia_matricula($identificacion = FALSE, $id_persona = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		if ($identificacion !== FALSE) {
+			$this->db->where('personas.identificacion',$identificacion);
+			$this->db->where('ano_lectivo',$ano_lectivo);
+		}
+		else{
+			$this->db->where('personas.id_persona',$id_persona);
+			$this->db->where('ano_lectivo',$ano_lectivo);
+		}
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function obtener_informacion_estudiante($id_persona){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('personas.id_persona',$id_persona);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+
+	}
+
+
+	public function obtener_fecha(){
+
+		$CI = & get_instance();
+		$CI->load->helper('date');
+
+		$fecha_horaGMT = now();  //Obtenemos la fecha actual en formato GMT
+
+		$esVerano = date('I', $fecha_horaGMT); //Obtenemos TRUE si es horario de verano
+		$zona_horaria = 'UM5'; //zona horaria de bogota
+
+		$fechaLocal = gmt_to_local($fecha_horaGMT, $zona_horaria, $esVerano); //Convertimos la fecha GMT a local a partir del código de zona horaria
+
+		$fechaLocal_Formateada = mdate("%d/%m/%Y", $fechaLocal); //Formato español (dd/mm/yyyy HH:mm:ss)
+
+		return $fechaLocal_Formateada; 
+
+	}
+
+
 }

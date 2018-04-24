@@ -312,6 +312,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_boletin"><i class="fa fa-clipboard"></i>Boletines</a></li>
             <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_planilla_asistencia"><i class="fa fa-clipboard"></i>Planillas De Asistencia</a></li>
+            <li><a href="<?php echo base_url(); ?>imprimir_controller/imprimir_constancia"><i class="fa fa-clipboard"></i>Constancias De Estudio</a></li>
           </ul>
         </li>
 
