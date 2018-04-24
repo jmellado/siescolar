@@ -178,6 +178,18 @@ class Profesores_model extends CI_Model {
 	}
 
 
-	
+	public function ValidarExistencia_ProfesorEnCargasAcademicas($id_profesor){
+
+		$this->db->where('id_profesor',$id_profesor);
+		$query = $this->db->get('cargas_academicas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
 	
 }

@@ -252,31 +252,37 @@ class Profesores_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			if ($this->profesores_model->EsAcudiente($id)) {
+        	if ($this->profesores_model->ValidarExistencia_ProfesorEnCargasAcademicas($id)){
 
-		        $respuesta=$this->profesores_model->eliminar_profesor($id);
-		        	
-	          	if($respuesta==true){
-	              
-	              	echo "Profesor Eliminado Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
+				if ($this->profesores_model->EsAcudiente($id)) {
 
-	        	$respuesta=$this->profesores_model->eliminar_profesor($id,"2");
-		        	
-	          	if($respuesta==true){
-	              
-	              	echo "Profesor Eliminado Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
+			        $respuesta=$this->profesores_model->eliminar_profesor($id);
+			        	
+		          	if($respuesta==true){
+		              
+		              	echo "Profesor Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
 
-	        }
+		        	$respuesta=$this->profesores_model->eliminar_profesor($id,"2");
+			        	
+		          	if($respuesta==true){
+		              
+		              	echo "Profesor Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+
+		        }
+		    }
+		    else{
+		    	echo "No Se Puede Eliminar Este Profesor; Actualmente Tiene Asociadas Cargas Académicas.";
+		    }
          
         }else{
           
