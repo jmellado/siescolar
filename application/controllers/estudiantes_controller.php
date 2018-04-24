@@ -410,16 +410,21 @@ class Estudiantes_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->estudiantes_model->eliminar_estudiante($id);
-	        	
-          	if($respuesta==true){
-              
-              	echo "eliminado correctamente";
-          	}else{
-              
-              	echo "no se pudo eliminar";
-          	}
+			if ($this->estudiantes_model->ValidarExistencia_EstudianteEnMatriculas($id)){
+
+		        $respuesta=$this->estudiantes_model->eliminar_estudiante($id);
+		        	
+	          	if($respuesta==true){
+	              
+	              	echo "Estudiante Eliminado Correctamente";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Este Estudiante; Actualmente Se Encuentra Asociado A Una Matrícula.";
+	        }
           //redirect(base_url());
         }else{
           

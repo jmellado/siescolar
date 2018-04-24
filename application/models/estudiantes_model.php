@@ -181,8 +181,18 @@ class Estudiantes_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_EstudianteEnMatriculas($id_estudiante){
 
+		$this->db->where('id_estudiante',$id_estudiante);
+		$query = $this->db->get('matriculas');
 
-	
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
 	
 }
