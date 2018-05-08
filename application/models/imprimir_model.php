@@ -188,6 +188,95 @@ class Imprimir_model extends CI_Model {
 	}
 
 
+	//Esta funcion me permite verificar si un curso tiene estudiantes pendientes por calificaciones en un periodo determinado. Verificando Estudiante Por Estudiante.
+	public function Verificar_NotasEstudiantesPorCurso($id_curso,$periodo){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		//array sencillo para almacenar los estudiantes pendientes por calificaciones
+		$estudiantes_pendientes = array();
+
+		$this->db->where('id_curso',$id_curso);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$query = $this->db->get('matriculas');
+
+		$estudiantes = $query->result_array();
+		
+		for ($i=0; $i < count($estudiantes); $i++) {
+
+			$id_estudiante = $estudiantes[$i]['id_estudiante'];
+
+			$asignaturas_sinnotas=$this->imprimir_model->Verificar_NotasEstudiante($id_estudiante,$periodo,$ano_lectivo);
+
+			if (count($asignaturas_sinnotas) > 0) {
+
+				$estudiantes_pendientes[] = $id_estudiante;
+			}
+			
+		}
+
+		if (count($estudiantes_pendientes) > 0) {
+
+			return false;
+		}
+		else{
+
+			return true;
+		}	
+
+	}
+
+
+	//Esta funcion permite verificar si un estudiante tienes asignaturas pendientes por notas
+	public function Verificar_NotasEstudiante($id_estudiante,$periodo,$ano_lectivo){
+
+		//array sencillo para las asignaturas sin notas de un estudiante
+		$asignaturas_sinnotas = array();
+
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('notas.id_estudiante,notas.id_asignatura,notas.p1,notas.p2,notas.p3,notas.p4');
+
+		$query = $this->db->get('notas');
+
+		$NotasAsignaturas = $query->result_array();
+		
+		for ($i=0; $i < count($NotasAsignaturas); $i++) {
+
+			if ($periodo == "Primero") {
+
+				if ($NotasAsignaturas[$i]['p1'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p1'];
+				}
+			}
+			if ($periodo == "Segundo") {
+
+				if ($NotasAsignaturas[$i]['p2'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p2'];
+				}
+			}
+			if ($periodo == "Tercero") {
+
+				if ($NotasAsignaturas[$i]['p3'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p3'];
+				}
+			}
+			if ($periodo == "Cuarto") {
+
+				if ($NotasAsignaturas[$i]['p4'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p4'];
+				}
+			}
+
+		}
+
+		return $asignaturas_sinnotas;
+
+	}
+
+
 	//************************************************** FUNCIONES PARA IMPRIMIR PLANILLAS *************************************************
 
 
