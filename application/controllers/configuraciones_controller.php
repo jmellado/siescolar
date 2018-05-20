@@ -198,7 +198,7 @@ class Configuraciones_controller extends CI_Controller {
         $this->form_validation->set_rules('periodo', 'Periodo', 'required');
         $this->form_validation->set_rules('fecha_inicial', 'Fecha Inicio', 'required');
         $this->form_validation->set_rules('fecha_final', 'Fecha Fin', 'required');
-        $this->form_validation->set_rules('estado_periodo', 'Estado Periodo', 'required');
+        //$this->form_validation->set_rules('estado_periodo', 'Estado Periodo', 'required');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -216,7 +216,7 @@ class Configuraciones_controller extends CI_Controller {
         	$fecha_inicial = $this->input->post('fecha_inicial');
         	$fecha_final = $this->input->post('fecha_final');
         	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
-        	$estado_actividad = $this->input->post('estado_periodo');
+        	$estado_actividad = "Inactivo";
 
         	//array para insertar en la tabla cronogramas
         	$actividad = array(
@@ -280,7 +280,7 @@ class Configuraciones_controller extends CI_Controller {
 
         $this->form_validation->set_rules('fecha_inicial', 'Fecha Inicio', 'required');
         $this->form_validation->set_rules('fecha_final', 'Fecha Fin', 'required');
-        $this->form_validation->set_rules('estado_periodo', 'Estado Periodo', 'required');
+        //$this->form_validation->set_rules('estado_periodo', 'Estado Periodo', 'required');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -292,14 +292,13 @@ class Configuraciones_controller extends CI_Controller {
         	$id_actividad = $this->input->post('id_periodo');
         	$fecha_inicial = $this->input->post('fecha_inicial');
         	$fecha_final = $this->input->post('fecha_final');
-        	$estado_actividad = $this->input->post('estado_periodo');
+        	//$estado_actividad = $this->input->post('estado_periodo');
 
         	//array para insertar en la tabla cronogramas
         	$actividad = array(
         	'id_actividad' =>$id_actividad,	
 			'fecha_inicial' =>$fecha_inicial,
-			'fecha_final' =>$fecha_final,
-			'estado_actividad' =>$estado_actividad);
+			'fecha_final' =>$fecha_final);
 
 			
 			$respuesta=$this->configuraciones_model->modificar_periodo($id_actividad,$actividad);
@@ -316,6 +315,64 @@ class Configuraciones_controller extends CI_Controller {
         }
 
 	}
+
+
+	public function activar_periodo(){
+
+	  	$id_periodo =$this->input->post('id_periodo'); 
+
+        if(is_numeric($id_periodo)){
+
+			if ($this->configuraciones_model->Verificar_PeriodosActivos()) {
+			
+		        $respuesta=$this->configuraciones_model->activar_periodo($id_periodo);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "periodoactivado";
+	          	}else{
+	              
+	              	echo "periodonoactivado";
+	          	}
+	        }
+	        else{
+	        	echo "periodosactivos";
+	        }
+          
+        }else{
+          
+          	echo "Digite valor numerico para identificar un Periodo.";
+        }
+    }
+
+
+    public function cerrar_periodo(){
+
+	  	$id_periodo =$this->input->post('id_periodo'); 
+
+        if(is_numeric($id_periodo)){
+
+			if ($this->configuraciones_model->Verificar_EstadoPeriodo($id_periodo)) {
+
+		        $respuesta=$this->configuraciones_model->cerrar_periodo($id_periodo);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "periodocerrado";
+	          	}else{
+	              
+	              	echo "periodonocerrado";
+	          	}
+	        }
+	        else{
+	        	echo "periodoinactivo";
+	        }
+          
+        }else{
+          
+          	echo "Digite valor numerico para identificar un Periodo.";
+        }
+    }
 
 
 	//**************************** FUNCIONES AÑO LECTIVO ****************************************

@@ -56,6 +56,8 @@
 								<th><i class='fa fa-calendar-times-o'></i>&nbsp;Fecha Fin</th>
 								<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 								<th></th>
+								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -125,10 +127,10 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="estado_periodo">ESTADO</label>
 						<div class="col-sm-7">
-							<select class="form-control" id="estado_periodo" name="estado_periodo">
+							<select class="form-control" id="estado_periodo" name="estado_periodo" disabled>
 									<option value=""></option>
 									<option value="Activo">Activo</option>
-									<option value="Inactivo">Inactivo</option>
+									<option value="Inactivo" selected>Inactivo</option>
 							</select>
 						</div>	
 					</div>
@@ -201,9 +203,10 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="estado_periodo">ESTADO</label>
 						<div class="col-sm-7">
-							<select class="form-control" id="estado_periodosele" name="estado_periodo">
+							<select class="form-control" id="estado_periodosele" name="estado_periodo" disabled>
 									<option value="Activo">Activo</option>
 									<option value="Inactivo">Inactivo</option>
+									<option value="Cerrado">Cerrado</option>
 							</select>
 						</div>	
 					</div>

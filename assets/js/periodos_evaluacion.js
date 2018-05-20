@@ -94,6 +94,42 @@ function inicio(){
 
 	});
 
+	$("body").on("click","#lista_periodos .btn-activar",function(event){
+		event.preventDefault();
+		id_periodo = $(this).attr("value");
+		estado_periodo = $(this).parent().parent().children("td:eq(5)").text();
+		
+		if (estado_periodo =="Activo") {
+
+			toastr.warning('El Período De Evaluación Ya Se Encuentra Activo.', 'Success Alert', {timeOut: 3000});
+		}
+		else{
+			if(confirm("Esta Seguro De Activar Este Período De Evaluación.?")){
+				activar_periodo(id_periodo);
+
+			}
+		}
+
+	});
+
+	$("body").on("click","#lista_periodos .btn-cerrar",function(event){
+		event.preventDefault();
+		id_periodo = $(this).attr("value");
+		estado_periodo = $(this).parent().parent().children("td:eq(5)").text();
+		
+		if (estado_periodo =="Cerrado") {
+
+			toastr.error('El Período De Evaluación Ya Se Encuentra Cerrado.', 'Success Alert', {timeOut: 3000});
+		}
+		else{
+			if(confirm("Esta Seguro De Cerrar Este Período De Evaluación.?")){
+				cerrar_periodo(id_periodo);
+
+			}
+		}
+
+	});
+
 	
     $("#btn_actualizar_periodo").click(function(event){
 
@@ -190,7 +226,7 @@ function mostrarperiodos(valor,pagina,cantidad){
 				if (registros.periodos.length > 0) {
 
 					for (var i = 0; i < registros.periodos.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.periodos[i].id_actividad+"</td><td>"+registros.periodos[i].nombre_actividad+"</td><td>"+registros.periodos[i].fecha_inicial+"</td><td>"+registros.periodos[i].fecha_final+"</td><td>"+registros.periodos[i].estado_actividad+"</td><td><a class='btn btn-success' href="+registros.periodos[i].id_actividad+"><i class='fa fa-edit'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+registros.periodos[i].id_actividad+"><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.periodos[i].id_actividad+"</td><td>"+registros.periodos[i].nombre_actividad+"</td><td>"+registros.periodos[i].fecha_inicial+"</td><td>"+registros.periodos[i].fecha_final+"</td><td>"+registros.periodos[i].estado_actividad+"</td><td><a class='btn btn-success' href="+registros.periodos[i].id_actividad+" title='Actualizar Información De Este Período De Evaluación'><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-warning btn-activar' value="+registros.periodos[i].id_actividad+" title='Activar Período De Evaluación'><i class='fa fa-check'></i></button></td><td><button type='button' class='btn btn-danger btn-cerrar' value="+registros.periodos[i].id_actividad+" title='Cerrar Período De Evaluación'><i class='fa fa-close'></i></button></td></tr>";
 					};
 
 					$("#lista_periodos tbody").html(html);
@@ -283,6 +319,84 @@ function actualizar_periodo(){
 				$("#form_periodos_actualizar")[0].reset();
 
 				mostrarperiodos("",1,5);
+
+		}
+
+
+	});
+
+}
+
+
+function activar_periodo(valor){
+
+	$.ajax({
+		url:base_url+"configuraciones_controller/activar_periodo",
+		type:"post",
+        data:{id_periodo:valor},
+		success:function(respuesta) {
+				
+				
+			if (respuesta==="periodoactivado") {
+					
+				toastr.success('Período Activado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+			}
+			else if(respuesta==="periodonoactivado"){
+				
+				toastr.error('Período No Activado.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else if(respuesta==="periodosactivos"){
+				
+				toastr.warning('Solo Puede Tener Un Período Activo.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else{
+
+				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+			}
+
+			mostrarperiodos("",1,5);
+
+		}
+
+
+	});
+
+}
+
+
+function cerrar_periodo(valor){
+
+	$.ajax({
+		url:base_url+"configuraciones_controller/cerrar_periodo",
+		type:"post",
+        data:{id_periodo:valor},
+		success:function(respuesta) {
+				
+				
+			if (respuesta==="periodocerrado") {
+					
+				toastr.success('Período Cerrado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+			}
+			else if(respuesta==="periodonocerrado"){
+				
+				toastr.error('Período No Cerrado.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else if(respuesta==="periodoinactivo"){
+				
+				toastr.warning('No Se Puede Cerrar Un Período Inactivo.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else{
+
+				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+			}
+
+			mostrarperiodos("",1,5);
 
 		}
 

@@ -129,6 +129,75 @@ class Configuraciones_model extends CI_Model {
 	}
 
 
+	public function activar_periodo($id_actividad){
+
+		$actividad = array('estado_actividad' => "Activo");
+		$this->db->where('id_actividad',$id_actividad);
+
+		if ($this->db->update('cronogramas', $actividad))
+
+			return true;
+		else
+			return false;
+	}
+
+
+	public function cerrar_periodo($id_actividad){
+
+		$actividad = array('estado_actividad' => "Cerrado");
+		$this->db->where('id_actividad',$id_actividad);
+
+		if ($this->db->update('cronogramas', $actividad))
+
+			return true;
+		else
+			return false;
+	}
+
+
+	public function Verificar_PeriodosActivos(){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_actividad',"Activo");
+		$query = $this->db->get('cronogramas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function Verificar_EstadoPeriodo($id_actividad){
+
+		$this->db->where('id_actividad',$id_actividad);
+		$query = $this->db->get('cronogramas');
+
+		if ($query->num_rows() > 0) {
+			
+			$row = $query->result_array();
+        	$estado_actividad = $row[0]['estado_actividad'];
+
+        	if ($estado_actividad == "Inactivo") {
+        		return false;
+        	}
+        	else{
+        		return true;
+        	}
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
 	//**************************** FUNCIONES AÑO LECTIVO ****************************************
 
 	public function validar_existencia_anolectivo($nombre_ano_lectivo){
