@@ -391,6 +391,11 @@ function cerrar_periodo(valor){
 				toastr.warning('No Se Puede Cerrar Un Período Inactivo.', 'Success Alert', {timeOut: 3000});
 				
 			}
+			else if(respuesta==="periodopendiente"){
+				
+				toastr.warning('No Se Puede Cerrar El Período;Existen Estudiantes Pendientes Por Calificaciones.', 'Success Alert', {timeOut: 3000});
+				
+			}
 			else{
 
 				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

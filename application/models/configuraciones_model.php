@@ -198,6 +198,115 @@ class Configuraciones_model extends CI_Model {
 	}
 
 
+	public function obtener_nombre_periodo($id_actividad){
+
+		$this->db->where('id_actividad',$id_actividad);
+		$query = $this->db->get('cronogramas');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	$nombre_actividad = $row[0]['nombre_actividad'];
+
+        	return $nombre_actividad;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	//Esta funcion me permite verificar si los estudiantes matriculados tienen asignaturas pendientes por calificaciones en un periodo determinado.
+	public function Verificar_NotasEstudiantesMatriculados($id_actividad){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$periodo = $this->configuraciones_model->obtener_nombre_periodo($id_actividad);
+
+		//array sencillo para almacenar los estudiantes pendientes por calificaciones
+		$estudiantes_pendientes = array();
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$query = $this->db->get('matriculas');
+
+		$estudiantes = $query->result_array();
+		
+		for ($i=0; $i < count($estudiantes); $i++) {
+
+			$id_estudiante = $estudiantes[$i]['id_estudiante'];
+
+			$asignaturas_sinnotas=$this->configuraciones_model->Verificar_NotasEstudiante($id_estudiante,$periodo,$ano_lectivo);
+
+			if (count($asignaturas_sinnotas) > 0) {
+
+				$estudiantes_pendientes[] = $id_estudiante;
+			}
+			
+		}
+
+		if (count($estudiantes_pendientes) > 0) {
+
+			return false;
+		}
+		else{
+
+			return true;
+		}	
+
+	}
+
+
+	//Esta funcion permite verificar si un estudiante tienes asignaturas pendientes por notas
+	public function Verificar_NotasEstudiante($id_estudiante,$periodo,$ano_lectivo){
+
+		//array sencillo para las asignaturas sin notas de un estudiante
+		$asignaturas_sinnotas = array();
+
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('notas.id_estudiante,notas.id_asignatura,notas.p1,notas.p2,notas.p3,notas.p4');
+
+		$query = $this->db->get('notas');
+
+		$NotasAsignaturas = $query->result_array();
+		
+		for ($i=0; $i < count($NotasAsignaturas); $i++) {
+
+			if ($periodo == "Primero") {
+
+				if ($NotasAsignaturas[$i]['p1'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p1'];
+				}
+			}
+			if ($periodo == "Segundo") {
+
+				if ($NotasAsignaturas[$i]['p2'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p2'];
+				}
+			}
+			if ($periodo == "Tercero") {
+
+				if ($NotasAsignaturas[$i]['p3'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p3'];
+				}
+			}
+			if ($periodo == "Cuarto") {
+
+				if ($NotasAsignaturas[$i]['p4'] == NULL) {
+					$asignaturas_sinnotas[] = $NotasAsignaturas[$i]['p4'];
+				}
+			}
+
+		}
+
+		return $asignaturas_sinnotas;
+
+	}
+
+
 	//**************************** FUNCIONES AÑO LECTIVO ****************************************
 
 	public function validar_existencia_anolectivo($nombre_ano_lectivo){
