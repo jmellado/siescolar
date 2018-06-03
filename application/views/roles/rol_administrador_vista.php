@@ -35,6 +35,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/imprimir.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/usuarios.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/periodos_evaluacion.js" defer></script>
@@ -298,6 +299,12 @@
           <a href="<?php echo base_url(); ?>pensum_controller/index">
             <i class="fa fa-sitemap"></i>
             <span>Gestionar Pensum</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo base_url(); ?>usuarios_controller/index">
+            <i class="fa fa-group"></i>
+            <span>Gestionar Usuarios</span>
           </a>
         </li>
 
