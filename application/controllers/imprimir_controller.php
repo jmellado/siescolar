@@ -760,7 +760,7 @@ class Imprimir_controller extends CI_Controller {
 	        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 	 
 			// establecer margenes
-	        $pdf->SetMargins(30, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 	        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 	        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 	 
@@ -793,16 +793,17 @@ class Imprimir_controller extends CI_Controller {
 	        $pdf->SetFont('helvetica', '', 12);
 	        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
 	        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->ln(3);
+	        $pdf->ln(12);
 	        //===========================================================================================================
 
-	        
+	        $pdf->SetMargins(30, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 	        $pdf->SetFont('helvetica', 'B', 12);
-	        $pdf->Write(0, '         CONSTANCIA DE ESTUDIO', '', 0, 'C', true, 0, false, false, 0);
+	        $titulo = '          El Suscrito Director Del '.ucwords(strtolower($nombre_institucion)).' De Sempegua Municipio De Chimichagua';
+	        $pdf->Write(0, $titulo, '', 0, 'C', true, 0, false, false, 0);
 	        $pdf->SetFont('helvetica', '', 12, '', true);
 	 
 			//fijar efecto de sombra en el texto
-	        $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+	        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
 
 
 	        // Establecemos el contenido para imprimir
@@ -812,23 +813,21 @@ class Imprimir_controller extends CI_Controller {
 
 	        $tbl = '';
 	        $tbl .= '<br /><br /><br />';
-	        $tbl .= '<p>Chimichagua, '.$fecha_actual.'<br /><br /><br /><br /></p>';
-	        $tbl .= '<p>A quien corresponda:<br /><br /><br /><br /></p>';
-	        //$tbl .= '<p>El que suscribe, Rector de esta institución, hace CONSTAR:</p>';
-	        $tbl .= '<p>El que suscribe, Rector de esta institución, hace CONSTAR:<br />Que el señor <b>'.$nombres.' '.$apellido1.' '.$apellido2.'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra cursando actualmente el grado <b>'.$grado.'</b> en la jornada <b>'.$jornada.'</b>, impartido por este plantel educativo.<br /><br /><br /></p>';
+	        $tbl .= '<p align="center"><b>H A C E &nbsp;&nbsp;C O N S T A R:<br /></b></p>';
+	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.substr($fecha_actual, 6).').<br /></p>';
 
-	        $tbl .= '<p>Esta constancia se expide a solicitud del interesado.<br /><br /><br /><br /></p>';
+	        $tbl .= '<p>Para mayor constancia se firma la presente en el Corregimiento de Sempegua Municipio de Chimichagua Cesar el '.$fecha_actual.'.<br /><br /><br /><br /></p>';
 	        $tbl .= '<p>Cordialmente,<br /><br /><br /><br /></p>';
-	        $tbl .= '<p><b>'.$rector.'</b><br />Rector</p>';
+	        $tbl .= '<p>________________________________<br /><b>'.$rector.'<br />Director General</b></p>';
 
 	        // Imprimimos el texto con writeHTMLCell()
-		    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+		    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = 'J', $autopadding = true);
 
 		    // ==============================================================================================0
 			// Cerrar el documento PDF y preparamos la salida
 			// Este método tiene varias opciones, consulte la documentación para más información.
 	        //$nombre_archivo = utf8_decode("Localidades de ".$prov.".pdf");
-	        $nombre_archivo = utf8_decode("Constancia De Estudio ".$id_persona." ".$id_persona.".pdf");
+	        $nombre_archivo = utf8_decode("Constancia De Estudio ".$identificacion.".pdf");
 	        $pdf->Output($nombre_archivo, 'I');
 
 
