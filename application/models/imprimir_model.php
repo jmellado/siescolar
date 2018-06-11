@@ -389,4 +389,80 @@ class Imprimir_model extends CI_Model {
 	}
 
 
+	//****************************** FUNCIONES PARA IMPRIMIR CERTIFICADOS ***************************
+
+
+	public function validar_existencia_matriculaCT($identificacion = FALSE, $id_persona = FALSE, $ano_lectivo = FALSE){
+
+		if ($identificacion !== FALSE) {
+			$this->db->where('personas.identificacion',$identificacion);
+		}
+		else{
+			$this->db->where('personas.id_persona',$id_persona);
+			$this->db->where('ano_lectivo',$ano_lectivo);
+		}
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function llenar_anos_lectivosCT(){
+
+		$query = $this->db->get('anos_lectivos');
+		return $query->result();
+	}
+
+
+	//Esta funcion permite obtener informacion de la matricula del estudiante seleccionado y el año lectivo seleccionado
+	public function obtener_informacion_estudianteCT($id_persona,$ano_lectivo){
+
+		$this->db->where('personas.id_persona',$id_persona);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+
+	}
+
+
+	//Esta funcion permite obtener las asignaturas cursadas por un estudiante en una año lectivo,
+	//con su repectiva calificacion y desempeño.
+	public function Obtener_NotasEstudianteCT($id_persona,$id_grado,$ano_lectivo){
+
+		$this->db->where('notas.id_estudiante',$id_persona);
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('pensum.id_grado',$id_grado);
+
+		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('pensum', 'notas.id_asignatura = pensum.id_asignatura');
+		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno');
+
+		$this->db->select('notas.id_estudiante,notas.id_asignatura,notas.nota_final,notas.id_desempeno,asignaturas.nombre_asignatura,pensum.intensidad_horaria,desempenos.nombre_desempeno');
+
+		$query = $this->db->get('notas');
+
+		return $query->result_array();
+
+	}
+
+
 }

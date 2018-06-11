@@ -200,6 +200,97 @@ function inicio(){
 	});
 
 
+	//**************************************** FUNCIONES PARA IMPRIMIR CERTIFICADOS *********************************
+
+
+	$("#btn_buscar_estudianteCT").click(function(event){
+    	
+    	if($("#identificacionCT").val()==""){
+
+    		toastr.warning('Favor Digite Un Numero De Identificación.', 'Success Alert', {timeOut: 3000});
+
+       	}
+       	else{
+
+       		id = $("#identificacionCT").val();
+       		buscar_estudianteCT(id);
+		}
+		
+       
+    });
+
+
+    $("#identificacionCT").keyup(function(event){
+
+       	if(event.keyCode == 13) {
+
+       		if($("#identificacionCT").val()==""){
+	        	toastr.warning('Favor Digite Un Numero De Identificación.', 'Success Alert', {timeOut: 3000});
+	       	}
+	       	else{
+	       		id = $("#identificacionCT").val();
+       			buscar_estudianteCT(id);
+	       	}
+    	}
+		
+    });
+
+
+    $("#btn_generar_certificado").click(function(event){
+
+    	if($("#form_certificados").valid()==true){
+
+    		id_persona = $("#id_personaCT").val();
+    		ano_lectivo = $("#ano_lectivoCT").val();
+    		//window.location.href =base_url+"imprimir_controller/generar_boletin";
+    		window.open(base_url+'imprimir_controller/generar_certificado'+'?id_persona='+id_persona+'&ano_lectivo='+ano_lectivo, '_blank');
+
+       	}
+       	else{
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+		}
+		
+       
+    });
+
+
+    $("#form_certificados").validate({
+
+    	rules:{
+
+    		id_persona:{
+				required: true	
+
+			},
+
+			nombres:{
+				required: true	
+
+			},
+
+			apellido1:{
+				required: true
+
+			},
+
+			apellido2:{
+				required: true
+
+			},
+
+			ano_lectivo:{
+				required: true,
+				digits: true	
+
+			},
+
+
+		}
+
+
+	});
+
+
 }
 
 
@@ -295,7 +386,7 @@ function buscar_estudianteC(valor){
 
 					toastr.warning('El Estudiante No Se Encuentra Matriculado.', 'Success Alert', {timeOut: 3000});
 					$("#form_constancias")[0].reset();
-					$("#id_persona").val("");
+					$("#id_personaC").val("");
 					bloquear_boton();
 				}
 				else{
@@ -333,4 +424,110 @@ function bloquear_boton(){
 function desbloquear_boton(){
 
     $("#btn_generar_constancia").removeAttr("disabled");
+}
+
+
+//************************************* FUNCIONES PARA IMPRIMIR CERTIFICADOS ********************************
+
+
+function validaCT(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+
+
+function buscar_estudianteCT(valor){
+
+	$.ajax({
+		url:base_url+"imprimir_controller/buscar_estudianteCT",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+				//toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+
+				if(respuesta==="estudiantenoexiste"){
+
+					toastr.error('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
+					$("#form_certificados")[0].reset();
+					$("#id_personaCT").val("");
+					bloquear_botonCT();
+				}
+				else if(respuesta==="estudiantenomatriculado"){
+
+					toastr.warning('El Estudiante No Tiene Matrículas Registradas.', 'Success Alert', {timeOut: 3000});
+					$("#form_certificados")[0].reset();
+					$("#id_personaCT").val("");
+					bloquear_botonCT();
+				}
+				else{
+
+					var registros = eval(respuesta);
+					for (var i = 0; i < registros.length; i++) {
+
+						id_persona = registros[i]["id_persona"];
+						nombres = registros[i]["nombres"];
+						apellido1 = registros[i]["apellido1"];
+						apellido2 = registros[i]["apellido2"];
+
+						$("#id_personaCT").val(id_persona);
+	        			$("#nombresCT").val(nombres);
+	        			$("#apellido1CT").val(apellido1);
+	        			$("#apellido2CT").val(apellido2);
+
+	        			llenarcombo_anos_lectivosCT();
+	        			desbloquear_botonCT();
+						
+					};
+				}	
+
+
+		}
+	});
+
+}
+
+
+function bloquear_botonCT(){
+
+    $("#btn_generar_certificado").attr("disabled", "disabled");
+    $("#ano_lectivoCT").attr("disabled", "disabled");
+    $("#form_certificados").valid()==true;
+}
+
+function desbloquear_botonCT(){
+
+    $("#btn_generar_certificado").removeAttr("disabled");
+    $("#ano_lectivoCT").removeAttr("disabled");
+
+}
+
+
+function llenarcombo_anos_lectivosCT(){
+
+	$.ajax({
+		url:base_url+"imprimir_controller/llenarcombo_anos_lectivosCT",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
+				};
+				
+				$("#ano_lectivoCT1 select").html(html);
+		}
+
+	});
 }

@@ -840,4 +840,249 @@ class Imprimir_controller extends CI_Controller {
 
 
 	}
+
+
+	//****************** FUNCIONES PARA IMPRIMIR CERTIFICADOS ****************
+
+
+	public function imprimir_certificado()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		$this->template->load('roles/rol_administrador_vista', 'imprimir/imprimir_certificado_vista');
+	}
+
+
+	public function buscar_estudianteCT(){
+
+		$identificacion = $this->input->post('id');
+		
+		$consulta = $this->imprimir_model->buscar_estudiante($identificacion);
+
+		if($consulta==false){
+			echo "estudiantenoexiste";
+		}
+		else{
+
+			if($this->imprimir_model->validar_existencia_matriculaCT($identificacion,FALSE,FALSE)){
+
+				echo json_encode($consulta);	
+			}
+			else{
+
+				echo "estudiantenomatriculado";
+
+			}			
+		}
+	    
+	}
+
+
+	public function llenarcombo_anos_lectivosCT(){
+
+    	$consulta = $this->imprimir_model->llenar_anos_lectivosCT();
+    	echo json_encode($consulta);
+    }
+
+
+    public function generar_certificado(){
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		$id_persona = $this->input->get('id_persona');
+		$ano_lectivo = $this->input->get('ano_lectivo');
+		$fecha_actual = $this->imprimir_model->obtener_fecha();
+
+		$col = $this->imprimir_model->obtener_informacion_colegio();
+		$nombre_institucion = $col[0]['nombre_institucion'];
+		$niveles_educacion = $col[0]['niveles_educacion'];
+		$resolucion = $col[0]['resolucion'];
+		$dane = $col[0]['dane'];
+		$nit = $col[0]['nit'];
+		$escudo = $col[0]['escudo'];
+		$rector = $col[0]['rector'];
+
+		$est = $this->imprimir_model->obtener_informacion_estudianteCT($id_persona,$ano_lectivo);
+		$nombres = $est[0]['nombres'];
+		$apellido1 = $est[0]['apellido1'];
+		$apellido2 = $est[0]['apellido2'];
+		$identificacion = $est[0]['identificacion'];
+		$id_grado = $est[0]['id_grado'];
+		$grado = $est[0]['nombre_grado'];
+		$jornada = $est[0]['jornada'];
+
+		if ($est[0]['tipo_id'] == "cc") {
+			$tipo_id = "cédula de ciudadania";
+		}
+		if ($est[0]['tipo_id'] == "rc") {
+			$tipo_id = "registro de civil";
+		}
+		if ($est[0]['tipo_id'] == "ti") {
+			$tipo_id = "tarjeta de identidad";
+		}
+
+		//variable que almacena el array de las calificaciones del estudiante
+		$NotasEstudiante = $this->imprimir_model->Obtener_NotasEstudianteCT($id_persona,$id_grado,$ano_lectivo);
+
+		if($this->imprimir_model->validar_existencia_matriculaCT(FALSE,$id_persona,$ano_lectivo)){
+
+
+			// create new PDF document
+			$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+	        $pdf->SetCreator(PDF_CREATOR);
+	        $pdf->SetAuthor('Siescolar');
+	        $pdf->SetTitle('Certificado De Estudio');
+	        $pdf->SetSubject('Certificados SIESCOLAR');
+	        $pdf->SetKeywords('SIESCOLAR, PDF, example, test, guide');
+
+	        // remove default header/footer
+	        $pdf->SetPrintHeader(false);
+	 		$pdf->SetPrintFooter(false);
+
+			// establecer la fuente monoespaciada predeterminada
+	        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+	 
+			// establecer margenes
+	        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+	        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+	 
+			// establecer saltos automáticos de página
+	        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	 
+			// relación utilizada para ajustar la conversión de los píxeles, establecer el factor de escala de la imagen
+	        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+	        // ---------------------------------------------------------
+			// establecer el modo de fuente por defecto
+	        $pdf->setFontSubsetting(true);
+
+
+	        // Añadir una página
+	        $pdf->AddPage();
+
+	        //=======================================Page header========================================================
+
+	        // Logo
+	        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
+	        $image_file = 'uploads/imagenes/colegio/'.$escudo;
+	        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+	        $pdf->SetFont('helvetica', 'B', 12);
+
+	        // Title
+	        //$pdf->Cell(0, 0, '<<TCPDF Example 003>>', 1, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->SetFont('helvetica', '', 12);
+	        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->ln(12);
+	        //===========================================================================================================
+
+	        $pdf->SetMargins(30, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        $pdf->SetFont('helvetica', 'B', 12);
+	        $titulo = '          El Suscrito Director Del '.ucwords(strtolower($nombre_institucion)).' De Sempegua Municipio De Chimichagua';
+	        $pdf->Write(0, $titulo, '', 0, 'C', true, 0, false, false, 0);
+	        $pdf->SetFont('helvetica', '', 12, '', true);
+	 
+			//fijar efecto de sombra en el texto
+	        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+
+
+	        // Establecemos el contenido para imprimir
+	        //**********************************************************************************************************
+			//preparamos y maquetamos el contenido a crear
+			//******
+
+	        $tbl = '';
+	        $tbl .= '<br />';
+	        $tbl .= '<p align="center"><b>CERTIFICA:</b><br /></p>';
+	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y aprobó en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.substr($fecha_actual, 6).') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
+
+	        $tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
+	        $tbl .= '<tr>
+	        			<td align="center" width="299" height="30"><b>AREAS Y ASIGNATURAS</b></td>
+	        			<td align="center" width="28"><b>I.H.</b></td>
+	        			<td align="center" width="249"><b>VALORACIÓN</b></td>
+	        		</tr>';
+
+	        for ($i=0; $i < count($NotasEstudiante); $i++) { 
+	        	
+	        	$tbl .= '<tr nobr="true">
+	        				<td><b>'.strtoupper($NotasEstudiante[$i]['nombre_asignatura']).'</b></td>
+	        				<td align="center">'.strtoupper($NotasEstudiante[$i]['intensidad_horaria']).'</td>
+	        				<td align="center">'.mb_strtoupper($NotasEstudiante[$i]['nombre_desempeno'],'UTF-8').'</td>
+	        			</tr>';
+	        }
+
+	        $tbl .= '</table>';
+
+	        $tbl .= '<p><b>OBSERVACIONES:</b><br /></p>';
+	        $tbl .= '<p>Este certificado pertenece a: <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>.</p>';
+	        $tbl .= '<p>El presente no necesita ser autenticado en Notarias, Decreto 1543 de Julio 1978.<br /></p>';
+
+	        if (count($NotasEstudiante) >= 17) {
+	        	$tbl .= '<p>&nbsp;</p>';
+	        }
+
+	        $tbl .= '<p>Se expide la presente en el Corregimiento de Sempegua, Municipio de Chimichagua Cesar a los _______ días del Mes de _______________ del Año __________.<br /><br /><br /></p>';
+
+	        if (count($NotasEstudiante) == 11) {
+	        	$tbl .= '<p>&nbsp;<br /></p>';
+	        }
+
+	        $tbl .= '<p align="center">________________________________<br /><b>'.strtoupper($rector).'<br />DIRECTOR GENERAL</b></p>';
+
+	        // Imprimimos el texto con writeHTMLCell()
+		    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = 'J', $autopadding = true);
+
+
+		    //SI HAY UN SALTO DE PAGINA, CREAMOS EL ENCABEZADO
+	        if ($pdf->getAutoPageBreak()) {
+	        	
+	        	$pdf->SetY(-280);
+	        	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        	//==================================Page header - Salto De Pagina=======================================
+		        // Logo
+		        $image_file = 'uploads/imagenes/colegio/'.$escudo;
+		        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		        $pdf->SetFont('helvetica', 'B', 12);
+
+		        // Title
+		        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->SetFont('helvetica', '', 12);
+		        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        //$pdf->ln(1);
+
+		        $pdf->SetMargins(30, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+
+	        }
+
+		    // ==============================================================================================0
+			// Cerrar el documento PDF y preparamos la salida
+			// Este método tiene varias opciones, consulte la documentación para más información.
+	        //$nombre_archivo = utf8_decode("Localidades de ".$prov.".pdf");
+	        $nombre_archivo = utf8_decode("Certificado De Estudio ".$identificacion.".pdf");
+	        $pdf->Output($nombre_archivo, 'I');
+
+
+		}
+		else{
+
+			echo "<h1>El Estudiante No Se Encuentra Matriculado.</h1>";
+		}
+
+
+
+	}
+
 }
