@@ -6,7 +6,7 @@ function inicio(){
 	mostrarcargas_academicas("",1,5,id_persona);
 
 
-    $("#btn_buscar_cargas_academicas").click(function(event){
+    /*$("#btn_buscar_cargas_academicas").click(function(event){
 		
        mostrarcargas_academicas("",1,5,id_persona);
     });
@@ -17,7 +17,7 @@ function inicio(){
 		valorcantidad = $("#cantidad_cargas_academicas").val();
 		mostrarcargas_academicas(buscar,1,valorcantidad,id_persona);
 		
-    });
+    });*/
 
     $("#cantidad_cargas_academicas").change(function(){
     	valorcantidad = $(this).val();

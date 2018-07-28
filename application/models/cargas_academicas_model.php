@@ -195,32 +195,47 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->where('id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
-		$this->db->where("(grados.nombre_grado LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%' OR grupos.nombre_grupo LIKE '".$id."%' OR cursos.jornada LIKE '".$id."%' OR pensum.intensidad_horaria LIKE '".$id."%' OR anos_lectivos.nombre_ano_lectivo LIKE '".$id."%')", NULL, FALSE);
-
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
-		$this->db->join('personas', 'cargas_academicas.id_profesor = personas.id_persona');
 		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
-		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
-		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
-		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
-		$this->db->join('anos_lectivos', 'cargas_academicas.ano_lectivo = anos_lectivos.id_ano_lectivo');
-		$this->db->join('pensum', 'cargas_academicas.id_asignatura = pensum.id_asignatura');
 
-		$this->db->select('cargas_academicas.id_carga_academica,cargas_academicas.id_profesor,cargas_academicas.id_curso,cargas_academicas.id_asignatura,cargas_academicas.ano_lectivo,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo,cursos.jornada,pensum.intensidad_horaria');
-		
 		$query = $this->db->get('cargas_academicas');
+		
+		$carga_academica = $query->result_array();
+		$listado_cargas = array();
 
-		return $query->result();
+		for ($i=0; $i < count($carga_academica) ; $i++) { 
+			
+			$id_grado = $carga_academica[$i]['id_grado'];
+			$id_asignatura = $carga_academica[$i]['id_asignatura'];
+
+			$this->db->where('id_profesor',$id_profesor);
+			$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
+			$this->db->where('pensum.id_grado',$id_grado);
+			$this->db->where('pensum.id_asignatura',$id_asignatura);
+			$this->db->where('pensum.ano_lectivo',$ano_lectivo);
+
+			$this->db->join('personas', 'cargas_academicas.id_profesor = personas.id_persona');
+			$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
+			$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
+			$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+			$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+			$this->db->join('anos_lectivos', 'cargas_academicas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+			$this->db->join('pensum', 'cargas_academicas.id_asignatura = pensum.id_asignatura');
+
+			$this->db->select('cargas_academicas.id_carga_academica,cargas_academicas.id_profesor,cargas_academicas.id_curso,cargas_academicas.id_asignatura,cargas_academicas.ano_lectivo,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo,cursos.jornada,pensum.intensidad_horaria');
+		
+			$query2 = $this->db->get('cargas_academicas');
+
+			$listado_cargas[] = $query2->row();
+
+		}
+
+		return $listado_cargas;
 		
 	}
-
-
-
-
-
 
 
 

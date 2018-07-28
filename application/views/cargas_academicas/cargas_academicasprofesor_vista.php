@@ -13,7 +13,7 @@
     </div>
     <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="<?php echo $this->session->userdata('id_persona')?>">
 
-    <div class="row">
+    <!--<div class="row">
 
     	<div class="col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-5 col-lg-3">
     		<div class="form-group">
@@ -29,7 +29,7 @@
     		</div>	
     	</div>
        
-    </div>
+    </div>-->
 
     <div class="row">
     	<div class="col-md-12">
