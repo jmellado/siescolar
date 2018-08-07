@@ -24,6 +24,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones_usuarios.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/inbox.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/seguimientos_disciplinarios_profesor.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
@@ -283,6 +284,21 @@
             <span>Inbox</span>
           </a>
         </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-retweet"></i>
+            <span>Seguimientos Disciplinarios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>seguimientos_disciplinarios_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
+            <li><a href="<?php echo base_url(); ?>seguimientos_disciplinarios_controller/index2"><i class="fa fa-list-alt"></i>Consultar</a></li>
+          </ul>
+        </li>
+
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>

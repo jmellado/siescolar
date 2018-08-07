@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2018 a las 18:16:01
+-- Tiempo de generación: 07-08-2018 a las 20:19:52
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -51,7 +51,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-04-22 16:15:33');
+(12345, '2018-08-07 18:18:22');
 
 -- --------------------------------------------------------
 
@@ -150,6 +150,26 @@ CREATE TABLE `categorias` (
 INSERT INTO `categorias` (`id_categoria`, `nombre_categoria`) VALUES
 (1, 'periodo academico'),
 (2, 'votacion');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `causales`
+--
+
+CREATE TABLE `causales` (
+  `id_causal` int(11) NOT NULL,
+  `causal` varchar(500) NOT NULL,
+  `id_tipo_causal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `causales`
+--
+
+INSERT INTO `causales` (`id_causal`, `causal`, `id_tipo_causal`) VALUES
+(1, 'Asistir puntualmente a clases y demás actividades programadas por el Centro Educativo.', 1),
+(2, 'Permanecer dentro del plantel durante la jornada escolar y en los sitios    programados por cada actividad.', 2);
 
 -- --------------------------------------------------------
 
@@ -1726,6 +1746,25 @@ INSERT INTO `municipios` (`id_municipio`, `nombre_municipio`, `id_departamento`)
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `nivelaciones`
+--
+
+CREATE TABLE `nivelaciones` (
+  `id_nivelacion` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
+  `periodo_nivelado` varchar(8) NOT NULL,
+  `nota_nivelada` decimal(11,1) NOT NULL,
+  `nivelacion` decimal(11,1) NOT NULL,
+  `observaciones` varchar(500) NOT NULL,
+  `fecha_nivelacion` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `niveles_educacion`
 --
 
@@ -1958,6 +1997,45 @@ CREATE TABLE `salones` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `seguimientos_disciplinarios`
+--
+
+CREATE TABLE `seguimientos_disciplinarios` (
+  `id_seguimiento` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_profesor` int(11) NOT NULL,
+  `id_curso` varchar(45) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_tipo_causal` int(11) NOT NULL,
+  `id_causal` int(11) NOT NULL,
+  `descripcion_situacion` varchar(500) NOT NULL,
+  `fecha_causal` date NOT NULL,
+  `fecha_registro` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos_causales`
+--
+
+CREATE TABLE `tipos_causales` (
+  `id_tipo_causal` int(11) NOT NULL,
+  `tipo_causal` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipos_causales`
+--
+
+INSERT INTO `tipos_causales` (`id_tipo_causal`, `tipo_causal`) VALUES
+(1, 'Orden Academico'),
+(2, 'Orden Disciplinario');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -2042,6 +2120,13 @@ ALTER TABLE `cargas_academicas`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id_categoria`);
+
+--
+-- Indices de la tabla `causales`
+--
+ALTER TABLE `causales`
+  ADD PRIMARY KEY (`id_causal`),
+  ADD KEY `fk_tipo_causal_idx` (`id_tipo_causal`);
 
 --
 -- Indices de la tabla `conceptos_pagos`
@@ -2170,6 +2255,12 @@ ALTER TABLE `municipios`
   ADD KEY `fk_municpios_departamentos_idx` (`id_departamento`);
 
 --
+-- Indices de la tabla `nivelaciones`
+--
+ALTER TABLE `nivelaciones`
+  ADD PRIMARY KEY (`id_nivelacion`);
+
+--
 -- Indices de la tabla `niveles_educacion`
 --
 ALTER TABLE `niveles_educacion`
@@ -2241,6 +2332,20 @@ ALTER TABLE `salones`
   ADD PRIMARY KEY (`id_salon`);
 
 --
+-- Indices de la tabla `seguimientos_disciplinarios`
+--
+ALTER TABLE `seguimientos_disciplinarios`
+  ADD PRIMARY KEY (`id_seguimiento`),
+  ADD KEY `fk_tipo_causal_idx` (`id_tipo_causal`),
+  ADD KEY `fk_causal_idx` (`id_causal`);
+
+--
+-- Indices de la tabla `tipos_causales`
+--
+ALTER TABLE `tipos_causales`
+  ADD PRIMARY KEY (`id_tipo_causal`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -2288,6 +2393,11 @@ ALTER TABLE `cargas_academicas`
 --
 ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `causales`
+--
+ALTER TABLE `causales`
+  MODIFY `id_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `cronogramas`
 --
@@ -2369,6 +2479,11 @@ ALTER TABLE `matriculas`
 ALTER TABLE `municipios`
   MODIFY `id_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1121;
 --
+-- AUTO_INCREMENT de la tabla `nivelaciones`
+--
+ALTER TABLE `nivelaciones`
+  MODIFY `id_nivelacion` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `niveles_educacion`
 --
 ALTER TABLE `niveles_educacion`
@@ -2414,6 +2529,16 @@ ALTER TABLE `roles`
 ALTER TABLE `salones`
   MODIFY `id_salon` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `seguimientos_disciplinarios`
+--
+ALTER TABLE `seguimientos_disciplinarios`
+  MODIFY `id_seguimiento` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `tipos_causales`
+--
+ALTER TABLE `tipos_causales`
+  MODIFY `id_tipo_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -2441,6 +2566,12 @@ ALTER TABLE `cargas_academicas`
   ADD CONSTRAINT `fk_cargas_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_cargas_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_cargas_personas` FOREIGN KEY (`id_profesor`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `causales`
+--
+ALTER TABLE `causales`
+  ADD CONSTRAINT `fk_tipo_causal` FOREIGN KEY (`id_tipo_causal`) REFERENCES `tipos_causales` (`id_tipo_causal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `cronogramas`
@@ -2510,6 +2641,13 @@ ALTER TABLE `pagos`
 ALTER TABLE `pensum`
   ADD CONSTRAINT `fk_pensum_asignaturas` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pensum_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `seguimientos_disciplinarios`
+--
+ALTER TABLE `seguimientos_disciplinarios`
+  ADD CONSTRAINT `fk_causal` FOREIGN KEY (`id_causal`) REFERENCES `causales` (`id_causal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tipo_causall` FOREIGN KEY (`id_tipo_causal`) REFERENCES `tipos_causales` (`id_tipo_causal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuarios`
