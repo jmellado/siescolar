@@ -55,7 +55,7 @@
 									<th><i class='fa fa-th-large'></i>&nbsp;Curso</th>
 									<th><i class='fa fa-user'></i>&nbsp;Estudiante</th>
 									<th><i class='fa fa-check-circle'></i>&nbsp;Tipo Causal</th>
-									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha</th>
+									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha Causal</th>
 									<th></th>
 								</tr>
 							</thead>

@@ -132,6 +132,10 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
 			if($respuesta == true){
 
 				echo "registroguardado";
+
+				//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                $respuesta_firebase = $this->seguimientos_disciplinarios_model->enviar_notificacionFirebase($id_estudiante);
+                
 			}
 			else{
 
