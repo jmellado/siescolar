@@ -25,6 +25,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notificaciones_usuarios.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/inbox.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/seguimientos_disciplinarios_profesor.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/actividades.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
@@ -269,6 +270,19 @@
               <small class="label pull-right bg-yellow">4</small>
             </span>
           </a>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-circle-o-notch"></i>
+            <span>Actividades y Notas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>actividades_controller/index"><i class="fa fa-clipboard"></i>Gestionar Actividades</a></li>
+          </ul>
         </li>
 
         <li>

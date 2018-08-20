@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-08-2018 a las 20:19:52
+-- Tiempo de generación: 20-08-2018 a las 05:28:28
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -19,6 +19,23 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_siescolar`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividades`
+--
+
+CREATE TABLE `actividades` (
+  `id_actividad` int(11) NOT NULL,
+  `descripcion_actividad` varchar(300) NOT NULL,
+  `id_profesor` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
+  `periodo` varchar(8) NOT NULL,
+  `fecha_registro` datetime NOT NULL,
+  `ano_lectivo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -51,7 +68,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-08-07 18:18:22');
+(12345, '2018-08-20 03:27:50');
 
 -- --------------------------------------------------------
 
@@ -1808,6 +1825,20 @@ CREATE TABLE `notas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notas_actividades`
+--
+
+CREATE TABLE `notas_actividades` (
+  `id_planilla` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_actividad` int(11) NOT NULL,
+  `nota` decimal(11,1) DEFAULT NULL,
+  `fecha_registro` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `notificaciones`
 --
 
@@ -2067,6 +2098,12 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 --
 
 --
+-- Indices de la tabla `actividades`
+--
+ALTER TABLE `actividades`
+  ADD PRIMARY KEY (`id_actividad`);
+
+--
 -- Indices de la tabla `acudientes`
 --
 ALTER TABLE `acudientes`
@@ -2277,6 +2314,13 @@ ALTER TABLE `notas`
   ADD KEY `fk_notas_grados_idx` (`id_grado`);
 
 --
+-- Indices de la tabla `notas_actividades`
+--
+ALTER TABLE `notas_actividades`
+  ADD PRIMARY KEY (`id_planilla`),
+  ADD KEY `fk_actividades_idx` (`id_actividad`);
+
+--
 -- Indices de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
@@ -2358,6 +2402,11 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
+--
+-- AUTO_INCREMENT de la tabla `actividades`
+--
+ALTER TABLE `actividades`
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `acudientes`
 --
@@ -2494,6 +2543,11 @@ ALTER TABLE `niveles_educacion`
 ALTER TABLE `notas`
   MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `notas_actividades`
+--
+ALTER TABLE `notas_actividades`
+  MODIFY `id_planilla` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
@@ -2628,6 +2682,12 @@ ALTER TABLE `notas`
   ADD CONSTRAINT `fk_notas_desempeños` FOREIGN KEY (`id_desempeno`) REFERENCES `desempenos` (`id_desempeno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_notas_estudiantes` FOREIGN KEY (`id_estudiante`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_notas_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `notas_actividades`
+--
+ALTER TABLE `notas_actividades`
+  ADD CONSTRAINT `fk_actividades` FOREIGN KEY (`id_actividad`) REFERENCES `actividades` (`id_actividad`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `pagos`
