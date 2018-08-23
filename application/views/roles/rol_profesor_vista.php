@@ -282,6 +282,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>actividades_controller/index"><i class="fa fa-clipboard"></i>Gestionar Actividades</a></li>
+            <li><a href="<?php echo base_url(); ?>actividades_controller/calificar_actividades"><i class="fa fa-clipboard"></i>Calificar Actividades</a></li>
           </ul>
         </li>
 

@@ -213,6 +213,121 @@ function inicio(){
 	}, "Solo Valores Alfabeticos");
 
 
+	//======================== Funciones Para La Calificacion De Actividades =================================
+
+
+	$("#btn_consultar_actividades").click(function(){
+
+		if ($("#form_consultar_actividades").valid()==true) {
+			
+	    	periodo = $("#periodoCA").val();
+			id_curso = $("#id_cursoCA").val();
+			id_asignatura = $("#id_asignaturaCA").val();
+
+			mostrardiv_actividades();
+			mostraractividadesCA("",1,5,id_persona,periodo,id_curso,id_asignatura);
+		}
+
+
+	});
+
+
+	$("#id_cursoCA").change(function(){
+    	id_curso = $(this).val();
+    	id_persona = $("#id_persona").val();
+    	llenarcombo_asignaturas_profesorA(id_persona,id_curso);
+    	ocultardiv_actividades();
+    });
+
+
+    $("#id_asignaturaCA").change(function(){
+    	ocultardiv_actividades();
+    });
+
+
+    $("#periodoCA").change(function(){
+    	ocultardiv_actividades();
+    });
+
+
+	$("#form_consultar_actividades").validate({
+
+    	rules:{
+
+			periodo:{
+				required: true,
+				maxlength: 8
+
+			},
+
+			id_curso:{
+				required: true,
+				maxlength: 15
+
+			},
+
+			id_asignatura:{
+				required: true,
+				maxlength: 15	
+
+			}
+
+		}
+
+
+	});
+
+
+	$("#cantidad_actividadCA").change(function(){
+		periodo = $("#periodoCA").val();
+		id_curso = $("#id_cursoCA").val();
+		id_asignatura = $("#id_asignaturaCA").val();
+
+    	valorcantidad = $(this).val();
+    	mostraractividadesCA("",1,valorcantidad,id_persona,periodo,id_curso,id_asignatura);
+    });
+
+
+    $("body").on("click", ".paginacion_actividadCA li a", function(event){
+    	event.preventDefault();
+    	numero_pagina = $(this).attr("href");
+    	valorcantidad = $("#cantidad_actividadCA").val();
+
+    	periodo = $("#periodoCA").val();
+		id_curso = $("#id_cursoCA").val();
+		id_asignatura = $("#id_asignaturaCA").val();
+
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+    		
+			mostraractividadesCA("",numero_pagina,valorcantidad,id_persona,periodo,id_curso,id_asignatura);
+		}	
+
+
+    });
+
+
+    $("body").on("click","#lista_actividadesCA button",function(event){
+		event.preventDefault();
+		$("#modal_ingresar_notas_actividad").modal();
+		id_actividadsele = $(this).attr("href");
+		descripcion_actividadsele = $(this).parent().parent().children("td:eq(2)").text();
+		periodosele = $(this).parent().parent().children("td:eq(3)").text();
+		id_cursosele = $(this).parent().parent().children("td:eq(4)").text();
+		cursosele = $(this).parent().parent().children("td:eq(5)").text();
+		id_asignaturasele = $(this).parent().parent().children("td:eq(6)").text();
+		asignaturasele = $(this).parent().parent().children("td:eq(7)").text();
+		
+		$("#id_actividadseleCA").val(id_actividadsele);
+        $("#periodoseleCA").val(periodosele);
+        $("#id_cursoseleCA").val(id_cursosele);
+        $("#cursoseleCA").val(cursosele);
+        $("#id_asignaturaseleCA").val(id_asignaturasele);
+        $("#asignaturaseleCA").val(asignaturasele);
+        $("#descripcion_actividadseleCA").val(descripcion_actividadsele);
+
+	});
+
+
 }
 
 
@@ -412,6 +527,117 @@ function actualizar_actividad(){
 
 		}
 
+
+	});
+
+}
+
+
+//======================== Funciones Para La Calificacion De Actividades =================================
+
+
+function mostrardiv_actividades(){
+
+	div = document.getElementById('div_actividades');
+    div.style.display = '';
+}
+
+function ocultardiv_actividades(){
+
+	div = document.getElementById('div_actividades');
+    div.style.display = 'none';
+}
+
+
+//esta funcion me permite obtener las activades creadas por un profesor, por periodo, curso y asignatura
+function mostraractividadesCA(valor,pagina,cantidad,id_persona,periodo,id_curso,id_asignatura){
+
+	$.ajax({
+		url:base_url+"actividades_controller/mostraractividadesCA",
+		type:"post",
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_persona:id_persona,periodo:periodo,id_curso:id_curso,id_asignatura:id_asignatura},
+		success:function(respuesta) {
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
+				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
+				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
+
+				html ="";
+
+				if (registros.actividades.length > 0) {
+
+					for (var i = 0; i < registros.actividades.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.actividades[i].id_actividad+"</td><td><textarea class='form-control' cols='30' rows='2' readonly style='resize:none'>"+registros.actividades[i].descripcion_actividad+"</textarea></td></td><td>"+registros.actividades[i].periodo+"</td><td style='display:none'>"+registros.actividades[i].id_curso+"</td><td>"+registros.actividades[i].nombre_grado+" "+registros.actividades[i].nombre_grupo+" "+registros.actividades[i].jornada+"</td><td style='display:none'>"+registros.actividades[i].id_asignatura+"</td><td>"+registros.actividades[i].nombre_asignatura+"</td><td><button type='button' class='btn btn-warning' value="+registros.actividades[i].id_actividad+" title='Calificar Actividad'><i class='fa  fa-caret-right'></i>&nbsp;Calificar</button></td></tr>";
+					};
+					
+					$("#lista_actividadesCA tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='6'><p style='text-align:center'>No Hay Actividades Registradas..</p></td></tr>";
+					$("#lista_actividadesCA tbody").html(html);
+				}	
+
+				linkseleccionado = Number(pagina);
+				//total de registros
+			    totalregistros = registros.totalregistros;
+				//cantidad de registros por pagina
+				cantidadregistros = registros.cantidad;
+				//numero de links o paginas dependiendo de la cantidad de registros y el numero a mostrar
+				numerolinks = Math.ceil(totalregistros/cantidadregistros);
+
+				paginador="<ul class='pagination'>";
+
+				if(linkseleccionado>1)
+				{
+					paginador+="<li><a href='1'>&laquo;</a></li>";
+					paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
+				}
+				//muestro de los enlaces 
+				//cantidad de link hacia atras y adelante
+	 			cant = 2;
+	 			//inicio de donde se va a mostrar los links
+				pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
+				//condicion en la cual establecemos el fin de los links
+				if (numerolinks > cant)
+				{
+					//conocer los links que hay entre el seleccionado y el final
+					pagRestantes = numerolinks - linkseleccionado;
+					//defino el fin de los links
+					pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
+				}
+				else 
+				{
+					pagFin = numerolinks;
+				}
+
+				for (var i = pagInicio; i <= pagFin; i++) {
+					if (i == linkseleccionado)
+						paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
+					else
+						paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
+				}
+				//condicion para mostrar el boton sigueinte y ultimo
+				if(linkseleccionado<numerolinks)
+				{
+					paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
+					paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
+				}
+				
+				paginador +="</ul>";
+				$(".paginacion_actividadCA").html(paginador);
+
+			}
 
 	});
 

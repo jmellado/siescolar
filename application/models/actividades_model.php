@@ -134,6 +134,42 @@ class Actividades_model extends CI_Model {
 	}
 
 
+	//===================== Funciones Para La Calificacion De Actividades =======================
+
+
+	public function buscar_actividadCA($id,$id_profesor,$periodo,$id_curso,$id_asignatura,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('actividades.id_profesor',$id_profesor);
+		$this->db->where('actividades.ano_lectivo',$ano_lectivo);
+		$this->db->where('actividades.periodo',$periodo);
+		$this->db->where('actividades.id_curso',$id_curso);
+		$this->db->where('actividades.id_asignatura',$id_asignatura);
+		
+		//$this->db->where("(grados.nombre_grado LIKE '".$id."%' OR grupos.nombre_grupo LIKE '".$id."%' OR actividades.descripcion_actividad LIKE '".$id."%' OR actividades.periodo LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%')", NULL, FALSE);
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('cursos', 'actividades.id_curso = cursos.id_curso');
+		$this->db->join('asignaturas', 'actividades.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('actividades.id_actividad,actividades.descripcion_actividad,actividades.id_curso,actividades.id_asignatura,actividades.periodo,actividades.fecha_registro,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura');
+		
+		$query = $this->db->get('actividades');
+
+		return $query->result();
+	
+	}
+
+
+
 
 
 }
