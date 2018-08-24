@@ -134,6 +134,64 @@ class Actividades_model extends CI_Model {
 	}
 
 
+	public function EstudiantesMatriculadosPorCurso($id_curso){
+
+		$this->db->where('matriculas.id_curso',$id_curso);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
+
+	}
+
+
+	//Esta Funcion permite registrar los estudiantes en una determinada actividad, para el posterior registro de notas.
+	public function insertar_estudiantesPoractividad($id_actividad,$id_curso){
+
+		$estudiantes = $this->actividades_model->EstudiantesMatriculadosPorCurso($id_curso);
+
+		if ($estudiantes != false) {
+			
+			//NUEVA TRANSACCION
+			$this->db->trans_start();
+
+				for ($i=0; $i < count($estudiantes); $i++) { 
+					
+					//array para insertar en la tabla notas_actividades
+		        	$notas_actividades = array(
+					'id_estudiante' =>$estudiantes[$i]['id_estudiante'],
+					'id_actividad' =>$id_actividad);
+
+					$this->db->insert('notas_actividades', $notas_actividades);
+				}
+
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+
 	//===================== Funciones Para La Calificacion De Actividades =======================
 
 

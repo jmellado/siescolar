@@ -39,7 +39,7 @@ class Actividades_controller extends CI_Controller {
         }
         else{
 
-        	//obtengo el ultimo id de seguimientos + 1 
+        	//obtengo el ultimo id de actividades + 1 
         	$ultimo_id = $this->actividades_model->obtener_ultimo_id();
 
         	//obtengo el año actual 
@@ -47,6 +47,7 @@ class Actividades_controller extends CI_Controller {
 
         	$fecha = $this->actividades_model->obtener_fecha_actual();
 
+        	$id_actividad = $ultimo_id;
         	$descripcion_actividad = $this->input->post('descripcion_actividad');
         	$id_profesor = $this->input->post('id_profesor');
         	$id_curso = $this->input->post('id_curso');
@@ -56,7 +57,7 @@ class Actividades_controller extends CI_Controller {
 
         	//array para insertar en la tabla seguimientos disciplinarios
         	$actividad = array(
-        	'id_actividad' =>$ultimo_id,
+        	'id_actividad' =>$id_actividad,
         	'descripcion_actividad' =>ucwords(strtolower(trim($descripcion_actividad))),
         	'id_profesor' =>$id_profesor,
         	'id_curso' =>$id_curso,
@@ -71,6 +72,15 @@ class Actividades_controller extends CI_Controller {
 			if($respuesta == true){
 
 				echo "registroguardado";
+
+				//======================== Asociamos Estudiantes A La Actividad Creada ====================
+				$resp = $this->actividades_model->insertar_estudiantesPoractividad($id_actividad,$id_curso);
+
+				if($resp == false){
+					echo "No Se Pudo Registrar En La Tabla Notas Actividad";
+				}
+				//=========================================================================================
+
 			}
 			else{
 
