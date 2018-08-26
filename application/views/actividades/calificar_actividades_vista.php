@@ -4,7 +4,7 @@
 
 	    #modal_ingresar_notas_actividad .modal-body
 		{
-  			height:490px;
+  			height:450px;
   			overflow:auto;
 		}
 	</style>
@@ -94,7 +94,7 @@
 				    				<div class="panel-body">
 
 				    					<div class="form-group">
-										  <label for="cantidad_grupo">Mostrar Por:</label>
+										  <label for="cantidad_actividadCA">Mostrar Por:</label>
 										  <select class="selectpicker" id="cantidad_actividadCA" name="cantidad_actividadCA" >
 										    <option value="5">5</option>
 						  					<option value="10">10</option>
@@ -162,6 +162,10 @@
 
 				<div class="panel panel-default">
         			<div class="panel-body">
+
+        				<input type="hidden" class="form-control" id="id_actividadseleCA" name="id_actividad">
+        				<input type="hidden" class="form-control" id="id_cursoseleCA" name="id_curso">
+
         				<div class="col-md-offset-1 col-md-3">
 	        				<div class="form-group">
 								<label for="periodo">PERIODO</label>
@@ -176,15 +180,15 @@
 
 						<div class="col-md-4">
 							<div class="form-group">
-								<label for="id_curso">CURSO</label>
-								<input type="text" class="form-control" id="cursoseleCA" name="id_curso" disabled>
+								<label for="curso">CURSO</label>
+								<input type="text" class="form-control" id="cursoseleCA" name="curso" disabled>
 							</div>
 						</div>
 
 						<div class="col-md-3">
 							<div class="form-group">
-								<label for="id_asignatura">ASIGNATURA</label>
-								<input type="text" class="form-control" id="asignaturaseleCA" name="id_asignatura" disabled>
+								<label for="asignatura">ASIGNATURA</label>
+								<input type="text" class="form-control" id="asignaturaseleCA" name="asignatura" disabled>
 							</div>
 						</div>
 
@@ -200,7 +204,7 @@
 		    				<div class="panel-body">
 
 		    					<div class="form-group">
-								  <label for="cantidad_nota">Mostrar Por:</label>
+								  <label for="cantidad_nota_actividad">Mostrar Por:</label>
 								  <select class="selectpicker" id="cantidad_nota_actividad" name="cantidad_nota" >
 								    <option value="5">5</option>
 				  					<option value="10">10</option>
@@ -216,16 +220,16 @@
 											<th><i class='fa fa-sort-amount-asc'></i></th>
 											<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificacion</th>
 											<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
-											<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido 1</th>
-											<th><i class='fa fa-file-text-o'></i>&nbsp;Apellido 2</th>
-											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 1</th>
-											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 2</th>
-											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 3</th>
-											<th><i class='fa fa-caret-down'></i>&nbsp;Nota 4</th>
-											<th><i class='fa fa-caret-right'></i>&nbsp;Nota Final</th>
-											<th><i class='fa fa-check-square-o'></i>&nbsp;Fallas</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;1° Apellido</th>
+											<th><i class='fa fa-file-text-o'></i>&nbsp;2° Apellido</th>
+											<th><i class='fa fa-caret-down'></i>&nbsp;Nota</th>
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<td colspan='6'></td>
+										</tr>
+									</tfoot>
 									<tbody>
 									</tbody>
 								</table>
@@ -241,19 +245,23 @@
 		    	</div>
 		    </div>
 
-		    <div class="row">
+		    <!--<div class="row">
 				<div class="col-sm-offset-9 col-sm-3">
 	        		<div class="form-group">
 						<button type="submit" name="btn_registrar_nota_actividad" id="btn_registrar_nota_actividad" class="btn btn-primary btn-lg btn-block">Registrar Notas</button>
 					</div>
 	        	</div>
-	        </div>
+	        </div>-->
 
         </form>
 
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+      	<div class="row">
+			<div class="col-sm-offset-9 col-sm-3">
+       			<button type="button" class="btn btn-success btn-lg btn-block" id="btn_registrar_nota_actividad" name="btn_registrar_nota_actividad">Registrar Notas</button>
+       		</div>
+       	</div>	
       </div>
     </div>
 

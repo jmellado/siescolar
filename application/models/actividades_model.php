@@ -227,7 +227,71 @@ class Actividades_model extends CI_Model {
 	}
 
 
+	public function buscar_nota($id,$id_curso,$id_actividad,$inicio = FALSE,$cantidad = FALSE){
 
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('matriculas.id_curso',$id_curso);
+		$this->db->where('notas_actividades.id_actividad',$id_actividad);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
+		$this->db->join('notas_actividades', 'matriculas.id_estudiante = notas_actividades.id_estudiante');
+
+		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas_actividades.id_actividad,IFNULL(notas_actividades.nota,"") as nota', false);
+		
+		$query = $this->db->get('matriculas');
+
+		return $query->result();
+	
+	}
+
+
+	public function modificar_nota($estudiantes,$id_actividad,$notas,$fecha_registro){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+		for ($i=0; $i < count($estudiantes) ; $i++) {
+
+			$nota = $notas[$i];
+			
+			if ($nota == ""){
+		        $nota = NULL;
+		    }
+
+			//array para actualizar en la tabla notas actividades
+        	$nota = array(
+			'id_estudiante' =>$estudiantes[$i],
+			'id_actividad' =>$id_actividad,
+			'nota' =>$nota,
+			'fecha_registro' =>$fecha_registro);
+
+        	$this->db->where('id_estudiante',$estudiantes[$i]);
+        	$this->db->where('id_actividad',$id_actividad);
+			$this->db->update('notas_actividades', $nota);
+
+		}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
 
 
 }

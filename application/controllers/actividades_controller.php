@@ -239,6 +239,60 @@ class Actividades_controller extends CI_Controller {
 	}
 
 
+	public function mostrarnotasactividad(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+
+		$id_curso = $this->input->post('id_curso');
+		$id_actividad = $this->input->post('id_actividad');
+		
+		$data = array(
+
+			'notas' => $this->actividades_model->buscar_nota($id,$id_curso,$id_actividad,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->actividades_model->buscar_nota($id,$id_curso,$id_actividad)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function insertar_notas(){
+
+
+		if($this->input->post('id_persona')!=""){
+
+			$fecha_registro = $this->actividades_model->obtener_fecha_actual();
+			$estudiantes = $this->input->post('id_persona');
+			$id_actividad = $this->input->post('id_actividad');
+			$notas = $this->input->post('nota');
+
+			$respuesta = $this->actividades_model->modificar_nota($estudiantes,$id_actividad,$notas,$fecha_registro);
+
+			if($respuesta == true){
+
+	        	echo "registroguardado";
+	        }
+	        else{
+	        	echo "registronoguardado";
+	        }
+
+	    }else{
+
+	    	echo "nohayestudiantes";
+	    }
+
+	}
+
+
 
 
 }

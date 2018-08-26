@@ -309,7 +309,7 @@ function inicio(){
     $("body").on("click","#lista_actividadesCA button",function(event){
 		event.preventDefault();
 		$("#modal_ingresar_notas_actividad").modal();
-		id_actividadsele = $(this).attr("href");
+		id_actividadsele = $(this).attr("value");
 		descripcion_actividadsele = $(this).parent().parent().children("td:eq(2)").text();
 		periodosele = $(this).parent().parent().children("td:eq(3)").text();
 		id_cursosele = $(this).parent().parent().children("td:eq(4)").text();
@@ -324,8 +324,85 @@ function inicio(){
         $("#id_asignaturaseleCA").val(id_asignaturasele);
         $("#asignaturaseleCA").val(asignaturasele);
         $("#descripcion_actividadseleCA").val(descripcion_actividadsele);
+       
+        mostrarnotasactividad("",1,5,id_cursosele,id_actividadsele);
 
 	});
+
+
+	$("#btn_registrar_nota_actividad").click(function(event){
+
+		if(validarCampoNotaCA() == true){
+
+			$.ajax({
+
+				url:$("#form_notas_actividad_insertar").attr("action"),
+				type:$("#form_notas_actividad_insertar").attr("method"),
+				data:$("#form_notas_actividad_insertar").serialize(),   //captura la info de la cajas de texto
+				success:function(respuesta) {
+
+					//alert(""+respuesta);
+					if (respuesta==="registroguardado") {
+						
+						toastr.success('Notas Registradas Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+						id_curso = $("#id_cursoseleCA").val();
+						id_actividad = $("#id_actividadseleCA").val();
+						mostrarnotasactividad("",1,5,id_cursosele,id_actividadsele);
+					}
+					else if(respuesta==="registronoguardado"){
+						
+						toastr.error('Notas No Registradas.', 'Success Alert', {timeOut: 5000});
+		
+					}
+					else if(respuesta==="nohayestudiantes"){
+						
+						toastr.warning('No Hay Información Por Registrar.', 'Success Alert', {timeOut: 5000});
+							
+					}
+					else{
+
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						
+					}
+	
+						
+				}
+
+			});
+
+		}else{
+
+			toastr.warning('Las Notas Ingresadas Son Incorrectas.', 'Success Alert', {timeOut: 3000});
+		}
+       
+    });
+
+
+    $("#cantidad_nota_actividad").change(function(){
+		
+		id_curso = $("#id_cursoseleCA").val();
+		id_actividad = $("#id_actividadseleCA").val();
+
+    	valorcantidad = $(this).val();
+    	mostrarnotasactividad("",1,valorcantidad,id_curso,id_actividad);
+    });
+
+
+    $("body").on("click", ".paginacion_nota_actividad li a", function(event){
+    	event.preventDefault();
+    	numero_pagina = $(this).attr("href");
+    	valorcantidad = $("#cantidad_nota_actividad").val();
+
+		id_curso = $("#id_cursoseleCA").val();
+		id_actividad = $("#id_actividadseleCA").val();
+
+    	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
+    		
+			mostrarnotasactividad("",numero_pagina,valorcantidad,id_curso,id_actividad);
+		}	
+
+
+    });
 
 
 }
@@ -640,5 +717,150 @@ function mostraractividadesCA(valor,pagina,cantidad,id_persona,periodo,id_curso,
 			}
 
 	});
+
+}
+
+
+function mostrarnotasactividad(valor,pagina,cantidad,id_curso,id_actividad){
+
+	$.ajax({
+		url:base_url+"actividades_controller/mostrarnotasactividad",
+		type:"post",
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_curso:id_curso,id_actividad:id_actividad},
+		success:function(respuesta) {
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
+				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
+				
+				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
+
+				html ="";
+
+				if (registros.notas.length > 0) {
+
+					for (var i = 0; i < registros.notas.length; i++) {
+						
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='nota[]' id='nota' value='"+registros.notas[i].nota+"' size='2' onKeypress='return valida_nota_actividad(event)'></td></tr>";
+					};
+					
+					$("#lista_notas_actividad tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='6'><p style='text-align:center'>No Hay Estudiantes Registrados..</p></td></tr>";
+					$("#lista_notas_actividad tbody").html(html);
+				}
+
+				linkseleccionado = Number(pagina);
+				//total de registros
+			    totalregistros = registros.totalregistros;
+				//cantidad de registros por pagina
+				cantidadregistros = registros.cantidad;
+				//numero de links o paginas dependiendo de la cantidad de registros y el numero a mostrar
+				numerolinks = Math.ceil(totalregistros/cantidadregistros);
+
+				paginador="<ul class='pagination'>";
+
+				if(linkseleccionado>1)
+				{
+					paginador+="<li><a href='1'>&laquo;</a></li>";
+					paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
+				}
+				//muestro de los enlaces 
+				//cantidad de link hacia atras y adelante
+	 			cant = 2;
+	 			//inicio de donde se va a mostrar los links
+				pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
+				//condicion en la cual establecemos el fin de los links
+				if (numerolinks > cant)
+				{
+					//conocer los links que hay entre el seleccionado y el final
+					pagRestantes = numerolinks - linkseleccionado;
+					//defino el fin de los links
+					pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
+				}
+				else 
+				{
+					pagFin = numerolinks;
+				}
+
+				for (var i = pagInicio; i <= pagFin; i++) {
+					if (i == linkseleccionado)
+						paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
+					else
+						paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
+				}
+				//condicion para mostrar el boton sigueinte y ultimo
+				if(linkseleccionado<numerolinks)
+				{
+					paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
+					paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
+				}
+				
+				paginador +="</ul>";
+				$(".paginacion_nota_actividad").html(paginador);
+
+			}
+
+	});
+
+}
+
+
+function valida_nota_actividad(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9\.]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+
+
+function validarCampoNotaCA(){
+
+	var resn=[];
+    var resy=[];
+    var vacio = "";
+
+   	var notas = document.getElementsByName("nota[]");
+
+   	for(i = 0; i < notas.length; i++){
+
+   		if(notas[i].value != vacio && notas[i].value >= 0 && notas[i].value <= 5){
+
+   			resy.push("si")
+   		}
+   		else{
+   			resn.push("no");
+   		}
+
+
+   	}
+
+   	if(resy.length == notas.length){
+
+		//alert("ok");
+		return true;
+	}
+	else{
+		//alert("no");
+		return false;
+	}
 
 }
