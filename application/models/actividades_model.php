@@ -262,7 +262,7 @@ class Actividades_model extends CI_Model {
 		for ($i=0; $i < count($estudiantes) ; $i++) {
 
 			$nota = $notas[$i];
-			
+
 			if ($nota == ""){
 		        $nota = NULL;
 		    }
@@ -290,6 +290,163 @@ class Actividades_model extends CI_Model {
 
 			return true;
 		}
+
+	}
+
+
+	//***************************** Funciones Para El Envio De Notificicaciones *****************
+
+	//Esta Funcion Me Permite Enviar Una Notificacion A Todos Los Acudientes Conectados En La App Movil
+	public function enviar_notificacionFirebase($destinatario,$id_actividad,$notas){
+
+		$actividad = $this->actividades_model->obtener_detalles_actividad($id_actividad);
+		$nombre_asignatura = $actividad[0]['nombre_asignatura'];
+
+		for ($i=0; $i < count($destinatario); $i++) { 
+			
+			$TokensAcudientes = $this->actividades_model->obtener_TokensAcudientes($destinatario[$i]);
+			$nombre_estudiante = $this->actividades_model->obtener_nombre_estudiante($destinatario[$i]);
+
+			$titulo = "Calificación!!";
+			$contenido = $nombre_estudiante." ha obtenido una calificación de ".$notas[$i]." en ".$nombre_asignatura.".";
+
+			if ($TokensAcudientes != false) {
+
+				//clave del servidor FCM
+	 			$apiKey = 'AAAAhVC_IAs:APA91bFIRUkXQpUEUKbZ_PdYJtHc2zt_g7kAcD6tct8ZfU0xI_c0pjmBTrW5PPuhJBG8AzNtuQJvcSUtal8sZnZpAcMHdkkTcOFOHWiJB6oHyeFr6q3sTSeuzes2v0XUmIYY6qnqQ4na';
+
+	 			$headers = array(
+					"Authorization:key=$apiKey",
+					'Content-Type:application/json'
+				);
+
+				//datos
+				$notificacion = array(
+					'body' => $contenido,
+					'title' => $titulo,
+				);
+
+				$data = array(
+				   'registration_ids' => $TokensAcudientes,
+				   'data' => $notificacion
+				);
+
+				// Petición
+				$ch = curl_init();
+				curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+				curl_setopt( $ch, CURLOPT_URL, "https://fcm.googleapis.com/fcm/send" );
+				curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
+				curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+				// Conectamos y recuperamos la respuesta
+				$response = curl_exec($ch);
+				//echo($response);
+				 
+				// Cerramos conexión
+				curl_close($ch);
+			}
+
+		}
+
+
+	}
+
+
+	//Con esta Funcion obtengo un array con los tokens de los acudientes seleccionados
+	//Recibo un array con los id de los estudiantes
+	//Luego consulto el id del acudiente de cada estudiante
+	//Po ultimo consulto el token de cada acudiente y lo voy almacenando en el array tokens el cual es retornado
+	public function obtener_TokensAcudientes($destinatario){
+
+		//array sencillo para los tokens
+		$tokens = array();
+
+		for ($i=0; $i < count($destinatario) ; $i++) {
+
+			$id_acudiente = $this->actividades_model->consultar_acudiente($destinatario[$i]);
+
+			$this->db->where('usuarios.id_rol',4);
+			$this->db->where('usuarios.id_persona',$id_acudiente);
+
+			$this->db->select('usuarios.token');
+
+			$query = $this->db->get('usuarios');
+
+			$row = $query->result_array();
+
+			$tokens[] = $row[0]['token'];
+		}
+		
+		//array con los token de los dispositvos a los cuales va ir dirgido la notificacion
+		return $tokens;
+	}
+
+
+	//Esta funcion me permite consultar el acudiente(id) de un estudiante matriculado
+	public function consultar_acudiente($id_estudiante){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_estudiante',$id_estudiante);
+
+		$this->db->select('matriculas.id_acudiente');
+		
+		$query = $this->db->get('matriculas');
+
+		$row = $query->result_array();
+
+		$id_acudiente = $row[0]['id_acudiente'];
+
+		return $id_acudiente;
+
+	}
+
+
+	public function obtener_nombre_estudiante($id_persona){
+
+		$this->db->where('personas.id_persona',$id_persona);
+
+		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+		
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+
+			$estudiante = $query->result_array();
+			$nombre_estudiante = $estudiante[0]['nombres']." ".$estudiante[0]['apellido1']." ".$estudiante[0]['apellido2'];
+
+			return $nombre_estudiante;
+		}
+		else{
+			return false;
+		}
+
+
+	}
+
+
+	public function obtener_detalles_actividad($id_actividad){
+
+		$this->db->where('actividades.id_actividad',$id_actividad);
+
+		$this->db->join('asignaturas', 'actividades.id_asignatura = asignaturas.id_asignatura');
+		
+		$query = $this->db->get('actividades');
+
+		if ($query->num_rows() > 0) {
+
+			$actividad = $query->result_array();
+
+			return $actividad;
+		}
+		else{
+			return false;
+		}
+
 
 	}
 

@@ -280,6 +280,9 @@ class Actividades_controller extends CI_Controller {
 			if($respuesta == true){
 
 	        	echo "registroguardado";
+
+	        	//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                $respuesta_firebase = $this->actividades_model->enviar_notificacionFirebase($estudiantes,$id_actividad,$notas);
 	        }
 	        else{
 	        	echo "registronoguardado";
