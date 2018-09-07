@@ -451,4 +451,62 @@ class Actividades_model extends CI_Model {
 	}
 
 
+	//===================== Funciones Para La Consulta De Calificaciones =======================
+
+
+	public function buscar_notafinal($id,$id_profesor,$periodo,$id_curso,$id_asignatura,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('actividades.id_profesor',$id_profesor);
+		$this->db->where('actividades.ano_lectivo',$ano_lectivo);
+		$this->db->where('actividades.periodo',$periodo);
+		$this->db->where('actividades.id_curso',$id_curso);
+		$this->db->where('actividades.id_asignatura',$id_asignatura);
+
+		$this->db->join('actividades', 'notas_actividades.id_actividad = actividades.id_actividad');
+
+		$this->db->select('DISTINCT(notas_actividades.id_estudiante)');
+		$query = $this->db->get('notas_actividades');
+
+		$estudiantes = $query->result_array();
+		$listado_estudiantes = array();
+
+		for ($i=0; $i < count($estudiantes) ; $i++) { 
+			
+			$id_estudiante = $estudiantes[$i]['id_estudiante'];
+
+			$this->db->where('actividades.id_profesor',$id_profesor);
+			$this->db->where('actividades.ano_lectivo',$ano_lectivo);
+			$this->db->where('actividades.periodo',$periodo);
+			$this->db->where('actividades.id_curso',$id_curso);
+			$this->db->where('actividades.id_asignatura',$id_asignatura);
+			$this->db->where('notas_actividades.id_estudiante',$id_estudiante);
+
+			$this->db->order_by('personas.apellido1', 'asc');
+			$this->db->order_by('personas.apellido2', 'asc');
+			$this->db->order_by('personas.nombres', 'asc');
+
+			$this->db->join('actividades', 'notas_actividades.id_actividad = actividades.id_actividad');
+			$this->db->join('personas', 'notas_actividades.id_estudiante = personas.id_persona');
+			$this->db->join('cursos', 'actividades.id_curso = cursos.id_curso');
+			$this->db->join('asignaturas', 'actividades.id_asignatura = asignaturas.id_asignatura');
+			$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+			$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+			$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas_actividades.nota, 0.0)),1) as nota,actividades.periodo,actividades.id_curso,actividades.id_asignatura,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura',false);
+		
+			$query2 = $this->db->get('notas_actividades');
+
+			$listado_estudiantes[] =$query2->row();
+		}
+
+		
+		return $listado_estudiantes;
+
+	}
+
+
+
 }

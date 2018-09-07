@@ -296,6 +296,48 @@ class Actividades_controller extends CI_Controller {
 	}
 
 
+	//===================== Funciones Para La Consulta De Notas =======================
+
+
+    public function consultar_notas()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_profesor_vista', 'actividades/consultar_notas_vista');
+	}
+
+
+	public function mostrarnotasasignatura(){
+
+		$id =$this->input->post('id_buscar');
+		$id_profesor = $this->input->post('id_persona');
+		$periodo = $this->input->post('periodo'); 
+		$id_curso = $this->input->post('id_curso'); 
+		$id_asignatura = $this->input->post('id_asignatura'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'notas' => $this->actividades_model->buscar_notafinal($id,$id_profesor,$periodo,$id_curso,$id_asignatura,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->actividades_model->buscar_notafinal($id,$id_profesor,$periodo,$id_curso,$id_asignatura)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
 
 
 }
