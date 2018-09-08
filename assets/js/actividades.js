@@ -469,6 +469,19 @@ function inicio(){
 
 	});
 
+
+	$("body").on("click","#lista_notas_asignatura button",function(event){
+		event.preventDefault();
+		$("#modal_ver_notas_actividades").modal();
+		id_estudiantesele = $(this).attr("value");
+		periodosele = $(this).parent().parent().children("td:eq(3)").text();
+		id_cursosele = $(this).parent().parent().children("td:eq(4)").text();
+		id_asignaturasele = $(this).parent().parent().children("td:eq(6)").text();
+       
+        mostrarnotasactividades("",1,5,id_cursosele,id_asignaturasele,periodosele,id_estudiantesele);
+
+	});
+
 }
 
 
@@ -1033,6 +1046,102 @@ function mostrarnotasasignatura(valor,pagina,cantidad,id_persona,periodo,id_curs
 				
 				paginador +="</ul>";
 				$(".paginacion_nota_asignatura").html(paginador);
+
+			}
+
+	});
+
+}
+
+
+function mostrarnotasactividades(valor,pagina,cantidad,id_curso,id_asignatura,periodo,id_estudiante){
+
+	$.ajax({
+		url:base_url+"actividades_controller/mostrarnotasactividades",
+		type:"post",
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_curso:id_curso,id_asignatura:id_asignatura,periodo:periodo,id_estudiante:id_estudiante},
+		success:function(respuesta) {
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
+				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
+				
+				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
+
+				html ="";
+
+				if (registros.notas.length > 0) {
+
+					for (var i = 0; i < registros.notas.length; i++) {
+						
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.notas[i].id_persona+"</td><td style='display:none'>"+registros.notas[i].identificacion+"</td><td style='display:none'>"+registros.notas[i].nombres+" "+registros.notas[i].apellido1+" "+registros.notas[i].apellido2+"</td><td><textarea class='form-control' cols='30' rows='2' readonly style='resize:none'>"+registros.notas[i].descripcion_actividad+"</textarea></td><td align='center'>"+registros.notas[i].nota+"</td></tr>";
+					};
+					
+					$("#lista_notas_actividades tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='3'><p style='text-align:center'>No Hay Actividades Registradas..</p></td></tr>";
+					$("#lista_notas_actividades tbody").html(html);
+				}
+
+				linkseleccionado = Number(pagina);
+				//total de registros
+			    totalregistros = registros.totalregistros;
+				//cantidad de registros por pagina
+				cantidadregistros = registros.cantidad;
+				//numero de links o paginas dependiendo de la cantidad de registros y el numero a mostrar
+				numerolinks = Math.ceil(totalregistros/cantidadregistros);
+
+				paginador="<ul class='pagination'>";
+
+				if(linkseleccionado>1)
+				{
+					paginador+="<li><a href='1'>&laquo;</a></li>";
+					paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
+				}
+				//muestro de los enlaces 
+				//cantidad de link hacia atras y adelante
+	 			cant = 2;
+	 			//inicio de donde se va a mostrar los links
+				pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
+				//condicion en la cual establecemos el fin de los links
+				if (numerolinks > cant)
+				{
+					//conocer los links que hay entre el seleccionado y el final
+					pagRestantes = numerolinks - linkseleccionado;
+					//defino el fin de los links
+					pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
+				}
+				else 
+				{
+					pagFin = numerolinks;
+				}
+
+				for (var i = pagInicio; i <= pagFin; i++) {
+					if (i == linkseleccionado)
+						paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
+					else
+						paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
+				}
+				//condicion para mostrar el boton sigueinte y ultimo
+				if(linkseleccionado<numerolinks)
+				{
+					paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
+					paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
+
+				}
+				else
+				{
+					paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
+					paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
+				}
+				
+				paginador +="</ul>";
+				$(".paginacion_notas_actividades").html(paginador);
 
 			}
 

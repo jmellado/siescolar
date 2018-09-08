@@ -338,6 +338,34 @@ class Actividades_controller extends CI_Controller {
 	}
 
 
+	// Esta funcion me permite obtener las notas por actividades de un estudiante en una asignatura
+	public function mostrarnotasactividades(){
+
+		$id =$this->input->post('id_buscar');
+		$id_estudiante = $this->input->post('id_estudiante');
+		$periodo = $this->input->post('periodo'); 
+		$id_curso = $this->input->post('id_curso'); 
+		$id_asignatura = $this->input->post('id_asignatura'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'notas' => $this->actividades_model->buscar_notasactividades($id,$id_estudiante,$periodo,$id_curso,$id_asignatura,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->actividades_model->buscar_notasactividades($id,$id_estudiante,$periodo,$id_curso,$id_asignatura)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
 
 
 }
