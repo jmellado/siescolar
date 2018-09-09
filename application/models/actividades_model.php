@@ -42,16 +42,23 @@ class Actividades_model extends CI_Model {
 
 	public function eliminar_actividad($id_actividad){
 
-     	$this->db->where('id_actividad',$id_actividad);
-		$consulta = $this->db->delete('actividades');
-       	if($consulta==true){
+       	//NUEVA TRANSACCION
+		$this->db->trans_start();
+		$this->db->where('id_actividad',$id_actividad);
+		$this->db->delete('notas_actividades');
 
-           return true;
-       	}
-       	else{
+		$this->db->where('id_actividad',$id_actividad);
+		$this->db->delete('actividades');
+		$this->db->trans_complete();
 
-           return false;
-       	}
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
     }
 
 
@@ -236,6 +243,9 @@ class Actividades_model extends CI_Model {
 		$this->db->where('notas_actividades.id_actividad',$id_actividad);
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
 		
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
@@ -465,7 +475,12 @@ class Actividades_model extends CI_Model {
 		$this->db->where('actividades.id_curso',$id_curso);
 		$this->db->where('actividades.id_asignatura',$id_asignatura);
 
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
 		$this->db->join('actividades', 'notas_actividades.id_actividad = actividades.id_actividad');
+		$this->db->join('personas', 'notas_actividades.id_estudiante = personas.id_persona');
 
 		$this->db->select('DISTINCT(notas_actividades.id_estudiante)');
 		$query = $this->db->get('notas_actividades');
@@ -484,9 +499,9 @@ class Actividades_model extends CI_Model {
 			$this->db->where('actividades.id_asignatura',$id_asignatura);
 			$this->db->where('notas_actividades.id_estudiante',$id_estudiante);
 
-			$this->db->order_by('personas.apellido1', 'asc');
+			/*$this->db->order_by('personas.apellido1', 'asc');
 			$this->db->order_by('personas.apellido2', 'asc');
-			$this->db->order_by('personas.nombres', 'asc');
+			$this->db->order_by('personas.nombres', 'asc');*/
 
 			$this->db->join('actividades', 'notas_actividades.id_actividad = actividades.id_actividad');
 			$this->db->join('personas', 'notas_actividades.id_estudiante = personas.id_persona');
