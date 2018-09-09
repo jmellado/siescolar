@@ -1085,4 +1085,156 @@ class Imprimir_controller extends CI_Controller {
 
 	}
 
+
+	//====================== FUNCIONES PARA LA IMPRESION DE CARNETS ESTUDIANTILES ==========================
+
+
+	//vista imprimir carnets
+	public function imprimir_carnet()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		$this->template->load('roles/rol_administrador_vista', 'imprimir/imprimir_carnet_vista');
+	}
+
+
+	public function generar_carnet(){
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+
+		$jornada = $this->input->get('jornada');
+		$id_curso = $this->input->get('id_curso');
+
+		$curs = $this->imprimir_model->obtener_informacion_curso($id_curso);
+		$nombre_curso = $curs[0]['nombre_grado'].' '.$curs[0]['nombre_grupo'];
+		$director_curso = $curs[0]['nombres'].' '.$curs[0]['apellido1'].' '.$curs[0]['apellido2'];
+		$ano_lectivo = $curs[0]['nombre_ano_lectivo'];
+
+		$estudiantes = $this->imprimir_model->EstudiantesMatriculadosPorCurso($id_curso);
+		$total_estudiantes = count($this->imprimir_model->EstudiantesMatriculadosPorCurso($id_curso));
+
+		$col = $this->imprimir_model->obtener_informacion_colegio();
+		$nombre_institucion = $col[0]['nombre_institucion'];
+		$niveles_educacion = $col[0]['niveles_educacion'];
+		$resolucion = $col[0]['resolucion'];
+		$dane = $col[0]['dane'];
+		$nit = $col[0]['nit'];
+		$escudo = $col[0]['escudo'];
+
+
+		if($this->imprimir_model->validar_existencia_estudiantes($id_curso)){
+
+			// create new PDF document
+			$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+	        $pdf->SetCreator(PDF_CREATOR);
+	        $pdf->SetAuthor('Siescolar');
+	        $pdf->SetTitle('Canets Estudiantiles Curso: '.$nombre_curso.' '.$jornada);
+	        $pdf->SetSubject('Carnets SIESCOLAR');
+	        $pdf->SetKeywords('SIESCOLAR, PDF, example, test, guide');
+
+	        // remove default header/footer
+	        $pdf->SetPrintHeader(false);
+	 		$pdf->SetPrintFooter(false);
+
+			// establecer la fuente monoespaciada predeterminada
+	        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+	 
+			// establecer margenes
+	        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+	        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+	 
+			// establecer saltos automáticos de página
+	        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	 
+			// relación utilizada para ajustar la conversión de los píxeles, establecer el factor de escala de la imagen
+	        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+	        // ---------------------------------------------------------
+			// establecer el modo de fuente por defecto
+	        $pdf->setFontSubsetting(true);
+
+	        for ($i=0; $i < $total_estudiantes; $i++) {
+
+		        // Añadir una página
+		        $pdf->AddPage();
+
+		        //========================================== Page header ===============================================
+
+		        // Logo
+		        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
+		        $image_file = 'uploads/imagenes/colegio/'.$escudo;
+		        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		        $pdf->SetFont('helvetica', 'B', 12);
+
+		        // Title
+		        //$pdf->Cell(0, 0, '<<TCPDF Example 003>>', 1, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->SetFont('helvetica', '', 12);
+		        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->ln(3);
+		        //=======================================================================================================
+
+		        
+		        $pdf->SetFont('helvetica', 'B', 12);
+		        $pdf->Write(0, '         CARNET ESTUDIANTIL', '', 0, 'C', true, 0, false, false, 0);
+		        $pdf->SetFont('helvetica', '', 10, '', true);
+		 
+				//fijar efecto de sombra en el texto
+		        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+
+
+		        // Establecemos el contenido para imprimir
+		        //**********************************************************************************************************
+				//preparamos y maquetamos el contenido a crear
+				//**********************************************************************************************************
+				
+				$tbl = '';
+				$tbl .= '<br /><br /><br />';
+				$tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
+				$tbl .= '<tr>
+		        			<td style="text-align:center" width="230" height="100" bgcolor="#4286f4"><br /><br /><b>'.$nombre_institucion.'</b><br /><img src="uploads/imagenes/colegio/'.$escudo.'" height="70" width="70" border="1"/></td>
+		        		</tr>';
+		        $tbl .= '<tr>
+		        			<td style="text-align:center" height="200"><br /><br /><img src="uploads/imagenes/elecciones/candidatos/candidato.png" alt="Foto En Blanco" height="110" width="90" border="1"/><br /><b>'.strtoupper($estudiantes[$i]['nombres']).'<br />'.strtoupper($estudiantes[$i]['apellido1']).' '.strtoupper($estudiantes[$i]['apellido2']).'</b><br /><b>'.strtoupper($estudiantes[$i]['tipo_id']).':</b> '.$estudiantes[$i]['identificacion'].'<br /><b>RH:</b> '.strtoupper($estudiantes[$i]['tipo_sangre']).'</td>
+		        		</tr>';
+		        $tbl .= '<tr>
+		        			<td style="text-align:center" height="40" bgcolor="#14cc5a"><b>CURSO: '.strtoupper($nombre_curso).'<br />'.$jornada.'</b></td>
+		        		</tr>';
+		        $tbl .= '</table>';
+
+
+				// Imprimimos el texto con writeHTMLCell()
+			    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '75', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+
+		    }
+
+		    // ==============================================================================================0
+			// Cerrar el documento PDF y preparamos la salida
+			// Este método tiene varias opciones, consulte la documentación para más información.
+	        //$nombre_archivo = utf8_decode("Localidades de ".$prov.".pdf");
+	        $nombre_archivo = utf8_decode("Carnets Estudiantiles Curso ".$nombre_curso." ".$jornada.".pdf");
+	        $pdf->Output($nombre_archivo, 'I');
+
+		}
+		else{
+
+			echo "<h1>No Existen Estudiantes Matriculados En Este Curso.</h1>";
+		}
+
+	}
+
+
+
+
 }

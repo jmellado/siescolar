@@ -291,6 +291,59 @@ function inicio(){
 	});
 
 
+	//**************************************** FUNCIONES PARA IMPRIMIR CARNETS *********************************
+
+
+	llenarcombo_cursosC($("#jornadaC").val());
+
+
+	$("#jornadaC").change(function(){
+    	jornada = $(this).val();
+    	llenarcombo_cursosC(jornada);
+    });
+
+
+    $("#btn_generar_carnet").click(function(event){
+
+    	if($("#form_carnet").valid()==true){
+
+    		jornada = $("#jornadaC").val();
+    		id_curso = $("#id_cursoC").val();
+    		window.open(base_url+'imprimir_controller/generar_carnet'+'?id_curso='+id_curso+'&jornada='+jornada, '_blank');
+
+       	}
+       	else{
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+		}
+		
+       
+    });
+
+
+    $("#form_carnet").validate({
+
+    	rules:{
+
+
+			id_curso:{
+				required: true,
+				maxlength: 15	
+
+			},
+
+			jornada:{
+				required: true,
+				maxlength: 30,
+
+			}
+
+
+		}
+
+
+	});
+
+
 }
 
 
@@ -530,4 +583,32 @@ function llenarcombo_anos_lectivosCT(){
 		}
 
 	});
+}
+
+
+//**************************************** FUNCIONES PARA IMPRIMIR CARNETS *********************************
+
+
+function llenarcombo_cursosC(jornada){
+
+	$.ajax({
+		url:base_url+"imprimir_controller/llenarcombo_cursos",
+		type:"post",
+		data:{jornada:jornada},
+		success:function(respuesta) {
+				//toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_curso"]+">"+registros[i]["nombre_grado"]+["-"]+registros[i]["nombre_grupo"]+[" "]+registros[i]["jornada"]+"</option>";
+					
+				};
+				
+				$("#cursos_carnet1 select").html(html);
+		}
+
+	});
+
 }

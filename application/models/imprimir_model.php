@@ -290,7 +290,7 @@ class Imprimir_model extends CI_Model {
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 
-		$this->db->select('matriculas.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2');
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.tipo_id,personas.nombres,personas.apellido1,personas.apellido2,personas.tipo_sangre');
 		$query = $this->db->get('matriculas');
 
 		return $query->result_array();
