@@ -110,16 +110,23 @@ class Cursos_model extends CI_Model {
 
 	public function eliminar_curso($id_curso){
 
-     	$this->db->where('id_curso',$id_curso);
-		$consulta = $this->db->delete('cursos');
-       	if($consulta==true){
+       	//NUEVA TRANSACCION
+		$this->db->trans_start();
+		$this->db->where('id_curso',$id_curso);
+		$this->db->delete('horarios');
 
-           return true;
-       	}
-       	else{
+		$this->db->where('id_curso',$id_curso);
+		$this->db->delete('cursos');
+		$this->db->trans_complete();
 
-           return false;
-       	}
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
     }
 
     public function modificar_curso($id_curso,$salon_grupo){
@@ -183,6 +190,41 @@ class Cursos_model extends CI_Model {
 		$query = $this->db->get('matriculas');
 
 		return count($query->result());
+
+	}
+
+
+	//Esta funcion permite crear la base del horario para cualquier curso.
+	public function CrearHorarioCurso($id_curso,$ano_lectivo){
+
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+			for ($i=0; $i < 10; $i++) {
+
+				$hora = $i + 1;
+
+				//array para insertar en la tabla horarios
+	        	$horario = array(
+				'id_curso'    => $id_curso,
+				'hora'        => $hora,
+				'ano_lectivo' => $ano_lectivo);
+
+				$this->db->insert('horarios', $horario);
+			}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
 
 	}
 

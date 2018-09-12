@@ -70,6 +70,12 @@ class Cursos_controller extends CI_Controller {
 							if($respuesta==true){
 
 								echo "registroguardado";
+
+								$resp = $this->cursos_model->CrearHorarioCurso($id_curso,$ano_lectivo);
+
+								if($resp == false){
+									echo "No Se Pudo Registrar En La Tabla Horarios.";
+								}
 							}
 							else{
 
