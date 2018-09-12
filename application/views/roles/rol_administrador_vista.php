@@ -40,6 +40,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/configuraciones.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/periodos_evaluacion.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/ano_lectivo.js" defer></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/horarios.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/funciones_globales.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/jquery.validate.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/libs/messages_es.js" defer></script>
@@ -299,6 +300,12 @@
           <a href="<?php echo base_url(); ?>pensum_controller/index">
             <i class="fa fa-sitemap"></i>
             <span>Gestionar Pensum</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo base_url(); ?>horarios_controller/index">
+            <i class="fa fa-calendar"></i>
+            <span>Gestionar Horarios</span>
           </a>
         </li>
         <li>

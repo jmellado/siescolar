@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-08-2018 a las 05:28:28
+-- Tiempo de generación: 12-09-2018 a las 18:15:00
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -68,7 +68,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-08-20 03:27:50');
+(12345, '2018-09-12 16:14:23');
 
 -- --------------------------------------------------------
 
@@ -105,6 +105,13 @@ CREATE TABLE `areas` (
   `estado_area` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `areas`
+--
+
+INSERT INTO `areas` (`id_area`, `nombre_area`, `ano_lectivo`, `estado_area`) VALUES
+(1, ' ', 0, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -118,6 +125,13 @@ CREATE TABLE `asignaturas` (
   `ano_lectivo` int(11) NOT NULL,
   `estado_asignatura` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `asignaturas`
+--
+
+INSERT INTO `asignaturas` (`id_asignatura`, `nombre_asignatura`, `id_area`, `ano_lectivo`, `estado_asignatura`) VALUES
+(1, ' ', 1, 0, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -496,6 +510,26 @@ CREATE TABLE `grupos` (
   `nombre_grupo` varchar(30) NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `estado_grupo` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `horarios`
+--
+
+CREATE TABLE `horarios` (
+  `id_horario` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `hora` int(11) NOT NULL,
+  `lunes` int(11) NOT NULL DEFAULT '1',
+  `martes` int(11) NOT NULL DEFAULT '1',
+  `miercoles` int(11) NOT NULL DEFAULT '1',
+  `jueves` int(11) NOT NULL DEFAULT '1',
+  `viernes` int(11) NOT NULL DEFAULT '1',
+  `sabado` int(11) NOT NULL DEFAULT '1',
+  `domingo` int(11) NOT NULL DEFAULT '1',
+  `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1957,9 +1991,9 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `departamento_nacimiento`, `municipio_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
 (1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
-(2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio', 'Cesar', 'Frias', 'm', '2000-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
-(3, '1066', 'cc', '1990-05-05', 20, 404, 'Hugo', 'Mairon', 'Sosa', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
-(4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian', 'Andres', 'Romero', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
+(2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio Cesar', 'Frias', 'Bossa', 'm', '2000-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
+(3, '1066', 'ti', '1990-05-05', 20, 404, 'Hugo Mairon', 'Sosa', 'Amaya', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
+(4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian Andres', 'Romero', 'Villa', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
 (5, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
 (6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona'),
 (7, '0901-72200', 'cc', '2018-01-25', 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco');
@@ -2249,6 +2283,12 @@ ALTER TABLE `grupos`
   ADD PRIMARY KEY (`id_grupo`);
 
 --
+-- Indices de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  ADD PRIMARY KEY (`id_horario`);
+
+--
 -- Indices de la tabla `listado_votantes`
 --
 ALTER TABLE `listado_votantes`
@@ -2421,12 +2461,12 @@ ALTER TABLE `anos_lectivos`
 -- AUTO_INCREMENT de la tabla `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `asignaturas`
 --
 ALTER TABLE `asignaturas`
-  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `candidatos_eleccion`
 --
@@ -2497,6 +2537,11 @@ ALTER TABLE `grados_educacion`
 --
 ALTER TABLE `grupos`
   MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `listado_votantes`
 --
