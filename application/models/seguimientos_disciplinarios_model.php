@@ -76,6 +76,13 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 	}
 
 
+	public function llenar_acciones_pedagogicas(){
+
+		$query = $this->db->get('acciones_pedagogicas');
+		return $query->result();
+	}
+
+
 	public function obtener_ultimo_id(){
 
 		$this->db->select_max('id_seguimiento');
@@ -122,7 +129,7 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 		$this->db->where('seguimientos_disciplinarios.id_profesor',$id_profesor);
 		$this->db->where('seguimientos_disciplinarios.ano_lectivo',$ano_lectivo);
 		
-		$this->db->where("(personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR tipos_causales.tipo_causal LIKE '".$id."%' OR seguimientos_disciplinarios.fecha_causal LIKE '".$id."%')", NULL, FALSE);
+		$this->db->where("(personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR tipos_causales.tipo_causal LIKE '".$id."%' OR seguimientos_disciplinarios.fecha_causal LIKE '".$id."%' OR seguimientos_disciplinarios.estado_seguimiento LIKE '".$id."%')", NULL, FALSE);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
@@ -136,7 +143,7 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 
-		$this->db->select('seguimientos_disciplinarios.id_seguimiento,seguimientos_disciplinarios.id_curso,seguimientos_disciplinarios.id_asignatura,seguimientos_disciplinarios.id_estudiante,seguimientos_disciplinarios.id_tipo_causal,seguimientos_disciplinarios.id_causal,seguimientos_disciplinarios.descripcion_situacion,seguimientos_disciplinarios.fecha_causal,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura,personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,tipos_causales.tipo_causal,causales.causal');
+		$this->db->select('seguimientos_disciplinarios.id_seguimiento,seguimientos_disciplinarios.id_curso,seguimientos_disciplinarios.id_asignatura,seguimientos_disciplinarios.id_estudiante,seguimientos_disciplinarios.id_tipo_causal,seguimientos_disciplinarios.id_causal,seguimientos_disciplinarios.descripcion_situacion,seguimientos_disciplinarios.fecha_causal,seguimientos_disciplinarios.id_accion_pedagogica,seguimientos_disciplinarios.descripcion_accion_pedagogica,seguimientos_disciplinarios.compromiso_estudiante,seguimientos_disciplinarios.observaciones,seguimientos_disciplinarios.estado_seguimiento,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura,personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,tipos_causales.tipo_causal,causales.causal');
 		
 		$query = $this->db->get('seguimientos_disciplinarios');
 
@@ -154,6 +161,48 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 			return true;
 		else
 			return false;
+	}
+
+
+	public function validar_estadoseguimiento($id_seguimiento){
+
+		$this->db->where('id_seguimiento',$id_seguimiento);
+
+		$this->db->select('estado_seguimiento');
+
+		$query = $this->db->get('seguimientos_disciplinarios');
+
+		if ($query->num_rows() > 0) {
+
+			$seguimiento = $query->result_array();
+			$estado_seguimiento = $seguimiento[0]['estado_seguimiento'];
+
+			if ($estado_seguimiento == "Abierto") {
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function cerrar_seguimiento($id_seguimiento){
+
+		$this->db->where('id_seguimiento',$id_seguimiento);
+
+		$seguimiento = array('estado_seguimiento' => "Cerrado");
+
+		if ($this->db->update('seguimientos_disciplinarios', $seguimiento))
+
+			return true;
+		else
+			return false;
+
 	}
 
 

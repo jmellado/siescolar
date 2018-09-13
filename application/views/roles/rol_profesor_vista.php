@@ -287,6 +287,20 @@
           </ul>
         </li>
 
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-retweet"></i>
+            <span>Seguimientos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>seguimientos_disciplinarios_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
+            <li><a href="<?php echo base_url(); ?>seguimientos_disciplinarios_controller/index2"><i class="fa fa-list-alt"></i>Consultar</a></li>
+          </ul>
+        </li>
+
         <li>
           <a href="<?php echo base_url(); ?>notificaciones_controller/index_profesor">
             <i class="fa fa-envelope"></i>
@@ -299,20 +313,6 @@
             <i class="fa fa-send"></i>
             <span>Inbox</span>
           </a>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-retweet"></i>
-            <span>Seguimientos Disciplinarios</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url(); ?>seguimientos_disciplinarios_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
-            <li><a href="<?php echo base_url(); ?>seguimientos_disciplinarios_controller/index2"><i class="fa fa-list-alt"></i>Consultar</a></li>
-          </ul>
         </li>
 
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>

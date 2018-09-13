@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-09-2018 a las 18:15:00
+-- Tiempo de generación: 13-09-2018 a las 19:36:47
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -19,6 +19,26 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_siescolar`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acciones_pedagogicas`
+--
+
+CREATE TABLE `acciones_pedagogicas` (
+  `id_accion_pedagogica` int(11) NOT NULL,
+  `accion_pedagogica` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `acciones_pedagogicas`
+--
+
+INSERT INTO `acciones_pedagogicas` (`id_accion_pedagogica`, `accion_pedagogica`) VALUES
+(1, 'Amonestación Verbal En Privado'),
+(2, 'Amonestación Escrita'),
+(3, 'Suspensión De Clases');
 
 -- --------------------------------------------------------
 
@@ -68,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-09-12 16:14:23');
+(12345, '2018-09-13 17:35:02');
 
 -- --------------------------------------------------------
 
@@ -2076,6 +2096,11 @@ CREATE TABLE `seguimientos_disciplinarios` (
   `id_causal` int(11) NOT NULL,
   `descripcion_situacion` varchar(500) NOT NULL,
   `fecha_causal` date NOT NULL,
+  `id_accion_pedagogica` int(11) NOT NULL,
+  `descripcion_accion_pedagogica` varchar(500) NOT NULL,
+  `compromiso_estudiante` varchar(500) NOT NULL,
+  `observaciones` varchar(500) NOT NULL,
+  `estado_seguimiento` varchar(8) NOT NULL,
   `fecha_registro` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2130,6 +2155,12 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `acciones_pedagogicas`
+--
+ALTER TABLE `acciones_pedagogicas`
+  ADD PRIMARY KEY (`id_accion_pedagogica`);
 
 --
 -- Indices de la tabla `actividades`
@@ -2421,7 +2452,8 @@ ALTER TABLE `salones`
 ALTER TABLE `seguimientos_disciplinarios`
   ADD PRIMARY KEY (`id_seguimiento`),
   ADD KEY `fk_tipo_causal_idx` (`id_tipo_causal`),
-  ADD KEY `fk_causal_idx` (`id_causal`);
+  ADD KEY `fk_causal_idx` (`id_causal`),
+  ADD KEY `fk_acciones_pedagogicas_idx` (`id_accion_pedagogica`);
 
 --
 -- Indices de la tabla `tipos_causales`
@@ -2442,6 +2474,11 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
+--
+-- AUTO_INCREMENT de la tabla `acciones_pedagogicas`
+--
+ALTER TABLE `acciones_pedagogicas`
+  MODIFY `id_accion_pedagogica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `actividades`
 --
@@ -2751,6 +2788,7 @@ ALTER TABLE `pensum`
 -- Filtros para la tabla `seguimientos_disciplinarios`
 --
 ALTER TABLE `seguimientos_disciplinarios`
+  ADD CONSTRAINT `fk_acciones_pedagogicas` FOREIGN KEY (`id_accion_pedagogica`) REFERENCES `acciones_pedagogicas` (`id_accion_pedagogica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_causal` FOREIGN KEY (`id_causal`) REFERENCES `causales` (`id_causal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_tipo_causall` FOREIGN KEY (`id_tipo_causal`) REFERENCES `tipos_causales` (`id_tipo_causal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

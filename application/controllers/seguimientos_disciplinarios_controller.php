@@ -76,6 +76,13 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
     }
 
 
+    public function llenarcombo_acciones_pedagogicas(){
+
+    	$consulta = $this->seguimientos_disciplinarios_model->llenar_acciones_pedagogicas();
+    	echo json_encode($consulta);
+    }
+
+
     public function insertar(){
 
         $this->form_validation->set_rules('id_profesor', 'Profesor', 'required|numeric');
@@ -86,6 +93,9 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
         $this->form_validation->set_rules('id_causal', 'Causal', 'required|numeric');
         $this->form_validation->set_rules('fecha_causal', 'Fecha Causal', 'required');
         $this->form_validation->set_rules('descripcion_situacion', 'Descripcion Situacion', 'required|alpha_spaces|min_length[1]|max_length[500]');
+        $this->form_validation->set_rules('id_accion_pedagogica', 'Accion Pedagogica', 'required|numeric');
+        $this->form_validation->set_rules('descripcion_accion', 'Descripcion Accion Pedagogica', 'required|alpha_spaces|min_length[1]|max_length[500]');
+        $this->form_validation->set_rules('compromiso_estudiante', 'Compromiso Estudiante', 'required|alpha_spaces|min_length[1]|max_length[500]');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -111,6 +121,11 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
         	$descripcion_situacion = $this->input->post('descripcion_situacion');
         	$fecha_causal = $this->input->post('fecha_causal');
         	$fecha_registro = $fecha;
+        	$id_accion_pedagogica = $this->input->post('id_accion_pedagogica');
+        	$descripcion_accion_pedagogica = $this->input->post('descripcion_accion');
+        	$compromiso_estudiante = $this->input->post('compromiso_estudiante');
+        	$observaciones = "";
+        	$estado_seguimiento = "Abierto";
 
         	//array para insertar en la tabla seguimientos disciplinarios
         	$seguimiento = array(
@@ -123,7 +138,12 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
         	'id_tipo_causal' =>$id_tipo_causal,
         	'id_causal' =>$id_causal,
         	'descripcion_situacion' =>ucwords(strtolower(trim($descripcion_situacion))),
-        	'fecha_causal' =>$fecha_causal,	
+        	'fecha_causal' =>$fecha_causal,
+        	'id_accion_pedagogica' =>$id_accion_pedagogica,
+        	'descripcion_accion_pedagogica' =>ucwords(strtolower(trim($descripcion_accion_pedagogica))),
+        	'compromiso_estudiante' =>ucwords(strtolower(trim($compromiso_estudiante))),
+        	'observaciones' =>$observaciones,
+        	'estado_seguimiento' =>$estado_seguimiento,
 			'fecha_registro' =>$fecha_registro);
 
 			
@@ -179,6 +199,9 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
         $this->form_validation->set_rules('id_causal', 'Causal', 'required|numeric');
         $this->form_validation->set_rules('fecha_causal', 'Fecha Causal', 'required');
         $this->form_validation->set_rules('descripcion_situacion', 'Descripcion Situacion', 'required|alpha_spaces|min_length[1]|max_length[500]');
+        $this->form_validation->set_rules('id_accion_pedagogica', 'Accion Pedagogica', 'required|numeric');
+        $this->form_validation->set_rules('descripcion_accion', 'Descripcion Accion Pedagogica', 'required|alpha_spaces|min_length[1]|max_length[500]');
+        $this->form_validation->set_rules('compromiso_estudiante', 'Compromiso Estudiante', 'required|alpha_spaces|min_length[1]|max_length[500]');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -192,6 +215,10 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
 	        $id_causal = $this->input->post('id_causal');
 	        $descripcion_situacion = $this->input->post('descripcion_situacion');
 	        $fecha_causal = $this->input->post('fecha_causal');
+	        $id_accion_pedagogica = $this->input->post('id_accion_pedagogica');
+        	$descripcion_accion_pedagogica = $this->input->post('descripcion_accion');
+        	$compromiso_estudiante = $this->input->post('compromiso_estudiante');
+        	$observaciones = $this->input->post('observaciones');
 
 	    	//array para actualizar en la tabla seguimientos disciplinarios
 	    	$seguimiento = array(
@@ -199,20 +226,30 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
 	    	'id_tipo_causal' =>$id_tipo_causal,
 	    	'id_causal' =>$id_causal,
 	    	'descripcion_situacion' =>ucwords(strtolower(trim($descripcion_situacion))),
-	    	'fecha_causal' =>$fecha_causal);
+	    	'fecha_causal' =>$fecha_causal,
+	    	'id_accion_pedagogica' =>$id_accion_pedagogica,
+        	'descripcion_accion_pedagogica' =>ucwords(strtolower(trim($descripcion_accion_pedagogica))),
+        	'compromiso_estudiante' =>ucwords(strtolower(trim($compromiso_estudiante))),
+        	'observaciones' =>ucwords(strtolower(trim($observaciones))));
 
 	        if(is_numeric($id_seguimiento)){
 
-	        	$respuesta = $this->seguimientos_disciplinarios_model->modificar_seguimiento($id_seguimiento,$seguimiento);
+	        	if ($this->seguimientos_disciplinarios_model->validar_estadoseguimiento($id_seguimiento)) {
 
-				if($respuesta==true){
+		        	$respuesta = $this->seguimientos_disciplinarios_model->modificar_seguimiento($id_seguimiento,$seguimiento);
 
-					echo "registroactualizado";
+					if($respuesta==true){
 
-				}else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+					}else{
 
+						echo "registronoactualizado";
+
+					}
+				}
+				else{
+					echo "seguimientoyacerrado";
 				}
 			                
 	        }else{
@@ -222,6 +259,33 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
 	        
 	    }
 
+    }
+
+
+    public function cerrar_seguimiento_disciplinario(){
+
+		$id_seguimiento = $this->input->post('id_seguimiento');
+
+		if ($this->seguimientos_disciplinarios_model->validar_estadoseguimiento($id_seguimiento)) {
+			
+	    	$respuesta = $this->seguimientos_disciplinarios_model->cerrar_seguimiento($id_seguimiento);
+
+	    	if($respuesta==true){
+
+				echo "seguimientocerrado";
+
+			}else{
+
+				echo "seguimientonocerrado";
+
+			}
+
+		}
+		else{
+
+			echo "seguimientoyacerrado";
+		}
+    	
     }
 
 

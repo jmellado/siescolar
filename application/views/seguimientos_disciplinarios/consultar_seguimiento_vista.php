@@ -2,6 +2,11 @@
 	    
 	    label.error{color:red;}
 
+	    #modal_actualizar_seguimiento .modal-body
+		{
+  			height:450px;
+  			overflow:auto;
+		}
 	</style>
 
 
@@ -9,7 +14,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><i class='fa fa-retweet'></i>&nbsp;CONSULTA DE SEGUIMIENTOS DISCIPLINARIOS</h1>
+            <h1 class="page-header"><i class='fa fa-retweet'></i>&nbsp;CONSULTA DE SEGUIMIENTOS ACADÉMICOS Y/O DISCIPLINARIOS</h1>
         </div>
     </div>
 
@@ -56,12 +61,13 @@
 									<th><i class='fa fa-user'></i>&nbsp;Estudiante</th>
 									<th><i class='fa fa-check-circle'></i>&nbsp;Tipo Causal</th>
 									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha Causal</th>
+									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<td colspan='6'></td>
+									<td colspan='7'></td>
 								</tr>
 							</tfoot>
 							<tbody>
@@ -167,23 +173,65 @@
 							</div>
 
 		    			</div>
+		    		</div>
+
+		    		<div class="panel panel-default">
+		    			<div class="panel-body">
+
+		    				<div class="col-md-4">
+								<div class="form-group">
+									<label for="id_accion_pedagogica">ACCIÓN PEDAGÓGICA</label>
+									<div id="accionespedagogicas_seguimientos1">
+										<select class="form-control" id="id_accion_pedagogicaseleSG" name="id_accion_pedagogica">
+													    
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-9">
+								<div class="form-group">
+									<label for="descripcion_accion">DESCRIBIR ACCIÓN PEDAGÓGICA</label>
+									<textarea class="form-control" name="descripcion_accion" id="descripcion_accionseleSG" cols="50" rows="4" placeholder="Descripción De La Acción Pedagógica.." style="resize:none"></textarea>
+								</div>
+							</div>
+
+							<div class="col-md-9">
+								<div class="form-group">
+									<label for="compromiso_estudiante">COMPROMISO DEL ESTUDIANTE</label>
+									<textarea class="form-control" name="compromiso_estudiante" id="compromiso_estudianteseleSG" cols="50" rows="4" placeholder="Compromiso Del Estudiante Por Mejorar.." style="resize:none"></textarea>
+								</div>
+							</div>
+
+							<div class="col-md-9">
+								<div class="form-group">
+									<label for="observaciones">OBSERVACIONES</label>
+									<textarea class="form-control" name="observaciones" id="observacionesseleSG" cols="50" rows="4" placeholder="Observaciones.." style="resize:none"></textarea>
+								</div>
+							</div>
+
+		    			</div>
 		    		</div>		
 				
 		        </form>
-
-				<div class="col-sm-offset-4 col-sm-4">
-					<div class="form-group">
-    					<button type="submit" name="btn_actualizar_seguimiento" id="btn_actualizar_seguimiento" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-    				</div>
-    			</div>
 
         	</div>
         </div>	
 
       </div>
-      <!--<div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>-->
+      <div class="modal-footer">
+        <div class="col-sm-offset-4 col-sm-4">
+			<div class="form-group">
+				<button type="submit" name="btn_actualizar_seguimiento" id="btn_actualizar_seguimiento" class="btn btn-primary btn-block">Actualizar</button>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<button type="button" name="btn_cerrar_seguimiento" id="btn_cerrar_seguimiento" class="btn btn-warning btn-block">Cerrar Seguimiento</button>
+			</div>
+		</div>
+      </div>
     </div>
 
   </div>
