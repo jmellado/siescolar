@@ -157,21 +157,29 @@ function mostrarnotificaciones_usuarios(valor,pagina,cantidad,rol,id_persona){
 				//alert(""+response);
 				i = 1;
 				html ="";
-				$.each(response.notificaciones,function(key,item){
-					if (item.rol_destinatario == 1) {
-						destino = "Estudiantes y Acudientes";
-					}
-					if (item.rol_destinatario == 2) {
-						destino = "Profesores";
-					}
-					if (item.rol_destinatario == 3) {
-						destino = "Estudiantes, Profesores y Acudientes";
-					}
-					html +="<tr><td>"+i+"</td><td style='display:none'>"+item.codigo_notificacion+"</td><td>"+item.titulo+"</td><td>"+item.tipo_notificacion+"</td><td style='display:none'>"+item.contenido+"</td><td style='display:none'>"+item.rol_destinatario+"</td><td style='display:none'>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.codigo_notificacion+"><i class='fa fa-eye'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+item.codigo_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
-					i++;
-				});
-				
-				$("#lista_notificacionesP tbody").html(html);
+
+				if (response.notificaciones.length > 0) {
+
+					$.each(response.notificaciones,function(key,item){
+						if (item.rol_destinatario == 1) {
+							destino = "Estudiantes y Acudientes";
+						}
+						if (item.rol_destinatario == 2) {
+							destino = "Profesores";
+						}
+						if (item.rol_destinatario == 3) {
+							destino = "Estudiantes, Profesores y Acudientes";
+						}
+						html +="<tr><td>"+i+"</td><td style='display:none'>"+item.codigo_notificacion+"</td><td>"+item.titulo+"</td><td>"+item.tipo_notificacion+"</td><td style='display:none'>"+item.contenido+"</td><td style='display:none'>"+item.rol_destinatario+"</td><td style='display:none'>"+destino+"</td><td>"+item.fecha_envio+"</td><td><a class='btn btn-success' href="+item.codigo_notificacion+"><i class='fa fa-eye'></i></a></td><td style='display:none'><button type='button' class='btn btn-danger' value="+item.codigo_notificacion+"><i class='fa fa-trash'></i></button></td></tr>";
+						i++;
+					});
+					
+					$("#lista_notificacionesP tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='5'><p style='text-align:center'>No Hay Mensajes..</p></td></tr>";
+					$("#lista_notificacionesP tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros
