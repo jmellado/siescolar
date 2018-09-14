@@ -396,6 +396,11 @@ function cerrar_periodo(valor){
 				toastr.warning('No Se Puede Cerrar El Período;Existen Estudiantes Pendientes Por Calificaciones.', 'Success Alert', {timeOut: 3000});
 				
 			}
+			else if(respuesta==="nohayestudiantes"){
+				
+				toastr.warning('No Se Puede Cerrar El Período;No Existen Estudiantes Matriculados.', 'Success Alert', {timeOut: 3000});
+				
+			}
 			else{
 
 				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

@@ -307,6 +307,25 @@ class Configuraciones_model extends CI_Model {
 	}
 
 
+	//verificar si existen estudiantes matriculados en un respectivo año lectivo
+	public function Verificar_Existencia_Estudiantes_Matriculados(){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
 	//**************************** FUNCIONES AÑO LECTIVO ****************************************
 
 	public function validar_existencia_anolectivo($nombre_ano_lectivo){
