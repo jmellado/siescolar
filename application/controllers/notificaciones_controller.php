@@ -201,12 +201,13 @@ class Notificaciones_controller extends CI_Controller {
 		$numero_pagina =$this->input->post('numero_pagina'); 
 		$cantidad =$this->input->post('cantidad'); 
 		$inicio = ($numero_pagina -1)*$cantidad;
+        $id_persona =$this->input->post('id_persona');
 		
 		$data = array(
 
-			'notificaciones' => $this->notificaciones_model->buscar_notificacion($id,$inicio,$cantidad),
+			'notificaciones' => $this->notificaciones_model->buscar_notificacion($id,$id_persona,$inicio,$cantidad),
 
-		    'totalregistros' => count($this->notificaciones_model->buscar_notificacion($id)),
+		    'totalregistros' => count($this->notificaciones_model->buscar_notificacion($id,$id_persona)),
 
 		    'cantidad' => $cantidad
 

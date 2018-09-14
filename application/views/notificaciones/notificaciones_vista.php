@@ -57,6 +57,11 @@
 							</thead>
 							<tbody>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan='7'></td>
+								</tr>
+							</tfoot>
 						</table>
 						</div>
 
