@@ -2,8 +2,8 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 
-	id_persona = $("#id_persona").val();
-	mostrarnotificaciones("",1,5,id_persona);
+	id_admin = $("#id_admin").val();
+	mostrarnotificaciones("",1,5,id_admin);
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_notificaciones").submit(function (event) {
@@ -75,7 +75,7 @@ function inicio(){
 						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
-					mostrarnotificaciones("",1,5,id_persona);
+					mostrarnotificaciones("",1,5,id_admin);
 
 						
 						
@@ -100,21 +100,21 @@ function inicio(){
 
     /*$("#btn_buscar_notificacion").click(function(event){
 		
-       mostrarnotificaciones("",1,5,id_persona);
+       mostrarnotificaciones("",1,5,id_admin);
     });*/
 
     $("#buscar_notificacion").keyup(function(event){
 
     	buscar = $("#buscar_notificacion").val();
 		valorcantidad = $("#cantidad_notificacion").val();
-		mostrarnotificaciones(buscar,1,valorcantidad,id_persona);
+		mostrarnotificaciones(buscar,1,valorcantidad,id_admin);
 		
     });
 
     $("#cantidad_notificacion").change(function(){
     	valorcantidad = $(this).val();
     	buscar = $("#buscar_notificacion").val();
-    	mostrarnotificaciones(buscar,1,valorcantidad,id_persona);
+    	mostrarnotificaciones(buscar,1,valorcantidad,id_admin);
     });
 
     $("body").on("click", ".paginacion_notificacion li a", function(event){
@@ -122,7 +122,7 @@ function inicio(){
     	numero_pagina = $(this).attr("href");
     	buscar = $("#buscar_notificacion").val();
     	valorcantidad = $("#cantidad_notificacion").val();
-		mostrarnotificaciones(buscar,numero_pagina,valorcantidad,id_persona);
+		mostrarnotificaciones(buscar,numero_pagina,valorcantidad,id_admin);
 
 
     });
@@ -271,12 +271,12 @@ function inicio(){
 }
 
 
-function mostrarnotificaciones(valor,pagina,cantidad,id_persona){
+function mostrarnotificaciones(valor,pagina,cantidad,id_admin){
 
 	$.ajax({
 		url:base_url+"notificaciones_controller/mostrarnotificaciones",
 		type:"post",
-		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_persona:id_persona},
+		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_admin:id_admin},
 		dataType:"json",
 		success:function(response) {
 				//toastr.error(''+response, 'Success Alert', {timeOut: 5000});
@@ -386,7 +386,7 @@ function eliminar_notificacion(valor){
 				
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostrarnotificaciones("",1,5,id_persona);
+				mostrarnotificaciones("",1,5,id_admin);
 
 		}
 
@@ -411,7 +411,7 @@ function actualizar_notificacion(){
 				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
 				$("#form_notificaciones_actualizar")[0].reset();
 
-				mostrarnotificaciones("",1,5,id_persona);
+				mostrarnotificaciones("",1,5,id_admin);
 
 		}
 

@@ -459,7 +459,7 @@
         <div class="box-body">
 
           <input type="hidden" id="rol" name="rol" value="<?php echo $this->session->userdata('rol')?>">
-          <input type="hidden" id="id_persona" name="id_persona" value="<?php echo $this->session->userdata('id_persona')?>">
+          <input type="hidden" id="id_admin" name="id_admin" value="<?php echo $this->session->userdata('id_persona')?>">
           <?php echo $contents; ?>
 
         </div>

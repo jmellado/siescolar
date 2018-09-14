@@ -211,9 +211,9 @@ class Notificaciones_model extends CI_Model {
 
 	}
 
-	public function buscar_notificacion($id,$id_persona,$inicio = FALSE,$cantidad = FALSE){
+	public function buscar_notificacion($id,$id_admin,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->where('remitente',$id_persona);
+		$this->db->where('remitente',$id_admin);
 		$this->db->where('categoria_notificacion',"Mensajes");
 		$this->db->group_by("codigo_notificacion"); 
 
