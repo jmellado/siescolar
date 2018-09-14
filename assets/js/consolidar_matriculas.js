@@ -36,7 +36,12 @@ function consolidar_matriculas(){
 				}
 				else if(respuesta==="consolidadodenegado"){
 					
-					toastr.warning('Consolidado De Matrículas No Realizado; Todos Los Periodos De Evaluación Deben Estar Cerrados.', 'Success Alert', {timeOut: 3000});
+					toastr.warning('Consolidado De Matrículas No Realizado; Todos Los Períodos De Evaluación Deben Estar Cerrados.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="nohayperiodos"){
+					
+					toastr.warning('Consolidado De Matrículas No Realizado; No Existen Períodos De Evaluación Registrados.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else{

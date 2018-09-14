@@ -233,7 +233,7 @@ function mostrarperiodos(valor,pagina,cantidad){
 				}
 				else{
 
-					html ="<tr><td colspan='6'><p style='text-align:center'>No Hay Datos Disponibles..</p></td></tr>";
+					html ="<tr><td colspan='8'><p style='text-align:center'>No Hay Datos Disponibles..</p></td></tr>";
 					$("#lista_periodos tbody").html(html);
 				}
 				

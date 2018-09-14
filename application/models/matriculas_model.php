@@ -620,4 +620,25 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	//Esta Funcion me permite obtener el numero total de periodos de evaluacion registrados o creados
+    public function PeriodosRegistrados(){
+
+    	$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		
+    	$this->db->where('id_categoria',"1");
+    	$this->db->where('ano_lectivo',$ano_lectivo);
+
+		$query = $this->db->get('cronogramas');
+
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		}
+		else{
+			return 0;
+		}
+
+	}
+
+
 }

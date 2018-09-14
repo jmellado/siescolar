@@ -412,24 +412,32 @@ class Matriculas_controller extends CI_Controller {
 
 	public function consolidar(){
 
+		$PeriodosRegistrados = $this->matriculas_model->PeriodosRegistrados();
 		$PeriodosActivos = $this->matriculas_model->PeriodosActivos();
 
-		if ($PeriodosActivos == 0) {
+		if ($PeriodosRegistrados > 0) {
+			
+			if ($PeriodosActivos == 0) {
 
-			$respuesta = $this->matriculas_model->modificar_estado_matricula();
+				$respuesta = $this->matriculas_model->modificar_estado_matricula();
 
-			if($respuesta==true){
-              
-              	echo "consolidadorealizado";
-          	}else{
-              
-              	echo "consolidadonorealizado";
-          	}
+				if($respuesta==true){
+	              
+	              	echo "consolidadorealizado";
+	          	}else{
+	              
+	              	echo "consolidadonorealizado";
+	          	}
 
+			}
+			else{
+
+				echo "consolidadodenegado";
+			}
 		}
 		else{
 
-			echo "consolidadodenegado";
+			echo "nohayperiodos";
 		}
 	}
 
