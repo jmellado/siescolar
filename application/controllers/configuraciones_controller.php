@@ -358,15 +358,21 @@ class Configuraciones_controller extends CI_Controller {
 
 					if ($this->configuraciones_model->Verificar_NotasEstudiantesMatriculados($id_periodo)) {
 
-				        $respuesta=$this->configuraciones_model->cerrar_periodo($id_periodo);
-				        
-			          	if($respuesta==true){
-			              
-			              	echo "periodocerrado";
-			          	}else{
-			              
-			              	echo "periodonocerrado";
-			          	}
+						if ($this->configuraciones_model->Verificar_LogrosEstudiantesMatriculados($id_periodo)) {
+
+					        $respuesta=$this->configuraciones_model->cerrar_periodo($id_periodo);
+					        
+				          	if($respuesta==true){
+				              
+				              	echo "periodocerrado";
+				          	}else{
+				              
+				              	echo "periodonocerrado";
+				          	}
+				        }
+				        else{
+				        	echo "periodopendiente2";
+				        }
 			        }
 			        else{
 			        	echo "periodopendiente";
