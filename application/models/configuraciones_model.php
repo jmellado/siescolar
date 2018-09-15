@@ -335,7 +335,7 @@ class Configuraciones_model extends CI_Model {
 
 		$periodo = $this->configuraciones_model->obtener_nombre_periodo($id_actividad);
 
-		//array sencillo para almacenar los estudiantes pendientes por calificaciones
+		//array sencillo para almacenar los estudiantes pendientes por asignacion de logros
 		$estudiantes_pendientes = array();
 
 		$this->db->where('ano_lectivo',$ano_lectivo);

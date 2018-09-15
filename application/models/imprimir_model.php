@@ -277,7 +277,113 @@ class Imprimir_model extends CI_Model {
 	}
 
 
-	//************************************************** FUNCIONES PARA IMPRIMIR PLANILLAS *************************************************
+	//Esta funcion me permite verificar si un curso tiene estudiantes pendientes por asignacion de logros en un periodo determinado.
+	public function Verificar_LogrosEstudiantesPorCurso($id_curso,$periodo){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		//array sencillo para almacenar los estudiantes pendientes por asignacion de logros
+		$estudiantes_pendientes = array();
+
+		$this->db->where('id_curso',$id_curso);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$query = $this->db->get('matriculas');
+
+		$estudiantes = $query->result_array();
+		
+		for ($i=0; $i < count($estudiantes); $i++) {
+
+			$id_estudiante = $estudiantes[$i]['id_estudiante'];
+
+			$asignaturas_sinlogros=$this->imprimir_model->Verificar_LogrosEstudiante($id_estudiante,$periodo,$ano_lectivo);
+
+			if (count($asignaturas_sinlogros) > 0) {
+
+				$estudiantes_pendientes[] = $id_estudiante;
+			}
+			
+		}
+
+		if (count($estudiantes_pendientes) > 0) {
+
+			return false;
+		}
+		else{
+
+			return true;
+		}	
+
+	}
+
+
+	//Esta funcion permite verificar si un estudiante tienes asignaturas pendientes por asignacion de logros
+	public function Verificar_LogrosEstudiante($id_estudiante,$periodo,$ano_lectivo){
+
+		//array sencillo para las asignaturas sin logros de un estudiante
+		$asignaturas_sinlogros = array();
+
+		$this->db->where('logros_asignados.id_estudiante',$id_estudiante);
+		$this->db->where('logros_asignados.periodo',$periodo);
+		$this->db->where('logros_asignados.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('logros_asignados.id_estudiante,logros_asignados.id_asignatura,logros_asignados.id_logro1,logros_asignados.id_logro2,logros_asignados.id_logro3,logros_asignados.id_logro4');
+
+		$query = $this->db->get('logros_asignados');
+
+		$LogrosAsignaturas = $query->result_array();
+
+		if (count($LogrosAsignaturas) > 0) {
+
+			$total_asignaturas = $this->imprimir_model->Total_AsignaturasMatriculadas($id_estudiante,$ano_lectivo);
+
+			if (count($LogrosAsignaturas) == $total_asignaturas) {
+				
+				for ($i=0; $i < count($LogrosAsignaturas); $i++) {
+
+					if ($LogrosAsignaturas[$i]['id_logro1'] == NULL) {
+						$asignaturas_sinlogros[] = $LogrosAsignaturas[$i]['id_logro1'];
+					}
+
+				}
+
+				return $asignaturas_sinlogros;
+			}
+			else{
+
+				$asignaturas_sinlogros[] = 1;
+
+				return $asignaturas_sinlogros;
+
+			}
+		}
+		else{
+
+			$asignaturas_sinlogros[] = 1;
+
+			return $asignaturas_sinlogros;
+		}
+
+	}
+
+
+	//esta funcion permite obtener el total de asignaturas matriculadas por estudiante.
+	public function Total_AsignaturasMatriculadas($id_estudiante,$ano_lectivo){
+
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('notas.id_estudiante,notas.id_asignatura,notas.p1,notas.p2,notas.p3,notas.p4');
+
+		$query = $this->db->get('notas');
+		$total_asignaturas = count($query->result_array());
+	
+		return $total_asignaturas;
+
+	}
+
+
+	//********************************** FUNCIONES PARA IMPRIMIR PLANILLAS *********************************
 
 
 	public function EstudiantesMatriculadosPorCurso($id_curso){
