@@ -355,6 +355,13 @@
           </ul>
         </li>
 
+        <li>
+          <a href="<?php echo base_url(); ?>estadisticas_controller/index">
+            <i class="fa fa-bar-chart"></i>
+            <span>Estadisticas</span>
+          </a>
+        </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-gears"></i>
