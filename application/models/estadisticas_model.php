@@ -173,4 +173,65 @@ class Estadisticas_model extends CI_Model {
 	}
 
 
+	public function buscar_promediogrados($periodo,$jornada,$ano_lectivo){
+
+		$this->db->where('matriculas.jornada',$jornada);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+
+		$this->db->select('DISTINCT(cursos.id_grado)');
+
+		$query = $this->db->get('matriculas');
+		$grados = $query->result_array();
+
+		$total_grados = count($query->result());
+		$listado_grados = array();
+		$aux = array();
+
+		for ($i=0; $i < $total_grados; $i++) {
+
+			$id_grado = $grados[$i]['id_grado'];
+
+			$this->db->where('notas.id_grado',$id_grado);
+			$this->db->where('notas.ano_lectivo',$ano_lectivo);
+
+			$this->db->join('grados', 'notas.id_grado = grados.id_grado');
+			$this->db->join('anos_lectivos', 'notas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+			if ($periodo == "Primero") {
+				
+				$this->db->select('notas.id_grado,grados.nombre_grado,ROUND(AVG(IFNULL(notas.p1, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+			if ($periodo == "Segundo") {
+				
+				$this->db->select('notas.id_grado,grados.nombre_grado,ROUND(AVG(IFNULL(notas.p2, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+			if ($periodo == "Tercero") {
+				
+				$this->db->select('notas.id_grado,grados.nombre_grado,ROUND(AVG(IFNULL(notas.p3, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+			if ($periodo == "Cuarto") {
+				
+				$this->db->select('notas.id_grado,grados.nombre_grado,ROUND(AVG(IFNULL(notas.p4, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+
+			$query2 = $this->db->get('notas');
+
+			$listado_grados[] =$query2->row_array();
+			
+		}
+
+		foreach ($listado_grados as $key => $row) {
+				//array auxiliar con los promedios de todos los cursos
+				$aux[$key] = $row['promedio'];
+		}
+
+		//Ordenamos el array, descendentemente por el promedio de cada curso, luego retornamos ese array
+		array_multisort($aux, SORT_DESC, $listado_grados);
+
+		return $listado_grados;
+	}
+
+
 }

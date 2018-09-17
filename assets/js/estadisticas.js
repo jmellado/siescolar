@@ -151,7 +151,7 @@ function inicio(){
     		jornada = $("#jornadaPG").val();
     		ano_lectivo = $("#ano_lectivoPG").val();
     		mostrardiv_promediogrados();
-    		//mostrarpromediogrados("",1,5,periodo,jornada,ano_lectivo);
+    		mostrarpromediogrados("",1,5,periodo,jornada,ano_lectivo);
 
        	}
        	else{
