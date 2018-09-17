@@ -82,7 +82,7 @@ function inicio(){
     		jornada = $("#jornadaPC").val();
     		ano_lectivo = $("#ano_lectivoPC").val();
     		mostrardiv_promediocursos();
-    		//mostrarpromediocursos("",1,5,periodo,jornada,ano_lectivo);
+    		mostrarpromediocursos("",1,5,periodo,jornada,ano_lectivo);
 
        	}
        	else{

@@ -106,4 +106,71 @@ class Estadisticas_model extends CI_Model {
 	}
 
 
+	public function buscar_promediocursos($periodo,$jornada,$ano_lectivo){
+
+		$this->db->where('matriculas.jornada',$jornada);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('DISTINCT(matriculas.id_curso)');
+
+		$query = $this->db->get('matriculas');
+		$cursos = $query->result_array();
+
+		$total_cursos = count($query->result());
+		$listado_cursos = array();
+		$aux = array();
+
+		for ($i=0; $i < $total_cursos; $i++) {
+
+			$id_curso = $cursos[$i]['id_curso'];
+
+			$cu = $this->estadisticas_model->obtener_informacion_curso($id_curso);
+			$id_grado = $cu[0]['id_grado'];
+			
+			$this->db->where('matriculas.id_curso',$id_curso);
+			$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+			$this->db->where('notas.id_grado',$id_grado);
+			$this->db->where('notas.ano_lectivo',$ano_lectivo);
+
+			$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
+			$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+			$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+			$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+			$this->db->join('anos_lectivos', 'notas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+			if ($periodo == "Primero") {
+				
+				$this->db->select('matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,ROUND(AVG(IFNULL(notas.p1, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+			if ($periodo == "Segundo") {
+				
+				$this->db->select('matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,ROUND(AVG(IFNULL(notas.p2, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+			if ($periodo == "Tercero") {
+				
+				$this->db->select('matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,ROUND(AVG(IFNULL(notas.p3, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+			if ($periodo == "Cuarto") {
+				
+				$this->db->select('matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,ROUND(AVG(IFNULL(notas.p4, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo',false);
+			}
+
+			$query2 = $this->db->get('matriculas');
+
+			$listado_cursos[] =$query2->row_array();
+			
+		}
+
+		foreach ($listado_cursos as $key => $row) {
+				//array auxiliar con los promedios de todos los cursos
+				$aux[$key] = $row['promedio'];
+		}
+
+		//Ordenamos el array, descendentemente por el promedio de cada curso, luego retornamos ese array
+		array_multisort($aux, SORT_DESC, $listado_cursos);
+
+		return $listado_cursos;
+	}
+
+
 }
