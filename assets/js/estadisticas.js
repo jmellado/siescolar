@@ -220,7 +220,7 @@ function inicio(){
     		jornada = $("#jornadaER").val();
     		ano_lectivo = $("#ano_lectivoER").val();
     		mostrardiv_enriesgo();
-    		//mostrarenriesgo("",1,5,periodo,jornada,ano_lectivo);
+    		mostrarenriesgo("",1,5,periodo,jornada,ano_lectivo);
 
        	}
        	else{
@@ -479,7 +479,7 @@ function mostrarenriesgo(valor,pagina,cantidad,periodo,jornada,ano_lectivo){
 					$("#lista_enriesgo tbody").html(html);
 				}
 				else{
-					html ="<tr><td colspan='5'><p style='text-align:center'>No Hay Estudiantes Matriculados..</p></td></tr>";
+					html ="<tr><td colspan='5'><p style='text-align:center'>No Hay Estudiantes..</p></td></tr>";
 					$("#lista_enriesgo tbody").html(html);
 				}	
 

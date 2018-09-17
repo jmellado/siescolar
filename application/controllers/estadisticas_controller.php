@@ -135,4 +135,24 @@ class Estadisticas_controller extends CI_Controller {
 
 
 	}
+
+
+	public function mostrarenriesgo(){
+
+		$periodo = $this->input->post('periodo'); 
+		$jornada = $this->input->post('jornada'); 
+		$ano_lectivo = $this->input->post('ano_lectivo'); 
+		
+		$data = array(
+
+			'enriesgo' => $this->estadisticas_model->buscar_enriesgo($periodo,$jornada,$ano_lectivo),
+
+		    'totalregistros' => count($this->estadisticas_model->buscar_enriesgo($periodo,$jornada,$ano_lectivo))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
 }

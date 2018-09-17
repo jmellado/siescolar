@@ -234,4 +234,183 @@ class Estadisticas_model extends CI_Model {
 	}
 
 
+	public function buscar_enriesgo($periodo,$jornada,$ano_lectivo){
+
+		$this->db->where('matriculas.jornada',$jornada);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$query = $this->db->get('matriculas');
+
+		$estudiantes = $query->result_array();
+		
+		$total_estudiantes = count($query->result());
+		$listado_estudiantes = array();
+		$aux = array();
+
+		for ($i=0; $i < $total_estudiantes; $i++) {
+
+			$id_estudiante = $estudiantes[$i]['id_estudiante'];
+			$id_curso = $estudiantes[$i]['id_curso'];
+
+			$cu = $this->estadisticas_model->obtener_informacion_curso($id_curso);
+			$id_grado = $cu[0]['id_grado'];
+
+			$estado_matricula = $this->estadisticas_model->calcular_estado_matricula($ano_lectivo,$id_estudiante,$periodo);
+
+			if ($estado_matricula == "Reprobado") {
+			
+				$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+				$this->db->where('matriculas.id_estudiante',$id_estudiante);
+				$this->db->where('notas.ano_lectivo',$ano_lectivo);
+				$this->db->where('notas.id_estudiante',$id_estudiante);
+				$this->db->where('notas.id_grado',$id_grado);
+				
+				$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
+				$this->db->join('personas', 'notas.id_estudiante = personas.id_persona');
+				$this->db->join('anos_lectivos', 'notas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+				$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+				$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+				$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+				if ($periodo == "Primero") {
+					
+					$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas.p1, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo,matriculas.jornada,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo',false);
+				}
+				if ($periodo == "Segundo") {
+					
+					$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas.p2, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo,matriculas.jornada,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo',false);
+				}
+				if ($periodo == "Tercero") {
+					
+					$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas.p3, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo,matriculas.jornada,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo',false);
+				}
+				if ($periodo == "Cuarto") {
+					
+					$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas.p4, 0.0)),1) as promedio,anos_lectivos.nombre_ano_lectivo,matriculas.jornada,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo',false);
+				}
+
+				$query2 = $this->db->get('matriculas');
+
+				$listado_estudiantes[] =$query2->row_array();
+
+			}
+			
+		}
+
+		foreach ($listado_estudiantes as $key => $row) {
+				//array auxiliar con los promedios de todos los estudiantes
+				$aux[$key] = $row['promedio'];
+		}
+
+		//Ordenamos el array, descendentemente por el promedio de notas de cada estudiante matriculado, luego retornamos ese array
+		array_multisort($aux, SORT_DESC, $listado_estudiantes);
+
+		return $listado_estudiantes;
+
+
+	}
+
+
+	//Esta funcion me permite calcular por periodo el estado de la matricula de un estudiante.
+	// Calculando su promedio general, el numero de asignaturas aprobadas y reprobadas
+	public function calcular_estado_matricula($ano_lectivo,$id_estudiante,$periodo){
+
+		//array sencillo para las asignaturas aprobadas y reprobadas
+		$asignaturas_aprobadas = array();
+		$asignaturas_reprobadas = array();
+		$totalnotas = 0;
+
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.p1, 0.0) as p1,IFNULL(notas.p2, 0.0) as p2,IFNULL(notas.p3, 0.0) as p3,IFNULL(notas.p4, 0.0) as p4',false);
+
+		$query = $this->db->get('notas');
+
+		$NotasAsignaturas = $query->result_array();
+
+		for ($i=0; $i < count($NotasAsignaturas); $i++) {
+
+			if ($periodo == "Primero") {
+
+				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p1'];
+
+				if ($NotasAsignaturas[$i]['p1'] >= 3.0 && $NotasAsignaturas[$i]['p1'] <= 5.0) {
+					
+					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p1'];
+				}
+				else{
+
+					$asignaturas_reprobadas[] = $NotasAsignaturas[$i]['p1'];
+				}
+
+			}
+
+			if ($periodo == "Segundo") {
+
+				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p2'];
+
+				if ($NotasAsignaturas[$i]['p2'] >= 3.0 && $NotasAsignaturas[$i]['p2'] <= 5.0) {
+					
+					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p2'];
+				}
+				else{
+
+					$asignaturas_reprobadas[] = $NotasAsignaturas[$i]['p2'];
+				}
+
+			}
+
+			if ($periodo == "Tercero") {
+
+				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p3'];
+
+				if ($NotasAsignaturas[$i]['p3'] >= 3.0 && $NotasAsignaturas[$i]['p3'] <= 5.0) {
+					
+					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p3'];
+				}
+				else{
+
+					$asignaturas_reprobadas[] = $NotasAsignaturas[$i]['p3'];
+				}
+
+			}
+
+			if ($periodo == "Cuarto") {
+
+				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p4'];
+
+				if ($NotasAsignaturas[$i]['p4'] >= 3.0 && $NotasAsignaturas[$i]['p4'] <= 5.0) {
+					
+					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p4'];
+				}
+				else{
+
+					$asignaturas_reprobadas[] = $NotasAsignaturas[$i]['p4'];
+				}
+
+			}
+			
+		}
+
+		$promedio = $totalnotas / count($NotasAsignaturas);
+
+		if ($promedio >= 3.0 && $promedio <= 5.0) {
+
+			return "Aprobado";
+		}
+		else{
+
+			if (count($asignaturas_reprobadas) > 2) {
+
+				return "Reprobado";
+			}
+			else{
+
+				return "Nivelacion";
+			}
+		}
+	}
+
+
 }
