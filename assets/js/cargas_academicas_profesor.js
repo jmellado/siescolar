@@ -53,6 +53,7 @@ function mostrarcargas_academicas(valor,pagina,cantidad,id_persona){
 		success:function(respuesta) {
 				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
 				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
+				
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				var total_h = document.getElementById('total_horas');

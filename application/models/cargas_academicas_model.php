@@ -208,10 +208,12 @@ class Cargas_academicas_model extends CI_Model {
 
 		for ($i=0; $i < count($carga_academica) ; $i++) { 
 			
+			$id_curso = $carga_academica[$i]['id_curso'];
 			$id_grado = $carga_academica[$i]['id_grado'];
 			$id_asignatura = $carga_academica[$i]['id_asignatura'];
 
-			$this->db->where('id_profesor',$id_profesor);
+			$this->db->where('cargas_academicas.id_profesor',$id_profesor);
+			$this->db->where('cargas_academicas.id_curso',$id_curso);
 			$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 			$this->db->where('pensum.id_grado',$id_grado);
 			$this->db->where('pensum.id_asignatura',$id_asignatura);
