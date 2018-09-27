@@ -74,6 +74,7 @@ class Inbox_controller extends CI_Controller {
         	$id_asignatura = $this->input->post('id_asignatura_destinatario');
         	$fecha_envio = $fecha;
         	$estado_lectura = "0";
+            $firebase = "1";
 
         	if ($destinatario != "") {
         		
@@ -84,7 +85,7 @@ class Inbox_controller extends CI_Controller {
 					echo "registroguardado";
 
                     //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
-                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario);
+                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario,$firebase);
 				}
 				else{
 
@@ -134,6 +135,7 @@ class Inbox_controller extends CI_Controller {
         	$fecha_limite = $this->input->post('fecha_limite');
         	$fecha_envio = $fecha;
         	$estado_lectura = "0";
+            $firebase = "2";
 
         	if ($destinatario != "") {
         		
@@ -144,7 +146,7 @@ class Inbox_controller extends CI_Controller {
 					echo "registroguardado";
 
                     //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
-                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario);
+                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario,$firebase);
 				}
 				else{
 
@@ -200,6 +202,7 @@ class Inbox_controller extends CI_Controller {
         	$hora_fin = $this->input->post('hora_fin');
         	$fecha_envio = $fecha;
         	$estado_lectura = "0";
+            $firebase = "3";
 
         	if ($destinatario != "") {
         		
@@ -210,7 +213,7 @@ class Inbox_controller extends CI_Controller {
 					echo "registroguardado";
 
                     //*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
-                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario);
+                    $respuesta_firebase = $this->inbox_model->enviar_notificacionFirebase($titulo,$contenido,$destinatario,$firebase);
 				}
 				else{
 

@@ -214,47 +214,68 @@ class Inbox_model extends CI_Model {
 
 
 	//Esta Funcion Me Permite Enviar Una Notificacion A Todos Los Acudientes Conectados En La App Movil
-	public function enviar_notificacionFirebase($titulo,$contenido,$destinatario){
+	public function enviar_notificacionFirebase($titulo,$contenido,$destinatario,$firebase){
 
-		$TokensAcudientes = $this->inbox_model->obtener_TokensAcudientes($destinatario);
+		$titulo2 = $titulo;
 
-		if ($TokensAcudientes != false) {
+		for ($i=0; $i < count($destinatario); $i++) { 
 
-			//clave del servidor FCM
- 			$apiKey = 'AAAAhVC_IAs:APA91bFIRUkXQpUEUKbZ_PdYJtHc2zt_g7kAcD6tct8ZfU0xI_c0pjmBTrW5PPuhJBG8AzNtuQJvcSUtal8sZnZpAcMHdkkTcOFOHWiJB6oHyeFr6q3sTSeuzes2v0XUmIYY6qnqQ4na';
+			$TokensAcudientes = $this->inbox_model->obtener_TokensAcudientes($destinatario[$i]);
+			$nombre_estudiante = $this->inbox_model->obtener_nombre_estudiante($destinatario[$i]);
 
- 			$headers = array(
-				"Authorization:key=$apiKey",
-				'Content-Type:application/json'
-			);
+			if ($firebase == "1") {
+				$titulo = "Mensaje!!";
+				$contenido = $nombre_estudiante.":<br>".$titulo2;
+			}
+			elseif ($firebase == "2") {
+				$titulo = "Tarea!!";
+				$contenido = $nombre_estudiante.":<br>".$titulo2;
+			}
+			elseif ($firebase == "3") {
+				$titulo = "Evento!!";
+				$contenido = $nombre_estudiante.":<br>".$titulo2;
+			}
+				
 
-			//datos
-			$notificacion = array(
-				'body' => $contenido,
-				'title' => $titulo,
-			);
+			if ($TokensAcudientes != false) {
 
-			$data = array(
-			   'registration_ids' => $TokensAcudientes,
-			   'data' => $notificacion
-			);
+				//clave del servidor FCM
+	 			$apiKey = 'AAAAhVC_IAs:APA91bFIRUkXQpUEUKbZ_PdYJtHc2zt_g7kAcD6tct8ZfU0xI_c0pjmBTrW5PPuhJBG8AzNtuQJvcSUtal8sZnZpAcMHdkkTcOFOHWiJB6oHyeFr6q3sTSeuzes2v0XUmIYY6qnqQ4na';
 
-			// Petición
-			$ch = curl_init();
-			curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-			curl_setopt( $ch, CURLOPT_URL, "https://fcm.googleapis.com/fcm/send" );
-			curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
-			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($data));
+	 			$headers = array(
+					"Authorization:key=$apiKey",
+					'Content-Type:application/json'
+				);
 
-			// Conectamos y recuperamos la respuesta
-			$response = curl_exec($ch);
-			//echo($response);
-			 
-			// Cerramos conexión
-			curl_close($ch);
-		}
+				//datos
+				$notificacion = array(
+					'body' => $contenido,
+					'title' => $titulo,
+				);
+
+				$data = array(
+				   'registration_ids' => $TokensAcudientes,
+				   'data' => $notificacion
+				);
+
+				// Petición
+				$ch = curl_init();
+				curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+				curl_setopt( $ch, CURLOPT_URL, "https://fcm.googleapis.com/fcm/send" );
+				curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
+				curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+				// Conectamos y recuperamos la respuesta
+				$response = curl_exec($ch);
+				//echo($response);
+				 
+				// Cerramos conexión
+				curl_close($ch);
+			}
+
+		}	
 
 
 	}
@@ -287,6 +308,29 @@ class Inbox_model extends CI_Model {
 		
 		//array con los token de los dispositvos a los cuales va ir dirgido la notificacion
 		return $tokens;
+	}
+
+
+	public function obtener_nombre_estudiante($id_persona){
+
+		$this->db->where('personas.id_persona',$id_persona);
+
+		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+		
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+
+			$estudiante = $query->result_array();
+			$nombre_estudiante = $estudiante[0]['nombres']." ".$estudiante[0]['apellido1']." ".$estudiante[0]['apellido2'];
+
+			return $nombre_estudiante;
+		}
+		else{
+			return false;
+		}
+
+
 	}
 
 
