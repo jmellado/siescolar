@@ -731,6 +731,7 @@ class Imprimir_controller extends CI_Controller {
 
 		$id_persona = $this->input->get('id_persona');
 		$fecha_actual = $this->imprimir_model->obtener_fecha();
+		$fecha_letra = $this->imprimir_model->FechaxLetras();
 
 		$col = $this->imprimir_model->obtener_informacion_colegio();
 		$nombre_institucion = $col[0]['nombre_institucion'];
@@ -834,7 +835,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl .= '<p align="center"><b>H A C E &nbsp;&nbsp;C O N S T A R:<br /></b></p>';
 	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.substr($fecha_actual, 6).').<br /></p>';
 
-	        $tbl .= '<p>Para mayor constancia se firma la presente en el Corregimiento de Sempegua Municipio de Chimichagua Cesar el '.$fecha_actual.'.<br /><br /><br /><br /></p>';
+	        $tbl .= '<p>Para mayor constancia se firma la presente en el Corregimiento de Sempegua Municipio de Chimichagua Cesar a los '.$fecha_letra.'.<br /><br /><br /><br /></p>';
 	        $tbl .= '<p>Cordialmente,<br /><br /><br /><br /></p>';
 	        $tbl .= '<p>________________________________<br /><b>'.$rector.'<br />Director General</b></p>';
 
@@ -917,6 +918,7 @@ class Imprimir_controller extends CI_Controller {
 		$id_persona = $this->input->get('id_persona');
 		$ano_lectivo = $this->input->get('ano_lectivo');
 		$fecha_actual = $this->imprimir_model->obtener_fecha();
+		$fecha_letra = $this->imprimir_model->FechaxLetras();
 
 		$col = $this->imprimir_model->obtener_informacion_colegio();
 		$nombre_institucion = $col[0]['nombre_institucion'];
@@ -1050,7 +1052,9 @@ class Imprimir_controller extends CI_Controller {
 	        	$tbl .= '<p>&nbsp;</p>';
 	        }
 
-	        $tbl .= '<p>Se expide la presente en el Corregimiento de Sempegua, Municipio de Chimichagua Cesar a los _______ días del Mes de _______________ del Año __________.<br /><br /><br /></p>';
+	        //$tbl .= '<p>Se expide la presente en el Corregimiento de Sempegua, Municipio de Chimichagua Cesar a los _______ días del Mes de _______________ del Año __________.<br /><br /><br /></p>';
+
+	        $tbl .= '<p>Se expide la presente en el Corregimiento de Sempegua, Municipio de Chimichagua Cesar a los '.$fecha_letra.'.<br /><br /><br /></p>';
 
 	        if (count($NotasEstudiante) == 11) {
 	        	$tbl .= '<p>&nbsp;<br /></p>';

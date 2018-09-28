@@ -495,6 +495,114 @@ class Imprimir_model extends CI_Model {
 	}
 
 
+	function FechaxLetras(){
+    
+       	setlocale(LC_ALL,"es_ES","esp");
+       	date_default_timezone_set('America/Bogota');
+        
+        $dia =  date("d");
+        $output = " ";
+	    switch ($dia) {
+	        case "1":
+	            $output = "un";
+	            break;
+	        case "2":
+	            $output = "dos";
+	            break;
+	        case "3":
+	            $output = "tres";
+	            break;
+	        case "4":
+	            $output = "cuatro";
+	            break;
+	        case "5":
+	            $output = "cinco";
+	            break;
+	        case "6":
+	            $output = "seis";
+	            break;
+	        case "7":
+	            $output = "siete";
+	            break;
+	        case "8":
+	            $output = "ocho";
+	            break;
+	        case "9":
+	            $output = "nueve";
+	            break;
+	        case "10":
+	            $output = "diez";
+	            break;
+	        case "11":
+	            $output = "once";
+	            break;
+	        case "12":
+	            $output = "doce";
+	            break;
+	        case "13":
+	            $output = "trece";
+	            break;
+	        case "14":
+	            $output = "catorce";
+	            break;
+	        case "15":
+	            $output = "quince";
+	            break;
+	        case "16":
+	            $output = "dieciseis";
+	            break;
+	        case "17":
+	            $output = "diecisiete";
+	            break;
+	        case "18":
+	            $output = "dieciocho";
+	            break;
+	        case "19":
+	            $output = "diecinueve";
+	            break;
+	         case "20":
+	            $output = "veinte";
+	            break;
+	         case "21":
+	            $output = "veintiun";
+	            break;
+	         case "22":
+	            $output = "veintidos";
+	            break;
+	         case "23":
+	            $output = "veintitres";
+	            break;
+	         case "24":
+	            $output = "veinticuatro";
+	            break;
+	        case "25":
+	            $output = "veinticinco";
+	            break;
+	        case "26":
+	            $output = "veintiseis";
+	            break;
+	        case "27":
+	            $output = "veintisiete";
+	            break;
+	        case "28":
+	            $output = "veintiocho";
+	            break;
+	        case "29":
+	            $output = "veintinueve";
+	            break;
+	        case "30";
+	            $output = "treinta";
+	            break;
+	        case "31":
+	            $output = "treinta y un";
+	            break;
+	    } 
+         
+        $cadenafinal = strftime(" dia(s) del mes de %B del año %Y", time());
+        return $output." (".$dia.") ".$cadenafinal;
+    } 
+
+
 	//****************************** FUNCIONES PARA IMPRIMIR CERTIFICADOS ***************************
 
 
