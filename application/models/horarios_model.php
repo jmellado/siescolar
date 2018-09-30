@@ -77,6 +77,8 @@ class Horarios_model extends CI_Model {
 		$this->db->where('horarios.id_curso',$id_curso);
 		$this->db->where('horarios.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('horarios.hora', 'asc');
+
 		$this->db->join('asignaturas as lu', 'horarios.lunes = lu.id_asignatura');
 		$this->db->join('asignaturas as ma', 'horarios.martes = ma.id_asignatura');
 		$this->db->join('asignaturas as mi', 'horarios.miercoles = mi.id_asignatura');
