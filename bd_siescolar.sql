@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-09-2018 a las 19:36:47
+-- Tiempo de generación: 30-09-2018 a las 20:48:43
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-09-13 17:35:02');
+(12345, '2018-09-30 18:47:07');
 
 -- --------------------------------------------------------
 
@@ -1824,13 +1824,14 @@ CREATE TABLE `nivelaciones` (
   `id_nivelacion` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `id_grado` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `periodo_nivelado` varchar(8) NOT NULL,
-  `nota_nivelada` decimal(11,1) NOT NULL,
+  `periodo` varchar(8) NOT NULL,
+  `nota` decimal(11,1) NOT NULL,
   `nivelacion` decimal(11,1) NOT NULL,
   `observaciones` varchar(500) NOT NULL,
-  `fecha_nivelacion` date NOT NULL
+  `fecha_nivelacion` date NOT NULL,
+  `fecha_registro` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

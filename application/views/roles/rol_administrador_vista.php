@@ -446,6 +446,12 @@
             </span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url(); ?>nivelaciones_controller/index">
+            <i class="fa fa-sliders"></i>
+            <span>Gestionar Nivelaciones</span>
+          </a>
+        </li>
         <li><a href="<?php echo base_url(); ?>asignar_logros_controller/index"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>
