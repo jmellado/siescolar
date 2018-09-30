@@ -3,8 +3,8 @@
 class Cursos_model extends CI_Model {
 
 
-	public function insertar_curso($salon_grupo){
-		if ($this->db->insert('cursos', $salon_grupo)) 
+	public function insertar_curso($curso){
+		if ($this->db->insert('cursos', $curso)) 
 			return true;
 		else
 			return false;
@@ -129,12 +129,12 @@ class Cursos_model extends CI_Model {
 		}
     }
 
-    public function modificar_curso($id_curso,$salon_grupo){
+    public function modificar_curso($id_curso,$curso){
 
 	
 		$this->db->where('id_curso',$id_curso);
 
-		if ($this->db->update('cursos', $salon_grupo))
+		if ($this->db->update('cursos', $curso))
 
 			return true;
 		else

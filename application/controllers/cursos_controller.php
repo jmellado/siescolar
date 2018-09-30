@@ -225,7 +225,7 @@ class Cursos_controller extends CI_Controller {
 
 						if($cupo_maximo >= $total_curso_matricula){
 
-				        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$salon_grupo);
+				        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
 
 							 if($respuesta==true){
 
@@ -253,7 +253,7 @@ class Cursos_controller extends CI_Controller {
 
 							if($cupo_maximo >= $total_curso_matricula){
 
-					        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$salon_grupo);
+					        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
 
 								 if($respuesta==true){
 
@@ -284,7 +284,7 @@ class Cursos_controller extends CI_Controller {
 
 								if($cupo_maximo >= $total_curso_matricula){
 
-						        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$salon_grupo);
+						        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
 
 									 if($respuesta==true){
 
