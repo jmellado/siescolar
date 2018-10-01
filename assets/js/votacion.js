@@ -49,7 +49,7 @@ function inicio(){
 
 		}else{
 
-			toastr.warning('Favor Digite Un Código De Votación.'+hora_actual, 'Success Alert', {timeOut: 3000});
+			toastr.warning('Favor Digite Un Código De Votación.', 'Success Alert', {timeOut: 3000});
 		}
 
 	});
@@ -82,14 +82,26 @@ function registrar_voto(candidato_elegido,codigo_eleccion){
 				
 			if (respuesta==="registroguardado") {
 				
-				toastr.success('Voto Registrado Satisfactoriamente, Gracias Por Elegir.', 'Success Alert', {timeOut: 8000});
-				window.location= base_url+"rol_votante/elecciones";
+				toastr.success('Voto Registrado Satisfactoriamente, Gracias Por Elegir.', 'Success Alert', {timeOut: 4000});
+				
+				var f = function(){window.location= base_url+"rol_votante/elecciones";};
+				setTimeout(f,4000);
 
 			}
 			else if(respuesta==="registronoguardado"){
 				
 				toastr.error('Voto No Registrado.', 'Success Alert', {timeOut: 3000});
 				
+			}
+			else if(respuesta==="yavoto"){
+						
+				toastr.error('Usted Ya Realizo Su Voto.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else if(respuesta==="noexiste"){
+						
+				toastr.warning('El Código Ingresado No Existe.', 'Success Alert', {timeOut: 3000});
+					
 			}
 			else{
 

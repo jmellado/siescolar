@@ -970,16 +970,36 @@ class Elecciones_controller extends CI_Controller {
 
 		$candidato_elegido = $this->input->post('candidato_elegido');
 		$codigo_eleccion = $this->input->post('codigo_eleccion');
+
+		//Validanos nuevamente el codigo de ingreso 
+		$consulta = $this->elecciones_model->obtener_informacion_porcodigo($codigo_eleccion);
 		
-		$respuesta=$this->elecciones_model->registrar_voto($candidato_elegido,$codigo_eleccion);
+		if ($consulta != false) {
 
-		if($respuesta==true){
+			$estado_votante = $consulta[0]['estado_votante'];
 
-			echo "registroguardado";
+			if ($estado_votante == "no") {
+			
+				$respuesta=$this->elecciones_model->registrar_voto($candidato_elegido,$codigo_eleccion);
+
+				if($respuesta==true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+			}
+			else{
+
+				echo "yavoto";
+			}
+
 		}
 		else{
-
-			echo "registronoguardado";
+			
+			echo "noexiste";
 		}
 
 	}
