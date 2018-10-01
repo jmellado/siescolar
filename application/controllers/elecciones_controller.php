@@ -1007,7 +1007,7 @@ class Elecciones_controller extends CI_Controller {
 
 			'elecciones' => $this->elecciones_model->buscar_resultados($id_eleccion),
 
-			'total_votantes' => count($this->elecciones_model->buscar_curso_votante($id_eleccion))
+			'total_votantes' => count($this->elecciones_model->total_votantes_aptos($id_eleccion))
 
 		);
 	    echo json_encode($data);

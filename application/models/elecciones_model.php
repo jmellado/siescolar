@@ -769,4 +769,19 @@ class Elecciones_model extends CI_Model {
 	}
 
 
+	//Esta funcion me permite obtener el numero total de votantes aptos o disponibles para una eleccion.
+	public function total_votantes_aptos($id_eleccion){
+
+
+		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
+
+		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante');
+		
+		$query = $this->db->get('listado_votantes');
+
+		return $query->result();
+		
+	}
+
+
 }
