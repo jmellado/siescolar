@@ -71,8 +71,8 @@
 				</div>
 			</div>
 	</div>
-		<div class="agileits-footer">
-			<p>Copyright &copy; 2017-2018 <a href="http://siescolar.com">Proyecto Siescolar</a> All Rights Reserved.</p>
-		</div>
+	<div class="agileits-footer">
+		<p>Copyright &copy; 2017-2018 <a href="http://siescolar.com">Proyecto Siescolar</a> All Rights Reserved.</p>
+	</div>
 </body>
 </html>
