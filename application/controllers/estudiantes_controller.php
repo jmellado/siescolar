@@ -361,10 +361,10 @@ class Estudiantes_controller extends CI_Controller {
 	            
 		            if($respuesta==true){
 		                
-		                echo "registro actualizado";
+		                echo "registroactualizado";
 		            }else{
 		               
-		            	echo "registro no se pudo actualizar";
+		            	echo "registronoactualizado";
 		            }
 	        		
 	        	}
@@ -376,17 +376,17 @@ class Estudiantes_controller extends CI_Controller {
 	            
 			            if($respuesta==true){
 			                
-			                echo "registro actualizado";
+			                echo "registroactualizado";
 			            }else{
 			               
-			            	echo "registro no se pudo actualizar";
+			            	echo "registronoactualizado";
 			            }
 
 
 	        		}
 	        		else{
 
-	        			echo "estudiante ya existe";
+	        			echo "estudianteyaexiste";
 
 	        		}
 
@@ -416,10 +416,10 @@ class Estudiantes_controller extends CI_Controller {
 		        	
 	          	if($respuesta==true){
 	              
-	              	echo "Estudiante Eliminado Correctamente";
+	              	echo "Estudiante Eliminado Correctamente.";
 	          	}else{
 	              
-	              	echo "No Se Pudo Eliminar";
+	              	echo "No Se Pudo Eliminar.";
 	          	}
 	        }
 	        else{

@@ -23,29 +23,29 @@ function inicio(){
 					
 					if (respuesta==="registroguardado") {
 
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Estudiante Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#mensajes-error").hide();
 						$("#form_estudiantes")[0].reset();
 						llenarcombo_municipios("","");
 						llenarcombo_municipiosN("","");
 
 					}
-					else if(respuesta==="registro no guardado"){
+					else if(respuesta==="registronoguardado"){
 					
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Estudiante No Registrado.', 'Success Alert', {timeOut: 5000});
 						//$("#mensajes-error").hide();
 							
 
 					}
 					else if(respuesta==="estudianteyaexiste"){
 						
-						toastr.success('Ya Fue Registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('El Estudiante Ya Se Encuentra Registrado.', 'Success Alert', {timeOut: 5000});
 						//$("#mensajes-error").hide();
 							
 
 					}
 					else{
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						//$("#mensajes-error").show();
 						//$("#mensajes-error").html(respuesta);
 					}
@@ -58,7 +58,7 @@ function inicio(){
 			});
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			toastr.success('Formulario incorrecto.', 'Success Alert', {timeOut: 2000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -955,8 +955,27 @@ function actualizar(){
 				
 				//alert(respuesta);
 				$("#myModal").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Información Del Estudiante Actualizada Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Información Del Estudiante No Actualizada.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="estudianteyaexiste"){
+					
+					toastr.warning('El Estudiante Ya Se Encuentra Registrado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_estudiantes_actualizar")[0].reset();
 
 				mostrarestudiantes("",1,5);
