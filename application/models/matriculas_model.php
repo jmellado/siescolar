@@ -34,6 +34,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->or_like('grupos.nombre_grupo',$id,'after');
 		$this->db->or_like('matriculas.jornada',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('matriculas.fecha_matricula',$id,'after');
 
 		$this->db->order_by('matriculas.ano_lectivo', 'desc');
 		$this->db->order_by('matriculas.fecha_matricula', 'asc');
@@ -637,6 +638,76 @@ class Matriculas_model extends CI_Model {
 		else{
 			return 0;
 		}
+
+	}
+
+
+
+	//******************* FUNCIONES PARA IMPRIMIR FICHAS DE MATRICULAS *********************
+
+
+	public function obtener_informacion_colegio(){
+
+		$query = $this->db->get('datos_institucion');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+        	
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function validar_existencia_matricula($id_matricula){
+
+		$this->db->where('id_matricula',$id_matricula);
+		
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function obtener_informacion_matricula_ficha($id_matricula){
+
+		$this->db->where('matriculas.id_matricula',$id_matricula);
+
+		$this->db->join('personas as est', 'matriculas.id_estudiante = est.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->join('personas as acu', 'matriculas.id_acudiente = acu.id_persona');
+		$this->db->join('acudientes as acud', 'acu.id_persona = acud.id_persona');
+
+		$this->db->join('municipios', 'est.municipio_nacimiento = municipios.id_municipio');
+
+		$this->db->join('estudiantes_padres as e_p', 'est.id_persona = e_p.id_estudiante');
+		$this->db->join('padres', 'e_p.id_padre = padres.id_padre');
+		$this->db->join('madres', 'e_p.id_madre = madres.id_madre');
+
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,est.identificacion as identificacionest,est.tipo_id as tipo_idest,est.nombres as nombresest,est.apellido1 as apellido1est,est.apellido2 as apellido2est,est.sexo as sexoest,est.fecha_nacimiento as fecha_nacimientoest,est.eps as epsest,est.tipo_sangre as tipo_sangreest,est.telefono as telefonoest,est.direccion as direccionest,est.barrio as barrioest,municipios.nombre_municipio,acu.identificacion as identificacionacu,acu.nombres as nombresacu,acu.apellido1 as apellido1acu,acu.apellido2 as apellido2acu,acu.telefono as telefonoacu,acu.direccion as direccionacu,acu.barrio as barrioacu,acud.ocupacion as ocupacionacu,acud.telefono_trabajo as telefono_trabajoacu,padres.identificacion_p,padres.nombres_p,padres.apellido1_p,padres.apellido2_p,padres.telefono_p,padres.direccion_p,padres.barrio_p,padres.ocupacion_p,padres.telefono_trabajo_p,madres.identificacion_m,madres.nombres_m,madres.apellido1_m,madres.apellido2_m,madres.telefono_m,madres.direccion_m,madres.direccion_m,madres.barrio_m,madres.ocupacion_m,madres.telefono_trabajo_m,grados.nombre_grado,grupos.nombre_grupo,anos_lectivos.nombre_ano_lectivo,municipios.nombre_municipio as nombre_municipioest');
+
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
 
 	}
 

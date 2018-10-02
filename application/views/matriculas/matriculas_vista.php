@@ -68,8 +68,6 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									
-									
 									<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificación</th>
 									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres Y Apellidos</th>
 									<th><i class='fa fa-graduation-cap'></i>&nbsp;Grado</th>
@@ -80,11 +78,12 @@
 									<th><i class='fa fa-shield'></i>&nbsp;Estado Matrícula</th>
 									<th></th>
 									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<td colspan='11'></td>
+									<td colspan='12'></td>
 								</tr>
 							</tfoot>
 							<tbody>

@@ -101,7 +101,7 @@ function inicio(){
 
     });
 
-    $("body").on("click","#lista_matriculas button",function(event){
+    $("body").on("click","#lista_matriculas .btn-eliminar",function(event){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
@@ -110,6 +110,13 @@ function inicio(){
 
 		}
 
+	});
+
+	$("body").on("click","#lista_matriculas .btn-imprimir",function(event){
+		event.preventDefault();
+		id_matriculasele = $(this).attr("value");
+		
+		window.open(base_url+'matriculas_controller/generar_ficha'+'?id_matricula='+id_matriculasele, '_blank');
 	});
 
 	$("body").on("click","#lista_matriculas a",function(event){
@@ -472,13 +479,13 @@ function mostrarmatriculas(valor,pagina,cantidad){
 				if (registros.matriculas.length > 0) {
 
 					for (var i = 0; i < registros.matriculas.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.matriculas[i].id_matricula+"</td><td style='display:none'>"+registros.matriculas[i].id_estudiante+"</td><td>"+registros.matriculas[i].identificacion+"</td><td>"+registros.matriculas[i].nombres+" "+registros.matriculas[i].apellido1+" "+registros.matriculas[i].apellido2+"</td><td style='display:none'>"+registros.matriculas[i].id_curso+"</td><td>"+registros.matriculas[i].nombre_grado+"</td><td>"+registros.matriculas[i].nombre_grupo+"</td><td>"+registros.matriculas[i].jornada+"</td><td style='display:none'>"+registros.matriculas[i].ano_lectivo+"</td><td>"+registros.matriculas[i].nombre_ano_lectivo+"</td><td style='display:none'>"+registros.matriculas[i].id_acudiente+"</td><td style='display:none'>"+registros.matriculas[i].parentesco+"</td><td style='display:none'>"+registros.matriculas[i].observaciones+"</td><td>"+registros.matriculas[i].fecha_matricula+"</td><td>"+registros.matriculas[i].estado_matricula+"</td><td><a class='btn btn-success' href="+registros.matriculas[i].id_matricula+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.matriculas[i].id_matricula+"><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.matriculas[i].id_matricula+"</td><td style='display:none'>"+registros.matriculas[i].id_estudiante+"</td><td>"+registros.matriculas[i].identificacion+"</td><td>"+registros.matriculas[i].nombres+" "+registros.matriculas[i].apellido1+" "+registros.matriculas[i].apellido2+"</td><td style='display:none'>"+registros.matriculas[i].id_curso+"</td><td>"+registros.matriculas[i].nombre_grado+"</td><td>"+registros.matriculas[i].nombre_grupo+"</td><td>"+registros.matriculas[i].jornada+"</td><td style='display:none'>"+registros.matriculas[i].ano_lectivo+"</td><td>"+registros.matriculas[i].nombre_ano_lectivo+"</td><td style='display:none'>"+registros.matriculas[i].id_acudiente+"</td><td style='display:none'>"+registros.matriculas[i].parentesco+"</td><td style='display:none'>"+registros.matriculas[i].observaciones+"</td><td>"+registros.matriculas[i].fecha_matricula+"</td><td>"+registros.matriculas[i].estado_matricula+"</td><td><a class='btn btn-success' href="+registros.matriculas[i].id_matricula+" title='Ver y/o Actualizar Matrícula'><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-warning btn-imprimir' value="+registros.matriculas[i].id_matricula+" title='Imprimir Ficha De Matrícula'><i class='fa fa-print'></i></button></td><td><button type='button' class='btn btn-danger btn-eliminar' value="+registros.matriculas[i].id_matricula+" title='Eliminar Matrícula'><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_matriculas tbody").html(html);
 				}
 				else{
-					html ="<tr><td colspan='11'><p style='text-align:center'>No Hay Estudiantes Matriculados..</p></td></tr>";
+					html ="<tr><td colspan='12'><p style='text-align:center'>No Hay Estudiantes Matriculados..</p></td></tr>";
 					$("#lista_matriculas tbody").html(html);
 				}	
 
