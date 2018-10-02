@@ -72,6 +72,11 @@
 							</thead>
 							<tbody>
 							</tbody>
+							<tfoot>
+                                <tr>
+                                    <td colspan='12'></td>
+                                </tr>
+                            </tfoot>
 						</table>
 						</div>
 
