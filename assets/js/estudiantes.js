@@ -381,11 +381,11 @@ function inicio(){
 
 			},
 
-			institucion_procedencia:{
+			/*institucion_procedencia:{
 				required: true,
 				maxlength: 50	
 
-			},
+			},*/
 
 			discapacidad:{
 				required: true,
@@ -399,12 +399,12 @@ function inicio(){
 
 			},
 
-			anio:{
+			/*anio:{
 				required: true,
 				maxlength: 4,
 				digits: true	
 
-			},
+			},*/
 
 			identificacion_padre:{
 				required: true,
@@ -671,11 +671,11 @@ function inicio(){
 
 			},
 
-			institucion_procedencia:{
+			/*institucion_procedencia:{
 				required: true,
 				maxlength: 50	
 
-			},
+			},*/
 
 			discapacidad:{
 				required: true,
@@ -689,12 +689,12 @@ function inicio(){
 
 			},
 
-			anio:{
+			/*anio:{
 				required: true,
 				maxlength: 4,
 				digits: true	
 
-			},
+			},*/
 
 			identificacion_padre:{
 				required: true,

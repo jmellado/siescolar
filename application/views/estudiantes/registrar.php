@@ -499,6 +499,7 @@
 											  	<label class="control-label col-md-3" for="grado_cursado">GRADO CURSADO</label>
 											  	<div class="col-md-7">
 												  	<select class="form-control" id="grado_cursado" name="grado_cursado">
+												  		<option value="Ninguno"></option>
 													    <option value="Prejardín">Prejardín</option>
 														<option value="Jardín">Jardín</option>
 														<option value="Transición">Transición</option>

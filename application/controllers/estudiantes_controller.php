@@ -48,10 +48,10 @@ class Estudiantes_controller extends CI_Controller {
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
-        $this->form_validation->set_rules('institucion_procedencia', 'I.E. De Procedencia', 'required|alpha_spaces');
+        //$this->form_validation->set_rules('institucion_procedencia', 'I.E. De Procedencia', 'required|alpha_spaces');
         $this->form_validation->set_rules('discapacidad', 'Discapacidad', 'required|alpha_spaces');
         $this->form_validation->set_rules('grado_cursado', 'Grado Cursado', 'required');
-        $this->form_validation->set_rules('anio', 'Año', 'required|numeric|max_length[4]');
+        //$this->form_validation->set_rules('anio', 'Año', 'required|numeric|max_length[4]');
         //Padre
         $this->form_validation->set_rules('identificacion_padre', 'Identificación Del Padre', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('nombres_padre', 'Nombres Del Padre', 'required|alpha_spaces');
@@ -98,28 +98,28 @@ class Estudiantes_controller extends CI_Controller {
 			'fecha_expedicion' =>$this->input->post('fecha_expedicion'),
 			'departamento_expedicion' =>$this->input->post('departamento_expedicion'),
 			'municipio_expedicion' =>$this->input->post('municipio_expedicion'),
-			'nombres' =>ucwords(strtolower($this->input->post('nombres'))),
-			'apellido1' =>ucwords(strtolower($this->input->post('apellido1'))),
-			'apellido2' =>ucwords(strtolower($this->input->post('apellido2'))),
+			'nombres' =>ucwords(strtolower(trim($this->input->post('nombres')))),
+			'apellido1' =>ucwords(strtolower(trim($this->input->post('apellido1')))),
+			'apellido2' =>ucwords(strtolower(trim($this->input->post('apellido2')))),
 			'sexo' =>$this->input->post('sexo'),
 			'fecha_nacimiento' =>$this->input->post('fecha_nacimiento'),
 			'departamento_nacimiento' =>$this->input->post('departamento_nacimiento'),
 			'municipio_nacimiento' =>$this->input->post('municipio_nacimiento'),
 			'tipo_sangre' =>$this->input->post('tipo_sangre'),
-			'eps' =>ucwords(strtolower($this->input->post('eps'))),
+			'eps' =>ucwords(strtolower(trim($this->input->post('eps')))),
 			'poblacion' =>$this->input->post('poblacion'),
-			'telefono' =>$this->input->post('telefono'),
-			'email' =>$this->input->post('correo'),
-			'direccion' =>ucwords(strtolower($this->input->post('direccion'))),
-			'barrio' =>ucwords(strtolower($this->input->post('barrio'))));
+			'telefono' =>trim($this->input->post('telefono')),
+			'email' =>trim($this->input->post('correo')),
+			'direccion' =>ucwords(strtolower(trim($this->input->post('direccion')))),
+			'barrio' =>ucwords(strtolower(trim($this->input->post('barrio')))));
 
         	//array para insertar en la tabla estudiantes
 			$estudiante2 = array(
 			'id_persona' =>$ultimo_id,
 			'discapacidad' =>$this->input->post('discapacidad'),
-			'institucion_procedencia' =>ucwords(strtolower($this->input->post('institucion_procedencia'))),
+			'institucion_procedencia' =>ucwords(strtolower(trim($this->input->post('institucion_procedencia')))),
 			'grado_cursado' =>$this->input->post('grado_cursado'),
-			'anio' =>$this->input->post('anio'));
+			'anio' =>trim($this->input->post('anio')));
 
 			//aqui creamos el username de un estudiante
 			$user = strtolower(substr($this->input->post('nombres'), 0, 2));
@@ -139,29 +139,29 @@ class Estudiantes_controller extends CI_Controller {
 			$padre = array(
 			'id_padre' =>$ultimo_id_padre,
 			'identificacion_p' =>$this->input->post('identificacion_padre'),
-			'nombres_p' =>ucwords(strtolower($this->input->post('nombres_padre'))),
-			'apellido1_p' =>ucwords(strtolower($this->input->post('apellido1_padre'))),
-			'apellido2_p' =>ucwords(strtolower($this->input->post('apellido2_padre'))),
-			'telefono_p' =>$this->input->post('telefono_padre'),
-			'direccion_p' =>ucwords(strtolower($this->input->post('direccion_padre'))),
-			'barrio_p' =>ucwords(strtolower($this->input->post('barrio_padre'))),
-			'ocupacion_p' =>ucwords(strtolower($this->input->post('ocupacion_padre'))),
-			'telefono_trabajo_p' =>$this->input->post('telefono_trabajo_padre'),
-			'direccion_trabajo_p' =>ucwords(strtolower($this->input->post('direccion_trabajo_padre'))));
+			'nombres_p' =>ucwords(strtolower(trim($this->input->post('nombres_padre')))),
+			'apellido1_p' =>ucwords(strtolower(trim($this->input->post('apellido1_padre')))),
+			'apellido2_p' =>ucwords(strtolower(trim($this->input->post('apellido2_padre')))),
+			'telefono_p' =>trim($this->input->post('telefono_padre')),
+			'direccion_p' =>ucwords(strtolower(trim($this->input->post('direccion_padre')))),
+			'barrio_p' =>ucwords(strtolower(trim($this->input->post('barrio_padre')))),
+			'ocupacion_p' =>ucwords(strtolower(trim($this->input->post('ocupacion_padre')))),
+			'telefono_trabajo_p' =>trim($this->input->post('telefono_trabajo_padre')),
+			'direccion_trabajo_p' =>ucwords(strtolower(trim($this->input->post('direccion_trabajo_padre')))));
 
 			//array de la madre - para insertar en la tabla madres
 			$madre = array(
 			'id_madre' =>$ultimo_id_madre,
 			'identificacion_m' =>$this->input->post('identificacion_madre'),
-			'nombres_m' =>ucwords(strtolower($this->input->post('nombres_madre'))),
-			'apellido1_m' =>ucwords(strtolower($this->input->post('apellido1_madre'))),
-			'apellido2_m' =>ucwords(strtolower($this->input->post('apellido2_madre'))),
-			'telefono_m' =>$this->input->post('telefono_madre'),
-			'direccion_m' =>ucwords(strtolower($this->input->post('direccion_madre'))),
-			'barrio_m' =>ucwords(strtolower($this->input->post('barrio_madre'))),
-			'ocupacion_m' =>ucwords(strtolower($this->input->post('ocupacion_madre'))),
-			'telefono_trabajo_m' =>$this->input->post('telefono_trabajo_madre'),
-			'direccion_trabajo_m' =>ucwords(strtolower($this->input->post('direccion_trabajo_madre'))));
+			'nombres_m' =>ucwords(strtolower(trim($this->input->post('nombres_madre')))),
+			'apellido1_m' =>ucwords(strtolower(trim($this->input->post('apellido1_madre')))),
+			'apellido2_m' =>ucwords(strtolower(trim($this->input->post('apellido2_madre')))),
+			'telefono_m' =>trim($this->input->post('telefono_madre')),
+			'direccion_m' =>ucwords(strtolower(trim($this->input->post('direccion_madre')))),
+			'barrio_m' =>ucwords(strtolower(trim($this->input->post('barrio_madre')))),
+			'ocupacion_m' =>ucwords(strtolower(trim($this->input->post('ocupacion_madre')))),
+			'telefono_trabajo_m' =>trim($this->input->post('telefono_trabajo_madre')),
+			'direccion_trabajo_m' =>ucwords(strtolower(trim($this->input->post('direccion_trabajo_madre')))));
 
 			$estudiantes_padres = array(
 			'id_estudiante' =>$ultimo_id,
@@ -240,10 +240,10 @@ class Estudiantes_controller extends CI_Controller {
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
-        $this->form_validation->set_rules('institucion_procedencia', 'I.E. De Procedencia', 'required|alpha_spaces');
+        //$this->form_validation->set_rules('institucion_procedencia', 'I.E. De Procedencia', 'required|alpha_spaces');
         $this->form_validation->set_rules('discapacidad', 'Discapacidad', 'required|alpha_spaces');
         $this->form_validation->set_rules('grado_cursado', 'Grado Cursado', 'required');
-        $this->form_validation->set_rules('anio', 'Año', 'required|numeric|max_length[4]');
+        //$this->form_validation->set_rules('anio', 'Año', 'required|numeric|max_length[4]');
         //Padre
         $this->form_validation->set_rules('identificacion_padre', 'Identificación Del Padre', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('nombres_padre', 'Nombres Del Padre', 'required|alpha_spaces');
@@ -283,28 +283,28 @@ class Estudiantes_controller extends CI_Controller {
 			'fecha_expedicion' =>$this->input->post('fecha_expedicion'),
 			'departamento_expedicion' =>$this->input->post('departamento_expedicion'),
 			'municipio_expedicion' =>$this->input->post('municipio_expedicion'),
-			'nombres' =>ucwords(strtolower($this->input->post('nombres'))),
-			'apellido1' =>ucwords(strtolower($this->input->post('apellido1'))),
-			'apellido2' =>ucwords(strtolower($this->input->post('apellido2'))),
+			'nombres' =>ucwords(strtolower(trim($this->input->post('nombres')))),
+			'apellido1' =>ucwords(strtolower(trim($this->input->post('apellido1')))),
+			'apellido2' =>ucwords(strtolower(trim($this->input->post('apellido2')))),
 			'sexo' =>$this->input->post('sexo'),
 			'fecha_nacimiento' =>$this->input->post('fecha_nacimiento'),
 			'departamento_nacimiento' =>$this->input->post('departamento_nacimiento'),
 			'municipio_nacimiento' =>$this->input->post('municipio_nacimiento'),
 			'tipo_sangre' =>$this->input->post('tipo_sangre'),
-			'eps' =>ucwords(strtolower($this->input->post('eps'))),
+			'eps' =>ucwords(strtolower(trim($this->input->post('eps')))),
 			'poblacion' =>$this->input->post('poblacion'),
-			'telefono' =>$this->input->post('telefono'),
-			'email' =>strtolower($this->input->post('correo')),
-			'direccion' =>ucwords(strtolower($this->input->post('direccion'))),
-			'barrio' =>ucwords(strtolower($this->input->post('barrio'))));
+			'telefono' =>trim($this->input->post('telefono')),
+			'email' =>strtolower(trim($this->input->post('correo'))),
+			'direccion' =>ucwords(strtolower(trim($this->input->post('direccion')))),
+			'barrio' =>ucwords(strtolower(trim($this->input->post('barrio')))));
 
 			//array para actualizar en la tabla estudiantes----------
 			$estudiante2 = array(
 			'id_persona' =>$this->input->post('id_persona'),
 			'discapacidad' =>$this->input->post('discapacidad'),
-			'institucion_procedencia' =>ucwords(strtolower($this->input->post('institucion_procedencia'))),
+			'institucion_procedencia' =>ucwords(strtolower(trim($this->input->post('institucion_procedencia')))),
 			'grado_cursado' =>$this->input->post('grado_cursado'),
-			'anio' =>$this->input->post('anio'));
+			'anio' =>trim($this->input->post('anio')));
 
 			//aqui creamos el username de un estudiante
 			$id_persona = $this->input->post('id_persona');
@@ -325,29 +325,29 @@ class Estudiantes_controller extends CI_Controller {
 			$padre = array(
 			'id_padre' =>$this->input->post('id_padre'),
 			'identificacion_p' =>$this->input->post('identificacion_padre'),
-			'nombres_p' =>ucwords(strtolower($this->input->post('nombres_padre'))),
-			'apellido1_p' =>ucwords(strtolower($this->input->post('apellido1_padre'))),
-			'apellido2_p' =>ucwords(strtolower($this->input->post('apellido2_padre'))),
-			'telefono_p' =>$this->input->post('telefono_padre'),
-			'direccion_p' =>ucwords(strtolower($this->input->post('direccion_padre'))),
-			'barrio_p' =>ucwords(strtolower($this->input->post('barrio_padre'))),
-			'ocupacion_p' =>ucwords(strtolower($this->input->post('ocupacion_padre'))),
-			'telefono_trabajo_p' =>$this->input->post('telefono_trabajo_padre'),
-			'direccion_trabajo_p' =>ucwords(strtolower($this->input->post('direccion_trabajo_padre'))));
+			'nombres_p' =>ucwords(strtolower(trim($this->input->post('nombres_padre')))),
+			'apellido1_p' =>ucwords(strtolower(trim($this->input->post('apellido1_padre')))),
+			'apellido2_p' =>ucwords(strtolower(trim($this->input->post('apellido2_padre')))),
+			'telefono_p' =>trim($this->input->post('telefono_padre')),
+			'direccion_p' =>ucwords(strtolower(trim($this->input->post('direccion_padre')))),
+			'barrio_p' =>ucwords(strtolower(trim($this->input->post('barrio_padre')))),
+			'ocupacion_p' =>ucwords(strtolower(trim($this->input->post('ocupacion_padre')))),
+			'telefono_trabajo_p' =>trim($this->input->post('telefono_trabajo_padre')),
+			'direccion_trabajo_p' =>ucwords(strtolower(trim($this->input->post('direccion_trabajo_padre')))));
 
 			//array de la madre - para insertar en la tabla madres
 			$madre = array(
 			'id_madre' =>$this->input->post('id_madre'),
 			'identificacion_m' =>$this->input->post('identificacion_madre'),
-			'nombres_m' =>ucwords(strtolower($this->input->post('nombres_madre'))),
-			'apellido1_m' =>ucwords(strtolower($this->input->post('apellido1_madre'))),
-			'apellido2_m' =>ucwords(strtolower($this->input->post('apellido2_madre'))),
-			'telefono_m' =>$this->input->post('telefono_madre'),
-			'direccion_m' =>ucwords(strtolower($this->input->post('direccion_madre'))),
-			'barrio_m' =>ucwords(strtolower($this->input->post('barrio_madre'))),
-			'ocupacion_m' =>ucwords(strtolower($this->input->post('ocupacion_madre'))),
-			'telefono_trabajo_m' =>$this->input->post('telefono_trabajo_madre'),
-			'direccion_trabajo_m' =>ucwords(strtolower($this->input->post('direccion_trabajo_madre'))));
+			'nombres_m' =>ucwords(strtolower(trim($this->input->post('nombres_madre')))),
+			'apellido1_m' =>ucwords(strtolower(trim($this->input->post('apellido1_madre')))),
+			'apellido2_m' =>ucwords(strtolower(trim($this->input->post('apellido2_madre')))),
+			'telefono_m' =>trim($this->input->post('telefono_madre')),
+			'direccion_m' =>ucwords(strtolower(trim($this->input->post('direccion_madre')))),
+			'barrio_m' =>ucwords(strtolower(trim($this->input->post('barrio_madre')))),
+			'ocupacion_m' =>ucwords(strtolower(trim($this->input->post('ocupacion_madre')))),
+			'telefono_trabajo_m' =>trim($this->input->post('telefono_trabajo_madre')),
+			'direccion_trabajo_m' =>ucwords(strtolower(trim($this->input->post('direccion_trabajo_madre')))));
 			
 			$id_persona = $this->input->post('id_persona');
 	    	$identificacion = $this->input->post('identificacion');
