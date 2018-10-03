@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-10-2018 a las 06:15:21
+-- Tiempo de generación: 04-10-2018 a las 00:59:55
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-10-03 04:14:25');
+(12345, '2018-10-03 22:58:47');
 
 -- --------------------------------------------------------
 
@@ -402,17 +402,18 @@ CREATE TABLE `estudiantes` (
   `institucion_procedencia` varchar(45) NOT NULL,
   `grado_cursado` varchar(45) NOT NULL,
   `anio` varchar(4) NOT NULL,
-  `estado_estudiante` varchar(8) NOT NULL DEFAULT 'Activo'
+  `estado_estudiante` varchar(15) NOT NULL DEFAULT 'Inscrito',
+  `fecha_estado` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `estudiantes`
 --
 
-INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedencia`, `grado_cursado`, `anio`, `estado_estudiante`) VALUES
-(2, 'ninguna', 'manuela beltran', 'Primero', '2007', 'Activo'),
-(3, 'ninguna', 'cotez queruz', 'Quinto', '2007', 'Activo'),
-(4, 'ninguna', 'la esperanza', 'Quinto', '2008', 'Activo');
+INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedencia`, `grado_cursado`, `anio`, `estado_estudiante`, `fecha_estado`) VALUES
+(2, 'ninguna', 'manuela beltran', 'Primero', '2007', 'Inscrito', '2018-10-03'),
+(3, 'ninguna', 'cotez queruz', 'Quinto', '2007', 'Inscrito', '2018-10-03'),
+(4, 'ninguna', 'la esperanza', 'Quinto', '2008', 'Inscrito', '2018-10-03');
 
 -- --------------------------------------------------------
 
@@ -521,6 +522,30 @@ CREATE TABLE `grupos` (
   `ano_lectivo` int(11) NOT NULL,
   `estado_grupo` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historial_estados`
+--
+
+CREATE TABLE `historial_estados` (
+  `id_historial` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
+  `estado` varchar(15) NOT NULL,
+  `observaciones` varchar(300) NOT NULL,
+  `fecha_estado` date NOT NULL,
+  `ano_lectivo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `historial_estados`
+--
+
+INSERT INTO `historial_estados` (`id_historial`, `id_persona`, `estado`, `observaciones`, `fecha_estado`, `ano_lectivo`) VALUES
+(1, 2, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
+(2, 3, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
+(3, 4, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1);
 
 -- --------------------------------------------------------
 
@@ -2306,6 +2331,12 @@ ALTER TABLE `grupos`
   ADD PRIMARY KEY (`id_grupo`);
 
 --
+-- Indices de la tabla `historial_estados`
+--
+ALTER TABLE `historial_estados`
+  ADD PRIMARY KEY (`id_historial`);
+
+--
 -- Indices de la tabla `horarios`
 --
 ALTER TABLE `horarios`
@@ -2566,6 +2597,11 @@ ALTER TABLE `grados_educacion`
 --
 ALTER TABLE `grupos`
   MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `historial_estados`
+--
+ALTER TABLE `historial_estados`
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `horarios`
 --

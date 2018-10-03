@@ -5,6 +5,7 @@ class Estudiantes_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('estudiantes_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -90,6 +91,9 @@ class Estudiantes_controller extends CI_Controller {
         	 //obtengo el ultimo id de madres + 1 
         	 $ultimo_id_madre = $this->estudiantes_model->obtener_ultimo_id_madres();
 
+        	 $ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+			 $fecha_actual = $this->funciones_globales_model->obtener_fecha_actual2();
+
         	 //array para insertar en la tabla personas----------
         	$estudiante = array(
         	'id_persona' =>$ultimo_id,	
@@ -119,7 +123,8 @@ class Estudiantes_controller extends CI_Controller {
 			'discapacidad' =>$this->input->post('discapacidad'),
 			'institucion_procedencia' =>ucwords(strtolower(trim($this->input->post('institucion_procedencia')))),
 			'grado_cursado' =>$this->input->post('grado_cursado'),
-			'anio' =>trim($this->input->post('anio')));
+			'anio' =>trim($this->input->post('anio')),
+			'fecha_estado' =>$fecha_actual);
 
 			//aqui creamos el username de un estudiante
 			$user = strtolower(substr($this->input->post('nombres'), 0, 2));
@@ -168,10 +173,20 @@ class Estudiantes_controller extends CI_Controller {
 			'id_padre' =>$ultimo_id_padre,
 			'id_madre' =>$ultimo_id_madre);
 
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+			$fecha_actual = $this->funciones_globales_model->obtener_fecha_actual_corta();
+
+			$estado = array(
+			'id_persona' =>$ultimo_id,
+			'Estado' =>"Inscrito",
+			'observaciones' =>"Estudiante Inscrito.",
+			'fecha_estado' =>$fecha_actual,
+			'ano_lectivo' =>$ano_lectivo);
+
 
 			if ($this->estudiantes_model->validar_existencia($this->input->post('identificacion'))){
 
-				$respuesta=$this->estudiantes_model->insertar_estudiante($estudiante,$estudiante2,$usuario,$padre,$madre,$estudiantes_padres);
+				$respuesta=$this->estudiantes_model->insertar_estudiante($estudiante,$estudiante2,$usuario,$padre,$madre,$estudiantes_padres,$estado);
 				
 
 				if($respuesta==true){

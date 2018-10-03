@@ -3,7 +3,7 @@
 class Estudiantes_model extends CI_Model {
 
 	
-	public function insertar_estudiante($estudiante,$estudiante2,$usuario,$padre,$madre,$e_p){
+	public function insertar_estudiante($estudiante,$estudiante2,$usuario,$padre,$madre,$e_p,$estado){
 
 		//NUEVA TRANSACCION
 		$this->db->trans_start();
@@ -13,6 +13,7 @@ class Estudiantes_model extends CI_Model {
 		$this->db->insert('padres', $padre);
 		$this->db->insert('madres', $madre);
 		$this->db->insert('estudiantes_padres', $e_p);
+		$this->db->insert('historial_estados', $estado);
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE){
