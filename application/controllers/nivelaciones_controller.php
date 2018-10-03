@@ -120,7 +120,7 @@ class Nivelaciones_controller extends CI_Controller {
         	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
         	//array para insertar en la tabla nivelaciones----------
-        	$nivelacion = array(
+        	/*$nivelacion = array(
         	'id_nivelacion' =>$id_nivelacion,	
 			'ano_lectivo' =>$ano_lectivo,
 			'id_estudiante' =>$id_estudiante,
@@ -132,10 +132,10 @@ class Nivelaciones_controller extends CI_Controller {
 			'nivelacion' =>$nivelacion,
 			'observaciones' =>$observaciones,
 			'fecha_nivelacion' =>$fecha_nivelacion,
-			'fecha_registro' =>$fecha_registro);
+			'fecha_registro' =>$fecha_registro);*/
 
 			
-			$respuesta = $this->nivelaciones_model->insertar_nivelacion($nivelacion);
+			$respuesta = $this->nivelaciones_model->insertar_nivelacion($id_nivelacion,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$periodo,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
 
 			if($respuesta == true){
 

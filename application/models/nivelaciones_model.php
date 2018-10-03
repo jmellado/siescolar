@@ -227,11 +227,58 @@ class Nivelaciones_model extends CI_Model {
 	}
 
 
-	public function insertar_nivelacion($nivelacion){
-		if ($this->db->insert('nivelaciones', $nivelacion)) 
-			return true;
-		else
+	public function insertar_nivelacion($id_nivelacion,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$periodo,$calificacion,$nota_nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+			$nivelacion = array(
+        	'id_nivelacion' =>$id_nivelacion,	
+			'ano_lectivo' =>$ano_lectivo,
+			'id_estudiante' =>$id_estudiante,
+			'id_curso' =>$id_curso,
+			'id_asignatura' =>$id_asignatura,
+			'id_profesor' =>$id_profesor,
+			'periodo' =>$periodo,
+			'nota' =>$calificacion,
+			'nivelacion' =>$nota_nivelacion,
+			'observaciones' =>$observaciones,
+			'fecha_nivelacion' =>$fecha_nivelacion,
+			'fecha_registro' =>$fecha_registro);
+
+			$peri = $this->nivelaciones_model->convertir_periodo($periodo);
+			$id_grado = $this->nivelaciones_model->obtener_gradoPorcurso($id_curso);
+			$nota_periodo = array($peri => $nota_nivelacion);
+			
+			$this->db->insert('nivelaciones', $nivelacion);
+
+			$this->db->where('ano_lectivo',$ano_lectivo);
+			$this->db->where('id_estudiante',$id_estudiante);
+			$this->db->where('id_grado',$id_grado);
+			$this->db->where('id_asignatura',$id_asignatura);
+			$this->db->update('notas', $nota_periodo);
+
+			$nota_final = $this->nivelaciones_model->calcularNota_final($ano_lectivo,$id_estudiante,$id_grado,$id_asignatura);
+			$desempeno = $this->nivelaciones_model->obtener_desempeno($nota_final);
+			$NotaDesempeño = array('nota_final' => $nota_final, 'id_desempeno' => $desempeno);
+
+			$this->db->where('ano_lectivo',$ano_lectivo);
+			$this->db->where('id_estudiante',$id_estudiante);
+			$this->db->where('id_grado',$id_grado);
+			$this->db->where('id_asignatura',$id_asignatura);
+			$this->db->update('notas', $NotaDesempeño);
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
 			return false;
+		}
+		else{
+
+			return true;
+		}
+
 	}
 
 
@@ -269,6 +316,102 @@ class Nivelaciones_model extends CI_Model {
 
 		return $query->result();
 		
+	}
+
+
+	public function convertir_periodo($periodo){
+
+		if ($periodo == "Primero") {
+
+			$peri = "p1";
+		}
+		elseif ($periodo == "Segundo") {
+
+			$peri = "p2";
+		}
+		elseif ($periodo == "Tercero") {
+
+			$peri = "p3";
+		}
+		elseif ($periodo == "Cuarto") {
+
+			$peri = "p4";
+		}
+
+		return $peri;
+	}
+
+
+	public function calcularNota_final($ano_lectivo,$id_estudiante,$id_grado,$id_asignatura){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('id_asignatura',$id_asignatura);
+
+		$this->db->select('p1,p2,p3,p4');
+
+		$query = $this->db->get('notas');
+		$notas = $query->result_array();
+
+		$n1 = $notas[0]['p1'];
+		$n2 = $notas[0]['p2'];
+		$n3 = $notas[0]['p3'];
+		$n4 = $notas[0]['p4'];
+
+		if($n1 == NULL && $n2 == NULL && $n3 == NULL && $n4 == NULL ){
+        $def =NULL;
+        }elseif ($n2 == NULL && $n3 == NULL && $n4 == NULL  ){
+            $def = $n1;
+        }elseif($n1 == NULL && $n3 == NULL && $n4 == NULL ){
+            $def= $n2;
+        }elseif($n1 == NULL && $n2 == NULL && $n4 == NULL ){
+            $def= $n3;
+        }elseif($n1 == NULL && $n2 == NULL && $n3 == NULL ){
+            $def= $n4;
+        }elseif($n3 == NULL && $n4 == NULL ){
+            $def= ($n1+$n2)/2;
+        }elseif($n2 == NULL && $n4 == NULL ){
+            $def= ($n1+$n3)/2;
+        }elseif($n1 == NULL && $n4 == NULL ){
+            $def= ($n2+$n3)/2;
+        }elseif($n2 == NULL && $n3 == NULL ){
+            $def= ($n1+$n4)/2;
+        }elseif($n1 == NULL && $n3 == NULL ){
+            $def= ($n2+$n4)/2;
+        }elseif($n1 == NULL && $n2 == NULL ){
+            $def= ($n4+$n3)/2;
+        }elseif($n4 == NULL ){
+            $def= ($n1+$n2+$n3)/3;
+        }elseif($n3 == NULL ){
+            $def= ($n1+$n2+$n4)/3;
+        }elseif($n2 == NULL ){
+            $def= ($n1+$n3+$n4)/3;
+        }elseif($n1 == NULL ){
+            $def= ($n2+$n3+$n4)/3;
+        }else{
+            $def= ($n1 + $n2 + $n3 + $n4)/4;
+        }
+        return $def;
+
+	}
+
+
+	public function obtener_desempeno($nota_final){
+
+		$sql= "SELECT id_desempeno FROM desempenos WHERE '".$nota_final."' >= rango_inicial AND '".$nota_final."' <= rango_final";
+
+		$query = $this->db->query($sql);
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_desempeno'];
+		}
+		else{
+			return false;
+		}
+
 	}
 
 
