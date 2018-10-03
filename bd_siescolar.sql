@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-09-2018 a las 21:49:34
+-- Tiempo de generación: 03-10-2018 a las 06:15:21
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-09-30 19:47:56');
+(12345, '2018-10-03 04:14:25');
 
 -- --------------------------------------------------------
 
@@ -253,16 +253,6 @@ CREATE TABLE `cronogramas` (
   `estado_actividad` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `cronogramas`
---
-
-INSERT INTO `cronogramas` (`id_actividad`, `nombre_actividad`, `id_categoria`, `descripcion_actividad`, `fecha_inicial`, `fecha_final`, `ano_lectivo`, `estado_actividad`) VALUES
-(1, 'Primero', 1, 'apertura para ingreso de notas para el primer periodo', '2017-09-05', '2017-09-15', 8, 'activo'),
-(2, 'Segundo', 1, 'apertura para ingreso de notas para el segundo periodo', '2017-09-05', '2017-09-05', 8, 'inactivo'),
-(3, 'Tercero', 1, 'apertura para ingreso de notas para el tercer periodo', '2017-09-05', '2017-09-05', 8, 'inactivo'),
-(4, 'Cuarto', 1, 'apertura para ingreso de notas para el cuarto periodo', '2017-09-05', '2017-09-05', 8, 'inactivo');
-
 -- --------------------------------------------------------
 
 --
@@ -305,7 +295,7 @@ CREATE TABLE `datos_institucion` (
 --
 
 INSERT INTO `datos_institucion` (`id`, `nombre_institucion`, `niveles_educacion`, `resolucion`, `dane`, `nit`, `direccion`, `telefono`, `email`, `escudo`, `rector`) VALUES
-(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria y Media', 'Aprobado según Resolucion 000209 del 29 de octubre de 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'calle 7 # 29-90', '5807659', 'cenuestraseñoradelcarmen@gmail.com', 'logo_example.jpg', 'Alvaro Araujo');
+(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria y Media', 'Aprobado según Resolucion 000209 del 29 de octubre de 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'calle 7 # 29-90', '5807659', 'cenuestraseñoradelcarmen@gmail.com', 'escudo.png', 'Alvaro Araujo');
 
 -- --------------------------------------------------------
 
@@ -376,11 +366,11 @@ CREATE TABLE `desempenos` (
 --
 
 INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `rango_final`, `ano_lectivo`) VALUES
-(1, 'Superior', '4.6', '5.0', 8),
-(2, 'Alto', '4.0', '4.5', 8),
-(3, 'Básico', '3.0', '3.9', 8),
-(4, 'Bajo', '1.0', '2.9', 8),
-(5, 'Bajo', '0.0', '0.9', 8);
+(1, 'Superior', '4.6', '5.0', 1),
+(2, 'Alto', '4.0', '4.5', 1),
+(3, 'Básico', '3.0', '3.9', 1),
+(4, 'Bajo', '1.0', '2.9', 1),
+(5, 'Bajo', '0.0', '0.9', 1);
 
 -- --------------------------------------------------------
 
@@ -2530,7 +2520,7 @@ ALTER TABLE `causales`
 -- AUTO_INCREMENT de la tabla `cronogramas`
 --
 ALTER TABLE `cronogramas`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `datos_institucion`
 --
