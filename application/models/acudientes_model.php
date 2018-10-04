@@ -243,7 +243,7 @@ class Acudientes_model extends CI_Model {
 			
 				$row = $query->result_array();
 				$estado = $row[0]['estado_estudiante'];
-				if ($estado == "Activo") {
+				if ($estado == "Inscrito" || $estado == "Matriculado") {
 					return false;
 				}
 				else{
