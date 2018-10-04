@@ -75,9 +75,23 @@ class Matriculas_controller extends CI_Controller {
 			'parentesco' =>$parentesco,
 			'ano_lectivo' =>$ano_lectivo);
 
+			//array para actualizar el estado del estudiante en la tabla estudiantes
+			$estado = array(
+        	'id_persona' =>$id_estudiante,	
+			'estado_estudiante' =>"Matriculado",
+			'fecha_estado' =>$fecha_actual);
+
+			//array para insertar en la tabla historial estados
+			$historial = array(
+        	'id_persona' =>$id_estudiante,	
+			'estado' =>"Matriculado",
+			'observaciones' =>"Estudiante Matriculado.",
+			'fecha_estado' =>$fecha_actual,
+			'ano_lectivo' =>$ano_lectivo);
+
 			if ($this->matriculas_model->validar_existencia($id_estudiante,$ano_lectivo)){
 
-				$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud);
+				$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud,$estado,$historial,$id_estudiante);
 
 				if($respuesta==true){
 
@@ -152,13 +166,21 @@ class Matriculas_controller extends CI_Controller {
 			$id_estudiante = $matri[0]['id_estudiante'];
 			$ano_lectivo = $matri[0]['ano_lectivo'];
 
+			$fecha_estado = $this->matriculas_model->obtener_fecha_estado($id_estudiante,$ano_lectivo);
+
+			//array para actualizar el estado de (Matriculado a Inscrito) del estudiante en la tabla estudiantes
+			$estado = array(
+        	'id_persona' =>$id_estudiante,	
+			'estado_estudiante' =>"Inscrito",
+			'fecha_estado' =>$fecha_estado);
+
 			//eliminanos las materias registradas de ese estudiante en la tabla notas********************************************
 			if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
 				echo "No se pudo eliminar en la tabla notas";
 			}
 
-			
-	        $respuesta=$this->matriculas_model->eliminar_matricula($id,$id_estudiante,$ano_lectivo);
+
+	        $respuesta=$this->matriculas_model->eliminar_matricula($id,$id_estudiante,$ano_lectivo,$estado);
 	        
           	if($respuesta==true){
               

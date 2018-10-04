@@ -3,11 +3,26 @@
 class Matriculas_model extends CI_Model {
 
 
-	public function insertar_matricula($matricula,$est_acud){
-		if ($this->db->insert('matriculas', $matricula) && $this->db->insert('estudiantes_acudientes', $est_acud)) 
-			return true;
-		else
+	public function insertar_matricula($matricula,$est_acud,$estado,$historial,$id_estudiante){
+
+		$this->db->trans_start();
+		$this->db->insert('matriculas', $matricula);
+		$this->db->insert('estudiantes_acudientes', $est_acud);
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->update('estudiantes', $estado);
+
+		$this->db->insert('historial_estados', $historial);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
 			return false;
+		}
+		else{
+
+			return true;
+		}
 	}
 
 	public function validar_existencia($id_persona,$ano_lectivo){
@@ -57,7 +72,7 @@ class Matriculas_model extends CI_Model {
 		
 	}
 
-	public function eliminar_matricula($id,$id_estudiante,$ano_lectivo){
+	public function eliminar_matricula($id,$id_estudiante,$ano_lectivo,$estado){
 
        	$this->db->trans_start();
 		$this->db->where('id_matricula',$id);
@@ -66,6 +81,14 @@ class Matriculas_model extends CI_Model {
 		$this->db->where('id_estudiante',$id_estudiante);
 		$this->db->where('ano_lectivo',$ano_lectivo);
 		$this->db->delete('estudiantes_acudientes');
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->update('estudiantes', $estado);
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->where('estado',"Matriculado");
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->delete('historial_estados');
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE){
@@ -108,6 +131,27 @@ class Matriculas_model extends CI_Model {
     	$row = $query->result_array();
         $data['query'] = 1 + $row[0]['id_matricula'];
         return $data['query'];
+	}
+
+
+	public function obtener_fecha_estado($id_estudiante,$ano_lectivo){
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->where('estado',"Inscrito");
+		$this->db->where('ano_lectivo',$ano_lectivo);
+
+		$query = $this->db->get('historial_estados');
+
+		if ($query->num_rows() > 0) {
+			$row = $query->result_array();
+			$fecha_estado = $row[0]['fecha_estado'];
+
+			return $fecha_estado;
+		}
+		else{
+			return false;
+		}
+
 	}
 
 
