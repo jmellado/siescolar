@@ -117,12 +117,14 @@ function inicio(){
 		nombre_salonsele = $(this).parent().parent().children("td:eq(2)").text();
 		observacionsele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(5)").text();
 		estado_salonsele = $(this).parent().parent().children("td:eq(6)").text();
 		
 		$("#id_salonsele").val(id_salonsele);
         $("#nombre_salonsele").val(nombre_salonsele);
         $("#observacionsele").val(observacionsele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
         $("#estado_salonsele").val(estado_salonsele);
      
 

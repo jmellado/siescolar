@@ -118,6 +118,7 @@ function inicio(){
 		nombre_gradosele = $(this).parent().parent().children("td:eq(2)").text();
 		nivel_educacionsele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		ano_lectivosele = $(this).parent().parent().children("td:eq(5)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(6)").text();
 		estado_gradosele = $(this).parent().parent().children("td:eq(7)").text();
 		
 		//alert(municipio_expedicionsele);
@@ -127,6 +128,7 @@ function inicio(){
         $("#nombre_gradosele").val(nombre_gradosele);
         $("#nivel_educacionsele").val(nivel_educacionsele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
         $("#estado_gradosele").val(estado_gradosele);
         
         //desbloquear_cajas_texto();
@@ -164,12 +166,14 @@ function inicio(){
 
     $("#modal_agregar_grado").on('hidden.bs.modal', function () {
         $("#form_grados")[0].reset();
+        $("#grados_educacion1 select").html("");
         $("#form_grados").valid()==true;
     });
 
 
     $("#modal_actualizar_grado").on('hidden.bs.modal', function () {
         $("#form_grados_actualizar")[0].reset();
+        $("#grados_educacion1 select").html("");
         $("#form_grados_actualizar").valid()==true;
     });
 

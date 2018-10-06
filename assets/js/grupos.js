@@ -115,6 +115,7 @@ function inicio(){
 		id_gruposele = $(this).attr("href");
 		nombre_gruposele = $(this).parent().parent().children("td:eq(2)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(4)").text();
 		estado_gruposele = $(this).parent().parent().children("td:eq(5)").text();
 		
 		//alert(municipio_expedicionsele);
@@ -123,6 +124,7 @@ function inicio(){
 		$("#id_gruposele").val(id_gruposele);
         $("#nombre_gruposele").val(nombre_gruposele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
         $("#estado_gruposele").val(estado_gruposele);
         
         //desbloquear_cajas_texto();

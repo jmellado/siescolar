@@ -32,12 +32,17 @@ class Grados_model extends CI_Model {
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('grados.estado_grado',$id,'after');
 
+		$this->db->order_by('grados.ano_lectivo', 'desc');
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
 		$this->db->join('anos_lectivos', 'grados.ano_lectivo = anos_lectivos.id_ano_lectivo');
 		$this->db->join('niveles_educacion', 'grados.nivel_educacion = niveles_educacion.id_nivel');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
 		$this->db->select('grados.id_grado,grados.nombre_grado,grados.nivel_educacion,grados.ano_lectivo,grados.estado_grado,anos_lectivos.nombre_ano_lectivo,niveles_educacion.nombre_nivel');
 		
 		$query = $this->db->get('grados');
