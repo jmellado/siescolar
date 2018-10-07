@@ -117,15 +117,18 @@ function inicio(){
 		nombre_asignaturasele = $(this).parent().parent().children("td:eq(2)").text();
 		id_areasele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		ano_lectivosele = $(this).parent().parent().children("td:eq(5)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(6)").text();
 		estado_asignaturasele = $(this).parent().parent().children("td:eq(7)").text();
 		
 		//alert(municipio_expedicionsele);
 
-		//llenarcombo_municipios(departamento_expedicionsele);
+		llenarcombo_areas_actualizar(ano_lectivosele,id_areasele);
+
 		$("#id_asignaturasele").val(id_asignaturasele);
         $("#nombre_asignaturasele").val(nombre_asignaturasele);
         $("#id_areasele").val(id_areasele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
         $("#estado_asignaturasele").val(estado_asignaturasele);
         
         //desbloquear_cajas_texto();
@@ -442,6 +445,35 @@ function llenarcombo_areas(){
 				};
 				
 				$("#area1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_areas_actualizar(ano_lectivo,id_areasele){
+
+	$.ajax({
+		url:base_url+"asignaturas_controller/llenarcombo_areas_actualizar",
+		type:"post",
+		data:{ano_lectivo:ano_lectivo},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if(registros[i]["id_area"] == id_areasele){
+					
+						html +="<option value="+registros[i]["id_area"]+" selected>"+registros[i]["nombre_area"]+"</option>";
+					}
+					else{
+
+						html +="<option value="+registros[i]["id_area"]+">"+registros[i]["nombre_area"]+"</option>";
+					}
+				};
+				
+				$("#area11 select").html(html);
 		}
 
 	});

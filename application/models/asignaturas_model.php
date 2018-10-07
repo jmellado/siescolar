@@ -96,6 +96,9 @@ class Asignaturas_model extends CI_Model {
 
 		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_area','Activo');
+
+		$this->db->order_by('nombre_area', 'asc');
+
 		$query = $this->db->get('areas');
 		return $query->result();
 	}
@@ -147,6 +150,18 @@ class Asignaturas_model extends CI_Model {
 			return true;
 		}
 
+	}
+
+
+	public function llenar_areas_actualizar($ano_lectivo){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_area','Activo');
+
+		$this->db->order_by('nombre_area', 'asc');
+
+		$query = $this->db->get('areas');
+		return $query->result();
 	}
 
 }

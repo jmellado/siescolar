@@ -126,7 +126,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<label class="control-label col-sm-3" for="ano_lectivo">AÑO LECTIVO</label>
 						<div class="col-sm-7">
 							<div id="ano_lectivo1">
 								<select class="form-control" id="ano_lectivo" name="ano_lectivo">
@@ -195,7 +195,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="id_area">AREA</label>
 						<div class="col-sm-7">
-							<div id="area1">
+							<div id="area11">
 								<select class="form-control" id="id_areasele" name="id_area">
 												    
 								</select>
@@ -204,15 +204,12 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+						<label class="control-label col-sm-3" for="anolectivo">AÑO LECTIVO</label>
 						<div class="col-sm-7">
-							<div id="ano_lectivo1">
-								<select class="form-control" id="ano_lectivosele" name="ano_lectivo">
-												    
-								</select>
-							</div>
+							<input type="text" class="form-control" id="anolectivosele" name="anolectivo" disabled>
 						</div>	
 					</div>
+					<input type="hidden" class="form-control" id="ano_lectivosele" name="ano_lectivo">
 
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="estado_asignatura">ESTADO</label>
