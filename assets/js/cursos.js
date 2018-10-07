@@ -135,23 +135,28 @@ function inicio(){
 		id_gradosele = $(this).parent().parent().children("td:eq(2)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		id_gruposele = $(this).parent().parent().children("td:eq(3)").text();
 		id_salonsele = $(this).parent().parent().children("td:eq(4)").text();
+		gradosele = $(this).parent().parent().children("td:eq(5)").text();
+		gruposele = $(this).parent().parent().children("td:eq(6)").text();
 		directorsele = $(this).parent().parent().children("td:eq(8)").text();
 		cupo_maximosele = $(this).parent().parent().children("td:eq(10)").text();
 		jornadasele = $(this).parent().parent().children("td:eq(11)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(12)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(13)").text();
+
+		llenarcombo_salones_actualizar(ano_lectivosele,id_salonsele);
 
 		$("#id_cursosele").val(id_cursosele);
         $("#id_gradosele").val(id_gradosele);
-        $("#id_grado-sele").val(id_gradosele);
+        $("#gradosele").val(gradosele);
         $("#id_gruposele").val(id_gruposele);
-        $("#id_grupo-sele").val(id_gruposele);
+        $("#gruposele").val(gruposele);
         $("#id_salonsele").val(id_salonsele);
         $("#directorsele").val(directorsele);
         $("#cupo_maximosele").val(cupo_maximosele);
         $("#jornadasele").val(jornadasele);
         $("#jornada-sele").val(jornadasele);
         $("#ano_lectivosele").val(ano_lectivosele);
-        $("#ano_lectivo-sele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
 
 	});
 
@@ -551,6 +556,36 @@ function llenarcombo_directores(){
 				};
 				
 				$("#director1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_salones_actualizar(ano_lectivo,id_salonsele){
+
+	$.ajax({
+		url:base_url+"cursos_controller/llenarcombo_salones_actualizar",
+		type:"post",
+		data:{ano_lectivo:ano_lectivo},
+		success:function(respuesta) {
+				
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if(registros[i]["id_salon"] == id_salonsele){
+					
+						html +="<option value="+registros[i]["id_salon"]+" selected>"+registros[i]["nombre_salon"]+"</option>";
+					}
+					else{
+
+						html +="<option value="+registros[i]["id_salon"]+">"+registros[i]["nombre_salon"]+"</option>";
+					}
+				};
+				
+				$("#salon11 select").html(html);
 		}
 
 	});

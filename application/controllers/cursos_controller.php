@@ -335,6 +335,15 @@ class Cursos_controller extends CI_Controller {
     	echo json_encode($consulta);
     }
 
+
+    public function llenarcombo_salones_actualizar(){
+
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+
+    	$consulta = $this->cursos_model->llenar_salones_actualizar($ano_lectivo);
+    	echo json_encode($consulta);
+    }
+
     
 
 }

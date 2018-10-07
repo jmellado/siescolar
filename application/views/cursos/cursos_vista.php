@@ -238,32 +238,24 @@
 
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="id_grado">GRADO</label>
-									<div id="grado1">
-										<select class="form-control" id="id_gradosele" name="id_grado" disabled>
-														    
-										</select>
-									</div>
+									<label for="grado">GRADO</label>
+									<input type="text" class="form-control" id="gradosele" name="grado" disabled>
 								</div>
 							</div>	
-							<input type="hidden" class="form-control" id="id_grado-sele" name="id_grado">
+							<input type="hidden" class="form-control" id="id_gradosele" name="id_grado">
 
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="id_grupo">GRUPO</label>
-									<div id="grupo1">
-										<select class="form-control" id="id_gruposele" name="id_grupo" disabled>
-														    
-										</select>
-									</div>
+									<label for="grupo">GRUPO</label>
+									<input type="text" class="form-control" id="gruposele" name="grupo" disabled>
 								</div>
 							</div>
-							<input type="hidden" class="form-control" id="id_grupo-sele" name="id_grupo">
+							<input type="hidden" class="form-control" id="id_gruposele" name="id_grupo">
 							
 							<div class="col-md-4">
 					        	<div class="form-group">
 									<label for="id_salon">AULA</label>
-									<div id="salon1">
+									<div id="salon11">
 										<select class="form-control" id="id_salonsele" name="id_salon">
 														    
 										</select>
@@ -313,15 +305,11 @@
 
 							<div class="col-md-4">	
 								<div class="form-group">
-									<label for="año_lectivo">AÑO LECTIVO</label>
-									<div id="ano_lectivo1">
-										<select class="form-control" id="ano_lectivosele" name="ano_lectivo" disabled>
-														    
-										</select>
-									</div>
+									<label for="anolectivo">AÑO LECTIVO</label>
+									<input type="text" class="form-control" id="anolectivosele" name="anolectivo" disabled>
 								</div>
 							</div>
-							<input type="hidden" class="form-control" id="ano_lectivo-sele" name="ano_lectivo">
+							<input type="hidden" class="form-control" id="ano_lectivosele" name="ano_lectivo">
 								
 						</div>
 					</div>
