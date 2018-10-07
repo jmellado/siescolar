@@ -121,15 +121,19 @@ function inicio(){
 		id_carga_academicasele = $(this).attr("href");
 		id_profesorCGsele = $(this).parent().parent().children("td:eq(2)").text();
 		id_cursoCGsele = $(this).parent().parent().children("td:eq(4)").text();
+		cursoCGsele = $(this).parent().parent().children("td:eq(5)").text();
 		id_asignaturaCGsele = $(this).parent().parent().children("td:eq(6)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		ano_lectivosele = $(this).parent().parent().children("td:eq(8)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(9)").text();
 
 		llenarcombo_asignaturasCG(id_cursoCGsele,id_asignaturaCGsele);
 		$("#id_carga_academicasele").val(id_carga_academicasele);
 		$("#id_profesorCGsele").val(id_profesorCGsele);
         $("#id_cursoCGsele").val(id_cursoCGsele);
+        $("#cursoCGsele").val(cursoCGsele);
         $("#id_asignaturaCGsele").val(id_asignaturaCGsele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
 
 	});
 
@@ -161,12 +165,14 @@ function inicio(){
 
     $("#modal_agregar_cargas_academicas").on('hidden.bs.modal', function () {
         $("#form_cargas_academicas")[0].reset();
+        $("#asignatura_carga1 select").html("");
         $("#form_cargas_academicas").valid()==true;
     });
 
 
     $("#modal_actualizar_cargas_academicas").on('hidden.bs.modal', function () {
         $("#form_cargas_academicas_actualizar")[0].reset();
+        $("#asignatura_carga1 select").html("");
         $("#form_cargas_academicas_actualizar").valid()==true;
     });
 

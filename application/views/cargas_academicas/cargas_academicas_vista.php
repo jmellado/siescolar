@@ -206,7 +206,7 @@
 								</div>	
 							</div>
 
-							<div class="form-group">
+							<!--<div class="form-group">
 								<label class="control-label col-md-3" for="id_curso">CURSO</label>
 								<div class="col-md-7">
 									<div id="curso_carga1">
@@ -215,7 +215,15 @@
 										</select>
 									</div>
 								</div>	
+							</div>-->
+
+							<div class="form-group">
+								<label class="control-label col-md-3" for="curso">CURSO</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="cursoCGsele" name="curso" disabled>
+								</div>	
 							</div>
+							<input type="hidden" class="form-control" id="id_cursoCGsele" name="id_curso">
 
 							<div class="form-group">
 								<label class="control-label col-md-3" for="id_asignatura">ASIGNATURA</label>
@@ -229,15 +237,12 @@
 							</div>
 
 							<div class="form-group">
-								<label class="control-label col-md-3" for="año_lectivo">AÑO LECTIVO</label>
+								<label class="control-label col-md-3" for="anolectivo">AÑO LECTIVO</label>
 								<div class="col-md-7">
-									<div id="ano_lectivo1">
-										<select class="form-control" id="ano_lectivosele" name="ano_lectivo" disabled>
-														    
-										</select>
-									</div>
+									<input type="text" class="form-control" id="anolectivosele" name="anolectivo" disabled>
 								</div>	
 							</div>
+							<input type="hidden" class="form-control" id="ano_lectivosele" name="ano_lectivo">
 						</div>
 					</div>
 				</div>
