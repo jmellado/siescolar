@@ -10,9 +10,10 @@ class Areas_model extends CI_Model {
 			return false;
 	}
 
-	public function validar_existencia($nombre){
+	public function validar_existencia($nombre,$ano_lectivo){
 
 		$this->db->where('nombre_area',$nombre);
+		$this->db->where('ano_lectivo',$ano_lectivo);
 		$query = $this->db->get('areas');
 
 		if ($query->num_rows() > 0) {
@@ -30,6 +31,7 @@ class Areas_model extends CI_Model {
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('areas.estado_area',$id,'after');
 
+		$this->db->order_by('areas.ano_lectivo', 'desc');
 		$this->db->order_by('areas.nombre_area', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {

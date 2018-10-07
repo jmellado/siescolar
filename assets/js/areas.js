@@ -116,6 +116,7 @@ function inicio(){
 		id_areasele = $(this).attr("href");
 		nombre_areasele = $(this).parent().parent().children("td:eq(2)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(3)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(4)").text();
 		estado_areasele = $(this).parent().parent().children("td:eq(5)").text();
 		
 		//alert(municipio_expedicionsele);
@@ -124,6 +125,7 @@ function inicio(){
 		$("#id_areasele").val(id_areasele);
         $("#nombre_areasele").val(nombre_areasele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
         $("#estado_areasele").val(estado_areasele);
         
         //desbloquear_cajas_texto();

@@ -47,7 +47,7 @@ class Areas_controller extends CI_Controller {
 			'ano_lectivo' =>$ano_lectivo,
 			'estado_area' =>$estado_area);
 
-			if ($this->areas_model->validar_existencia($nombre_area)){
+			if ($this->areas_model->validar_existencia($nombre_area,$ano_lectivo)){
 
 				$respuesta=$this->areas_model->insertar_area($area);
 
@@ -156,7 +156,7 @@ class Areas_controller extends CI_Controller {
 		        }
 		        else{
 
-		        	if($this->areas_model->validar_existencia($nombre_area)){
+		        	if($this->areas_model->validar_existencia($nombre_area,$ano_lectivo)){
 
 		        		$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
