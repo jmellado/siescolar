@@ -123,9 +123,12 @@ function inicio(){
 		$("#modal_actualizar_pensum").modal();
 		id_pensumsele = $(this).attr("href");
 		id_gradosele = $(this).parent().parent().children("td:eq(2)").text();
+		gradosele = $(this).parent().parent().children("td:eq(3)").text();
 		id_asignaturasele = $(this).parent().parent().children("td:eq(4)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
+		asignaturasele = $(this).parent().parent().children("td:eq(5)").text();
 		intensidad_horariasele = $(this).parent().parent().children("td:eq(6)").text();
 		ano_lectivosele = $(this).parent().parent().children("td:eq(7)").text();
+		anolectivosele = $(this).parent().parent().children("td:eq(8)").text();
 		estado_pensumsele = $(this).parent().parent().children("td:eq(9)").text();
 		
 		//alert(municipio_expedicionsele);
@@ -133,9 +136,12 @@ function inicio(){
 		//llenarcombo_municipios(departamento_expedicionsele);
 		$("#id_pensumsele").val(id_pensumsele);
         $("#id_gradosele").val(id_gradosele);
+        $("#gradosele").val(gradosele);
         $("#id_asignaturasele").val(id_asignaturasele);
+        $("#asignaturasele").val(asignaturasele);
         $("#intensidad_horariasele").val(intensidad_horariasele);
         $("#ano_lectivosele").val(ano_lectivosele);
+        $("#anolectivosele").val(anolectivosele);
         $("#estado_pensumsele").val(estado_pensumsele);
         
         //desbloquear_cajas_texto();
