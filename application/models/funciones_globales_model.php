@@ -17,6 +17,9 @@ class Funciones_globales_model extends CI_Model {
 		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_salon','Activo');
 		$this->db->where('disponibilidad','si');
+
+		$this->db->order_by('nombre_salon', 'asc');
+
 		$query = $this->db->get('salones');
 		return $query->result();
 	}
@@ -27,6 +30,11 @@ class Funciones_globales_model extends CI_Model {
 
 		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_grado','Activo');
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
 		$query = $this->db->get('grados');
 		return $query->result();
 	}
@@ -37,6 +45,9 @@ class Funciones_globales_model extends CI_Model {
 
 		$this->db->where('ano_lectivo',$id_ano_lectivo);
 		$this->db->where('estado_grupo','Activo');
+
+		$this->db->order_by('nombre_grupo', 'asc');
+
 		$query = $this->db->get('grupos');
 		return $query->result();
 	}
