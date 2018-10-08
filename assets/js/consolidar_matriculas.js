@@ -39,9 +39,19 @@ function consolidar_matriculas(){
 					toastr.warning('Consolidado De Matrículas No Realizado; Todos Los Períodos De Evaluación Deben Estar Cerrados.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="nohay4periodoscerrados"){
+					
+					toastr.warning('Consolidado De Matrículas No Realizado; Deben Existir Cuatro Períodos De Evaluación En Estado Cerrado.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else if(respuesta==="nohayperiodos"){
 					
 					toastr.warning('Consolidado De Matrículas No Realizado; No Existen Períodos De Evaluación Registrados.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="nohay4periodos"){
+					
+					toastr.warning('Consolidado De Matrículas No Realizado; Deben Existir Cuatro Períodos De Evaluación Registrados.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else{
