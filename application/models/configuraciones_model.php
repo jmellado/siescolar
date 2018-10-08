@@ -229,6 +229,7 @@ class Configuraciones_model extends CI_Model {
 		$estudiantes_pendientes = array();
 
 		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_matricula',"Activo");
 		$query = $this->db->get('matriculas');
 
 		$estudiantes = $query->result_array();
@@ -339,6 +340,7 @@ class Configuraciones_model extends CI_Model {
 		$estudiantes_pendientes = array();
 
 		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_matricula',"Activo");
 		$query = $this->db->get('matriculas');
 
 		$estudiantes = $query->result_array();

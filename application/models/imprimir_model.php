@@ -199,6 +199,7 @@ class Imprimir_model extends CI_Model {
 
 		$this->db->where('id_curso',$id_curso);
 		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_matricula',"Activo");
 		$query = $this->db->get('matriculas');
 
 		$estudiantes = $query->result_array();
@@ -288,6 +289,7 @@ class Imprimir_model extends CI_Model {
 
 		$this->db->where('id_curso',$id_curso);
 		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_matricula',"Activo");
 		$query = $this->db->get('matriculas');
 
 		$estudiantes = $query->result_array();

@@ -240,6 +240,7 @@ class Elecciones_model extends CI_Model {
 	public function buscar_estudiantes_matriculados($id,$ano_lectivo){
 
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('estado_matricula',"Activo");
 
 		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
 
