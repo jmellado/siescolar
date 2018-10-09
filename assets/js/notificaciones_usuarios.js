@@ -127,13 +127,13 @@ function VistaPrevia_Notificaciones(){
 					}
 
 					if (rol == "profesor") {
-						html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_profesor'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+						html +="<li><a href='"+base_url+"notificaciones_controller/index_profesor'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
 					}
 					else if (rol == "estudiante") {
-						html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_estudiante'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+						html +="<li><a href='"+base_url+"notificaciones_controller/index_estudiante'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
 					}
 					else if (rol == "acudiente") {
-						html +="<li><a href='http://localhost/siescolar/notificaciones_controller/index_acudiente'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
+						html +="<li><a href='"+base_url+"notificaciones_controller/index_acudiente'>"+$categoria+" "+registros.notificaciones[i].titulo+"<br/>"+registros.notificaciones[i].fecha_envio+"</a></li>";
 					}	
 				};
 
