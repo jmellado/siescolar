@@ -802,4 +802,44 @@ class Matriculas_controller extends CI_Controller {
 	}
 
 
+	//******************* FUNCIONES PARA CONSULTAR LA SITUACION ACADEMICA *********************
+
+
+	public function situacion_academica()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'matriculas/situacion_academica_vista');
+	}
+
+
+	public function llenarcombo_cursosSA(){
+
+    	$jornada = $this->input->post('jornada');
+
+    	$consulta = $this->matriculas_model->llenar_cursosSA($jornada);
+    	echo json_encode($consulta);
+    }
+
+
+    public function mostrarsituacionacademica(){
+
+		$jornada = $this->input->post('jornada'); 
+		$id_curso = $this->input->post('id_curso'); 
+		
+		$data = array(
+
+			'situacion' => $this->matriculas_model->buscar_situacionacademica($jornada,$id_curso),
+
+		    'totalregistros' => count($this->matriculas_model->buscar_situacionacademica($jornada,$id_curso))
+
+
+		);
+	    echo json_encode($data);
+
+	}
+
 }

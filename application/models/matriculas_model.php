@@ -779,4 +779,142 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+
+	//******************* FUNCIONES PARA CONSULTAR LA SITUACION ACADEMICA *********************
+
+
+	//llenar el combo con todos los cursos de una respectiva jornada
+	public function llenar_cursosSA($jornada){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
+	}
+
+
+	//Esta funcion me permite obtener todos los estudiantes matriculados en un respectivo curso y año lectivo
+	public function buscar_estudiantes_matriculados_curso($ano_lectivo,$id_curso){
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_curso',$id_curso);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
+		
+	}
+
+
+	// Esta funcion me permite consultar la situacion academica de los estudiantes de un respectivo curso y año lectivo 
+	public function buscar_situacionacademica($jornada,$id_curso){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$estudiantes = $this->matriculas_model->buscar_estudiantes_matriculados_curso($ano_lectivo,$id_curso);
+
+		$listado_estudiantes = array();
+
+		for ($i=0; $i < count($estudiantes); $i++) { 
+			
+			$id_estudiante = $estudiantes[$i]['id_estudiante'];
+			$estado_matricula = $this->matriculas_model->calcular_estado_matricula($ano_lectivo,$id_estudiante);
+			$total = $this->matriculas_model->calcular_asignaturasreprobadas_fallas($ano_lectivo,$id_estudiante);
+
+			$estudiant = array(
+
+				'id_matricula' 			=> $estudiantes[$i]['id_matricula'],
+				'id_estudiante' 		=> $estudiantes[$i]['id_estudiante'],
+				'identificacion' 		=> $estudiantes[$i]['identificacion'],
+				'nombres' 				=> $estudiantes[$i]['nombres'],
+				'apellido1' 			=> $estudiantes[$i]['apellido1'],
+				'apellido2' 			=> $estudiantes[$i]['apellido2'],
+				'id_curso' 				=> $estudiantes[$i]['id_curso'],
+				'nombre_grado' 			=> $estudiantes[$i]['nombre_grado'],
+				'nombre_grupo' 			=> $estudiantes[$i]['nombre_grupo'],
+				'jornada' 				=> $estudiantes[$i]['jornada'],
+				'asig_reprobadas' 		=> $total[0],
+				'total_fallas' 			=> $total[1],
+				'estado_matricula' 		=> $estado_matricula,
+				'ano_lectivo' 			=> $estudiantes[$i]['ano_lectivo'],
+				'nombre_ano_lectivo' 	=> $estudiantes[$i]['nombre_ano_lectivo']
+			);
+
+			$listado_estudiantes[] = $estudiant;
+
+		}
+
+		return $listado_estudiantes;
+		
+	}
+
+
+	//Esta funcion me permite calcular el total de asignaturas reprobadas y fallas por estudiante.
+	public function calcular_asignaturasreprobadas_fallas($ano_lectivo,$id_estudiante){
+
+		//array sencillo para las asignaturas aprobadas y reprobadas
+		$asignaturas_aprobadas = array();
+		$asignaturas_reprobadas = array();
+		$totalfallas = 0;
+
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.nota_final, 0.0) as nota_final,IF(notas.fallas = "","0", notas.fallas) as fallas',false);
+
+		$query = $this->db->get('notas');
+
+		$NotasAsignaturas = $query->result_array();
+
+		for ($i=0; $i < count($NotasAsignaturas); $i++) {
+
+			$totalfallas = $totalfallas + $NotasAsignaturas[$i]['fallas'];
+
+			if ($NotasAsignaturas[$i]['nota_final'] >= 3.0 && $NotasAsignaturas[$i]['nota_final'] <= 5.0) {
+				
+				$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['nota_final'];
+			}
+			else{
+
+				$asignaturas_reprobadas[] = $NotasAsignaturas[$i]['nota_final'];
+			}
+			
+		}
+
+		$data = array(
+
+			count($asignaturas_reprobadas),
+			$totalfallas
+		);
+
+		return $data;
+	}
+	
+
 }

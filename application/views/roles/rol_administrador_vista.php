@@ -407,6 +407,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>matriculas_controller/index"><i class="fa fa-clipboard"></i> Matricular</a></li>
+            <li><a href="<?php echo base_url(); ?>matriculas_controller/situacion_academica"><i class="fa fa fa-shield"></i>Situación Academica</a></li>
             <li><a href="<?php echo base_url(); ?>matriculas_controller/consolidar_matriculas"><i class="fa fa-tasks"></i> Consolidar Matriculas</a></li>
           </ul>
         </li>
