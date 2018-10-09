@@ -450,6 +450,12 @@ class Configuraciones_controller extends CI_Controller {
 					if($respuesta==true){
 
 						echo "registroguardado";
+
+						$resp = $this->configuraciones_model->CrearDesempeños($ultimo_id);
+
+						if($resp == false){
+							echo "No Se Pudo Registrar En La Tabla Desempeños.";
+						}
 					}
 					else{
 

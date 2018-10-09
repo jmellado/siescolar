@@ -581,4 +581,53 @@ class Configuraciones_model extends CI_Model {
 		}
 
 	}
+
+
+	public function CrearDesempeños($ano_lectivo){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+
+			//array para insertar en la tabla desempeños
+        	$desempeño1 = array(
+			'nombre_desempeno'	=> "Superior",
+			'rango_inicial'     => "4.6",
+			'rango_final'       => "5.0",
+			'ano_lectivo' 		=> $ano_lectivo);
+
+			$desempeño2 = array(
+			'nombre_desempeno'	=> "Alto",
+			'rango_inicial'     => "4.0",
+			'rango_final'       => "4.5",
+			'ano_lectivo' 		=> $ano_lectivo);
+
+			$desempeño3 = array(
+			'nombre_desempeno'	=> "Básico",
+			'rango_inicial'     => "3.0",
+			'rango_final'       => "3.9",
+			'ano_lectivo' 		=> $ano_lectivo);
+
+			$desempeño4 = array(
+			'nombre_desempeno'	=> "Bajo",
+			'rango_inicial'     => "0.0",
+			'rango_final'       => "2.9",
+			'ano_lectivo' 		=> $ano_lectivo);
+
+			$this->db->insert('desempenos', $desempeño1);
+			$this->db->insert('desempenos', $desempeño2);
+			$this->db->insert('desempenos', $desempeño3);
+			$this->db->insert('desempenos', $desempeño4);
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
 }
