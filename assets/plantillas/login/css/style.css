@@ -71,7 +71,8 @@ img {
     text-transform: capitalize;
 	letter-spacing: 2px;
     color: #fff;
-	padding: 1em 0 1em;
+	/*padding: 1em 0 1em;*/
+    padding: 0.5em 0 0;
 	font-family: 'Josefin Sans', sans-serif;
 }
 .wthree-container {

@@ -38,7 +38,11 @@
 
 	<div class="w3ls-main">
 		<div class="wthree-heading">
-			<h1><i class='fa fa-graduation-cap'></i>&nbsp;SIESCOLAR</h1>
+			<!--<h1><i class='fa fa-graduation-cap'></i>&nbsp;SIESCOLAR</h1>-->
+			<h1>
+				<i class='fa fa-graduation-cap'></i>&nbsp;SIESCOLAR</br>
+				<img src="<?php echo base_url();?>assets/plantillas/login/images/uni.png" alt="Logo UPC" class=" img-responsive" style="width: 155px; height: 55px; text-align: center;">
+			</h1>
 		</div>
 			<div class="wthree-container">
 				<div class="wthree-form">
