@@ -104,7 +104,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		//alert("boton eliminar"+idsele);
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Logro.?")){
 			eliminar_logro(idsele);
 
 		}
@@ -329,11 +329,19 @@ function mostrarlogros(valor,pagina,cantidad){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.logros.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td style='display:none'>"+registros.logros[i].descripcion_logro+"</td><td>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td>"+registros.logros[i].nombres+[" "]+registros.logros[i].apellido1+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td>"+registros.logros[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.logros[i].id_logro+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.logros[i].id_logro+"><i class='fa fa-trash'></i></button></td></tr>";
-				};
-				
-				$("#lista_logros tbody").html(html);
+
+				if (registros.logros.length > 0) {
+
+					for (var i = 0; i < registros.logros.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td style='display:none'>"+registros.logros[i].descripcion_logro+"</td><td>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td>"+registros.logros[i].nombres+[" "]+registros.logros[i].apellido1+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td>"+registros.logros[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.logros[i].id_logro+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.logros[i].id_logro+"><i class='fa fa-trash'></i></button></td></tr>";
+					};
+					
+					$("#lista_logros tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='9'><p style='text-align:center'>No Hay Logros Registrados..</p></td></tr>";
+					$("#lista_logros tbody").html(html);
+				}
 
 				linkseleccionado = Number(pagina);
 				//total de registros

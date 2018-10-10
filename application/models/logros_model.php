@@ -225,6 +225,23 @@ class Logros_model extends CI_Model {
 	}
 
 
+	// Esta funcion permite validar si el logro se encuentra asignado
+	public function ValidarExistencia_LogroAsignado($id_logro){
+		
+		$this->db->where("(id_logro1 = '".$id_logro."' OR id_logro2 = '".$id_logro."' OR id_logro3 = '".$id_logro."' OR id_logro4 = '".$id_logro."')");
+
+		$query = $this->db->get('logros_asignados');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 
 
 

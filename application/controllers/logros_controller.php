@@ -154,16 +154,21 @@ class Logros_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-			
-	        $respuesta=$this->logros_model->eliminar_logro($id);
-	        
-          	if($respuesta==true){
-              
-              	echo "eliminado correctamente";
-          	}else{
-              
-              	echo "no se pudo eliminar";
-          	}
+			if ($this->logros_model->ValidarExistencia_LogroAsignado($id)){
+
+		        $respuesta=$this->logros_model->eliminar_logro($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Logro Eliminado Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Este Logro; Actualmente Se Encuentra Asignado A Un Estudiante.";
+	        }
           
         }else{
           
