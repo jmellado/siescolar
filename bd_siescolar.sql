@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-10-2018 a las 00:59:55
+-- Tiempo de generación: 10-10-2018 a las 22:12:35
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-10-03 22:58:47');
+(12345, '2018-10-10 20:11:38');
 
 -- --------------------------------------------------------
 
@@ -369,8 +369,7 @@ INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `
 (1, 'Superior', '4.6', '5.0', 1),
 (2, 'Alto', '4.0', '4.5', 1),
 (3, 'Básico', '3.0', '3.9', 1),
-(4, 'Bajo', '1.0', '2.9', 1),
-(5, 'Bajo', '0.0', '0.9', 1);
+(4, 'Bajo', '0.0', '2.9', 1);
 
 -- --------------------------------------------------------
 
@@ -667,7 +666,8 @@ CREATE TABLE `matriculas` (
   `id_acudiente` int(11) NOT NULL,
   `parentesco` varchar(45) NOT NULL,
   `observaciones` varchar(45) NOT NULL,
-  `estado_matricula` varchar(15) NOT NULL
+  `estado_matricula` varchar(15) NOT NULL,
+  `situacion_academica` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2566,7 +2566,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `desempenos`
 --
 ALTER TABLE `desempenos`
-  MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --

@@ -50,6 +50,8 @@ class Matriculas_model extends CI_Model {
 		$this->db->or_like('matriculas.jornada',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('matriculas.fecha_matricula',$id,'after');
+		$this->db->or_like('matriculas.estado_matricula',$id,'after');
+		$this->db->or_like('matriculas.situacion_academica',$id,'after');
 
 		$this->db->order_by('matriculas.ano_lectivo', 'desc');
 		$this->db->order_by('matriculas.fecha_matricula', 'asc');
@@ -64,7 +66,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,matriculas.situacion_academica,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('matriculas');
 
@@ -544,7 +546,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,matriculas.situacion_academica,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('matriculas');
 
@@ -606,7 +608,7 @@ class Matriculas_model extends CI_Model {
 	}
 
 
-	// Esta funcion me permite actualizar el estado de la matricula en la tabla matriculas.
+	// Esta funcion me permite actualizar el estado o situacion_academica de la matricula en la tabla matriculas.
 	public function modificar_estado_matricula(){
 
 		$this->load->model('funciones_globales_model');
@@ -622,7 +624,7 @@ class Matriculas_model extends CI_Model {
 				$id_estudiante = $estudiantes[$i]['id_estudiante'];
 				$estado_matricula = $this->matriculas_model->calcular_estado_matricula($ano_lectivo,$id_estudiante);
 
-				$matriculas = array('estado_matricula' => $estado_matricula);
+				$matriculas = array('situacion_academica' => $estado_matricula);
 
 				$this->db->where('ano_lectivo',$ano_lectivo);
 				$this->db->where('id_estudiante',$id_estudiante);
@@ -822,7 +824,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,matriculas.situacion_academica,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('matriculas');
 

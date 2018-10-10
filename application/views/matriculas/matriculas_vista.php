@@ -76,6 +76,7 @@
 									<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año Lectivo</th>
 									<th><i class='fa fa-calendar-check-o'></i>&nbsp;Fecha Matrícula</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado Matrícula</th>
+									<th><i class='fa fa-shield'></i>&nbsp;Situación Académica</th>
 									<th></th>
 									<th></th>
 									<th></th>
@@ -83,7 +84,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<td colspan='12'></td>
+									<td colspan='13'></td>
 								</tr>
 							</tfoot>
 							<tbody>

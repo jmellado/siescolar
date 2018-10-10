@@ -54,6 +54,7 @@ class Matriculas_controller extends CI_Controller {
         	$parentesco = $this->input->post('parentesco');
         	$observaciones = $this->input->post('observaciones');
         	$estado = 'Activo';
+        	$situacion_academica = 'No Definida';
 
         	//array para insertar en la tabla grados----------
         	$matricula = array(
@@ -66,7 +67,8 @@ class Matriculas_controller extends CI_Controller {
 			'id_acudiente' =>$id_acudiente,
 			'parentesco' =>$parentesco,
 			'observaciones' =>ucwords(strtolower($observaciones)),
-			'estado_matricula' =>$estado);
+			'estado_matricula' =>$estado,
+			'situacion_academica' =>$situacion_academica);
 
 			//array para insertar en la tabla estudiantes_acudientes
 			$est_acud = array(
@@ -360,12 +362,13 @@ class Matriculas_controller extends CI_Controller {
 					$matricula = $this->matriculas_model->obtener_informacion_matricula($ultima_matricula);
 					$id_curso = $matricula[0]['id_curso'];
 					$estado_matricula = $matricula[0]['estado_matricula'];
+					$situacion_academica = $matricula[0]['situacion_academica'];
 
 					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
 					$grado = $this->matriculas_model->obtener_informacion_grado($id_grado);
 					$nombre_grado = $grado[0]['nombre_grado'];
 
-					if ($estado_matricula == "Aprobado") {
+					if ($situacion_academica == "Aprobado") {
 
 						$data = array(
 
