@@ -61,7 +61,7 @@ class Notas_controller extends CI_Controller {
 				$fallas = $this->input->post('fallas')[$i];
 
 				$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
-				$desempeno = $this->notas_model->obtener_desempeno($nota_final);
+				$desempeno = $this->notas_model->obtener_desempeno($nota_final,$ano_lectivo);
 
 				if ($p1==""){
 		            $p1=NULL;

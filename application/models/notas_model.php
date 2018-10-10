@@ -161,9 +161,9 @@ class Notas_model extends CI_Model {
 	}
 
 
-	public function obtener_desempeno($nota_final){
+	public function obtener_desempeno($nota_final,$ano_lectivo){
 
-		$sql= "SELECT id_desempeno FROM desempenos WHERE '".$nota_final."' >= rango_inicial AND '".$nota_final."' <= rango_final";
+		$sql= "SELECT id_desempeno FROM desempenos WHERE '".$nota_final."' >= rango_inicial AND '".$nota_final."' <= rango_final AND '".$ano_lectivo."' = ano_lectivo";
 
 		$query = $this->db->query($sql);
 
