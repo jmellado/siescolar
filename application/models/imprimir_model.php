@@ -89,6 +89,8 @@ class Imprimir_model extends CI_Model {
 		$this->db->where('logros_asignados.periodo',$periodo);
 		$this->db->where('pensum.id_grado',$id_grado);
 
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
 		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
 		$this->db->join('logros_asignados', 'notas.id_asignatura = logros_asignados.id_asignatura');
 

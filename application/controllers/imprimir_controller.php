@@ -131,7 +131,7 @@ class Imprimir_controller extends CI_Controller {
 				        $pdf->SetFont('helvetica', '', 10, '', true);
 				 
 						//fijar efecto de sombra en el texto
-				        $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+				        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
 				 
 						// Establecemos el contenido para imprimir
 				        //**********************************************************************************************************
