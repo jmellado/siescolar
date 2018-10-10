@@ -5,6 +5,7 @@ class Cargas_academicas_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('cargas_academicas_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -108,20 +109,29 @@ class Cargas_academicas_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id_carga_academica =$this->input->post('id_carga_academica'); 
+	  	$id_carga_academica =$this->input->post('id_carga_academica');
+
+	  	$carg = $this->cargas_academicas_model->obtener_informacion_carga($id_carga_academica);
+	  	$ano_lectivo = $carg[0]['ano_lectivo']; 
 
         if(is_numeric($id_carga_academica)){
 
-			
-	        $respuesta=$this->cargas_academicas_model->eliminar_cargas_academicas($id_carga_academica);
-	        
-          	if($respuesta==true){
-              
-              	echo "Carga Académica Eliminada Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
+
+		        $respuesta=$this->cargas_academicas_model->eliminar_cargas_academicas($id_carga_academica);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Carga Académica Eliminada Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+
+	        	echo "No Se Puede Eliminar Esta Carga Académica; El Año Lectivo En La Que Fue Registrada, Se Encuentra Cerrado.";
+	        }  	
           
         }else{
           
@@ -153,47 +163,52 @@ class Cargas_academicas_controller extends CI_Controller {
 
         if(is_numeric($id_carga_academica)){
 
-        	if ($curso_buscado == $id_curso && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($id_carga_academica,$cargas_academicas);
+	        	if ($curso_buscado == $id_curso && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($id_carga_academica,$cargas_academicas);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+		             }else{
 
-	             }
-	        }
-	        else{
+						echo "registronoactualizado";
 
-	        	if($this->cargas_academicas_model->validar_existencia($id_curso,$id_asignatura,$ano_lectivo)){
+		             }
+		        }
+		        else{
 
-	        		$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($id_carga_academica,$cargas_academicas);
+		        	if($this->cargas_academicas_model->validar_existencia($id_curso,$id_asignatura,$ano_lectivo)){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->cargas_academicas_model->modificar_cargas_academicas($id_carga_academica,$cargas_academicas);
 
-	        			echo "registroactualizado";
+		        		if($respuesta==true){
 
-	        		}else{
+		        			echo "registroactualizado";
 
-	        			echo "registronoactualizado";
-	        		}
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
 
 
 
-	        	}else{
+		        	}else{
 
-	        		echo "cargas_academicasyaexiste";
+		        		echo "cargas_academicasyaexiste";
 
-	        	}
+		        	}
 
-				
+					
+				}
+			}
+			else{
+				echo "anolectivocerrado";
 			}    
                 
-         
         }else{
             
             echo "digite valor numerico para identificar una carga_academica";

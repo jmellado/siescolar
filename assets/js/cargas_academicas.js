@@ -414,6 +414,11 @@ function actualizar_cargas_academicas(){
 					toastr.warning('Carga Académica Ya Fue Asignada.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Esta Carga Académica; El Año Lectivo En La Que Fue Registrada, Se Encuentra Cerrado.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

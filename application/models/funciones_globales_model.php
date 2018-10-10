@@ -139,4 +139,29 @@ class Funciones_globales_model extends CI_Model {
 		return $fechaLocal_Formateada; 
 
 	}
+
+
+	// Esta Funcion me permite obtener el estado de un anolectivo
+	public function ValidarEstado_AnoLectivo($id_ano_lectivo){
+
+		$this->db->where('id_ano_lectivo',$id_ano_lectivo);
+		$query = $this->db->get('anos_lectivos');
+
+		if ($query->num_rows() > 0) {
+
+			$row = $query->result_array();
+			$estado = $row[0]['estado_ano_lectivo'];
+
+			if ($estado == "Activo") {
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+
+	}
 }
