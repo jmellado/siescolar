@@ -76,7 +76,8 @@ class Notificaciones_controller extends CI_Controller {
         	//obtengo el ultimo id de notificaciones + 1 
         	$ultimo_id = $this->notificaciones_model->obtener_ultimo_id();
         	$categoria_notificacion = "Mensajes";
-        	$remitente = $this->input->post('remitente');
+        	//$remitente = $this->input->post('remitente');
+            $remitente = "1";
         	$titulo = ucwords(strtolower($this->input->post('titulo')));
         	$tipo_notificacion = $this->input->post('tipo');
         	$contenido = ucwords(strtolower($this->input->post('contenido')));
@@ -201,7 +202,8 @@ class Notificaciones_controller extends CI_Controller {
 		$numero_pagina =$this->input->post('numero_pagina'); 
 		$cantidad =$this->input->post('cantidad'); 
 		$inicio = ($numero_pagina -1)*$cantidad;
-        $id_admin =$this->input->post('id_admin');
+        //$id_admin =$this->input->post('id_admin');
+        $id_admin = "1";
 		
 		$data = array(
 

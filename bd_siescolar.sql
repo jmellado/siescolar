@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2018 a las 22:12:35
+-- Tiempo de generación: 11-10-2018 a las 06:41:22
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(12345, '2018-10-10 20:11:38');
+(1, '2018-10-11 04:40:20');
 
 -- --------------------------------------------------------
 
@@ -1923,7 +1923,7 @@ CREATE TABLE `notificaciones` (
   `contenido` varchar(300) NOT NULL,
   `destinatario` varchar(45) NOT NULL,
   `rol_destinatario` varchar(45) NOT NULL,
-  `id_estudiante` int(11) DEFAULT NULL,
+  `id_estudiante` int(11) DEFAULT '1',
   `id_asignatura` int(11) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,
@@ -2001,7 +2001,7 @@ CREATE TABLE `pensum` (
 
 CREATE TABLE `personas` (
   `id_persona` int(11) NOT NULL,
-  `identificacion` varchar(10) NOT NULL,
+  `identificacion` varchar(15) NOT NULL,
   `tipo_id` varchar(2) NOT NULL,
   `fecha_expedicion` date DEFAULT NULL,
   `departamento_expedicion` int(11) DEFAULT NULL,
@@ -2027,7 +2027,7 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `departamento_nacimiento`, `municipio_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
-(1, '12345', 'cc', '2017-04-10', 20, 404, 'Siescolar', 'Siescolar', 'Siescolar', 'm', '2017-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
+(1, '0902-73301', 'cc', '2017-04-10', 20, 404, 'Siescolar', ' ', ' ', 'm', '2017-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
 (2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio Cesar', 'Frias', 'Bossa', 'm', '2000-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
 (3, '1066', 'ti', '1990-05-05', 20, 404, 'Hugo Mairon', 'Sosa', 'Amaya', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
 (4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian Andres', 'Romero', 'Villa', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
