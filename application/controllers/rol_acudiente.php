@@ -11,4 +11,16 @@ class Rol_acudiente extends CI_Controller {
 		$data['contents'] = null;
 		$this->load->view('roles/rol_acudiente_vista',$data);
 	}
+
+
+	public function dashboard()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'acudiente')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_acudiente_vista', 'dashboards/dashboard_acudiente');
+	}
 }

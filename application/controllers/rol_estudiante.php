@@ -11,4 +11,16 @@ class Rol_estudiante extends CI_Controller {
 		$data['contents'] = null;
 		$this->load->view('roles/rol_estudiante_vista',$data);
 	}
+
+
+	public function dashboard()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'estudiante')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_estudiante_vista', 'dashboards/dashboard_estudiante');
+	}
 }

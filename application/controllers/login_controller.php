@@ -23,16 +23,16 @@ class Login_controller extends CI_Controller {
 				redirect(site_url("rol_administrador/dashboard"));
 				break;
 			case 'estudiante':
-				redirect(site_url("rol_estudiante"));
+				redirect(site_url("rol_estudiante/dashboard"));
 				break;	
 			case 'profesor':
-				redirect(site_url("rol_profesor"));
+				redirect(site_url("rol_profesor/dashboard"));
 				break;
 			case 'votante':
 				redirect(site_url("rol_votante/elecciones"));
 				break;
 			case 'acudiente':
-				redirect(site_url("rol_acudiente"));
+				redirect(site_url("rol_acudiente/dashboard"));
 				break;
 			default:		
 				//$data['titulo'] = 'Login con roles de usuario en codeigniter';
