@@ -578,5 +578,36 @@ class Configuraciones_controller extends CI_Controller {
           
           	echo "Digite valor numerico para identificar un Ano lectivo";
         }
+    }
+
+
+    public function cerrar_anolectivo(){
+
+	  	$id_anolectivo =$this->input->post('id_anolectivo'); 
+
+        if(is_numeric($id_anolectivo)){
+
+        	if ($this->configuraciones_model->Validar_SituacionAcademica($id_anolectivo)){
+
+		        $respuesta=$this->configuraciones_model->cerrar_anolectivo($id_anolectivo);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "aniocerrado";
+
+	          	}else{
+	              
+	              	echo "anionocerrado";
+	          	}
+	        }
+	        else{
+
+	        	echo "matriculanodefinida";
+	        }
+          
+        }else{
+          
+          	echo "Digite valor numerico para identificar un Ano lectivo";
+        }
     }	
 }

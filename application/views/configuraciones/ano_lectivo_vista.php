@@ -69,11 +69,12 @@
 								<th><i class='fa fa-check-square-o'></i>&nbsp;Seleccionado</th>
 								<th></th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<td colspan='8'></td>
+								<td colspan='9'></td>
 							</tr>
 						</tfoot>
 						<tbody>

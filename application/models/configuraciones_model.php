@@ -630,4 +630,37 @@ class Configuraciones_model extends CI_Model {
 		}
 
 	}
+
+
+    public function cerrar_anolectivo($id_ano_lectivo){
+
+    	$cerrado = array('estado_ano_lectivo' => "Cerrado");
+
+		$this->db->where('id_ano_lectivo',$id_ano_lectivo);
+
+		if ($this->db->update('anos_lectivos', $cerrado))
+
+			return true;
+		else
+			return false;
+	}
+
+
+	public function Validar_SituacionAcademica($id_ano_lectivo){
+
+		$this->db->where('ano_lectivo',$id_ano_lectivo);
+		$this->db->where('estado_matricula',"Activo");
+		$this->db->where('situacion_academica',"No Definida");
+
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
 }

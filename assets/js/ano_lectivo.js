@@ -131,6 +131,24 @@ function inicio(){
 
 	});
 
+	$("body").on("click","#lista_anoslectivos .btn-cerrar",function(event){
+		event.preventDefault();
+		id_anolectivo = $(this).attr("value");
+		estado = $(this).parent().parent().children("td:eq(5)").text();
+		
+		if (estado =="Cerrado") {
+
+			toastr.warning('El Año Lectivo Ya Se Encuentra Cerrado.', 'Success Alert', {timeOut: 3000});
+		}
+		else{
+			if(confirm("Esta Seguro De Cerrar Este Año Lectivo.?")){
+				cerrar_anolectivo(id_anolectivo);
+
+			}
+		}
+
+	});
+
 	$("body").on("click","#lista_anoslectivos a",function(event){
 		event.preventDefault();
 		$("#modal_actualizar_anolectivo").modal();
@@ -266,13 +284,13 @@ function mostraranoslectivos(valor,pagina,cantidad){
 				if (registros.anoslectivos.length > 0) {
 
 					for (var i = 0; i < registros.anoslectivos.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.anoslectivos[i].id_ano_lectivo+"</td><td>"+registros.anoslectivos[i].nombre_ano_lectivo+"</td><td>"+registros.anoslectivos[i].fecha_inicio+"</td><td>"+registros.anoslectivos[i].fecha_fin+"</td><td>"+registros.anoslectivos[i].estado_ano_lectivo+"</td><td>"+registros.anoslectivos[i].seleccionado+"</td><td><a class='btn btn-success' href="+registros.anoslectivos[i].id_ano_lectivo+" title='Actualizar Información De Este Año Lectivo'><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-warning btn-seleccionar' value="+registros.anoslectivos[i].id_ano_lectivo+" title='Seleccionar Este Año Lectivo'><i class='fa fa-check-square-o'></i></button><td style='display:none'><button type='button' class='btn btn-danger btn-eliminar' value="+registros.anoslectivos[i].id_ano_lectivo+" title='Eliminar Este Año Lectivo'><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.anoslectivos[i].id_ano_lectivo+"</td><td>"+registros.anoslectivos[i].nombre_ano_lectivo+"</td><td>"+registros.anoslectivos[i].fecha_inicio+"</td><td>"+registros.anoslectivos[i].fecha_fin+"</td><td>"+registros.anoslectivos[i].estado_ano_lectivo+"</td><td>"+registros.anoslectivos[i].seleccionado+"</td><td><a class='btn btn-success' href="+registros.anoslectivos[i].id_ano_lectivo+" title='Actualizar Información De Este Año Lectivo'><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-warning btn-seleccionar' value="+registros.anoslectivos[i].id_ano_lectivo+" title='Seleccionar Este Año Lectivo'><i class='fa fa-check-square-o'></i></button><td><button type='button' class='btn btn-danger btn-cerrar' value="+registros.anoslectivos[i].id_ano_lectivo+" title='Cerrar Este Año Lectivo'><i class='fa fa-close'></i></button></td><td style='display:none'><button type='button' class='btn btn-danger btn-eliminar' value="+registros.anoslectivos[i].id_ano_lectivo+" title='Eliminar Este Año Lectivo'><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_anoslectivos tbody").html(html);
 				}
 				else{
-					html ="<tr><td colspan='6'><p style='text-align:center'>No Hay Años Lectivos Registrados..</p></td></tr>";
+					html ="<tr><td colspan='9'><p style='text-align:center'>No Hay Años Lectivos Registrados..</p></td></tr>";
 					$("#lista_anoslectivos tbody").html(html);
 				}	
 
@@ -444,6 +462,45 @@ function seleccionar_anolectivo(valor){
 			else if(respuesta==="registronoseleccionado"){
 				
 				toastr.error('Año Lectivo No Seleccionado.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else{
+
+				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+			}
+
+			mostraranoslectivos("",1,5);
+
+		}
+
+
+	});
+
+}
+
+
+function cerrar_anolectivo(valor){
+
+	$.ajax({
+		url:base_url+"configuraciones_controller/cerrar_anolectivo",
+		type:"post",
+        data:{id_anolectivo:valor},
+		success:function(respuesta) {
+				
+				
+			if (respuesta==="aniocerrado") {
+					
+				toastr.success('Año Lectivo Cerrado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+			}
+			else if(respuesta==="anionocerrado"){
+				
+				toastr.error('Año Lectivo No Cerrado.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else if(respuesta==="matriculanodefinida"){
+				
+				toastr.warning('No Se Puede Cerrar Este Año Lectivo; Existen Estudiantes Con La Situación Académica No Definida.', 'Success Alert', {timeOut: 3000});
 				
 			}
 			else{
