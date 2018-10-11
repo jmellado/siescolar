@@ -2,6 +2,43 @@
 
 class Usuarios_model extends CI_Model {
 
+
+	public function insertar_usuario($usuario,$usuario2,$usuario3){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+		$this->db->insert('personas', $usuario);
+		$this->db->insert('administradores', $usuario2);
+		$this->db->insert('usuarios', $usuario3);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
+
+	public function validar_existencia($id){
+
+		$this->db->where('identificacion',$id);
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 	public function buscar_usuario($id,$inicio = FALSE,$cantidad = FALSE){
 
 		$this->db->like('personas.identificacion',$id,'after');
@@ -38,5 +75,15 @@ class Usuarios_model extends CI_Model {
 			return false;
 	}
 
+
+	public function obtener_ultimo_id(){
+
+		$this->db->select_max('id_persona');
+		$query = $this->db->get('personas');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['id_persona'];
+        return $data['query'];
+	}
 
 }

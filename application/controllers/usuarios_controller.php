@@ -21,6 +21,91 @@ class Usuarios_controller extends CI_Controller {
 	}
 
 
+	public function insertar(){
+
+		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('nombres', 'Nombres', 'required|alpha_spaces');
+        $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('apellido2', 'Segundo Apellido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
+        $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
+
+        $this->form_validation->set_rules('rol', 'Rol', 'required|numeric');
+
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	//obtengo el ultimo id de personas + 1 
+        	$ultimo_id = $this->usuarios_model->obtener_ultimo_id();
+
+        	$identificacion = $this->input->post('identificacion');
+        	$nombres = $this->input->post('nombres');
+        	$apellido1 = $this->input->post('apellido1');
+        	$apellido2 = $this->input->post('apellido2');
+        	$telefono = $this->input->post('telefono');
+        	$direccion = $this->input->post('direccion');
+        	$barrio = $this->input->post('barrio');
+        	$rol = $this->input->post('rol');
+   
+
+        	//array para insertar en la tabla personas----------
+        	$usuario = array(
+			'id_persona' =>$ultimo_id,
+			'identificacion' =>$identificacion,
+			'nombres' =>ucwords(strtolower($nombres)),
+			'apellido1' =>ucwords(strtolower($apellido1)),
+			'apellido2' =>ucwords(strtolower($apellido2)),
+			'telefono' =>$telefono,
+			'direccion' =>ucwords(strtolower($direccion)),
+			'barrio' =>ucwords(strtolower($barrio)));
+
+			//array para insertar en la tabla administradores----------
+        	$usuario2 = array(
+			'id_persona' =>$ultimo_id);
+
+			//aqui creamos el username de un administrador
+			$user = strtolower(substr($nombres, 0, 2));
+			$name = strtolower($apellido1);
+			$username = $user.$name."ad".$ultimo_id;
+
+			//array para insertar en la tabla usuarios
+			$usuario3 = array(
+			'id_persona' =>$ultimo_id,
+			'id_rol' => $rol,
+			'username' =>$username,
+			'password' =>sha1($identificacion),
+			'acceso' =>1);
+
+
+			if ($this->usuarios_model->validar_existencia($identificacion)){
+
+				$respuesta=$this->usuarios_model->insertar_usuario($usuario,$usuario2,$usuario3);
+							
+				if($respuesta==true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+			}
+			else{
+
+				echo "usuarioyaexiste";
+			}
+
+		}
+
+	}
+
+
 	public function mostrarusuarios(){
 
 		$id =$this->input->post('id_buscar'); 

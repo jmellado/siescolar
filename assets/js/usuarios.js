@@ -5,6 +5,66 @@ function inicio(){
 	mostrarusuarios("",1,5);
 
 
+	$("#form_usuarios").submit(function (event) {
+		//validar()
+		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
+		if($("#form_usuarios").valid()==true){
+
+			$.ajax({
+
+				url:$("#form_usuarios").attr("action"),
+				type:$("#form_usuarios").attr("method"),
+				data:$("#form_usuarios").serialize(),   //captura la info de la cajas de texto
+				success:function(respuesta) {
+
+					//alert(""+respuesta);
+					if (respuesta==="registroguardado") {
+						
+						toastr.success('Usuario Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+						$("#form_usuarios")[0].reset();
+
+					}
+					else if(respuesta==="registronoguardado"){
+						
+						toastr.error('Usuario No Registrado.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
+					else if(respuesta==="usuarioyaexiste"){
+						
+						toastr.warning('El N° De Identificación Corresponde A Un Usuario Ya Registrado.', 'Success Alert', {timeOut: 3000});
+							
+
+					}
+					else{
+
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						
+					}
+					
+					mostrarusuarios("",1,5);
+
+						
+						
+				}
+
+			});
+
+		}else{
+
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			
+		}
+
+	});
+
+
+	$("#btn_agregar_usuario").click(function(){
+
+		$("#modal_agregar_usuario").modal();
+       
+    });
+
 	$("#btn_buscar_usuario").click(function(event){
 		
        mostrarusuarios("",1,5);
@@ -69,6 +129,75 @@ function inicio(){
 		
        
     });
+
+
+    $("#modal_agregar_usuario").on('hidden.bs.modal', function () {
+        $("#form_usuarios")[0].reset();
+        $("#form_usuarios").valid()==true;
+    });
+
+
+    $("#form_usuarios").validate({
+
+    	rules:{
+
+			identificacion:{
+				required: true,
+				maxlength: 10,
+				digits: true
+
+			},
+
+			nombres:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			apellido1:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			apellido2:{
+				required: true,
+				maxlength: 50,
+				lettersonly: true	
+
+			},
+
+			telefono:{
+				required: true,
+				maxlength: 10,
+				digits: true	
+
+			},
+
+			direccion:{
+				required: true,
+				maxlength: 50	
+
+			},
+
+			barrio:{
+				required: true,
+				maxlength: 40	
+
+			},
+
+			rol:{
+				required: true,
+				maxlength: 1	
+
+			}
+
+		}
+
+
+	});
 
 
     $("#form_usuarios_actualizar").validate({
