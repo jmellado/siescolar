@@ -205,7 +205,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?php echo base_url(); ?>cuenta_controller/cambiarpassword" class="btn btn-default btn-flat">Account</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?php echo base_url(); ?>login_controller/logout_ci" class="btn btn-default btn-flat">Sign out</a>
