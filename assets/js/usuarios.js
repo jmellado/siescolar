@@ -148,6 +148,12 @@ function inicio(){
 
 			},
 
+			tipo_id:{
+				required: true,
+				maxlength: 2
+				
+			},
+
 			nombres:{
 				required: true,
 				maxlength: 50,
@@ -173,6 +179,13 @@ function inicio(){
 				required: true,
 				maxlength: 10,
 				digits: true	
+
+			},
+
+			correo:{
+				required: true,
+				email: true,
+				maxlength: 50	
 
 			},
 

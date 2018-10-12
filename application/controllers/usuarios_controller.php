@@ -24,10 +24,12 @@ class Usuarios_controller extends CI_Controller {
 	public function insertar(){
 
 		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+		$this->form_validation->set_rules('tipo_id', 'Tipo Identificación', 'required|max_length[2]');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido2', 'Segundo Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
 
@@ -44,28 +46,32 @@ class Usuarios_controller extends CI_Controller {
         	//obtengo el ultimo id de personas + 1 
         	$ultimo_id = $this->usuarios_model->obtener_ultimo_id();
 
-        	$identificacion = $this->input->post('identificacion');
-        	$nombres = $this->input->post('nombres');
-        	$apellido1 = $this->input->post('apellido1');
-        	$apellido2 = $this->input->post('apellido2');
-        	$telefono = $this->input->post('telefono');
-        	$direccion = $this->input->post('direccion');
-        	$barrio = $this->input->post('barrio');
+        	$identificacion = trim($this->input->post('identificacion'));
+        	$tipo_id = $this->input->post('tipo_id');
+        	$nombres = ucwords(strtolower(trim($this->input->post('nombres'))));
+        	$apellido1 = ucwords(strtolower(trim($this->input->post('apellido1'))));
+        	$apellido2 = ucwords(strtolower(trim($this->input->post('apellido2'))));
+        	$telefono = trim($this->input->post('telefono'));
+        	$correo = trim($this->input->post('correo'));
+        	$direccion = ucwords(strtolower(trim($this->input->post('direccion'))));
+        	$barrio = ucwords(strtolower(trim($this->input->post('barrio'))));
         	$rol = $this->input->post('rol');
    
 
-        	//array para insertar en la tabla personas----------
+        	//array para insertar en la tabla personas
         	$usuario = array(
 			'id_persona' =>$ultimo_id,
 			'identificacion' =>$identificacion,
-			'nombres' =>ucwords(strtolower($nombres)),
-			'apellido1' =>ucwords(strtolower($apellido1)),
-			'apellido2' =>ucwords(strtolower($apellido2)),
+			'tipo_id' =>$tipo_id,
+			'nombres' =>$nombres,
+			'apellido1' =>$apellido1,
+			'apellido2' =>$apellido2,
 			'telefono' =>$telefono,
-			'direccion' =>ucwords(strtolower($direccion)),
-			'barrio' =>ucwords(strtolower($barrio)));
+			'email' =>$correo,
+			'direccion' =>$direccion,
+			'barrio' =>$barrio);
 
-			//array para insertar en la tabla administradores----------
+			//array para insertar en la tabla administradores
         	$usuario2 = array(
 			'id_persona' =>$ultimo_id);
 

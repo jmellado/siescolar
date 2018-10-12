@@ -1,6 +1,20 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
+	    #modal_agregar_usuario .modal-body
+		{
+  			height:355px;
+  			overflow:auto;
+		}
+
+		.panel-margen{
+			margin-bottom: 0px;
+		}
+
+		.panel-margen1{
+			margin-bottom: 2px;
+		}
 	</style>
 
 
@@ -100,7 +114,7 @@
       </div>
       <div class="modal-body">
         
-        <div class="panel panel-default">
+        <div class="panel panel-default panel-margen1">
 		    <div class="panel-body">
 
 		        <form class="form-horizontal" role="form" id="form_usuarios_actualizar">
@@ -145,20 +159,16 @@
 						</div>	
 					</div>
 
-		        </form>
-
-		        <div class="form-group">
-					<div class="col-sm-offset-4 col-sm-5">
-		        		<button type="submit" name="btn_actualizar_usuario" id="btn_actualizar_usuario" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-		        	</div>
-		        </div>		
+		        </form>		
 
 		    </div>
 		</div>        
 
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+      	<div class="col-sm-offset-4 col-sm-4">
+    		<button type="submit" name="btn_actualizar_usuario" id="btn_actualizar_usuario" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+    	</div>
       </div>
     </div>
 
@@ -168,123 +178,133 @@
 
 <!-- Modal  agregar nuev usuario --><!--Para Que no se cierre el modal automaticamente utilizar data-backdrop="static" data-keyboard="false"-->
 <div id="modal_agregar_usuario" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR USUARIOS</h4>
-      </div>
-      <div class="modal-body">
-        
-      	<div class="panel panel-default">
-		    <div class="panel-body">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR USUARIOS</h4>
+			</div>
 
-		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>usuarios_controller/insertar" name="" method="post" id="form_usuarios">
+	      	<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>usuarios_controller/insertar" name="" method="post" id="form_usuarios">	
+				<div class="modal-body">
+					<div class="panel panel-default panel-margen">
+					    <div class="panel-body">
+					    	<div class="row">
+					    		<div class="col-md-6">
+					    			<div class="panel panel-default panel-margen1">
+					    				<div class="panel-body">
 
-		        	<div class="row">
-		        		
-		        		<div class="col-md-6">
+					    					<div class="form-group">
+										    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="identificacion_u" name="identificacion"
+										           placeholder="Identificación">
+										        </div>   
+										  	</div>
 
-		        			<div class="panel panel-default">
-		    					<div class="panel-body">
+										  	<div class="form-group">
+											  	<label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
+											  	<div class="col-md-7">
+												  	<select class="form-control" id="tipo_id" name="tipo_id">
+												  		<option value=""></option>
+													    <option value="rc">RC</option>
+														<option value="ti">TI</option>
+														<option value="cc">CC</option>
+														<option value="ce">CE</option>
+												  	</select>
+												</div>  	
+											</div>
 
-		    						<div class="form-group">
-								    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="identificacion_u" name="identificacion"
-								           placeholder="Identificación">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="nombres_u" name="nombres"
+										           placeholder="Nombres">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="nombres_u" name="nombres"
-								           placeholder="Nombres">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="apellido1_2" name="apellido1"
+										           placeholder="Primer Apellido">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="apellido1_2" name="apellido1"
-								           placeholder="Primer Apellido">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="apellido2_u" name="apellido2"
+										           placeholder="Segundo Apellido">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="apellido2_u" name="apellido2"
-								           placeholder="Segundo Apellido">
-								        </div>   
-								  	</div>
+					    				</div>
+					    			</div>		
+					    		</div>
+					    		
+					    		<div class="col-md-6">
+					    			<div class="panel panel-default panel-margen1">
+					    				<div class="panel-body">
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="telefono_u" name="telefono"
-								           placeholder="Teléfono">
-								        </div>   
-								  	</div>
-						        	
-								</div>
-							</div>	
-						</div>
+					    					<div class="form-group">
+										    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="telefono_u" name="telefono"
+										           placeholder="Teléfono">
+										        </div>   
+										  	</div>
 
-						<div class="col-md-6">
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="correo">CORREO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="correo_u" name="correo"
+										           placeholder="Correo">
+										        </div>   
+										  	</div>
 
-							<div class="panel panel-default">
-		    					<div class="panel-body">
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccion_u" name="direccion"
+										           placeholder="Dirección">
+										        </div>   
+										  	</div>
 
-		    						<div class="form-group">
-								    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="direccion_u" name="direccion"
-								           placeholder="Dirección">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="barrio_u" name="barrio"
+										           placeholder="Barrio">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="barrio_u" name="barrio"
-								           placeholder="Barrio">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="rol">ROL</label>
+										    	<div class="col-md-7">
+										           <select class="form-control" id="rol_u" name="rol">
+														<option value=""></option>
+														<option value="1">Administrador</option>
+													</select>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="rol">ROL</label>
-								    	<div class="col-md-7">
-								           <select class="form-control" id="rol_u" name="rol">
-												<option value=""></option>
-												<option value="1">Administrador</option>
-											</select>
-								        </div>   
-								  	</div>
-
-								</div>
-							</div>	
-						</div>
-
-						<div class="form-group">
-							<div class="col-sm-offset-4 col-sm-4">
-								<button type="submit" name="btn_registrar_usuario" id="btn_registrar_usuario" class="btn btn-primary btn-lg btn-block">Registrar</button>
-							</div>
-						</div>		
-						
+					    				</div>
+					    			</div>		
+					    		</div>	
+					    	</div>	
+					    </div>
+					</div>  
+				</div>
+		      	<div class="modal-footer">
+					<div class="col-sm-offset-4 col-sm-4">
+						<button type="submit" name="btn_registrar_usuario" id="btn_registrar_usuario" class="btn btn-primary btn-lg btn-block">Registrar</button>
 					</div>
-		        </form>
-		    </div>
-		</div>        
+		      	</div>
+		    </form>  
+	    </div>
 
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+  	</div>
 </div>
