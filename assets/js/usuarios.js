@@ -117,6 +117,18 @@ function inicio(){
 	});
 
 
+	$("body").on("click","#lista_usuarios button",function(event){
+		event.preventDefault();
+		id_usuario = $(this).attr("value");
+		
+		if(confirm("Esta Seguro De Reestablecer La Contraseña De Este Usuario.?")){
+			reestablecer_contrasena(id_usuario);
+
+		}
+
+	});
+
+
 	$("#btn_actualizar_usuario").click(function(event){
 
     	if($("#form_usuarios_actualizar").valid()==true){
@@ -257,13 +269,13 @@ function mostrarusuarios(valor,pagina,cantidad){
 						if (registros.usuarios[i].acceso == 1) {estado = "Activo"}
 						if (registros.usuarios[i].acceso == 0) {estado = "Inactivo"}
 							
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.usuarios[i].id_usuario+"</td><td style='display:none'>"+registros.usuarios[i].id_persona+"</td><td>"+registros.usuarios[i].identificacion+"</td><td>"+registros.usuarios[i].nombres+"</td><td>"+registros.usuarios[i].apellido1+" "+registros.usuarios[i].apellido2+"</td><td>"+registros.usuarios[i].nombre_rol+"</td><td>"+registros.usuarios[i].username+"</td><td style='display:none'>"+registros.usuarios[i].acceso+"</td><td>"+estado+"</td><td><a class='btn btn-success' href="+registros.usuarios[i].id_usuario+"><i class='fa fa-edit'></i></a></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.usuarios[i].id_usuario+"</td><td style='display:none'>"+registros.usuarios[i].id_persona+"</td><td>"+registros.usuarios[i].identificacion+"</td><td>"+registros.usuarios[i].nombres+"</td><td>"+registros.usuarios[i].apellido1+" "+registros.usuarios[i].apellido2+"</td><td>"+registros.usuarios[i].nombre_rol+"</td><td>"+registros.usuarios[i].username+"</td><td style='display:none'>"+registros.usuarios[i].acceso+"</td><td>"+estado+"</td><td><a class='btn btn-success' href="+registros.usuarios[i].id_usuario+" title='Actualizar Información Del Usuario.'><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-warning' value="+registros.usuarios[i].id_usuario+" title='Reestablecer Contraseña.'><i class='fa fa-refresh'></i></button></td></tr>";
 					};
 					
 					$("#lista_usuarios tbody").html(html);
 				}
 				else{
-					html ="<tr><td colspan='8'><p style='text-align:center'>Resultados No Encontrados..</p></td></tr>";
+					html ="<tr><td colspan='9'><p style='text-align:center'>Resultados No Encontrados..</p></td></tr>";
 					$("#lista_usuarios tbody").html(html);
 				}	
 
@@ -359,6 +371,40 @@ function actualizar_usuario(){
 				$("#form_usuarios_actualizar")[0].reset();
 
 				mostrarusuarios("",1,5);
+
+		}
+
+
+	});
+
+}
+
+
+function reestablecer_contrasena(id_usuario){
+
+	$.ajax({
+		url:base_url+"usuarios_controller/reestablecer_contrasena",
+		type:"post",
+        data:{id_usuario:id_usuario},
+		success:function(respuesta) {
+				
+				
+			if (respuesta==="reestablecida") {
+					
+				toastr.success('Contraseña Reestablecida Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+			}
+			else if(respuesta==="noreestablecida"){
+				
+				toastr.error('Contraseña No Reestablecida.', 'Success Alert', {timeOut: 3000});
+				
+			}
+			else{
+
+				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+			}
+
+			mostrarusuarios("",1,5);
 
 		}
 

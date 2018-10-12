@@ -86,4 +86,34 @@ class Usuarios_model extends CI_Model {
         return $data['query'];
 	}
 
+
+	public function obtener_informacion_usuario($id_usuario){
+
+		$this->db->where('id_usuario',$id_usuario);
+
+		$this->db->join('personas', 'usuarios.id_persona = personas.id_persona');
+
+		$query = $this->db->get('usuarios');
+
+		if ($query->num_rows() > 0) {
+
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+	}
+
+
+	public function reestablecer_contrasena($id_usuario,$password){
+
+		$this->db->where('id_usuario',$id_usuario);
+
+		if ($this->db->update('usuarios', $password))
+
+			return true;
+		else
+			return false;
+	}
+
 }

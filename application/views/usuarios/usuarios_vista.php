@@ -78,11 +78,12 @@
 									<th><i class='fa fa-user'></i>&nbsp;Usuario</th>
 									<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<td colspan='8'></td>
+									<td colspan='9'></td>
 								</tr>
 							</tfoot>
 							<tbody>

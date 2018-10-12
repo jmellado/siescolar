@@ -178,5 +178,34 @@ class Usuarios_controller extends CI_Controller {
 	}
 
 
+	public function reestablecer_contrasena(){
+
+	  	$id_usuario =$this->input->post('id_usuario');
+
+	  	$user = $this->usuarios_model->obtener_informacion_usuario($id_usuario);
+	  	$identificacion = $user[0]['identificacion'];
+
+	  	$password = array('password' => sha1($identificacion));
+
+        if(is_numeric($id_usuario)){
+
+			
+	        $respuesta=$this->usuarios_model->reestablecer_contrasena($id_usuario,$password);
+	        
+          	if($respuesta==true){
+              
+              	echo "reestablecida";
+          	}else{
+              
+              	echo "noreestablecida";
+          	}
+          
+        }else{
+          
+          	echo "Digite valor numerico para identificar un usuario";
+        }
+    }
+
+
 
 }
