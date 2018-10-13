@@ -1042,6 +1042,13 @@ class Elecciones_controller extends CI_Controller {
 	}
 
 
+	public function llenarcombo_eleccionesR(){
+
+    	$consulta = $this->elecciones_model->llenar_eleccionesR();
+    	echo json_encode($consulta);
+    }
+
+
 
 
 }

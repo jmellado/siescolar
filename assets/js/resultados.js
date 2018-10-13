@@ -15,7 +15,7 @@ function inicio(){
 function llenarcombo_eleccionesR(){
 
 	$.ajax({
-		url:base_url+"elecciones_controller/llenarcombo_elecciones",
+		url:base_url+"elecciones_controller/llenarcombo_eleccionesR",
 		type:"post",
 		success:function(respuesta) {
 

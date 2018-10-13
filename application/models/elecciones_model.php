@@ -42,10 +42,10 @@ class Elecciones_model extends CI_Model {
 
 	public function buscar_eleccion($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->load->model('funciones_globales_model');
-		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		//$this->load->model('funciones_globales_model');
+		//$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-		$this->db->where('elecciones.ano_lectivo',$ano_lectivo);
+		//$this->db->where('elecciones.ano_lectivo',$ano_lectivo);
 
 		$this->db->where("(elecciones.nombre_eleccion LIKE '".$id."%' OR elecciones.estado_eleccion LIKE '".$id."%' OR elecciones.fecha_inicio LIKE '".$id."%' OR elecciones.fecha_fin LIKE '".$id."%')", NULL, FALSE);
 
@@ -795,6 +795,13 @@ class Elecciones_model extends CI_Model {
 
 		return $query->result();
 		
+	}
+
+
+	public function llenar_eleccionesR(){
+
+		$query = $this->db->get('elecciones');
+		return $query->result();
 	}
 
 
