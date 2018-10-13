@@ -229,23 +229,30 @@ class Configuraciones_controller extends CI_Controller {
 			'ano_lectivo' =>$ano_lectivo,
 			'estado_actividad' =>$estado_actividad);
 
-			if ($this->configuraciones_model->validar_existencia_actividad($nombre_actividad,$ano_lectivo)){
+			if ($ano_lectivo !=""){
 
-				$respuesta=$this->configuraciones_model->insertar_periodo($actividad);
+				if ($this->configuraciones_model->validar_existencia_actividad($nombre_actividad,$ano_lectivo)){
 
-				if($respuesta==true){
+					$respuesta=$this->configuraciones_model->insertar_periodo($actividad);
 
-					echo "registroguardado";
+					if($respuesta==true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "periodo ya existe";
 				}
-
 			}
 			else{
 
-				echo "periodo ya existe";
+				echo "anionoexiste";
 			}
 
         }

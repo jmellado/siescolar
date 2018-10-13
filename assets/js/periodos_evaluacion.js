@@ -37,6 +37,12 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="anionoexiste"){
+						
+						toastr.warning('Período No Registrado; No Se Encontró Un Año Lectivo Activo.', 'Success Alert', {timeOut: 3000});
+							
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
@@ -142,6 +148,20 @@ function inicio(){
 		}
 		
        
+    });
+
+
+    $("#modal_agregar_periodo").on('hidden.bs.modal', function () {
+        $("#form_periodos")[0].reset();
+        var validator = $("#form_periodos").validate();
+        validator.resetForm();
+    });
+
+
+    $("#modal_actualizar_periodo").on('hidden.bs.modal', function () {
+        $("#form_periodos_actualizar")[0].reset();
+        var validator2 = $("#form_periodos_actualizar").validate();
+        validator2.resetForm();
     });
 
 
