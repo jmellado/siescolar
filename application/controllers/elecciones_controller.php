@@ -96,28 +96,35 @@ class Elecciones_controller extends CI_Controller {
 			'numero' =>"00",
 			'partido' =>"En Blanco",
 			'estado_candidato' =>"Activo");
+        	
+        	if ($ano_lectivo !=""){
 
-			if ($this->elecciones_model->validar_existencia($nombre_eleccion,$ano_lectivo)){
+				if ($this->elecciones_model->validar_existencia($nombre_eleccion,$ano_lectivo)){
 
-				$respuesta=$this->elecciones_model->insertar_eleccion($eleccion,$candidato_voto_blanco);
+					$respuesta=$this->elecciones_model->insertar_eleccion($eleccion,$candidato_voto_blanco);
 
-				if($respuesta==true){
+					if($respuesta==true){
 
-					echo "registroguardado";
+						echo "registroguardado";
 
-					if(!copy("./uploads/imagenes/elecciones/voto_blanco.png","./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")){
-						echo "Error Al Copiar La Imagen.";
+						if(!copy("./uploads/imagenes/elecciones/voto_blanco.png","./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")){
+							echo "Error Al Copiar La Imagen.";
+						}
 					}
+					else{
+
+						echo "registronoguardado";
+					}
+
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "eleccionyaexiste";
 				}
-
 			}
 			else{
 
-				echo "eleccionyaexiste";
+				echo "anionoexiste";
 			}
 
 
@@ -943,7 +950,7 @@ class Elecciones_controller extends CI_Controller {
     				$data['candidatos'] = $this->elecciones_model->candidatos_eleccion($id_eleccion);
     				$data['institucion'] = $this->elecciones_model->buscar_datos_institucion();
     				$data['codigo_eleccion'] = $codigo_eleccion;
-
+    				
     				$this->template->load('roles/rol_votante_vista', 'elecciones/votacion_vista',$data);
     			}
     			else{

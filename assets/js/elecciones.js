@@ -36,6 +36,12 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="anionoexiste"){
+						
+						toastr.warning('Elección No Registrada; No Se Encontró Un Año Lectivo Activo.', 'Success Alert', {timeOut: 5000});
+							
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});

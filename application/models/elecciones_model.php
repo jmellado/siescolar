@@ -439,10 +439,15 @@ class Elecciones_model extends CI_Model {
 		$id_ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
 		$this->db->where('cursos.ano_lectivo',$id_ano_lectivo);
+
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
 		
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('salones', 'cursos.id_salon = salones.id_salon');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,cursos.id_salon,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 
@@ -475,8 +480,11 @@ class Elecciones_model extends CI_Model {
 
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
 		$this->db->where('matriculas.id_curso',$id_curso);
+		$this->db->where('matriculas.estado_matricula',"Activo");
 
 		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 
@@ -535,13 +543,16 @@ class Elecciones_model extends CI_Model {
 
 		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
 
-		$this->db->order_by('listado_votantes.id_curso', 'asc');
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
 		$this->db->group_by("listado_votantes.id_curso");  
 
 		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
 		$this->db->join('cursos', 'listado_votantes.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
-		$this->db->join('grupos', 'cursos.id_curso = grupos.id_grupo');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,elecciones.nombre_eleccion,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 		
@@ -574,14 +585,15 @@ class Elecciones_model extends CI_Model {
 		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
 
 		$this->db->order_by('cursos.jornada', 'asc');
-		$this->db->order_by('grados.nombre_grado', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 		$this->db->order_by('grupos.nombre_grupo', 'asc');
 		$this->db->group_by("listado_votantes.id_curso");  
 
 		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
 		$this->db->join('cursos', 'listado_votantes.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
-		$this->db->join('grupos', 'cursos.id_curso = grupos.id_grupo');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('listado_votantes.id_eleccion,listado_votantes.id_curso,listado_votantes.id_estudiante,elecciones.nombre_eleccion,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 		
@@ -599,6 +611,7 @@ class Elecciones_model extends CI_Model {
 		$this->db->where('listado_votantes.id_curso',$id_curso);
 
 		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
 		$this->db->order_by('personas.nombres', 'asc'); 
 
 		$this->db->join('personas', 'listado_votantes.id_estudiante = personas.id_persona');
