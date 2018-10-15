@@ -89,17 +89,138 @@ class Usuarios_controller extends CI_Controller {
 			'acceso' =>1);
 
 
-			if ($this->usuarios_model->validar_existencia($identificacion)){
+			if ($this->usuarios_model->validar_existencia_rol($identificacion,"administradores")){
 
-				$respuesta=$this->usuarios_model->insertar_usuario($usuario,$usuario2,$usuario3);
-							
-				if($respuesta==true){
+				if ($this->usuarios_model->validar_existencia_rol($identificacion,"estudiantes")){
 
-					echo "registroguardado";
+					if ($this->usuarios_model->validar_existencia_rol($identificacion,"profesores")){
+
+						if ($this->usuarios_model->validar_existencia_rol($identificacion,"acudientes")){
+
+							$respuesta=$this->usuarios_model->insertar_usuario($usuario,$usuario2,$usuario3);
+										
+							if($respuesta==true){
+
+								echo "registroguardado";
+							}
+							else{
+
+								echo "registronoguardado";
+							}
+
+						}
+						else{
+
+							$row = $this->usuarios_model->obtener_informacion_persona($identificacion);
+							$id_persona = $row[0]['id_persona'];
+
+							//array para insertar en la tabla administradores
+				        	$usuario2 = array(
+							'id_persona' =>$id_persona);
+
+							//aqui creamos el username de un administrador
+							$user = strtolower(substr($nombres, 0, 2));
+							$name = strtolower($apellido1);
+							$username = $user.$name."ad".$id_persona;
+
+							//array para insertar en la tabla usuarios
+							$usuario3 = array(
+							'id_persona' =>$id_persona,
+							'id_rol' => $rol,
+							'username' =>$username,
+							'password' =>sha1($identificacion),
+							'acceso' =>1);
+
+							$respuesta=$this->usuarios_model->insertar_usuario_rol($usuario2,$usuario3);
+
+							if($respuesta==true){
+
+								echo "registroguardado";
+							}
+							else{
+
+								echo "registronoguardado";
+							}
+
+						}
+					}
+					else{
+
+						$row = $this->usuarios_model->obtener_informacion_persona($identificacion);
+						$id_persona = $row[0]['id_persona'];
+
+						//array para insertar en la tabla administradores
+			        	$usuario2 = array(
+						'id_persona' =>$id_persona);
+
+						//aqui creamos el username de un administrador
+						$user = strtolower(substr($nombres, 0, 2));
+						$name = strtolower($apellido1);
+						$username = $user.$name."ad".$id_persona;
+
+						//array para insertar en la tabla usuarios
+						$usuario3 = array(
+						'id_persona' =>$id_persona,
+						'id_rol' => $rol,
+						'username' =>$username,
+						'password' =>sha1($identificacion),
+						'acceso' =>1);
+
+						$respuesta=$this->usuarios_model->insertar_usuario_rol($usuario2,$usuario3);
+
+						if($respuesta==true){
+
+							echo "registroguardado";
+						}
+						else{
+
+							echo "registronoguardado";
+						}
+
+					}
 				}
 				else{
 
-					echo "registronoguardado";
+					//COMPROBAMOS QUE EL ESTADO DE ESE ESTUDIANTE NO SEA ACTIVO.
+					if ($this->usuarios_model->comprobar_estado_rol($identificacion,"estudiantes")) {
+
+						$row = $this->usuarios_model->obtener_informacion_persona($identificacion);
+						$id_persona = $row[0]['id_persona'];
+
+						//array para insertar en la tabla administradores
+			        	$usuario2 = array(
+						'id_persona' =>$id_persona);
+
+						//aqui creamos el username de un administrador
+						$user = strtolower(substr($nombres, 0, 2));
+						$name = strtolower($apellido1);
+						$username = $user.$name."ad".$id_persona;
+
+						//array para insertar en la tabla usuarios
+						$usuario3 = array(
+						'id_persona' =>$id_persona,
+						'id_rol' => $rol,
+						'username' =>$username,
+						'password' =>sha1($identificacion),
+						'acceso' =>1);
+
+						$respuesta=$this->usuarios_model->insertar_usuario_rol($usuario2,$usuario3);
+
+						if($respuesta==true){
+
+							echo "registroguardado";
+						}
+						else{
+
+							echo "registronoguardado";
+						}
+
+					}
+					else{
+
+						echo "estudianteactivo";
+					}
+
 				}
 			}
 			else{
@@ -205,6 +326,84 @@ class Usuarios_controller extends CI_Controller {
           	echo "Digite valor numerico para identificar un usuario";
         }
     }
+
+
+
+    //==================  FUNCIONES PARA VALIDAR EL USUARIO ==================
+
+
+    public function validar_identificacion(){
+
+		$identificacion = $this->input->post('identificacion'); 
+
+		if ($this->usuarios_model->validar_existencia_rol($identificacion,"administradores")){
+
+			if ($this->usuarios_model->validar_existencia_rol($identificacion,"estudiantes")){
+
+				if ($this->usuarios_model->validar_existencia_rol($identificacion,"profesores")){
+
+					if ($this->usuarios_model->validar_existencia_rol($identificacion,"acudientes")){
+
+						echo "ok";
+					}
+					else{
+
+						$consulta = $this->usuarios_model->obtener_informacion_persona($identificacion);
+						echo json_encode($consulta);
+					}	
+				}
+				else{
+
+					$consulta = $this->usuarios_model->obtener_informacion_persona($identificacion);
+					echo json_encode($consulta);
+				}	
+			}
+			else{
+
+				if ($this->usuarios_model->comprobar_estado_rol($identificacion,"estudiantes")) {
+
+					$consulta = $this->usuarios_model->obtener_informacion_persona($identificacion);
+					echo json_encode($consulta);
+					
+				}
+				else{
+					echo "estudianteactivo";
+				}
+
+			}
+		}
+		else{
+			echo "administradoryaexiste";
+		}	
+		
+	    
+	}
+
+
+	public function validar_rol(){
+
+		$identificacion = $this->input->post('identificacion');
+
+		if (!$this->usuarios_model->validar_existencia_rol($identificacion,"estudiantes")) {
+				
+			echo "no";
+		}
+		elseif (!$this->usuarios_model->validar_existencia_rol($identificacion,"profesores")) {
+			
+			echo "no";
+		}
+		elseif (!$this->usuarios_model->validar_existencia_rol($identificacion,"acudientes")) {
+			
+			echo "no";
+		}
+		else{
+
+			echo "si";
+
+		}
+
+
+	}
 
 
 

@@ -32,7 +32,13 @@ function inicio(){
 					}
 					else if(respuesta==="usuarioyaexiste"){
 						
-						toastr.warning('El N° De Identificación Corresponde A Un Usuario Ya Registrado.', 'Success Alert', {timeOut: 3000});
+						toastr.warning('El N° De Identificación Corresponde A Un Administrador Ya Registrado.', 'Success Alert', {timeOut: 3000});
+							
+
+					}
+					else if(respuesta==="estudianteactivo"){
+						
+						toastr.warning('Usuario No Registrado, El N° De Identificación Corresponde A Un Estudiante Activo.', 'Success Alert', {timeOut: 3000});
 							
 
 					}
@@ -145,7 +151,22 @@ function inicio(){
 
     $("#modal_agregar_usuario").on('hidden.bs.modal', function () {
         $("#form_usuarios")[0].reset();
+        bloquear_cajas_texto_u();
+        $("#btn_registrar_usuario").removeAttr("disabled");
         $("#form_usuarios").valid()==true;
+    });
+
+
+    $("#identificacion_u").blur(function(){
+
+    	if($("#identificacion_u").val()==""){
+			
+		}
+		else{
+
+			validar_identificacion_personaU($(this).val());
+		}
+       
     });
 
 
@@ -245,6 +266,7 @@ function inicio(){
 
 
 	});
+
 
 }
 
@@ -411,6 +433,185 @@ function reestablecer_contrasena(id_usuario){
 
 	});
 
+}
+
+
+
+//================= FUNCIONES PARA VALIDAR EL USUARIO ====================0
+
+
+//Validar el Ingreso de solo numeros
+function validar_solonumerosU(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+
+
+function validar_identificacion_personaU(valor){
+
+	$.ajax({
+		url:base_url+"usuarios_controller/validar_identificacion",
+		type:"post",
+		data:{identificacion:valor},
+		success:function(respuesta) {
+				
+				
+				if (respuesta==="ok") {
+						
+					desbloquear_cajas_texto_u();
+					limpiar_cajas_texto_u();
+
+				}
+				else if(respuesta==="administradoryaexiste"){
+					bloquear_cajas_texto_u();
+					limpiar_cajas_texto_u();
+					toastr.warning('El N° De Identificación Corresponde A Un Administrador Ya Registrado.', 'Success Alert', {timeOut: 3000});
+						
+				}
+				else if(respuesta==="estudianteactivo"){
+					bloquear_cajas_texto_u();
+					limpiar_cajas_texto_u();
+					toastr.warning('El N° De Identificación Corresponde A Un Estudiante Activo.', 'Success Alert', {timeOut: 3000});
+						
+				}
+				else{
+					
+					var registros = eval(respuesta);
+					for (var i = 0; i < registros.length; i++) {
+
+						//id_persona = registros[i]["id_persona"];
+						tipo_id = registros[i]["tipo_id"];
+						nombres = registros[i]["nombres"];
+						apellido1 = registros[i]["apellido1"];
+						apellido2 = registros[i]["apellido2"];
+						telefono = registros[i]["telefono"];
+						correo = registros[i]["email"];
+						direccion = registros[i]["direccion"];
+						barrio = registros[i]["barrio"];
+
+						//$("#id_persona").val(id_persona);
+						$("#tipo_id_u").val(tipo_id);
+	        			$("#nombres_u").val(nombres);
+	        			$("#apellido1_u").val(apellido1);
+	        			$("#apellido2_u").val(apellido2);
+	        			$("#telefono_u").val(telefono);
+	        			$("#correo_u").val(correo);
+	        			$("#direccion_u").val(direccion);
+	        			$("#barrio_u").val(barrio);
+	        			bloquear_cajas_texto_u();
+	        			$("#btn_registrar_usuario").removeAttr("disabled");
+	        			
+					};
+
+				}
+
+		
+		}
+
+	});
+}
+
+
+function validar_rol(valor){
+
+	$.ajax({
+		url:base_url+"usuarios_controller/validar_rol",
+		type:"post",
+		data:{identificacion:valor},
+		success:function(respuesta) {
+				
+
+				if (respuesta==="si") {
+						
+					desbloquear_cajas_texto_au();
+
+				}
+				else{
+					bloquear_cajas_texto_au();
+						
+				}
+
+		
+		}
+
+	});
+}
+
+
+//Cajas De Texto Del Fomulario Registrar Usuarios
+function bloquear_cajas_texto_u(){
+
+	$("#tipo_id_u").attr("readonly", "readonly");
+	$("#nombres_u").attr("readonly", "readonly");
+    $("#apellido1_u").attr("readonly", "readonly");
+    $("#apellido2_u").attr("readonly", "readonly");
+    $("#telefono_u").attr("readonly", "readonly");
+    $("#correo_u").attr("readonly", "readonly");
+    $("#direccion_u").attr("readonly", "readonly");
+    $("#barrio_u").attr("readonly", "readonly");
+    $("#btn_registrar_usuario").attr("disabled", "disabled");
+}
+
+//Cajas De Texto Del Fomulario Registrar Usuarios
+function desbloquear_cajas_texto_u(){
+
+	$("#tipo_id_u").removeAttr("readonly");
+	$("#nombres_u").removeAttr("readonly");
+    $("#apellido1_u").removeAttr("readonly");
+    $("#apellido2_u").removeAttr("readonly");
+    $("#telefono_u").removeAttr("readonly");
+    $("#correo_u").removeAttr("readonly");
+    $("#direccion_u").removeAttr("readonly");
+    $("#barrio_u").removeAttr("readonly");
+    $("#btn_registrar_usuario").removeAttr("disabled");
+}
+
+//Cajas De Texto Del Fomulario Actualizar Usuarios
+function bloquear_cajas_texto_au(){
+
+	$("#tipo_idsele_u").attr("readonly", "readonly");
+	$("#nombressele_u").attr("readonly", "readonly");
+    $("#apellido1sele_u").attr("readonly", "readonly");
+    $("#apellido2sele_u").attr("readonly", "readonly");
+    $("#telefonosele_u").attr("readonly", "readonly");
+    $("#correosele_u").attr("readonly", "readonly");
+    $("#direccionsele_u").attr("readonly", "readonly");
+    $("#barriosele_u").attr("readonly", "readonly");
+}
+
+//Cajas De Texto Del Fomulario Actualizar Usuarios
+function desbloquear_cajas_texto_au(){
+
+	$("#tipo_idsele_u").removeAttr("readonly");
+	$("#nombressele_u").removeAttr("readonly");
+    $("#apellido1sele_u").removeAttr("readonly");
+    $("#apellido2sele_u").removeAttr("readonly");
+    $("#telefonosele_u").removeAttr("readonly");
+    $("#correosele_u").removeAttr("readonly");
+    $("#direccionsele_u").removeAttr("readonly");
+    $("#barriosele_u").removeAttr("readonly");
+}
+
+
+function limpiar_cajas_texto_u(){
+
+	$("#tipo_id_u").val("");
+	$("#nombres_u").val("");
+    $("#apellido1_u").val("");
+    $("#apellido2_u").val("");
+    $("#telefono_u").val("");
+    $("#correo_u").val("");
+    $("#direccion_u").val("");
+    $("#barrio_u").val("");
 }
 
 

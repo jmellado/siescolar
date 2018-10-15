@@ -201,14 +201,14 @@
 										    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="identificacion_u" name="identificacion"
-										           placeholder="Identificación">
+										           placeholder="Identificación" onkeypress="return validar_solonumerosU(event)">
 										        </div>   
 										  	</div>
 
 										  	<div class="form-group">
 											  	<label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
 											  	<div class="col-md-7">
-												  	<select class="form-control" id="tipo_id" name="tipo_id">
+												  	<select class="form-control" id="tipo_id_u" name="tipo_id" readonly>
 												  		<option value=""></option>
 													    <option value="rc">RC</option>
 														<option value="ti">TI</option>
@@ -222,15 +222,15 @@
 										    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="nombres_u" name="nombres"
-										           placeholder="Nombres">
+										           placeholder="Nombres" readonly>
 										        </div>   
 										  	</div>
 
 										  	<div class="form-group">
 										    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
 										    	<div class="col-md-7">
-										    		<input type="text" class="form-control" id="apellido1_2" name="apellido1"
-										           placeholder="Primer Apellido">
+										    		<input type="text" class="form-control" id="apellido1_u" name="apellido1"
+										           placeholder="Primer Apellido" readonly>
 										        </div>   
 										  	</div>
 
@@ -238,7 +238,7 @@
 										    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="apellido2_u" name="apellido2"
-										           placeholder="Segundo Apellido">
+										           placeholder="Segundo Apellido" readonly>
 										        </div>   
 										  	</div>
 
@@ -254,7 +254,7 @@
 										    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="telefono_u" name="telefono"
-										           placeholder="Teléfono">
+										           placeholder="Teléfono" readonly>
 										        </div>   
 										  	</div>
 
@@ -262,7 +262,7 @@
 										    	<label class="control-label col-md-4" for="correo">CORREO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="correo_u" name="correo"
-										           placeholder="Correo">
+										           placeholder="Correo" readonly>
 										        </div>   
 										  	</div>
 
@@ -270,7 +270,7 @@
 										    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="direccion_u" name="direccion"
-										           placeholder="Dirección">
+										           placeholder="Dirección" readonly>
 										        </div>   
 										  	</div>
 
@@ -278,7 +278,7 @@
 										    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="barrio_u" name="barrio"
-										           placeholder="Barrio">
+										           placeholder="Barrio" readonly>
 										        </div>   
 										  	</div>
 

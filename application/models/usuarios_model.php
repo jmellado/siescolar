@@ -116,4 +116,171 @@ class Usuarios_model extends CI_Model {
 			return false;
 	}
 
+
+
+	//==================  FUNCIONES PARA VALIDAR EL USUARIO ==================
+
+
+	public function validar_existencia_rol($identificacion,$rol){
+
+		if ($rol == "acudientes") {
+			
+			$this->db->where('identificacion',$identificacion);
+			$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		elseif ($rol == "estudiantes") {
+			
+			$this->db->where('identificacion',$identificacion);
+			$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+				return false;
+
+			}
+			else{
+				return true;
+			}
+		}
+		elseif ($rol == "profesores") {
+			
+			$this->db->where('identificacion',$identificacion);
+			$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+				return false;
+
+			}
+			else{
+				return true;
+			}
+		}
+		elseif ($rol == "administradores") {
+			
+			$this->db->where('identificacion',$identificacion);
+			$this->db->join('administradores', 'personas.id_persona = administradores.id_persona');
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+				return false;
+
+			}
+			else{
+				return true;
+			}
+		}
+
+
+	}
+
+
+	public function obtener_informacion_persona($id,$senal = FALSE){
+
+		if ($senal == "2") {
+			
+			$this->db->where('id_persona',$id);
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+			
+	        	return $query->result_array();
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			$this->db->where('identificacion',$id);
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+			
+	        	return $query->result_array();
+			}
+			else{
+				return false;
+			}
+		}	
+
+	}
+
+
+	public function comprobar_estado_rol($id,$rol){
+
+		if ($rol == "acudientes") {
+
+			$this->db->where('identificacion',$id);
+			$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+			
+				$row = $query->result_array();
+				$estado = $row[0]['estado_acudiente'];
+				if ($estado == "Activo") {
+					return false;
+				}
+				else{
+					return true;
+				}
+			}
+			else{
+				return false;
+			}
+		}	
+		elseif ($rol == "estudiantes") {
+
+			$this->db->where('identificacion',$id);
+			$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+			$query = $this->db->get('personas');
+
+			if ($query->num_rows() > 0) {
+			
+				$row = $query->result_array();
+				$estado = $row[0]['estado_estudiante'];
+				if ($estado == "Inscrito" || $estado == "Matriculado") {
+					return false;
+				}
+				else{
+					return true;
+				}
+			}
+			else{
+				return false;
+			}
+			
+		}
+
+	}
+
+
+	public function insertar_usuario_rol($usuario2,$usuario3){
+
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
+		
+		$this->db->insert('administradores', $usuario2);
+		$this->db->insert('usuarios', $usuario3);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
 }
