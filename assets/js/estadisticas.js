@@ -38,6 +38,17 @@ function inicio(){
     });
 
 
+    $("#btn_imprimir_CM").click(function(){
+
+		periodo = $("#periodoCM").val();
+    	jornada = $("#jornadaCM").val();
+    	ano_lectivo = $("#ano_lectivoCM").val();
+
+    	window.open(base_url+'estadisticas_controller/generar_CincuentaMejores'+'?periodo='+periodo+'&jornada='+jornada+'&ano_lectivo='+ano_lectivo, '_blank');
+       
+    });
+
+
 	$("#form_cincuentamejores").validate({
 
     	rules:{
@@ -103,6 +114,17 @@ function inicio(){
 
     $("#ano_lectivoPC").change(function(){
     	ocultardiv_promediocursos();
+    });
+
+
+    $("#btn_imprimir_PC").click(function(){
+
+		periodo = $("#periodoPC").val();
+    	jornada = $("#jornadaPC").val();
+    	ano_lectivo = $("#ano_lectivoPC").val();
+
+    	window.open(base_url+'estadisticas_controller/generar_PromedioCursos'+'?periodo='+periodo+'&jornada='+jornada+'&ano_lectivo='+ano_lectivo, '_blank');
+       
     });
 
 
@@ -175,6 +197,17 @@ function inicio(){
     });
 
 
+    $("#btn_imprimir_PG").click(function(){
+
+		periodo = $("#periodoPG").val();
+    	jornada = $("#jornadaPG").val();
+    	ano_lectivo = $("#ano_lectivoPG").val();
+
+    	window.open(base_url+'estadisticas_controller/generar_PromedioGrados'+'?periodo='+periodo+'&jornada='+jornada+'&ano_lectivo='+ano_lectivo, '_blank');
+       
+    });
+
+
 	$("#form_promediogrados").validate({
 
     	rules:{
@@ -241,6 +274,17 @@ function inicio(){
 
     $("#ano_lectivoER").change(function(){
     	ocultardiv_enriesgo();
+    });
+
+
+    $("#btn_imprimir_ER").click(function(){
+
+		periodo = $("#periodoER").val();
+    	jornada = $("#jornadaER").val();
+    	ano_lectivo = $("#ano_lectivoER").val();
+
+    	window.open(base_url+'estadisticas_controller/generar_EnRiesgo'+'?periodo='+periodo+'&jornada='+jornada+'&ano_lectivo='+ano_lectivo, '_blank');
+       
     });
 
 

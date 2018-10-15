@@ -413,4 +413,40 @@ class Estadisticas_model extends CI_Model {
 	}
 
 
+	//=================== Funciones para imprimir los listado ====================
+
+
+	public function obtener_informacion_colegio(){
+
+		$query = $this->db->get('datos_institucion');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+        	
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function obtener_informacion_anolectivo($ano_lectivo){
+
+		$this->db->where('id_ano_lectivo',$ano_lectivo);
+		$query = $this->db->get('anos_lectivos');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+        	
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
 }
