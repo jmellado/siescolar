@@ -118,7 +118,7 @@ class Acudientes_model extends CI_Model {
 		}
 
 		$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
-		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,personas.telefono,personas.direccion,personas.barrio,acudientes.ocupacion,acudientes.telefono_trabajo,acudientes.direccion_trabajo,acudientes.estado_acudiente');
+		$this->db->select('personas.id_persona,personas.identificacion,personas.tipo_id,personas.nombres,personas.apellido1,personas.apellido2,personas.telefono,personas.email,personas.direccion,personas.barrio,acudientes.ocupacion,acudientes.telefono_trabajo,acudientes.direccion_trabajo,acudientes.estado_acudiente');
 		
 		$query = $this->db->get('personas');
 

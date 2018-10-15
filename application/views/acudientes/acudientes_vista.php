@@ -4,14 +4,22 @@
 
 	    #modal_agregar_acudiente .modal-body
 		{
-  			height:480px;
+  			height:416px;
   			overflow:auto;
 		}
 
 		#modal_actualizar_acudiente .modal-body
 		{
-  			height:480px;
+  			height:453px;
   			overflow:auto;
+		}
+
+		.panel-margen{
+			margin-bottom: 0px;
+		}
+
+		.panel-margen1{
+			margin-bottom: 2px;
 		}
 	    
 	</style>
@@ -82,6 +90,11 @@
 							</thead>
 							<tbody>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan='8'></td>
+								</tr>
+							</tfoot>
 						</table>
 						</div>
 
@@ -99,290 +112,317 @@
 
 <!-- Modal  agregar nuev grado --><!--Para Que no se cierre el modal automaticamente utilizar data-backdrop="static" data-keyboard="false"-->
 <div id="modal_agregar_acudiente" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR ACUDIENTES</h4>
-      </div>
-      <div class="modal-body">
-        
-      	<div class="panel panel-default">
-		    <div class="panel-body">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR ACUDIENTES</h4>
+			</div>
 
-		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>acudientes_controller/insertar" name="" method="post" id="form_acudientes">
+			<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>acudientes_controller/insertar" name="" method="post" id="form_acudientes">
+		    	<div class="modal-body">
+		        
+			      	<div class="panel panel-default panel-margen">
+					    <div class="panel-body">
+					        <div class="row">
 
-		        	<div class="row">
-		        		
-		        		<div class="col-md-6">
+				        		<div class="col-md-6">
+				        			<div class="panel panel-default panel-margen1">
+				    					<div class="panel-body">
 
-		        			<div class="panel panel-default">
-		    					<div class="panel-body">
+				    						<div class="form-group">
+										    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="identificacion_a" name="identificacion"
+										           placeholder="Identificación" onkeypress="return validar_solonumeros(event)">
+										        </div>   
+										  	</div>
 
-		    						<div class="form-group">
-								    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="identificacion_a" name="identificacion"
-								           placeholder="Identificación" onkeypress="return validar_solonumeros(event)">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+											  	<label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
+											  	<div class="col-md-7">
+												  	<select class="form-control" id="tipo_id_a" name="tipo_id" readonly>
+												  		<option value=""></option>
+													    <option value="rc">RC</option>
+														<option value="ti">TI</option>
+														<option value="cc">CC</option>
+														<option value="ce">CE</option>
+												  	</select>
+												</div>  	
+											</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="nombres_a" name="nombres"
-								           placeholder="Nombres" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="nombres_a" name="nombres"
+										           placeholder="Nombres" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="apellido1_a" name="apellido1"
-								           placeholder="Primer Apellido" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="apellido1_a" name="apellido1"
+										           placeholder="Primer Apellido" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="apellido2_a" name="apellido2"
-								           placeholder="Segundo Apellido" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="apellido2_a" name="apellido2"
+										           placeholder="Segundo Apellido" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="telefono_a" name="telefono"
-								           placeholder="Teléfono" readonly>
-								        </div>   
-								  	</div>
-						        	
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="telefono_a" name="telefono"
+										           placeholder="Teléfono" readonly>
+										        </div>   
+										  	</div>
+								        	
+										</div>
+									</div>	
 								</div>
-							</div>	
-						</div>
 
-						<div class="col-md-6">
+								<div class="col-md-6">
+									<div class="panel panel-default panel-margen1">
+				    					<div class="panel-body">
 
-							<div class="panel panel-default">
-		    					<div class="panel-body">
+				    						<div class="form-group">
+										    	<label class="control-label col-md-4" for="correo">CORREO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="correo_a" name="correo"
+										           placeholder="Correo" readonly>
+										        </div>   
+										  	</div>
 
-		    						<div class="form-group">
-								    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="direccion_a" name="direccion"
-								           placeholder="Dirección" readonly>
-								        </div>   
-								  	</div>
+				    						<div class="form-group">
+										    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccion_a" name="direccion"
+										           placeholder="Dirección" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="barrio_a" name="barrio"
-								           placeholder="Barrio" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="barrio_a" name="barrio"
+										           placeholder="Barrio" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="ocupacion">OCUPACIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="ocupacion_a" name="ocupacion"
-								           placeholder="Ocupación">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="ocupacion">OCUPACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="ocupacion_a" name="ocupacion"
+										           placeholder="Ocupación">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="telefono_trabajo">TELÉFONO TRABAJO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="telefono_trabajo_a" name="telefono_trabajo"
-								           placeholder="Teléfono Trabajo">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="telefono_trabajo">TELÉFONO TRABAJO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="telefono_trabajo_a" name="telefono_trabajo"
+										           placeholder="Teléfono Trabajo">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="direccion_trabajo">DIRECCIÓN TRABAJO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="direccion_trabajo_a" name="direccion_trabajo"
-								           placeholder="Dirección Trabajo">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="direccion_trabajo">DIRECCIÓN TRABAJO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccion_trabajo_a" name="direccion_trabajo"
+										           placeholder="Dirección Trabajo">
+										        </div>   
+										  	</div>
 
+										</div>
+									</div>	
 								</div>
-							</div>	
-						</div>
 
-						<div class="form-group">
-							<div class="col-sm-offset-4 col-sm-4">
-								<button type="submit" name="btn_registrar_acudiente" id="btn_registrar_acudiente" class="btn btn-primary btn-lg btn-block">Registrar</button>
 							</div>
-						</div>		
-						
+					    </div>
+					</div>        
+
+		    	</div>
+
+				<div class="modal-footer">
+					<div class="col-sm-offset-4 col-sm-4">
+						<button type="submit" name="btn_registrar_acudiente" id="btn_registrar_acudiente" class="btn btn-primary btn-lg btn-block">Registrar</button>
 					</div>
-		        </form>
-		    </div>
-		</div>        
+				</div>
+			</form>
+	    </div>
 
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+	</div>
 </div>
 
 
 <!-- Modal  actualizar acudiente -->
 <div id="modal_actualizar_acudiente" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR ACUDIENTES</h4>
-      </div>
-      <div class="modal-body">
-        
-        <div class="panel panel-default">
-		    <div class="panel-body">
+    	<!-- Modal content-->
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR ACUDIENTES</h4>
+			</div>
+			<div class="modal-body">
+	        
+		        <div class="panel panel-default panel-margen">
+				    <div class="panel-body">
+				        <form class="form-horizontal" role="form" id="form_acudientes_actualizar">
+												    
+							<div class="row">
+				        		<div class="col-md-6">
+				        			<div class="panel panel-default panel-margen1">
+				    					<div class="panel-body">
 
-		        <form class="form-horizontal" role="form" id="form_acudientes_actualizar">
-										    
-					<div class="row">
-		        		
-		        		<div class="col-md-6">
+				    						<input type="hidden" class="form-control" id="id_personasele" name="id_persona">
+				    						<input type="hidden" class="form-control" id="identificacionsele2" name="identificacion">
 
-		        			<div class="panel panel-default">
-		    					<div class="panel-body">
+				    						<div class="form-group">
+										    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="identificacionsele" name="identificacion"
+										           placeholder="Identificación" disabled>
+										        </div>   
+										  	</div>
 
-		    						<input type="hidden" class="form-control" id="id_personasele" name="id_persona">
-		    						<input type="hidden" class="form-control" id="identificacionsele2" name="identificacion">
+										  	<div class="form-group">
+											  	<label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
+											  	<div class="col-md-7">
+												  	<select class="form-control" id="tipo_idsele" name="tipo_id" readonly>
+												  		<option value=""></option>
+													    <option value="rc">RC</option>
+														<option value="ti">TI</option>
+														<option value="cc">CC</option>
+														<option value="ce">CE</option>
+												  	</select>
+												</div>  	
+											</div>
 
-		    						<div class="form-group">
-								    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="identificacionsele" name="identificacion"
-								           placeholder="Identificación" disabled>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="nombressele" name="nombres"
+										           placeholder="Nombres" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="nombressele" name="nombres"
-								           placeholder="Nombres" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="apellido1sele" name="apellido1"
+										           placeholder="Primer Apellido" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="apellido1sele" name="apellido1"
-								           placeholder="Primer Apellido" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="apellido2sele" name="apellido2"
+										           placeholder="Segundo Apellido" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="apellido2sele" name="apellido2"
-								           placeholder="Segundo Apellido" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="telefonosele" name="telefono"
+										           placeholder="Teléfono" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="telefonosele" name="telefono"
-								           placeholder="Teléfono" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccionsele" name="direccion"
+										           placeholder="Dirección" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="direccionsele" name="direccion"
-								           placeholder="Dirección" readonly>
-								        </div>   
-								  	</div>
-						        	
+										</div>
+									</div>	
 								</div>
-							</div>	
-						</div>
 
-						<div class="col-md-6">
+								<div class="col-md-6">
+									<div class="panel panel-default panel-margen1">
+				    					<div class="panel-body">
 
-							<div class="panel panel-default">
-		    					<div class="panel-body">
+				    						<div class="form-group">
+										    	<label class="control-label col-md-4" for="correo">CORREO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="correosele" name="correo"
+										           placeholder="Correo" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="barriosele" name="barrio"
-								           placeholder="Barrio" readonly>
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="barriosele" name="barrio"
+										           placeholder="Barrio" readonly>
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="ocupacion">OCUPACIÓN</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="ocupacionsele" name="ocupacion"
-								           placeholder="Ocupación">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="ocupacion">OCUPACIÓN</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="ocupacionsele" name="ocupacion"
+										           placeholder="Ocupación">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="telefono_trabajo">TELÉFONO TRABAJO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="telefono_trabajosele" name="telefono_trabajo"
-								           placeholder="Teléfono Trabajo">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="telefono_trabajo">TELÉFONO TRABAJO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="telefono_trabajosele" name="telefono_trabajo"
+										           placeholder="Teléfono Trabajo">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-								    	<label class="control-label col-md-4" for="direccion_trabajo">DIRECCIÓN TRABAJO</label>
-								    	<div class="col-md-7">
-								    		<input type="text" class="form-control" id="direccion_trabajosele" name="direccion_trabajo"
-								           placeholder="Dirección Trabajo">
-								        </div>   
-								  	</div>
+										  	<div class="form-group">
+										    	<label class="control-label col-md-4" for="direccion_trabajo">DIRECCIÓN TRABAJO</label>
+										    	<div class="col-md-7">
+										    		<input type="text" class="form-control" id="direccion_trabajosele" name="direccion_trabajo"
+										           placeholder="Dirección Trabajo">
+										        </div>   
+										  	</div>
 
-								  	<div class="form-group">
-										<label class="control-label col-md-4" for="estado_acudiente">ESTADO</label>
-										<div class="col-md-7">
-											<select class="form-control" id="estado_acudientesele" name="estado_acudiente">
-													<option value="Activo">Activo</option>
-													<option value="Inactivo">Inactivo</option>
-											</select>
-										</div>	
-									</div>
+										  	<div class="form-group">
+												<label class="control-label col-md-4" for="estado_acudiente">ESTADO</label>
+												<div class="col-md-7">
+													<select class="form-control" id="estado_acudientesele" name="estado_acudiente">
+															<option value="Activo">Activo</option>
+															<option value="Inactivo">Inactivo</option>
+													</select>
+												</div>	
+											</div>
 
+										</div>
+									</div>	
 								</div>
-							</div>	
-						</div>
+							</div>
+							
+				        </form>		
+				    </div>
+				</div>        
 
-					</div>
-					
-		        </form>
+	      	</div>
+			<div class="modal-footer">
+	        	<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+	        	<div class="col-sm-offset-4 col-sm-4">
+	        		<button type="submit" name="btn_actualizar_acudiente" id="btn_actualizar_acudiente" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+	        	</div>
+	      	</div>
+	    </div>
 
-		        <div class="form-group">
-					<div class="col-sm-offset-4 col-sm-4">
-		        		<button type="submit" name="btn_actualizar_acudiente" id="btn_actualizar_acudiente" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-		        	</div>
-		        </div>		
-
-		    </div>
-		</div>        
-
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+ 	</div>
 </div>

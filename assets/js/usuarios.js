@@ -218,7 +218,7 @@ function inicio(){
 			correo:{
 				required: true,
 				email: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -521,7 +521,7 @@ function validar_identificacion_personaU(valor){
 }
 
 
-function validar_rol(valor){
+function validar_rolU(valor){
 
 	$.ajax({
 		url:base_url+"usuarios_controller/validar_rol",

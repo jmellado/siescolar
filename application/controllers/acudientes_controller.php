@@ -23,10 +23,12 @@ class Acudientes_controller extends CI_Controller {
 	public function insertar(){
 
 		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+		$this->form_validation->set_rules('tipo_id', 'Tipo Identificación', 'required|max_length[2]');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido2', 'Segundo Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
 
@@ -45,34 +47,38 @@ class Acudientes_controller extends CI_Controller {
         	//obtengo el ultimo id de personas + 1 
         	$ultimo_id = $this->acudientes_model->obtener_ultimo_id();
 
-        	$identificacion = $this->input->post('identificacion');
-        	$nombres = $this->input->post('nombres');
-        	$apellido1 = $this->input->post('apellido1');
-        	$apellido2 = $this->input->post('apellido2');
-        	$telefono = $this->input->post('telefono');
-        	$direccion = $this->input->post('direccion');
-        	$barrio = $this->input->post('barrio');
-        	$ocupacion = $this->input->post('ocupacion');
-        	$telefono_trabajo = $this->input->post('telefono_trabajo');
-        	$direccion_trabajo = $this->input->post('direccion_trabajo');
+        	$identificacion = trim($this->input->post('identificacion'));
+        	$tipo_id = $this->input->post('tipo_id');
+        	$nombres = ucwords(strtolower(trim($this->input->post('nombres'))));
+        	$apellido1 = ucwords(strtolower(trim($this->input->post('apellido1'))));
+        	$apellido2 = ucwords(strtolower(trim($this->input->post('apellido2'))));
+        	$telefono = trim($this->input->post('telefono'));
+        	$correo = trim($this->input->post('correo'));
+        	$direccion = ucwords(strtolower(trim($this->input->post('direccion'))));
+        	$barrio = ucwords(strtolower(trim($this->input->post('barrio'))));
+        	$ocupacion = ucwords(strtolower(trim($this->input->post('ocupacion'))));
+        	$telefono_trabajo = trim($this->input->post('telefono_trabajo'));
+        	$direccion_trabajo = ucwords(strtolower(trim($this->input->post('direccion_trabajo'))));
 
         	//array para insertar en la tabla personas----------
         	$acudiente = array(
 			'id_persona' =>$ultimo_id,
 			'identificacion' =>$identificacion,
-			'nombres' =>ucwords(strtolower($nombres)),
-			'apellido1' =>ucwords(strtolower($apellido1)),
-			'apellido2' =>ucwords(strtolower($apellido2)),
+			'tipo_id' =>$tipo_id,
+			'nombres' =>$nombres,
+			'apellido1' =>$apellido1,
+			'apellido2' =>$apellido2,
 			'telefono' =>$telefono,
-			'direccion' =>ucwords(strtolower($direccion)),
-			'barrio' =>ucwords(strtolower($barrio)));
+			'email' =>$correo,
+			'direccion' =>$direccion,
+			'barrio' =>$barrio);
 
 			//array para insertar en la tabla acudientes----------
         	$acudiente2 = array(
 			'id_persona' =>$ultimo_id,
-			'ocupacion' =>ucwords(strtolower($ocupacion)),
+			'ocupacion' =>$ocupacion,
 			'telefono_trabajo' =>$telefono_trabajo,
-			'direccion_trabajo' =>ucwords(strtolower($direccion_trabajo)));
+			'direccion_trabajo' =>$direccion_trabajo);
 
 			//aqui creamos el username de un estudiante
 			$user = strtolower(substr($nombres, 0, 2));
@@ -115,9 +121,9 @@ class Acudientes_controller extends CI_Controller {
 							//array para insertar en la tabla acudientes----------
 				        	$acudiente2 = array(
 							'id_persona' =>$id_persona,
-							'ocupacion' =>ucwords(strtolower($ocupacion)),
+							'ocupacion' =>$ocupacion,
 							'telefono_trabajo' =>$telefono_trabajo,
-							'direccion_trabajo' =>ucwords(strtolower($direccion_trabajo)));
+							'direccion_trabajo' =>$direccion_trabajo);
 
 							//aqui creamos el username de un estudiante
 							$user = strtolower(substr($nombres, 0, 2));
@@ -153,9 +159,9 @@ class Acudientes_controller extends CI_Controller {
 						//array para insertar en la tabla acudientes----------
 			        	$acudiente2 = array(
 						'id_persona' =>$id_persona,
-						'ocupacion' =>ucwords(strtolower($ocupacion)),
+						'ocupacion' =>$ocupacion,
 						'telefono_trabajo' =>$telefono_trabajo,
-						'direccion_trabajo' =>ucwords(strtolower($direccion_trabajo)));
+						'direccion_trabajo' =>$direccion_trabajo);
 
 						//aqui creamos el username de un estudiante
 						$user = strtolower(substr($nombres, 0, 2));
@@ -196,9 +202,9 @@ class Acudientes_controller extends CI_Controller {
 						//array para insertar en la tabla acudientes----------
 			        	$acudiente2 = array(
 						'id_persona' =>$id_persona,
-						'ocupacion' =>ucwords(strtolower($ocupacion)),
+						'ocupacion' =>$ocupacion,
 						'telefono_trabajo' =>$telefono_trabajo,
-						'direccion_trabajo' =>ucwords(strtolower($direccion_trabajo)));
+						'direccion_trabajo' =>$direccion_trabajo);
 
 						//aqui creamos el username de un estudiante
 						$user = strtolower(substr($nombres, 0, 2));
@@ -342,35 +348,40 @@ class Acudientes_controller extends CI_Controller {
     public function modificar(){
 
     	$id_persona = $this->input->post('id_persona');
-    	$identificacion = $this->input->post('identificacion');
-    	$nombres = $this->input->post('nombres');
-    	$apellido1 = $this->input->post('apellido1');
-    	$apellido2 = $this->input->post('apellido2');
-    	$telefono = $this->input->post('telefono');
-    	$direccion = $this->input->post('direccion');
-    	$barrio = $this->input->post('barrio');
-    	$ocupacion = $this->input->post('ocupacion');
-    	$telefono_trabajo = $this->input->post('telefono_trabajo');
-    	$direccion_trabajo = $this->input->post('direccion_trabajo');
+    	$identificacion = trim($this->input->post('identificacion'));
+    	$tipo_id = $this->input->post('tipo_id');
+    	$nombres = ucwords(strtolower(trim($this->input->post('nombres'))));
+    	$apellido1 = ucwords(strtolower(trim($this->input->post('apellido1'))));
+    	$apellido2 = ucwords(strtolower(trim($this->input->post('apellido2'))));
+    	$telefono = trim($this->input->post('telefono'));
+    	$correo = trim($this->input->post('correo'));
+    	$direccion = ucwords(strtolower(trim($this->input->post('direccion'))));
+    	$barrio = ucwords(strtolower(trim($this->input->post('barrio'))));
+    	$ocupacion = ucwords(strtolower(trim($this->input->post('ocupacion'))));
+    	$telefono_trabajo = trim($this->input->post('telefono_trabajo'));
+    	$direccion_trabajo = ucwords(strtolower(trim($this->input->post('direccion_trabajo'))));
     	$estado_acudiente = $this->input->post('estado_acudiente');
+
 
     	//array para insertar en la tabla personas----------
     	$acudiente = array(
 		'id_persona' =>$id_persona,
 		'identificacion' =>$identificacion,
-		'nombres' =>ucwords(strtolower($nombres)),
-		'apellido1' =>ucwords(strtolower($apellido1)),
-		'apellido2' =>ucwords(strtolower($apellido2)),
+		'tipo_id' =>$tipo_id,
+		'nombres' =>$nombres,
+		'apellido1' =>$apellido1,
+		'apellido2' =>$apellido2,
 		'telefono' =>$telefono,
-		'direccion' =>ucwords(strtolower($direccion)),
-		'barrio' =>ucwords(strtolower($barrio)));
+		'email' =>$correo,
+		'direccion' =>$direccion,
+		'barrio' =>$barrio);
 
 		//array para insertar en la tabla acudientes----------
     	$acudiente2 = array(
 		'id_persona' =>$id_persona,
-		'ocupacion' =>ucwords(strtolower($ocupacion)),
+		'ocupacion' =>$ocupacion,
 		'telefono_trabajo' =>$telefono_trabajo,
-		'direccion_trabajo' =>ucwords(strtolower($direccion_trabajo)),
+		'direccion_trabajo' =>$direccion_trabajo,
 		'estado_acudiente' =>$estado_acudiente);
 
 		//aqui creamos el username de un estudiante
