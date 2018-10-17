@@ -178,6 +178,7 @@ class Imprimir_model extends CI_Model {
 	public function validar_existencia_estudiantes($id_curso){
 
 		$this->db->where('id_curso',$id_curso);
+		$this->db->where('estado_matricula',"Activo");
 		$query = $this->db->get('matriculas');
 
 		if ($query->num_rows() > 0) {
@@ -393,6 +394,7 @@ class Imprimir_model extends CI_Model {
 	public function EstudiantesMatriculadosPorCurso($id_curso){
 
 		$this->db->where('matriculas.id_curso',$id_curso);
+		$this->db->where('matriculas.estado_matricula',"Activo");
 
 		$this->db->order_by('personas.apellido1', 'asc');
 		$this->db->order_by('personas.apellido2', 'asc');

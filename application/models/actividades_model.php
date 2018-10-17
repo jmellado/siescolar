@@ -144,6 +144,7 @@ class Actividades_model extends CI_Model {
 	public function EstudiantesMatriculadosPorCurso($id_curso){
 
 		$this->db->where('matriculas.id_curso',$id_curso);
+		$this->db->where('matriculas.estado_matricula',"Activo");
 
 		$this->db->order_by('personas.apellido1', 'asc');
 		$this->db->order_by('personas.apellido2', 'asc');

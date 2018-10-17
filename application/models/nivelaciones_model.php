@@ -91,6 +91,7 @@ class Nivelaciones_model extends CI_Model {
 
 		$this->db->where('matriculas.id_curso',$id_curso);
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.estado_matricula',"Activo");
 
 		$this->db->order_by('personas.apellido1', 'asc');
 		$this->db->order_by('personas.apellido2', 'asc');
@@ -285,6 +286,7 @@ class Nivelaciones_model extends CI_Model {
 	public function buscar_nivelacion($id,$inicio = FALSE,$cantidad = FALSE){
 
 		$this->db->like('est.identificacion',$id,'after');
+		$this->db->or_like('est.nombres',$id,'after');
 		$this->db->or_like('est.apellido1',$id,'after');
 		$this->db->or_like('est.apellido2',$id,'after');
 		$this->db->or_like('grados.nombre_grado',$id,'after');

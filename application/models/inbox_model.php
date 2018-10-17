@@ -10,6 +10,7 @@ class Inbox_model extends CI_Model {
 
 		$this->db->where('matriculas.id_curso',$id_curso);
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.estado_matricula',"Activo");
 		
 		$this->db->where("(personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
 
