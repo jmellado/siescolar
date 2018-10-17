@@ -40,6 +40,23 @@ class Matriculas_model extends CI_Model {
 
 	}
 
+	public function validar_existencia_pensum($id_curso,$ano_lectivo){
+
+		$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
+
+		$this->db->where('id_grado',$id_grado);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$query = $this->db->get('pensum');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
 	public function buscar_matricula($id,$inicio = FALSE,$cantidad = FALSE){
 
 		$this->db->like('personas.identificacion',$id,'after');
@@ -351,6 +368,11 @@ class Matriculas_model extends CI_Model {
     public function llenar_acudientes(){
 
     	$this->db->where('acudientes.estado_acudiente',"Activo");
+
+    	$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+		
 		$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
 		$query = $this->db->get('personas');
 		return $query->result();

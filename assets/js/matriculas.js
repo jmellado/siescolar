@@ -25,6 +25,8 @@ function inicio(){
 						$("#form_matriculas")[0].reset();
 						$("#identificacion").val("");
 						bloquear_cajas_texto();
+						llenarcombo_cursos($("#jornadaMT").val(),null);
+						llenarcombo_acudientes("");
 
 					}
 					else if(respuesta==="registronoguardado"){
@@ -39,14 +41,20 @@ function inicio(){
 						
 
 					}
+					else if(respuesta==="pensumnoexiste"){
+						
+						toastr.warning('Estudiante No Matriculado; No Se Encontro Un Pensum Para El Grado Al Que Aspira.', 'Success Alert', {timeOut: 3000});
+						
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrarmatriculas("",1,5);
-					llenarcombo_cursos($("#jornadaMT").val(),null);
-					llenarcombo_acudientes("");
+					//llenarcombo_cursos($("#jornadaMT").val(),null);
+					//llenarcombo_acudientes("");
 						
 				}
 

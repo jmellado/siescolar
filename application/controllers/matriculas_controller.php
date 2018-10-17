@@ -93,36 +93,43 @@ class Matriculas_controller extends CI_Controller {
 
 			if ($this->matriculas_model->validar_existencia($id_estudiante,$ano_lectivo)){
 
-				$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud,$estado,$historial,$id_estudiante);
+				if ($this->matriculas_model->validar_existencia_pensum($id_curso,$ano_lectivo)){
 
-				if($respuesta==true){
+					$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud,$estado,$historial,$id_estudiante);
 
-					echo "registroguardado";
+					if($respuesta==true){
 
-					//*******************************matricular materias********************************************
-					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
+						echo "registroguardado";
 
-					$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
+						//*******************************matricular materias********************************************
+						$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
 
-					if ($asignaturas_grados != false) {
+						$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
 
-						for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+						if ($asignaturas_grados != false) {
+
+							for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
 
 
-							$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
+								$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
 
-							if($resp == false){
-								echo "no se pudo registrar en la tabla notas";
+								if($resp == false){
+									echo "no se pudo registrar en la tabla notas";
+								}
+								
 							}
-							
 						}
-					}
-					//*************************************************************************************************
+						//*************************************************************************************************
 
+					}
+					else{
+
+						echo "registronoguardado";
+					}
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "pensumnoexiste";
 				}
 
 			}
