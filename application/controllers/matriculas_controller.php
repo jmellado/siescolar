@@ -852,4 +852,126 @@ class Matriculas_controller extends CI_Controller {
 
 	}
 
+
+	//******************* FUNCIONES PARA RETIRAR ESTUDIANTES *********************
+
+
+	public function retirar_estudiante()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'matriculas/retirar_estudiante_vista');
+	}
+
+
+	public function llenarcombo_cursosRT(){
+
+    	$jornada = $this->input->post('jornada');
+
+    	$consulta = $this->matriculas_model->llenar_cursosRT($jornada);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_estudiantesRT(){
+
+    	$id_curso = $this->input->post('id_curso');
+
+    	$consulta = $this->matriculas_model->llenar_estudiantesRT($id_curso);
+    	echo json_encode($consulta);
+    }
+
+
+    public function insertar_retiro(){
+
+        $this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
+        $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
+        $this->form_validation->set_rules('observaciones', 'Observaciones', 'required|alpha_spaces|min_length[1]|max_length[500]');
+        $this->form_validation->set_rules('fecha_retiro', 'Fecha Retiro', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	//obtengo el ultimo id de nivelaciones + 1 
+        	$id_retiro = $this->matriculas_model->obtener_ultimo_idretiro();
+        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	$id_estudiante = $this->input->post('id_estudiante');
+        	$id_curso = $this->input->post('id_curso');
+        	$observaciones = ucwords(strtolower(trim($this->input->post('observaciones'))));
+        	$fecha_retiro = $this->input->post('fecha_retiro');
+        	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
+
+        	//array para insertar en la tabla retiros
+        	$retiro = array(
+        	'id_retiro' =>$id_retiro,	
+			'ano_lectivo' =>$ano_lectivo,
+			'id_estudiante' =>$id_estudiante,
+			'id_curso' =>$id_curso,
+			'observaciones' =>$observaciones,
+			'fecha_retiro' =>$fecha_retiro,
+			'fecha_registro' =>$fecha_registro);
+
+			//array para actualizar el estado del estudiante en la tabla estudiantes
+			$estado = array(
+			'estado_estudiante' =>"Retirado",
+			'fecha_estado' =>$fecha_registro);
+
+			//array para insertar en la tabla historial estados
+			$historial = array(
+        	'id_persona' =>$id_estudiante,	
+			'estado' =>"Retirado",
+			'observaciones' =>"Estudiante Retirado.",
+			'fecha_estado' =>$fecha_registro,
+			'ano_lectivo' =>$ano_lectivo);
+
+			//array para actualizar el estado de la matricula del estudiante
+			$estado_matricula = array(
+			'estado_matricula' =>"Inactiva");
+
+			
+			$respuesta = $this->matriculas_model->insertar_retiro($retiro,$estado,$historial,$estado_matricula,$id_estudiante,$id_curso,$ano_lectivo);
+
+			if($respuesta == true){
+
+				echo "registroguardado";
+			}
+			else{
+
+				echo "registronoguardado";
+			}
+
+        }
+
+	}
+
+
+	public function mostrarretiros(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'retiros' => $this->matriculas_model->buscar_retiro($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->matriculas_model->buscar_retiro($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
 }

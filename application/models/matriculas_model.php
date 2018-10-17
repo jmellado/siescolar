@@ -960,6 +960,122 @@ class Matriculas_model extends CI_Model {
 
 		return $data;
 	}
+
+
+	//******************* FUNCIONES PARA RETIRAR ESTUDIANTES *********************
 	
+
+	//llenar el combo con todos los cursos de una respectiva jornada
+	public function llenar_cursosRT($jornada){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
+	}
+
+
+	public function llenar_estudiantesRT($id_curso){
+
+		$this->db->where('matriculas.id_curso',$id_curso);
+		$this->db->where('matriculas.estado_matricula',"Activo");
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
+
+	}
+
+
+	public function obtener_ultimo_idretiro(){
+
+		$this->db->select_max('id_retiro');
+		$query = $this->db->get('retiros');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['id_retiro'];
+        return $data['query'];
+	}
+
+
+	public function insertar_retiro($retiro,$estado,$historial,$estado_matricula,$id_estudiante,$id_curso,$ano_lectivo){
+
+		$this->db->trans_start();
+		$this->db->insert('retiros', $retiro);
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->update('estudiantes', $estado);
+
+		$this->db->insert('historial_estados', $historial);
+		$this->db->trans_complete();
+
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('id_curso',$id_curso);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->update('matriculas', $estado_matricula);
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+	}
+
+
+	public function buscar_retiro($id,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->like('est.identificacion',$id,'after');
+		$this->db->or_like('est.nombres',$id,'after');
+		$this->db->or_like('est.apellido1',$id,'after');
+		$this->db->or_like('est.apellido2',$id,'after');
+		$this->db->or_like('grados.nombre_grado',$id,'after');
+		$this->db->or_like('grupos.nombre_grupo',$id,'after');
+		$this->db->or_like('cursos.jornada',$id,'after');
+		$this->db->or_like('retiros.fecha_retiro',$id,'after');
+		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+
+		$this->db->order_by('retiros.ano_lectivo', 'desc');
+		$this->db->order_by('retiros.fecha_registro', 'desc');
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('cursos', 'retiros.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('personas as est', 'retiros.id_estudiante = est.id_persona');
+		$this->db->join('anos_lectivos', 'retiros.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->select('retiros.id_retiro,retiros.ano_lectivo,retiros.id_estudiante,retiros.id_curso,retiros.observaciones,retiros.fecha_retiro,retiros.fecha_registro,est.identificacion as identificacionest,est.nombres as nombresest,est.apellido1 as apellido1est,est.apellido2 as apellido2est,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('retiros');
+
+		return $query->result();
+		
+	}
 
 }

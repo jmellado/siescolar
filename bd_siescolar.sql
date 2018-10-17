@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2018 a las 06:41:22
+-- Tiempo de generación: 17-10-2018 a las 21:07:09
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(1, '2018-10-11 04:40:20');
+(1, '2018-10-17 19:06:18');
 
 -- --------------------------------------------------------
 
@@ -410,9 +410,9 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedencia`, `grado_cursado`, `anio`, `estado_estudiante`, `fecha_estado`) VALUES
-(2, 'ninguna', 'manuela beltran', 'Primero', '2007', 'Inscrito', '2018-10-03'),
-(3, 'ninguna', 'cotez queruz', 'Quinto', '2007', 'Inscrito', '2018-10-03'),
-(4, 'ninguna', 'la esperanza', 'Quinto', '2008', 'Inscrito', '2018-10-03');
+(3, 'ninguna', 'manuela beltran', 'Primero', '2007', 'Inscrito', '2018-10-03'),
+(4, 'ninguna', 'cotez queruz', 'Quinto', '2007', 'Inscrito', '2018-10-03'),
+(5, 'ninguna', 'la esperanza', 'Quinto', '2008', 'Inscrito', '2018-10-03');
 
 -- --------------------------------------------------------
 
@@ -446,9 +446,9 @@ CREATE TABLE `estudiantes_padres` (
 --
 
 INSERT INTO `estudiantes_padres` (`idestudiantes_padres`, `id_estudiante`, `id_padre`, `id_madre`) VALUES
-(1, 2, 1, 1),
-(2, 3, 2, 2),
-(3, 4, 3, 3);
+(1, 3, 1, 1),
+(2, 4, 2, 2),
+(3, 5, 3, 3);
 
 --
 -- Disparadores `estudiantes_padres`
@@ -542,9 +542,9 @@ CREATE TABLE `historial_estados` (
 --
 
 INSERT INTO `historial_estados` (`id_historial`, `id_persona`, `estado`, `observaciones`, `fecha_estado`, `ano_lectivo`) VALUES
-(1, 2, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
-(2, 3, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
-(3, 4, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1);
+(1, 3, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
+(2, 4, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
+(3, 5, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1);
 
 -- --------------------------------------------------------
 
@@ -2028,12 +2028,12 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `departamento_nacimiento`, `municipio_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`) VALUES
 (1, '0902-73301', 'cc', '2017-04-10', 20, 404, 'Siescolar', ' ', ' ', 'm', '2017-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza'),
-(2, '1065', 'ti', '2000-04-10', 20, 404, 'Julio Cesar', 'Frias', 'Bossa', 'm', '2000-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
-(3, '1066', 'ti', '1990-05-05', 20, 404, 'Hugo Mairon', 'Sosa', 'Amaya', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
-(4, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian Andres', 'Romero', 'Villa', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
-(5, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
-(6, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona'),
-(7, '0901-72200', 'cc', '2018-01-25', 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco');
+(2, '0901-72200', 'cc', '2018-01-25', 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco'),
+(3, '1065', 'ti', '2000-04-10', 20, 404, 'Julio Cesar', 'Frias', 'Bossa', 'm', '2000-04-10', 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal'),
+(4, '1066', 'ti', '1990-05-05', 20, 404, 'Hugo Mairon', 'Sosa', 'Amaya', 'm', '1990-05-05', 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha'),
+(5, '1067', 'ti', '1998-06-06', 20, 404, 'Sebastian Andres', 'Romero', 'Villa', 'm', '1998-06-06', 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza'),
+(6, '323', 'cc', '1990-06-07', 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia'),
+(7, '324', 'cc', '1990-05-10', 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona');
 
 -- --------------------------------------------------------
 
@@ -2055,8 +2055,24 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`id_persona`, `perfil`, `escalafon`, `fecha_inicio`, `tipo_contrato`, `estado_profesor`) VALUES
-(5, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo'),
-(6, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo');
+(6, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo'),
+(7, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `retiros`
+--
+
+CREATE TABLE `retiros` (
+  `id_retiro` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `observaciones` varchar(500) NOT NULL,
+  `fecha_retiro` date NOT NULL,
+  `fecha_registro` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2162,12 +2178,12 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `password`, `acceso`, `token`) VALUES
 (1, 1, 1, 'siescolar', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(2, 2, 2, 'jfirias', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(3, 3, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(4, 4, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(5, 5, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(6, 6, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(7, 1, 5, 'adminvotante', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL);
+(2, 2, 5, 'adminvotante', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(3, 3, 2, 'jfirias', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(4, 4, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(5, 5, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(6, 6, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
+(7, 7, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -2458,6 +2474,12 @@ ALTER TABLE `profesores`
   ADD PRIMARY KEY (`id_persona`);
 
 --
+-- Indices de la tabla `retiros`
+--
+ALTER TABLE `retiros`
+  ADD PRIMARY KEY (`id_retiro`);
+
+--
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
@@ -2682,6 +2704,11 @@ ALTER TABLE `pensum`
 --
 ALTER TABLE `personas`
   MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT de la tabla `retiros`
+--
+ALTER TABLE `retiros`
+  MODIFY `id_retiro` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
