@@ -21,7 +21,7 @@ function inicio(){
 					
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+						toastr.success('Logro Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						//$("#form_logros")[0].reset();
 						$("#descripcion_logro").val("");
 						//llenarcombo_grados_profesor($id_persona,null);
@@ -30,19 +30,19 @@ function inicio(){
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+						toastr.error('Logro No Registrado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
-					else if(respuesta==="grado ya existe"){
+					else if(respuesta==="logroyaexiste"){
 						
-						toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
+						toastr.warning('El Logro Ya Se Encuentra Registrado.', 'Success Alert', {timeOut: 5000});
 							
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrarlogros("",1,5);
@@ -333,7 +333,7 @@ function mostrarlogros(valor,pagina,cantidad){
 				if (registros.logros.length > 0) {
 
 					for (var i = 0; i < registros.logros.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td style='display:none'>"+registros.logros[i].descripcion_logro+"</td><td>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td>"+registros.logros[i].nombres+[" "]+registros.logros[i].apellido1+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td>"+registros.logros[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.logros[i].id_logro+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.logros[i].id_logro+"><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td style='display:none'>"+registros.logros[i].descripcion_logro+"</td><td>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td>"+registros.logros[i].nombres+[" "]+registros.logros[i].apellido1+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td>"+registros.logros[i].nombre_ano_lectivo+"</td><td><a class='btn btn-success' href="+registros.logros[i].id_logro+" title='Ver y/o Actualizar Logro'><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.logros[i].id_logro+" title='Eliminar Logro'><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_logros tbody").html(html);
@@ -442,8 +442,27 @@ function actualizar_logro(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_logro").modal('hide');
-				//toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
+
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Logro Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Logro No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else if(respuesta==="logroasignado"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Este Logro; Actualmente Se Encuentra Asignado A Un Estudiante.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
+
 				$("#form_logros_actualizar")[0].reset();
 
 				mostrarlogros("",1,5);

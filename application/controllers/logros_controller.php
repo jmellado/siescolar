@@ -95,7 +95,7 @@ class Logros_controller extends CI_Controller {
 			}
 			else{
 
-				echo "logro ya existe";
+				echo "logroyaexiste";
 			}
 
         }
@@ -215,24 +215,23 @@ class Logros_controller extends CI_Controller {
 
         if(is_numeric($id_logro)){
 
-	    	//if($this->logros_model->validar_existencia($nombre_logro,$ano_lectivo)){
+	    	if($this->logros_model->ValidarExistencia_LogroAsignado($id_logro)){
 
 	        	$respuesta=$this->logros_model->modificar_logro($id_logro,$logro);
 
 	        	if($respuesta==true){
 
-	        		echo "registro actualizado";
+	        		echo "registroactualizado";
 
 	        	}else{
 
-	        		echo "registro no se pudo actualizar";
+	        		echo "registronoactualizado";
 	        	}
 
-	        //}else{
+	        }else{
 
-	        	//echo "logro ya existe";
-
-	        //}
+	        	echo "logroasignado";
+	        }
 
         }else{
             
