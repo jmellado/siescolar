@@ -291,9 +291,9 @@ class Inbox_model extends CI_Model {
 		//array sencillo para los tokens
 		$tokens = array();
 
-		for ($i=0; $i < count($destinatario) ; $i++) {
+		//for ($i=0; $i < count($destinatario) ; $i++) {
 
-			$id_acudiente = $this->inbox_model->consultar_acudiente($destinatario[$i]);
+			$id_acudiente = $this->inbox_model->consultar_acudiente($destinatario);
 
 			$this->db->where('usuarios.id_rol',4);
 			$this->db->where('usuarios.id_persona',$id_acudiente);
@@ -305,7 +305,7 @@ class Inbox_model extends CI_Model {
 			$row = $query->result_array();
 
 			$tokens[] = $row[0]['token'];
-		}
+		//}
 		
 		//array con los token de los dispositvos a los cuales va ir dirgido la notificacion
 		return $tokens;
