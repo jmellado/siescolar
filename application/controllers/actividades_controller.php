@@ -48,7 +48,7 @@ class Actividades_controller extends CI_Controller {
         	$fecha = $this->actividades_model->obtener_fecha_actual();
 
         	$id_actividad = $ultimo_id;
-        	$descripcion_actividad = $this->input->post('descripcion_actividad');
+        	$descripcion_actividad = ucwords(mb_strtolower(trim($this->input->post('descripcion_actividad'))));
         	$id_profesor = $this->input->post('id_profesor');
         	$id_curso = $this->input->post('id_curso');
         	$id_asignatura = $this->input->post('id_asignatura');
@@ -58,7 +58,7 @@ class Actividades_controller extends CI_Controller {
         	//array para insertar en la tabla seguimientos disciplinarios
         	$actividad = array(
         	'id_actividad' =>$id_actividad,
-        	'descripcion_actividad' =>ucwords(strtolower(trim($descripcion_actividad))),
+        	'descripcion_actividad' =>$descripcion_actividad,
         	'id_profesor' =>$id_profesor,
         	'id_curso' =>$id_curso,
         	'id_asignatura' =>$id_asignatura,
@@ -152,13 +152,13 @@ class Actividades_controller extends CI_Controller {
         }
         else{
 
-        	$descripcion_actividad = $this->input->post('descripcion_actividad');
+        	$descripcion_actividad = ucwords(mb_strtolower(trim($this->input->post('descripcion_actividad'))));
         	$id_actividad = $this->input->post('id_actividad');
 
         	//array para insertar en la tabla seguimientos disciplinarios
         	$actividad = array(
         	'id_actividad' =>$id_actividad,
-        	'descripcion_actividad' =>ucwords(strtolower(trim($descripcion_actividad))));
+        	'descripcion_actividad' =>$descripcion_actividad);
 
 			
 			$respuesta = $this->actividades_model->modificar_actividad($id_actividad,$actividad);

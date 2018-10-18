@@ -54,7 +54,7 @@ class Logros_controller extends CI_Controller {
 
         	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-        	$descripcion_logro = $this->input->post('descripcion_logro');
+        	$descripcion_logro = ucwords(mb_strtolower(trim($this->input->post('descripcion_logro'))));
         	$periodo = $this->input->post('periodo');
         	$id_profesor = $this->input->post('id_persona');
         	$id_grado = $this->input->post('id_grado');
@@ -181,7 +181,7 @@ class Logros_controller extends CI_Controller {
     	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
     	$id_logro = $this->input->post('id_logro');
-    	$descripcion_logro = $this->input->post('descripcion_logro');
+    	$descripcion_logro = ucwords(mb_strtolower(trim($this->input->post('descripcion_logro'))));
         $periodo = $this->input->post('periodo');
         $id_profesor = $this->input->post('id_persona');
         $id_grado = $this->input->post('id_grado');
