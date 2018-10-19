@@ -209,7 +209,7 @@
 
 							<div class="col-md-4">
 								<label for="id_grado">GRADO</label>
-								<div id="grados_logros1">
+								<div id="grados_logros11">
 									<select class="form-control" id="id_grado_logrossele" name="id_grado">
 												    
 									</select>
@@ -218,7 +218,7 @@
 
 							<div class="col-md-4">
 								<label for="id_asignatura">ASIGNATURA</label>
-								<div id="asignaturas_logros1">
+								<div id="asignaturas_logros11">
 									<select class="form-control" id="id_asignatura_logrossele" name="id_asignatura">
 												    
 									</select>
@@ -236,6 +236,8 @@
 								<label for="descripcion_logro">DESCRIPCION LOGRO</label>
 								<textarea class="form-control" name="descripcion_logro" id="descripcion_logrosele" cols="60" rows="4" placeholder="Descripcion logro" style="resize:none"></textarea>
 							</div>
+
+							<input type="hidden" class="form-control" id="ano_lectivologrossele" name="ano_lectivo">
 						</div>
 					</div>		
 

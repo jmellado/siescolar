@@ -123,10 +123,10 @@ function inicio(){
 		id_personasele = $(this).parent().parent().children("td:eq(5)").text();
 		id_gradosele = $(this).parent().parent().children("td:eq(6)").text();
 		id_asignaturasele = $(this).parent().parent().children("td:eq(8)").text();
-		//ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(10)").text();
 
-		llenarcombo_grados_profesor(id_personasele,id_gradosele);
-		llenarcombo_asignaturas_profesor(id_personasele,id_gradosele,id_asignaturasele);
+		llenarcombo_grados_profesor_actualizar(id_personasele,id_gradosele);
+		llenarcombo_asignaturas_profesor_actualizar(id_personasele,id_gradosele,id_asignaturasele);
 
 		$("#id_logrosele").val(id_logrosele);
         $("#nombre_logrosele").val(nombre_logrosele);
@@ -136,7 +136,7 @@ function inicio(){
         $("#periodosele").val(periodosele);
         $("#id_grado_logrossele").val(id_gradosele);
         $("#id_asignatura_logrossele").val(id_asignaturasele);
-        
+        $("#ano_lectivologrossele").val(ano_lectivosele);
 
 	});
 
@@ -144,12 +144,12 @@ function inicio(){
     $("#btn_actualizar_logro").click(function(event){
 
     	if($("#form_logros_actualizar").valid()==true){
-       	actualizar_logro();
-       	//bloquear_cajas_texto();
+       		actualizar_logro();
+       		//bloquear_cajas_texto();
 
-       }
-       else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+       	}
+       	else{
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_logros_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
@@ -168,13 +168,23 @@ function inicio(){
     $("#id_grado_logrossele").change(function(){
     	id_grado = $(this).val();
     	id_persona = $("#id_personasele").val();
-    	llenarcombo_asignaturas_profesor(id_persona,id_grado,null);
+    	llenarcombo_asignaturas_profesor_actualizar(id_persona,id_grado,null);
     	
     });
 
 
+    $("#modal_agregar_logro").on('hidden.bs.modal', function () {
+        $("#form_logros")[0].reset();
+        var validator = $("#form_logros").validate();
+        validator.resetForm();
+    });
 
 
+    $("#modal_actualizar_logro").on('hidden.bs.modal', function () {
+        $("#form_logros_actualizar")[0].reset();
+        var validator2 = $("#form_logros_actualizar").validate();
+        validator2.resetForm();
+    });
 
 
 	$("#form_logros").validate({
@@ -494,6 +504,62 @@ function llenarcombo_asignaturas_profesor(valor,valor2,valor3){
 				};
 				
 				$("#asignaturas_logros1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_grados_profesor_actualizar(valor,valor2){
+
+	$.ajax({
+		url:base_url+"logros_controller/llenarcombo_grados_profesor",
+		type:"post",
+		data:{id_persona:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_grado"]==valor2){
+						html +="<option value="+registros[i]["id_grado"]+" selected>"+registros[i]["nombre_grado"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_grado"]+">"+registros[i]["nombre_grado"]+"</option>";
+					}
+				};
+				
+				$("#grados_logros11 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_asignaturas_profesor_actualizar(valor,valor2,valor3){
+
+	$.ajax({
+		url:base_url+"logros_controller/llenarcombo_asignaturas_profesor",
+		type:"post",
+		data:{id_persona:valor,id_grado:valor2},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_asignatura"]==valor3){
+						html +="<option value="+registros[i]["id_asignatura"]+" selected>"+registros[i]["nombre_asignatura"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_asignatura"]+">"+registros[i]["nombre_asignatura"]+"</option>";
+					}
+				};
+				
+				$("#asignaturas_logros11 select").html(html);
 		}
 
 	});

@@ -242,26 +242,20 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="id_grado">GRADO</label>
-									<div id="grados_logros1">
-										<select class="form-control" id="id_grado_logrossele" name="id_grado">
-													    
-										</select>
-									</div>
+									<input type="text" class="form-control" id="gradologrossele" name="grado" disabled>
 								</div>
-							</div>	
+							</div>
+							<input type="hidden" class="form-control" id="id_grado_logrossele" name="id_grado">	
 
 							<input type="hidden" class="form-control" id="id_personasele" name="id_persona">
 
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="id_asignatura">ASIGNATURA</label>
-									<div id="asignaturas_logros1">
-										<select class="form-control" id="id_asignatura_logrossele" name="id_asignatura">
-													    
-										</select>
-									</div>
+									<input type="text" class="form-control" id="asignaturalogrossele" name="asignatura" disabled>
 								</div>
-							</div>	
+							</div>
+							<input type="hidden" class="form-control" id="id_asignatura_logrossele" name="id_asignatura">	
 							
 						</div>
 
@@ -271,6 +265,8 @@
 								<textarea class="form-control" name="descripcion_logro" id="descripcion_logrosele" cols="60" rows="4" placeholder="Describir logro.." style="resize:none"></textarea>
 							</div>
 						</div>
+
+						<input type="hidden" class="form-control" id="ano_lectivologrossele" name="ano_lectivo">
 					</div>	
 					
 		        </form>

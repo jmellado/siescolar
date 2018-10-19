@@ -120,11 +120,13 @@ function inicio(){
 		periodosele = $(this).parent().parent().children("td:eq(4)").text();
 		id_personasele = $(this).parent().parent().children("td:eq(5)").text();
 		id_gradosele = $(this).parent().parent().children("td:eq(7)").text();
+		gradologrossele = $(this).parent().parent().children("td:eq(8)").text();
 		id_asignaturasele = $(this).parent().parent().children("td:eq(9)").text();
-		//ano_lectivosele = $(this).parent().parent().children("td:eq(4)").text();
+		asignaturalogrossele = $(this).parent().parent().children("td:eq(10)").text();
+		ano_lectivosele = $(this).parent().parent().children("td:eq(11)").text();
 
-		llenarcombo_grados_profesor(id_personasele,id_gradosele);
-		llenarcombo_asignaturas_profesor(id_personasele,id_gradosele,id_asignaturasele);
+		//llenarcombo_grados_profesor(id_personasele,id_gradosele);
+		//llenarcombo_asignaturas_profesor(id_personasele,id_gradosele,id_asignaturasele);
 
 		$("#id_logrosele").val(id_logrosele);
         $("#nombre_logrosele").val(nombre_logrosele);
@@ -133,8 +135,10 @@ function inicio(){
         $("#id_personasele").val(id_personasele);
         $("#periodosele").val(periodosele);
         $("#id_grado_logrossele").val(id_gradosele);
+        $("#gradologrossele").val(gradologrossele);
         $("#id_asignatura_logrossele").val(id_asignaturasele);
-        
+        $("#asignaturalogrossele").val(asignaturalogrossele);
+        $("#ano_lectivologrossele").val(ano_lectivosele);
 
 	});
 
@@ -142,13 +146,13 @@ function inicio(){
     $("#btn_actualizar_logro").click(function(event){
 
     	if($("#form_logros_actualizar").valid()==true){
-       	actualizar_logro();
-       	//bloquear_cajas_texto();
+       		actualizar_logro();
+       		//bloquear_cajas_texto();
 
-       }
-       else{
-			alert("formulario incorrecto");
-			alert($("#form_logros_actualizar").validate().numberOfInvalids()+"errores");
+       	}
+       	else{
+
+			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
 		}
 		
        

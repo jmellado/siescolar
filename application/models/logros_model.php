@@ -36,6 +36,12 @@ class Logros_model extends CI_Model {
 		$this->db->or_like('asignaturas.nombre_asignatura',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 
+		$this->db->order_by('logros.ano_lectivo', 'desc');
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}

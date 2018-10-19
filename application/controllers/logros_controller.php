@@ -178,14 +178,13 @@ class Logros_controller extends CI_Controller {
 
     public function modificar(){
 
-    	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
-
     	$id_logro = $this->input->post('id_logro');
     	$descripcion_logro = ucwords(mb_strtolower(trim($this->input->post('descripcion_logro'))));
         $periodo = $this->input->post('periodo');
         $id_profesor = $this->input->post('id_persona');
         $id_grado = $this->input->post('id_grado');
         $id_asignatura = $this->input->post('id_asignatura');
+        $ano_lectivo = $this->input->post('ano_lectivo');
         $row = $this->logros_model->obtener_secuencia_logro($id_logro);
 
         if($row[0]['periodo'] == $periodo && $row[0]['id_asignatura'] == $id_asignatura && $row[0]['id_grado'] == $id_grado){
