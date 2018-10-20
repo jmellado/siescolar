@@ -59,7 +59,7 @@ function inicio(){
 		}else{
 
 			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
-			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+			bloquear_CampoAnoLectivoCG();
 		}
 
 	});
