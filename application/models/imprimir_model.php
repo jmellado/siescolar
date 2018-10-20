@@ -469,6 +469,8 @@ class Imprimir_model extends CI_Model {
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		
 		$query = $this->db->get('matriculas');
 
 		if ($query->num_rows() > 0) {
@@ -651,6 +653,8 @@ class Imprimir_model extends CI_Model {
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
 		$query = $this->db->get('matriculas');
 
 		if ($query->num_rows() > 0) {

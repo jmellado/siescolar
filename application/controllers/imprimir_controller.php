@@ -749,6 +749,7 @@ class Imprimir_controller extends CI_Controller {
 		$identificacion = $est[0]['identificacion'];
 		$grado = $est[0]['nombre_grado'];
 		$jornada = $est[0]['jornada'];
+		$nombre_ano_lectivo = $est[0]['nombre_ano_lectivo'];
 
 		if ($est[0]['tipo_id'] == "cc") {
 			$tipo_id = "cédula de ciudadania";
@@ -833,7 +834,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl = '';
 	        $tbl .= '<br /><br /><br />';
 	        $tbl .= '<p align="center"><b>H A C E &nbsp;&nbsp;C O N S T A R:<br /></b></p>';
-	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.substr($fecha_actual, 6).').<br /></p>';
+	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.$nombre_ano_lectivo.').<br /></p>';
 
 	        $tbl .= '<p>Para mayor constancia se firma la presente en el Corregimiento de Sempegua Municipio de Chimichagua Cesar a los '.$fecha_letra.'.<br /><br /><br /><br /></p>';
 	        $tbl .= '<p>Cordialmente,<br /><br /><br /><br /></p>';
@@ -937,6 +938,7 @@ class Imprimir_controller extends CI_Controller {
 		$id_grado = $est[0]['id_grado'];
 		$grado = $est[0]['nombre_grado'];
 		$jornada = $est[0]['jornada'];
+		$nombre_ano_lectivo = $est[0]['nombre_ano_lectivo'];
 
 		if ($est[0]['tipo_id'] == "cc") {
 			$tipo_id = "cédula de ciudadania";
@@ -1024,7 +1026,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl = '';
 	        $tbl .= '<br />';
 	        $tbl .= '<p align="center"><b>CERTIFICA:</b><br /></p>';
-	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y aprobó en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.substr($fecha_actual, 6).') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
+	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y aprobó en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.$nombre_ano_lectivo.') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
 
 	        $tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
 	        $tbl .= '<tr>
