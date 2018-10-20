@@ -155,6 +155,12 @@ class Cursos_model extends CI_Model {
 
 	public function llenar_directores(){
 
+		$this->db->where('profesores.estado_profesor','Activo');
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
 		$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');
 		$query = $this->db->get('personas');
 		return $query->result();
