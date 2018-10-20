@@ -33,7 +33,7 @@
 									<div class="col-md-offset-2 col-md-4">
 										<div class="form-group">
 											<label for="jornada">JORNADA</label>
-											<select class="form-control" id="jornadaA" name="jornada">
+											<select class="form-control" id="jornadaPA" name="jornada">
 												<option value="Mañana">Mañana</option>
 												<option value="Tarde">Tarde</option>
 												<option value="Noche">Noche</option>
@@ -46,7 +46,7 @@
 										<div class="form-group">
 											<label for="id_curso">CURSO</label>
 											<div id="cursos_planillaA1">
-												<select class="form-control" id="id_cursoA" name="id_curso">
+												<select class="form-control" id="id_cursoPA" name="id_curso">
 															    
 												</select>
 											</div>

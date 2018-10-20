@@ -66,12 +66,12 @@ function inicio(){
 
 	//*********************************************** FUNCIONES PARA IMPRIMIR PLANILLAS *************************************************
 
-	llenarcombo_cursosA($("#jornadaA").val());
+	llenarcombo_cursosPA($("#jornadaPA").val());
 
 
-	$("#jornadaA").change(function(){
+	$("#jornadaPA").change(function(){
     	jornada = $(this).val();
-    	llenarcombo_cursosA(jornada);
+    	llenarcombo_cursosPA(jornada);
     });
 
 
@@ -79,8 +79,8 @@ function inicio(){
 
     	if($("#form_planillasA").valid()==true){
 
-    		jornada = $("#jornadaA").val();
-    		id_curso = $("#id_cursoA").val();
+    		jornada = $("#jornadaPA").val();
+    		id_curso = $("#id_cursoPA").val();
     		window.open(base_url+'imprimir_controller/generar_planilla_asistencia'+'?id_curso='+id_curso+'&jornada='+jornada, '_blank');
 
        	}
@@ -376,7 +376,7 @@ function llenarcombo_cursosB(jornada){
 //*********************************************** FUNCIONES PARA IMPRIMIR PLANILLAS *************************************************
 
 
-function llenarcombo_cursosA(jornada){
+function llenarcombo_cursosPA(jornada){
 
 	$.ajax({
 		url:base_url+"imprimir_controller/llenarcombo_cursos",
