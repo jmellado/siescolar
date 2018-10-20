@@ -122,6 +122,8 @@ function inicio(){
 		hora_inicio_eleccionsele = $(this).parent().parent().children("td:eq(5)").text();
 		fecha_fin_eleccionsele = $(this).parent().parent().children("td:eq(6)").text();
 		hora_fin_eleccionsele = $(this).parent().parent().children("td:eq(7)").text();
+		ano_lectivoeleccionsele = $(this).parent().parent().children("td:eq(8)").text();
+		anolectivoeleccionsele = $(this).parent().parent().children("td:eq(9)").text();
 		estado_eleccionsele = $(this).parent().parent().children("td:eq(10)").text();
 		
 		$("#id_eleccionsele").val(id_eleccionsele);
@@ -131,6 +133,7 @@ function inicio(){
         $("#hora_inicio_eleccionsele").val(hora_inicio_eleccionsele);
         $("#fecha_fin_eleccionsele").val(fecha_fin_eleccionsele);
         $("#hora_fin_eleccionsele").val(hora_fin_eleccionsele);
+        $("#ano_lectivoeleccionsele").val(ano_lectivoeleccionsele);
         $("#estado_eleccionsele").val(estado_eleccionsele);
 
 	});
@@ -284,13 +287,13 @@ function mostrarelecciones(valor,pagina,cantidad){
 				if (registros.elecciones.length > 0) {
 
 					for (var i = 0; i < registros.elecciones.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.elecciones[i].id_eleccion+"</td><td>"+registros.elecciones[i].nombre_eleccion+"</td><td style='display:none'>"+registros.elecciones[i].descripcion+"</td><td>"+registros.elecciones[i].fecha_inicio+"</td><td>"+registros.elecciones[i].hora_inicio+"</td><td>"+registros.elecciones[i].fecha_fin+"</td><td>"+registros.elecciones[i].hora_fin+"</td><td style='display:none'>"+registros.elecciones[i].ano_lectivo+"</td><td style='display:none'>"+registros.elecciones[i].nombre_ano_lectivo+"</td><td>"+registros.elecciones[i].estado_eleccion+"</td><td><a class='btn btn-success' href="+registros.elecciones[i].id_eleccion+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.elecciones[i].id_eleccion+"><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.elecciones[i].id_eleccion+"</td><td>"+registros.elecciones[i].nombre_eleccion+"</td><td style='display:none'>"+registros.elecciones[i].descripcion+"</td><td>"+registros.elecciones[i].fecha_inicio+"</td><td>"+registros.elecciones[i].hora_inicio+"</td><td>"+registros.elecciones[i].fecha_fin+"</td><td>"+registros.elecciones[i].hora_fin+"</td><td style='display:none'>"+registros.elecciones[i].ano_lectivo+"</td><td>"+registros.elecciones[i].nombre_ano_lectivo+"</td><td>"+registros.elecciones[i].estado_eleccion+"</td><td><a class='btn btn-success' href="+registros.elecciones[i].id_eleccion+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.elecciones[i].id_eleccion+"><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_elecciones tbody").html(html);
 				}
 				else{
-					html ="<tr><td colspan='9'><p style='text-align:center'>No Hay Elecciones Creadas..</p></td></tr>";
+					html ="<tr><td colspan='10'><p style='text-align:center'>No Hay Elecciones Creadas..</p></td></tr>";
 					$("#lista_elecciones tbody").html(html);
 				}
 

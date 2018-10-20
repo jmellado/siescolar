@@ -47,7 +47,10 @@ class Elecciones_model extends CI_Model {
 
 		//$this->db->where('elecciones.ano_lectivo',$ano_lectivo);
 
-		$this->db->where("(elecciones.nombre_eleccion LIKE '".$id."%' OR elecciones.estado_eleccion LIKE '".$id."%' OR elecciones.fecha_inicio LIKE '".$id."%' OR elecciones.fecha_fin LIKE '".$id."%')", NULL, FALSE);
+		$this->db->where("(elecciones.nombre_eleccion LIKE '".$id."%' OR elecciones.estado_eleccion LIKE '".$id."%' OR elecciones.fecha_inicio LIKE '".$id."%' OR elecciones.fecha_fin LIKE '".$id."%' OR anos_lectivos.nombre_ano_lectivo LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('elecciones.ano_lectivo', 'desc');
+		$this->db->order_by('elecciones.nombre_eleccion', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);

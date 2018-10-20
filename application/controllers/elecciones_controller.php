@@ -92,7 +92,7 @@ class Elecciones_controller extends CI_Controller {
         	$candidato_voto_blanco = array(
         	'id_candidato_eleccion' => $id_candidato_eleccion,
         	'id_eleccion' =>$id_eleccion,	
-			'id_estudiante' =>"7",
+			'id_estudiante' =>"2",
 			'numero' =>"00",
 			'partido' =>"En Blanco",
 			'estado_candidato' =>"Activo");
@@ -203,7 +203,7 @@ class Elecciones_controller extends CI_Controller {
     	$hora_inicio = $this->input->post('hora_inicio');
     	$fecha_fin = $this->input->post('fecha_fin');
     	$hora_fin = $this->input->post('hora_fin');
-    	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+    	$ano_lectivo = $this->input->post('ano_lectivo');
     	$estado_eleccion = $this->input->post('estado_eleccion');
 
     	//array para modificar en la tabla elecciones
@@ -215,6 +215,7 @@ class Elecciones_controller extends CI_Controller {
 		'hora_inicio' =>$hora_inicio,
 		'fecha_fin' =>$fecha_fin,
 		'hora_fin' =>$hora_fin,
+		'ano_lectivo' =>$ano_lectivo,
 		'estado_eleccion' =>$estado_eleccion);
 
 		$elecciones = $this->elecciones_model->obtener_informacion_eleccion($id_eleccion);

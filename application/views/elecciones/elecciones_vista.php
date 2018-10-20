@@ -78,8 +78,9 @@
 								<th><i class='fa fa-file-text-o'></i>&nbsp;Nombre</th>
 								<th><i class='fa fa-calendar-plus-o'></i>&nbsp;Fecha Inicio</th>
 								<th><i class='fa fa-clock-o'></i>&nbsp;Hora Inicio</th>
-								<th><i class='fa fa-calendar-times-o'></i>&nbsp;Fecha Fin</th>
+								<th><i class='fa fa-calendar-minus-o'></i>&nbsp;Fecha Fin</th>
 								<th><i class='fa fa-clock-o'></i>&nbsp;Hora Fin</th>
+								<th><i class='fa fa-calendar-times-o'></i>&nbsp;Año lectivo</th>
 								<th><i class='fa fa-shield'></i>&nbsp;Estado</th>
 								<th></th>
 								<th></th>
@@ -87,7 +88,7 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<td colspan='9'></td>
+								<td colspan='10'></td>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -241,6 +242,8 @@
 							<input type="time" class="form-control" id="hora_fin_eleccionsele" name="hora_fin">
 						</div>
 					</div>
+
+					<input type="hidden" class="form-control" id="ano_lectivoeleccionsele" name="ano_lectivo">
 
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="estado_grado">ESTADO</label>
