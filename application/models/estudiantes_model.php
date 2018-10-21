@@ -102,18 +102,33 @@ class Estudiantes_model extends CI_Model {
 	}
 
 
-	public function eliminar_estudiante($id){
+	public function eliminar_estudiante($id_persona){
 
-     	$this->db->where('id_persona',$id);
-		$consulta = $this->db->delete('usuarios');
-       	if($consulta==true){
+       	$this->db->trans_start();
+       	$this->db->where('id_persona',$id_persona);
+		$this->db->delete('usuarios');
 
-           return true;
-       	}
-       	else{
+		$this->db->where('id_persona',$id_persona);
+		$this->db->delete('estudiantes');
 
-           return false;
-       	}
+		$this->db->where('id_estudiante',$id_persona);
+		$this->db->delete('estudiantes_padres');
+
+		$this->db->where('id_persona',$id_persona);
+		$this->db->delete('historial_estados');
+
+		$this->db->where('id_persona',$id_persona);
+		$this->db->delete('personas');
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
     }
 
 
