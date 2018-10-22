@@ -68,6 +68,17 @@
 										  	</div>
 
 										  	<div class="form-group">
+							  					<label class="control-label col-md-3" for="pais_expedicion">PAIS DE EXPEDICIÓN</label>
+							  					<div class="col-md-7">
+								  					<div id="pais_expedicion1">
+								  						<select class="form-control" id="pais_expedicion" name="pais_expedicion">
+								    
+								  						</select>
+								  					</div>
+								  				</div>		
+											</div>
+
+										  	<div class="form-group">
 							  					<label class="control-label col-md-3" for="departamento_expedicion">DPTO. DE EXPEDICIÓN</label>
 							  					<div class="col-md-7">
 								  					<div id="departamento_expedicion1">
@@ -119,7 +130,7 @@
 										  	</div>
 
 										  	<div class="form-group">
-												<label class="control-label col-md-3" for="sexo">SEXO:</label>
+												<label class="control-label col-md-3" for="sexo">SEXO</label>
 												<div class="col-md-4">
 													 <select class="form-control" id="sexo" name="sexo">
 													 	<option value="m">Masculino</option>
@@ -141,6 +152,17 @@
 										    		<input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
 										    	</div>	
 										  	</div>
+
+										  	<div class="form-group">
+							  					<label class="control-label col-md-3" for="pais_nacimiento">PAIS DE NACIMIENTO</label>
+							  					<div class="col-md-7">
+								  					<div id="pais_nacimiento1">
+								  						<select class="form-control" id="pais_nacimiento" name="pais_nacimiento">
+								    
+								  						</select>
+								  					</div>
+								  				</div>		
+											</div>
 
 										  	<div class="form-group">
 							  					<label class="control-label col-md-3" for="departamento_nacimiento">DPTO. DE NACIMIENTO</label>
@@ -267,6 +289,63 @@
 					                </div> 
 					            </div>
 
+					            <div class="col-md-6">
+					                <div class="panel panel-default">
+					                    <div class="panel-body">
+
+					                    	<div class="form-group">
+							  					<label class="control-label col-md-3" for="pais_residencia">PAIS DE RESIDENCIA</label>
+							  					<div class="col-md-7">
+								  					<div id="pais_residencia1">
+								  						<select class="form-control" id="pais_residencia" name="pais_residencia">
+								    
+								  						</select>
+								  					</div>
+								  				</div>		
+											</div>
+
+										  	<div class="form-group">
+							  					<label class="control-label col-md-3" for="departamento_residencia">DPTO. DE RESIDENCIA</label>
+							  					<div class="col-md-7">
+								  					<div id="departamento_residencia1">
+								  						<select class="form-control" id="departamento_residencia" name="departamento_residencia">
+								    
+								  						</select>
+								  					</div>
+								  				</div>		
+											</div>
+
+											<div class="form-group">
+											 	<label class="control-label col-md-3" for="municipio_residencia">MUNICIPIO DE RESIDENCIA</label>
+											 	<div class="col-md-7">
+												 	<div id="municipio_residencia1">
+														<select class="form-control" id="municipio_residencia" name="municipio_residencia">
+													    
+														</select>
+													</div>
+												</div>	
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-md-3" for="estrato">ESTRATO</label>
+												<div class="col-md-4">
+													<select class="form-control" id="estrato" name="estrato">
+														<option value=""></option>
+														<option value="1">Uno</option>
+									  					<option value="2">Dos</option>
+									  					<option value="3">Tres</option>
+									  					<option value="4">Cuatro</option>
+									  					<option value="5">Cinco</option>
+									  					<option value="6">Seis</option>
+									  					<option value="7">Siete</option>
+									  					<option value="0">No Estratificado</option>
+													 </select>
+												</div>		 
+											</div>
+										  	
+					                    </div>
+					                </div> 
+					            </div>
 					        </div> 
 					           
 	              		</div>

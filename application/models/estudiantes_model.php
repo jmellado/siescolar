@@ -55,10 +55,15 @@ class Estudiantes_model extends CI_Model {
 		}
 
 		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');  //nada mas add is line
+		$this->db->join('paises', 'personas.pais_expedicion = paises.id_pais');
 		$this->db->join('departamentos', 'personas.departamento_expedicion = departamentos.id_departamento');  //nada mas add is line
 		$this->db->join('municipios', 'personas.municipio_expedicion = municipios.id_municipio');  //nada mas add is line
+		$this->db->join('paises as p', 'personas.pais_nacimiento = p.id_pais');
 		$this->db->join('departamentos as d', 'personas.departamento_nacimiento = d.id_departamento');  //nada mas add is line
 		$this->db->join('municipios as m', 'personas.municipio_nacimiento = m.id_municipio');  //nada mas add is line
+		$this->db->join('paises as pr', 'personas.pais_residencia = pr.id_pais');
+		$this->db->join('departamentos as dr', 'personas.departamento_residencia = dr.id_departamento');
+		$this->db->join('municipios as mr', 'personas.municipio_residencia = mr.id_municipio');
 
 		$this->db->join('estudiantes_padres as e_p', 'estudiantes.id_persona = e_p.id_estudiante');
 		$this->db->join('padres', 'e_p.id_padre = padres.id_padre');
@@ -182,8 +187,16 @@ class Estudiantes_model extends CI_Model {
 	}
 
 
-	public function llenar_departamentos(){
+	public function llenar_paises(){
 
+		$query = $this->db->get('paises');
+		return $query->result();
+	}
+
+
+	public function llenar_departamentos($id){
+
+		$this->db->where('id_pais',$id);
 		$query = $this->db->get('departamentos');
 		return $query->result();
 	}

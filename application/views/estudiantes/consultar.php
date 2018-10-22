@@ -5,8 +5,12 @@
 
 	    #myModal .modal-body
 		{
-  			height:490px;
+  			height:440px;
   			overflow:auto;
+		}
+
+		.panel-margen{
+			margin-bottom: 0px;
 		}
 	</style>
 
@@ -57,7 +61,7 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificacion</th>
+									<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificación</th>
 									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres</th>
 									<th><i class='fa fa-file-text-o'></i>&nbsp;1° Apellido</th>
 									<th><i class='fa fa-file-text-o'></i>&nbsp;2° Apellido</th>
@@ -65,7 +69,7 @@
 									<th><i class='fa fa-calendar-o'></i>&nbsp;Fecha Nacimiento</th>
 									<th><i class='fa fa-phone-square'></i>&nbsp;Telefono</th>
 									<th><i class='fa fa-envelope'></i>&nbsp;Correo</th>
-									<th><i class='fa fa-map'></i>&nbsp;Direccion</th>
+									<th><i class='fa fa-map'></i>&nbsp;Dirección</th>
 									<th></th>
 									<th></th>
 								</tr>
@@ -97,7 +101,7 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg" id="tamano">
+  <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -110,7 +114,7 @@
       		<div class="row">
     			<div class="col-md-12">
       				<form class="form-horizontal" role="form" name="" method="post" id="form_estudiantes_actualizar">
-			    		<div class="nav-tabs-custom">
+			    		<div class="nav-tabs-custom panel-margen">
 
 				            <ul class="nav nav-tabs">
 				              <li class="active"><a href="#tab_1" data-toggle="tab"><i class='fa fa-newspaper-o'></i>&nbsp;Datos Personales</a></li>
@@ -160,6 +164,17 @@
 												    		<input type="date" class="form-control" id="fecha_expedicionsele" name="fecha_expedicion">
 												    	</div>	
 												  	</div>
+
+												  	<div class="form-group">
+									  					<label class="control-label col-md-4" for="pais_expedicion">PAIS DE EXPEDICIÓN</label>
+									  					<div class="col-md-7">
+										  					<div id="pais_expedicion1">
+										  						<select class="form-control" id="pais_expedicionsele" name="pais_expedicion">
+										    
+										  						</select>
+										  					</div>
+										  				</div>	
+													</div>
 
 												  	<div class="form-group">
 									  					<label class="control-label col-md-4" for="departamento_expedicion">DPTO. DE EXPEDICIÓN</label>
@@ -212,7 +227,7 @@
 												  	</div>
 
 												  	<div class="form-group">
-														<label class="control-label col-md-4" for="sexo">SEXO:</label>
+														<label class="control-label col-md-4" for="sexo">SEXO</label>
 														<div class="col-md-5">
 															<select class="form-control" id="sexosele" name="sexo">
 														 		<option value="m">Masculino</option>
@@ -234,6 +249,17 @@
 												    		<input type="date" class="form-control" id="fecha_nacimientosele" name="fecha_nacimiento">
 												    	</div>	
 												  	</div>
+
+												  	<div class="form-group">
+									  					<label class="control-label col-md-4" for="pais_nacimiento">PAIS DE NACIMIENTO</label>
+									  					<div class="col-md-7">
+										  					<div id="pais_nacimiento1">
+										  						<select class="form-control" id="pais_nacimientosele" name="pais_nacimiento">
+										    
+										  						</select>
+										  					</div>
+										  				</div>		
+													</div>
 
 												  	<div class="form-group">
 									  					<label class="control-label col-md-4" for="departamento_nacimiento">DPTO. DE NACIMIENTO</label>
@@ -356,6 +382,63 @@
 												           placeholder="Barrio">
 												        </div>   
 												  	</div>
+							                    </div>
+							                </div> 
+							            </div>
+
+							            <div class="col-md-6">
+							                <div class="panel panel-default">
+							                    <div class="panel-body">
+							                    	<div class="form-group">
+									  					<label class="control-label col-md-4" for="pais_residencia">PAIS DE RESIDENCIA</label>
+									  					<div class="col-md-7">
+										  					<div id="pais_residencia1">
+										  						<select class="form-control" id="pais_residenciasele" name="pais_residencia">
+										    
+										  						</select>
+										  					</div>
+										  				</div>		
+													</div>
+
+												  	<div class="form-group">
+									  					<label class="control-label col-md-4" for="departamento_residencia">DPTO. DE RESIDENCIA</label>
+									  					<div class="col-md-7">
+										  					<div id="departamento_residencia1">
+										  						<select class="form-control" id="departamento_residenciasele" name="departamento_residencia">
+										    
+										  						</select>
+										  					</div>
+										  				</div>		
+													</div>
+
+													<div class="form-group">
+													 	<label class="control-label col-md-4" for="municipio_residencia">MUNICIPIO DE RESIDENCIA</label>
+													 	<div class="col-md-7">
+														 	<div id="municipio_residencia1">
+																<select class="form-control" id="municipio_residenciasele" name="municipio_residencia">
+															    
+																</select>
+															</div>
+														</div>		
+													</div>
+
+													<div class="form-group">
+														<label class="control-label col-md-4" for="estrato">ESTRATO</label>
+														<div class="col-md-5">
+															<select class="form-control" id="estratosele" name="estrato">
+																<option value=""></option>
+																<option value="1">Uno</option>
+											  					<option value="2">Dos</option>
+											  					<option value="3">Tres</option>
+											  					<option value="4">Cuatro</option>
+											  					<option value="5">Cinco</option>
+											  					<option value="6">Seis</option>
+											  					<option value="7">Siete</option>
+											  					<option value="0">No Estratificado</option>
+															 </select>
+														</div>		 
+													</div>
+							                    	
 							                    </div>
 							                </div> 
 							            </div>
@@ -634,19 +717,14 @@
 						
 					</form>
 				</div>
-			</div>		
-
-			<div class="row">
-				<div class="col-md-offset-4 col-md-4">
-					<div class="form-group">
-						<button type="submit" name="btn_actualizar" id="btn_actualizar" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-					</div>
-				</div>
-			</div>			
+			</div>					
 			
       	</div>
       	<div class="modal-footer">
         	<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        	<div class="col-md-offset-4 col-md-4">
+				<button type="submit" name="btn_actualizar" id="btn_actualizar" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+			</div>
       	</div>
     </div>
 
