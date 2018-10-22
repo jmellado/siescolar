@@ -3,6 +3,9 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 	mostrarprofesores("",1,5);
+	llenarcombo_paisesP();
+	llenarcombo_paisesNP();
+	llenarcombo_paisesRP();
 	
 	// body...
 	// este metodo permite enviar la inf del formulario
@@ -21,19 +24,19 @@ function inicio(){
 					
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+						toastr.success('Profesor Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_profesores")[0].reset();
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
+						toastr.error('Profesor No Registrado.', 'Success Alert', {timeOut: 5000});
 						
 							
 					}
 					else if(respuesta==="profesoryaexiste"){
 						
-						toastr.warning('Profesor Ya Registrado.', 'Success Alert', {timeOut: 5000});
+						toastr.warning('El Profesor Ya Se Encuentra Registrado.', 'Success Alert', {timeOut: 5000});
 						
 							
 					}
@@ -113,38 +116,71 @@ function inicio(){
 		id_personasele = $(this).attr("href");
 		identificacionsele = $(this).parent().parent().children("td:eq(2)").text();
 		tipo_idsele = $(this).parent().parent().children("td:eq(3)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
-		nombressele = $(this).parent().parent().children("td:eq(4)").text();
-		apellido1sele = $(this).parent().parent().children("td:eq(5)").text();
-		apellido2sele = $(this).parent().parent().children("td:eq(6)").text();
-		sexosele = $(this).parent().parent().children("td:eq(7)").text();
-		fecha_nacimientosele = $(this).parent().parent().children("td:eq(8)").text();
-		telefonosele = $(this).parent().parent().children("td:eq(9)").text();
-		correosele = $(this).parent().parent().children("td:eq(10)").text();
-		direccionsele = $(this).parent().parent().children("td:eq(11)").text();
-		barriosele = $(this).parent().parent().children("td:eq(12)").text();
-		perfilsele = $(this).parent().parent().children("td:eq(13)").text();
-		escalafonsele = $(this).parent().parent().children("td:eq(14)").text();
-		fecha_iniciosele = $(this).parent().parent().children("td:eq(15)").text();
-		tipo_contratosele = $(this).parent().parent().children("td:eq(16)").text();
-		//alert(barriosele);
+		fecha_expedicionsele = $(this).parent().parent().children("td:eq(4)").text();
+		pais_expedicionsele = $(this).parent().parent().children("td:eq(5)").text();
+		departamento_expedicionsele = $(this).parent().parent().children("td:eq(6)").text();
+		municipio_expedicionsele = $(this).parent().parent().children("td:eq(7)").text();
+		nombressele = $(this).parent().parent().children("td:eq(8)").text();
+		apellido1sele = $(this).parent().parent().children("td:eq(9)").text();
+		apellido2sele = $(this).parent().parent().children("td:eq(10)").text();
+		sexosele = $(this).parent().parent().children("td:eq(11)").text();
+		fecha_nacimientosele = $(this).parent().parent().children("td:eq(12)").text();
+		pais_nacimientosele = $(this).parent().parent().children("td:eq(13)").text();
+		departamento_nacimientosele = $(this).parent().parent().children("td:eq(14)").text();
+		municipio_nacimientosele = $(this).parent().parent().children("td:eq(15)").text();
+		telefonosele = $(this).parent().parent().children("td:eq(16)").text();
+		correosele = $(this).parent().parent().children("td:eq(17)").text();
+		direccionsele = $(this).parent().parent().children("td:eq(18)").text();
+		barriosele = $(this).parent().parent().children("td:eq(19)").text();
+		pais_residenciasele = $(this).parent().parent().children("td:eq(20)").text();
+		departamento_residenciasele = $(this).parent().parent().children("td:eq(21)").text();
+		municipio_residenciasele = $(this).parent().parent().children("td:eq(22)").text();
+		estratosele = $(this).parent().parent().children("td:eq(23)").text();
 
-		//llenarcombo_municipios(departamento_expedicionsele);
+		titulosele = $(this).parent().parent().children("td:eq(24)").text();
+		escalafonsele = $(this).parent().parent().children("td:eq(25)").text();
+		fecha_vinculacionsele = $(this).parent().parent().children("td:eq(26)").text();
+		tipo_vinculacionsele = $(this).parent().parent().children("td:eq(27)").text();
+		decretosele = $(this).parent().parent().children("td:eq(28)").text();
+		
+		//alert(barriosele);
+		llenarcombo_departamentosP(pais_expedicionsele,departamento_expedicionsele);
+		llenarcombo_departamentosNP(pais_nacimientosele,departamento_nacimientosele);
+		llenarcombo_departamentosRP(pais_residenciasele,departamento_residenciasele);
+
+		llenarcombo_municipiosP(departamento_expedicionsele,municipio_expedicionsele);
+		llenarcombo_municipiosNP(departamento_nacimientosele,municipio_nacimientosele);
+		llenarcombo_municipiosRP(departamento_residenciasele,municipio_residenciasele);
+
 		$("#id_personasele").val(id_personasele);
         $("#identificacionsele").val(identificacionsele);
         $("#tipo_idsele").val(tipo_idsele);
+        $("#fecha_expedicionsele").val(fecha_expedicionsele);
+        $("#pais_expedicionseleP").val(pais_expedicionsele);
+        $("#departamento_expedicionseleP").val(departamento_expedicionsele);
+        $("#municipio_expedicionseleP").val(municipio_expedicionsele);
         $("#nombressele").val(nombressele);
         $("#apellido1sele").val(apellido1sele);
         $("#apellido2sele").val(apellido2sele);
         $("#sexosele").val(sexosele);
         $("#fecha_nacimientosele").val(fecha_nacimientosele);
+        $("#pais_nacimientoseleP").val(pais_nacimientosele);
+        $("#departamento_nacimientoseleP").val(departamento_nacimientosele);
+        $("#municipio_nacimientoseleP").val(municipio_nacimientosele);
         $("#telefonosele").val(telefonosele);
         $("#correosele").val(correosele);
         $("#direccionsele").val(direccionsele);
         $("#barriosele").val(barriosele);
-        $("#perfilsele").val(perfilsele);
+        $("#pais_residenciaseleP").val(pais_residenciasele);
+        $("#departamento_residenciaseleP").val(departamento_residenciasele);
+        $("#municipio_residenciaseleP").val(municipio_residenciasele);
+        $("#estratosele").val(estratosele);
+
+        $("#titulosele").val(titulosele);
         $("#escalafonsele").val(escalafonsele);
-        $("#fecha_iniciosele").val(fecha_iniciosele);
-        $("#tipo_contratosele").val(tipo_contratosele);
+        $("#fecha_vinculacionsele").val(fecha_vinculacionsele);
+        $("#tipo_vinculacionsele").val(tipo_vinculacionsele);
+        $("#decretosele").val(decretosele);
         //desbloquear_cajas_texto();
 
 	});
@@ -165,6 +201,73 @@ function inicio(){
     });
 
 
+   $("#pais_expedicionP").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosP(id_pais,null);
+    	$("#municipio_expedicionP1 select").html("");
+    });
+
+    $("#departamento_expedicionP").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosP(id_departamento,null);
+    });
+
+    $("#pais_expedicionseleP").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosP(id_pais,null);
+    	$("#municipio_expedicionP1 select").html("");
+    });
+
+    $("#departamento_expedicionseleP").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosP(id_departamento,null);
+    });
+
+    $("#pais_nacimientoP").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosNP(id_pais,null);
+    	$("#municipio_nacimientoP1 select").html("");
+    });
+
+    $("#departamento_nacimientoP").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosNP(id_departamento,null);
+    });
+
+    $("#pais_nacimientoseleP").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosNP(id_pais,null);
+    	$("#municipio_nacimientoP1 select").html("");
+    });
+
+    $("#departamento_nacimientoseleP").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosNP(id_departamento,null);
+    });
+
+    $("#pais_residenciaP").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosRP(id_pais,null);
+    	$("#municipio_residenciaP1 select").html("");
+    });
+
+    $("#departamento_residenciaP").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosRP(id_departamento,null);
+    });
+
+    $("#pais_residenciaseleP").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosRP(id_pais,null);
+    	$("#municipio_residenciaP1 select").html("");
+    });
+
+    $("#departamento_residenciaseleP").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosRP(id_departamento,null);
+    });
+
+
    $("#modal_agregar_profesor").on('hidden.bs.modal', function () {
         $("#form_profesores")[0].reset();
         $("#form_profesores").valid()==true;
@@ -174,6 +277,14 @@ function inicio(){
     $("#modal_actualizar_profesor").on('hidden.bs.modal', function () {
         $("#form_profesores_actualizar")[0].reset();
         $("#form_profesores_actualizar").valid()==true;
+
+        $("#departamento_expedicionP1 select").html("");
+        $("#departamento_nacimientoP1 select").html("");
+        $("#departamento_residenciaP1 select").html("");
+
+        $("#municipio_expedicionP1 select").html("");
+        $("#municipio_nacimientoP1 select").html("");
+        $("#municipio_residenciaP1 select").html("");
     });
 
    	
@@ -191,6 +302,30 @@ function inicio(){
 			tipo_id:{
 				required: true,
 				maxlength: 2
+				
+			},
+
+			fecha_expedicion:{
+				required: true,
+				date: true
+				
+			},
+
+			pais_expedicion:{
+				required: true
+				
+				
+			},
+
+			departamento_expedicion:{
+				required: true
+				
+				
+			},
+
+			municipio_expedicion:{
+				required: true
+				
 				
 			},
 
@@ -227,6 +362,24 @@ function inicio(){
 				
 			},
 
+			pais_nacimiento:{
+				required: true
+				
+				
+			},
+
+			departamento_nacimiento:{
+				required: true
+				
+				
+			},
+
+			municipio_nacimiento:{
+				required: true
+				
+				
+			},
+
 			telefono:{
 				required: true,
 				maxlength: 10,
@@ -253,25 +406,49 @@ function inicio(){
 
 			},
 
-			perfil:{
+			pais_residencia:{
+				required: true
+				
+				
+			},
+
+			departamento_residencia:{
+				required: true
+				
+				
+			},
+
+			municipio_residencia:{
+				required: true
+				
+				
+			},
+
+			estrato:{
 				required: true,
-				maxlength: 40	
+				maxlength: 1
+				
+			},
+
+			titulo:{
+				required: true,
+				maxlength: 100	
 
 			},
 
 			escalafon:{
 				required: true,
-				maxlength: 50	
+				maxlength: 3	
 
 			},
 
-			fecha_inicio:{
+			fecha_vinculacion:{
 				required: true,
 				date: true
 
 			},
 
-			tipo_contrato:{
+			tipo_vinculacion:{
 				required: true,
 				maxlength: 50
 
@@ -300,6 +477,30 @@ function inicio(){
 				
 			},
 
+			fecha_expedicion:{
+				required: true,
+				date: true
+				
+			},
+
+			pais_expedicion:{
+				required: true
+				
+				
+			},
+
+			departamento_expedicion:{
+				required: true
+				
+				
+			},
+
+			municipio_expedicion:{
+				required: true
+				
+				
+			},
+
 			nombres:{
 				required: true,
 				maxlength: 40,
@@ -333,6 +534,24 @@ function inicio(){
 				
 			},
 
+			pais_nacimiento:{
+				required: true
+				
+				
+			},
+
+			departamento_nacimiento:{
+				required: true
+				
+				
+			},
+
+			municipio_nacimiento:{
+				required: true
+				
+				
+			},
+
 			telefono:{
 				required: true,
 				maxlength: 10,
@@ -359,25 +578,49 @@ function inicio(){
 
 			},
 
-			perfil:{
+			pais_residencia:{
+				required: true
+				
+				
+			},
+
+			departamento_residencia:{
+				required: true
+				
+				
+			},
+
+			municipio_residencia:{
+				required: true
+				
+				
+			},
+
+			estrato:{
 				required: true,
-				maxlength: 40	
+				maxlength: 1
+				
+			},
+
+			titulo:{
+				required: true,
+				maxlength: 100	
 
 			},
 
 			escalafon:{
 				required: true,
-				maxlength: 50	
+				maxlength: 3	
 
 			},
 
-			fecha_inicio:{
+			fecha_vinculacion:{
 				required: true,
 				date: true
 
 			},
 
-			tipo_contrato:{
+			tipo_vinculacion:{
 				required: true,
 				maxlength: 50
 
@@ -420,7 +663,7 @@ function mostrarprofesores(valor,pagina,cantidad){
 				if (registros.profesores.length > 0) {
 
 					for (var i = 0; i < registros.profesores.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.profesores[i].id_persona+"</td><td>"+registros.profesores[i].identificacion+"</td><td style='display:none'>"+registros.profesores[i].tipo_id+"</td><td>"+registros.profesores[i].nombres+"</td><td>"+registros.profesores[i].apellido1+"</td><td>"+registros.profesores[i].apellido2+"</td><td>"+registros.profesores[i].sexo+"</td><td>"+registros.profesores[i].fecha_nacimiento+"</td><td>"+registros.profesores[i].telefono+"</td><td>"+registros.profesores[i].email+"</td><td>"+registros.profesores[i].direccion+"</td><td style='display:none'>"+registros.profesores[i].barrio+"</td><td style='display:none'>"+registros.profesores[i].perfil+"</td><td style='display:none'>"+registros.profesores[i].escalafon+"</td><td style='display:none'>"+registros.profesores[i].fecha_inicio+"</td><td style='display:none'>"+registros.profesores[i].tipo_contrato+"</td><td><a class='btn btn-success' href="+registros.profesores[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.profesores[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.profesores[i].id_persona+"</td><td>"+registros.profesores[i].identificacion+"</td><td style='display:none'>"+registros.profesores[i].tipo_id+"</td><td style='display:none'>"+registros.profesores[i].fecha_expedicion+"</td><td style='display:none'>"+registros.profesores[i].pais_expedicion+"</td><td style='display:none'>"+registros.profesores[i].departamento_expedicion+"</td><td style='display:none'>"+registros.profesores[i].municipio_expedicion+"</td><td>"+registros.profesores[i].nombres+"</td><td>"+registros.profesores[i].apellido1+"</td><td>"+registros.profesores[i].apellido2+"</td><td>"+registros.profesores[i].sexo+"</td><td>"+registros.profesores[i].fecha_nacimiento+"</td><td style='display:none'>"+registros.profesores[i].pais_nacimiento+"</td><td style='display:none'>"+registros.profesores[i].departamento_nacimiento+"</td><td style='display:none'>"+registros.profesores[i].municipio_nacimiento+"</td><td>"+registros.profesores[i].telefono+"</td><td>"+registros.profesores[i].email+"</td><td>"+registros.profesores[i].direccion+"</td><td style='display:none'>"+registros.profesores[i].barrio+"</td><td style='display:none'>"+registros.profesores[i].pais_residencia+"</td><td style='display:none'>"+registros.profesores[i].departamento_residencia+"</td><td style='display:none'>"+registros.profesores[i].municipio_residencia+"</td><td style='display:none'>"+registros.profesores[i].estrato+"</td><td style='display:none'>"+registros.profesores[i].titulo+"</td><td style='display:none'>"+registros.profesores[i].escalafon+"</td><td style='display:none'>"+registros.profesores[i].fecha_vinculacion+"</td><td style='display:none'>"+registros.profesores[i].tipo_vinculacion+"</td><td style='display:none'>"+registros.profesores[i].decreto_nombramiento+"</td><td style='display:none'>"+registros.profesores[i].estado_profesor+"</td><td><a class='btn btn-success' href="+registros.profesores[i].id_persona+"><i class='fa fa-edit'></i></a></td><td><button type='button' class='btn btn-danger' value="+registros.profesores[i].id_persona+"><i class='fa fa-trash'></i></button></td></tr>";
 					};
 					
 					$("#lista_profesores tbody").html(html);
@@ -558,5 +801,241 @@ function actualizar_profesor(){
 
 
 	});
+
+}
+
+
+function llenarcombo_paisesP(){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_paises",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_pais"]+">"+registros[i]["nombre_pais"]+"</option>";
+				};
+				
+				$("#pais_expedicionP1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_departamentosP(valor,valor2){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_departamentos",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_departamento"]==valor2){
+						html +="<option value="+registros[i]["id_departamento"]+" selected>"+registros[i]["nombre_departamento"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre_departamento"]+"</option>";
+					}
+				};
+				
+				$("#departamento_expedicionP1 select").html(html);
+		}
+
+	});
+}
+
+function llenarcombo_municipiosP(valor,valor2){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_municipios",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_municipio"]==valor2){
+						html +="<option value="+registros[i]["id_municipio"]+" selected>"+registros[i]["nombre_municipio"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					}
+				};
+				$("#municipio_expedicionP1 select").html(html);
+		}
+
+	});
+
+
+}
+
+
+function llenarcombo_paisesNP(){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_paises",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_pais"]+">"+registros[i]["nombre_pais"]+"</option>";
+				};
+				
+				$("#pais_nacimientoP1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_departamentosNP(valor,valor2){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_departamentos",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if(registros[i]["id_departamento"]==valor2){
+						html +="<option value="+registros[i]["id_departamento"]+" selected>"+registros[i]["nombre_departamento"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre_departamento"]+"</option>";
+					}
+				};
+				
+				$("#departamento_nacimientoP1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_municipiosNP(valor,valor2){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_municipios",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_municipio"]==valor2){
+						html +="<option value="+registros[i]["id_municipio"]+" selected>"+registros[i]["nombre_municipio"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					}
+				};
+				$("#municipio_nacimientoP1 select").html(html);
+		}
+
+	});
+
+
+}
+
+
+function llenarcombo_paisesRP(){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_paises",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_pais"]+">"+registros[i]["nombre_pais"]+"</option>";
+				};
+				
+				$("#pais_residenciaP1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_departamentosRP(valor,valor2){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_departamentos",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if(registros[i]["id_departamento"]==valor2){
+						html +="<option value="+registros[i]["id_departamento"]+" selected>"+registros[i]["nombre_departamento"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre_departamento"]+"</option>";
+					}
+				};
+				
+				$("#departamento_residenciaP1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_municipiosRP(valor,valor2){
+
+	$.ajax({
+		url:base_url+"profesores_controller/llenarcombo_municipios",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_municipio"]==valor2){
+						html +="<option value="+registros[i]["id_municipio"]+" selected>"+registros[i]["nombre_municipio"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					}
+				};
+				$("#municipio_residenciaP1 select").html(html);
+		}
+
+	});
+
 
 }

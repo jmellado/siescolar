@@ -4,13 +4,17 @@
 
         #modal_agregar_profesor .modal-body
         {
-            height:490px;
+            height:440px;
             overflow-y:auto;
         }
         #modal_actualizar_profesor .modal-body
         {
-            height:490px;
+            height:440px;
             overflow-y:auto;
+        }
+
+        .panel-margen{
+            margin-bottom: 0px;
         }
 	</style>
 
@@ -111,207 +115,367 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR PROFESORES</h4>
-      </div>
-      <div class="modal-body">
-        
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR PROFESORES</h4>
+        </div>
 
         <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>profesores_controller/insertar" name="" method="post" id="form_profesores">
+            <div class="modal-body">
+            
+                <div class="nav-tabs-custom panel-margen">
 
-            <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab_1" data-toggle="tab"><i class='fa fa-newspaper-o'></i>&nbsp;Datos Personales</a></li>
+                      <li><a href="#tab_2" data-toggle="tab"><i class='fa fa-location-arrow'></i>&nbsp;Datos De Contacto</a></li>
+                      <li><a href="#tab_3" data-toggle="tab"><i class='fa fa-graduation-cap'></i>&nbsp;Datos Académicos</a></li>
+                      <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                    </ul>
 
-                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_1" data-toggle="tab"><i class='fa fa-newspaper-o'></i>&nbsp;Datos Personales</a></li>
-                  <li><a href="#tab_2" data-toggle="tab"><i class='fa fa-location-arrow'></i>&nbsp;Datos De Contacto /&nbsp;&nbsp;<i class='fa fa-caret-right'></i>&nbsp;Otros</a></li>
-                  <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                </ul>
+                    <!--CONTENIDO DE LOS TABS-->
+                    <div class="tab-content">
 
-                <!--CONTENIDO DE LOS TABS-->
-                <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
 
-                    <div class="tab-pane active" id="tab_1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Identificación">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Identificación">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
-                                            <div class="col-md-4">
-                                                <select class="form-control" id="tipo_id" name="tipo_id">
-                                                    <option value="rc">RC</option>
-                                                    <option value="ti">TI</option>
-                                                    <option value="cc">CC</option>
-                                                    <option value="ce">CE</option>
-                                                </select>
-                                            </div>      
-                                        </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" id="tipo_id" name="tipo_id">
+                                                        <option value="rc">RC</option>
+                                                        <option value="ti">TI</option>
+                                                        <option value="cc">CC</option>
+                                                        <option value="ce">CE</option>
+                                                    </select>
+                                                </div>      
+                                            </div>
 
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="fecha_expedicion">FECHA DE EXPEDICIÓN</label>
+                                                <div class="col-md-7">
+                                                    <input type="date" class="form-control" id="fecha_expedicion" name="fecha_expedicion">
+                                                </div>  
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="pais_expedicion">PAIS DE EXPEDICIÓN</label>
+                                                <div class="col-md-7">
+                                                    <div id="pais_expedicionP1">
+                                                        <select class="form-control" id="pais_expedicionP" name="pais_expedicion">
+                                    
+                                                        </select>
+                                                    </div>
+                                                </div>      
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="departamento_expedicion">DPTO. DE EXPEDICIÓN</label>
+                                                <div class="col-md-7">
+                                                    <div id="departamento_expedicionP1">
+                                                        <select class="form-control" id="departamento_expedicionP" name="departamento_expedicion">
+                                    
+                                                        </select>
+                                                    </div>
+                                                </div>      
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="municipio_expedicion">MUNICIPIO DE EXPEDICIÓN</label>
+                                                <div class="col-md-7">
+                                                    <div id="municipio_expedicionP1">
+                                                        <select class="form-control" id="municipio_expedicionP" name="municipio_expedicion">
+                                                        
+                                                        </select>
+                                                    </div>
+                                                </div>  
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="nombres">NOMBRES</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="nombres" name="nombres"
+                                                   placeholder="Nombres">
+                                                </div>   
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="apellido1" name="apellido1"
+                                                   placeholder="Primer apellido">
+                                                </div>   
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="apellido2" name="apellido2"
+                                                   placeholder="Segundo apellido">
+                                                </div>   
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="sexo">SEXO</label>
+                                                <div class="col-md-5">
+                                                     <select class="form-control" id="sexo" name="sexo">
+                                                        <option value="m">Masculino</option>
+                                                        <option value="f">Femenino</option>
+                                                     </select>
+                                                </div>       
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="fecha_nacimiento">FECHA DE NACIMIENTO</label>
+                                                <div class="col-md-7">
+                                                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+                                                </div>  
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="pais_nacimiento">PAIS DE NACIMIENTO</label>
+                                                <div class="col-md-7">
+                                                    <div id="pais_nacimientoP1">
+                                                        <select class="form-control" id="pais_nacimientoP" name="pais_nacimiento">
+                                    
+                                                        </select>
+                                                    </div>
+                                                </div>      
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="departamento_nacimiento">DPTO. DE NACIMIENTO</label>
+                                                <div class="col-md-7">
+                                                    <div id="departamento_nacimientoP1">
+                                                        <select class="form-control" id="departamento_nacimientoP" name="departamento_nacimiento">
+                                    
+                                                        </select>
+                                                    </div>
+                                                </div>      
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="municipio_nacimiento">MUNICIPIO DE NACIMIENTO</label>
+                                                <div class="col-md-7">
+                                                    <div id="municipio_nacimientoP1">
+                                                        <select class="form-control" id="municipio_nacimientoP" name="municipio_nacimiento">
+                                                        
+                                                        </select>
+                                                    </div>
+                                                </div>  
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>        
+
+                        </div>
+
+                        <div class="tab-pane" id="tab_2">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="telefono">TELÉFONO</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="telefono" name="telefono"
+                                                   placeholder="Teléfono">
+                                                </div>   
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="correo">CORREO</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="correo" name="correo"
+                                                   placeholder="Correo">
+                                                </div>   
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="direccion" name="direccion"
+                                                   placeholder="Dirección">
+                                                </div>   
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="barrio">BARRIO</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="barrio" name="barrio"
+                                                   placeholder="Barrio">
+                                                </div>   
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="pais_residencia">PAIS DE RESIDENCIA</label>
+                                                <div class="col-md-7">
+                                                    <div id="pais_residencia1">
+                                                        <select class="form-control" id="pais_residenciaP" name="pais_residencia">
+                                    
+                                                        </select>
+                                                    </div>
+                                                </div>      
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="departamento_residencia">DPTO. DE RESIDENCIA</label>
+                                                <div class="col-md-7">
+                                                    <div id="departamento_residenciaP1">
+                                                        <select class="form-control" id="departamento_residenciaP" name="departamento_residencia">
+                                    
+                                                        </select>
+                                                    </div>
+                                                </div>      
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="municipio_residencia">MUNICIPIO DE RESIDENCIA</label>
+                                                <div class="col-md-7">
+                                                    <div id="municipio_residenciaP1">
+                                                        <select class="form-control" id="municipio_residenciaP" name="municipio_residencia">
+                                                        
+                                                        </select>
+                                                    </div>
+                                                </div>  
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="estrato">ESTRATO</label>
+                                                <div class="col-md-5">
+                                                    <select class="form-control" id="estrato" name="estrato">
+                                                        <option value=""></option>
+                                                        <option value="1">Uno</option>
+                                                        <option value="2">Dos</option>
+                                                        <option value="3">Tres</option>
+                                                        <option value="4">Cuatro</option>
+                                                        <option value="5">Cinco</option>
+                                                        <option value="6">Seis</option>
+                                                        <option value="7">Siete</option>
+                                                        <option value="0">No Estratificado</option>
+                                                     </select>
+                                                </div>       
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
+                        </div>
 
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="nombres">NOMBRES</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="nombres" name="nombres"
-                                               placeholder="Nombres">
-                                            </div>   
+                        <div class="tab-pane" id="tab_3">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="titulo">TÍTULO</label>
+                                                <div class="col-md-7">
+                                                    <!--<input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo">-->
+                                                    <textarea class="form-control" name="titulo" id="titulo" cols="50" rows="3" placeholder="Título" style="resize:none"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="escalafon">ESCALAFON</label>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" id="escalafon" name="escalafon">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="fecha_vinculacion">FECHA DE VINCULACIÓN</label>
+                                                <div class="col-md-7">
+                                                    <input type="date" class="form-control" id="fecha_vinculacion" name="fecha_vinculacion">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="tipo_vinculacion">TIPO DE VINCULACIÓN</label>
+                                                <div class="col-md-7">
+                                                    <select class="form-control" id="tipo_vinculacion" name="tipo_vinculacion">
+                                                        <option value=""></option>
+                                                        <option value="En propiedad">En propiedad</option>
+                                                        <option value="En periodo de prueba">En periodo de prueba</option>
+                                                        <option value="En provisionalidad">En provisionalidad</option>
+                                                        <option value="Encargado">Encargado</option>
+                                                        <option value="Transitorio">Transitorio</option>
+                                                        <option value="Contrato">Contrato</option>
+                                                        <option value="Obra o labor">Obra o labor</option>
+                                                        <option value="Prestacion de servicios">Prestacion de servicios</option>
+                                                        <option value="Aprendizaje">Aprendizaje</option>
+                                                        <option value="Otro">Otro</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="apellido1" name="apellido1"
-                                               placeholder="Primer apellido">
-                                            </div>   
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="apellido2" name="apellido2"
-                                               placeholder="Segundo apellido">
-                                            </div>   
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="sexo">SEXO</label>
-                                            <div class="col-md-5">
-                                                 <select class="form-control" id="sexo" name="sexo">
-                                                    <option value="m">Masculino</option>
-                                                    <option value="f">Femenino</option>
-                                                 </select>
-                                            </div>       
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="fecha_nacimiento">FECHA DE NACIMIENTO</label>
-                                            <div class="col-md-7">
-                                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
-                                            </div>  
-                                        </div>
-
                                     </div>
                                 </div>
-                            </div>
-                        </div>        
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
 
-                    </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4" for="decreto">DECRETO DE NOMBRAMIENTO</label>
+                                                <div class="col-md-7">
+                                                    <textarea class="form-control" name="decreto" id="decreto" cols="50" rows="3" placeholder="Decreto De Nombramiento.." style="resize:none"></textarea>
+                                                </div>
+                                            </div>
 
-                    <div class="tab-pane" id="tab_2">
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="telefono">TELÉFONO</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="telefono" name="telefono"
-                                               placeholder="Teléfono">
-                                            </div>   
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="correo">CORREO</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="correo" name="correo"
-                                               placeholder="Correo">
-                                            </div>   
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="direccion" name="direccion"
-                                               placeholder="Dirección">
-                                            </div>   
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="barrio">BARRIO</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="barrio" name="barrio"
-                                               placeholder="Barrio">
-                                            </div>   
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="perfil">PERFIL</label>
-                                            <div class="col-md-7">
-                                                <input type="text" class="form-control" id="perfil" name="perfil" placeholder="Perfil">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="escalafon">ESCALAFON</label>
-                                            <div class="col-md-3">
-                                                <select class="form-control" id="escalafon" name="escalafon">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="fecha_inicio">FECHA DE INICIO</label>
-                                            <div class="col-md-7">
-                                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4" for="tipo_contrato">TIPO CONTRATO</label>
-                                            <div class="col-md-7">
-                                                <select class="form-control" id="tipo_contrato" name="tipo_contrato">
-                                                    <option value="1">Termino fijo</option>
-                                                    <option value="2">Termino indefinido</option>
-                                                    <option value="3">Obra o labor</option>
-                                                    <option value="4">Prestacion de servicios</option>
-                                                    <option value="5">Aprendizaje</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -319,21 +483,12 @@
                 </div>
 
             </div>
-
-            <div class="row">
-    			<div class="col-md-offset-4 col-md-4"> 
-        			<div class="form-group">
-          				<button type="submit" name="btn_registrar_profesor" id="btn_registrar_profesor" class="btn btn-primary btn-lg btn-block">Registrar</button>
-        			</div>
-     			</div>
+            <div class="modal-footer">
+                <div class="col-md-offset-4 col-md-4"> 
+                    <button type="submit" name="btn_registrar_profesor" id="btn_registrar_profesor" class="btn btn-primary btn-lg btn-block">Registrar</button>
+                </div>
             </div>
-
         </form>
-
-      </div>
-      <!--<div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>-->
     </div>
 
   </div>
@@ -354,11 +509,12 @@
 
         <form class="form-horizontal" role="form" id="form_profesores_actualizar">
 
-            <div class="nav-tabs-custom">
+            <div class="nav-tabs-custom panel-margen">
 
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#tab_11" data-toggle="tab"><i class='fa fa-newspaper-o'></i>&nbsp;Datos Personales</a></li>
-                  <li><a href="#tab_22" data-toggle="tab"><i class='fa fa-location-arrow'></i>&nbsp;Datos De Contacto /&nbsp;&nbsp;<i class='fa fa-caret-right'></i>&nbsp;Otros</a></li>
+                  <li><a href="#tab_22" data-toggle="tab"><i class='fa fa-location-arrow'></i>&nbsp;Datos De Contacto</a></li>
+                  <li><a href="#tab_33" data-toggle="tab"><i class='fa fa-graduation-cap'></i>&nbsp;Datos Académicos</a></li>
                   <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                 </ul>
 
@@ -391,6 +547,46 @@
                                                     <option value="ce">CE</option>
                                                 </select>
                                             </div>      
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="fecha_expedicion">FECHA DE EXPEDICIÓN</label>
+                                            <div class="col-md-7">
+                                                <input type="date" class="form-control" id="fecha_expedicionsele" name="fecha_expedicion">
+                                            </div>  
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="pais_expedicion">PAIS DE EXPEDICIÓN</label>
+                                            <div class="col-md-7">
+                                                <div id="pais_expedicionP1">
+                                                    <select class="form-control" id="pais_expedicionseleP" name="pais_expedicion">
+                                
+                                                    </select>
+                                                </div>
+                                            </div>  
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="departamento_expedicion">DPTO. DE EXPEDICIÓN</label>
+                                            <div class="col-md-7">
+                                                <div id="departamento_expedicionP1">
+                                                    <select class="form-control" id="departamento_expedicionseleP" name="departamento_expedicion">
+                                
+                                                    </select>
+                                                </div>
+                                            </div>  
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="municipio_expedicion">MUNICIPIO DE EXPEDICIÓN</label>
+                                            <div class="col-md-7">
+                                                <div id="municipio_expedicionP1">
+                                                    <select class="form-control" id="municipio_expedicionseleP" name="municipio_expedicion">
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>  
                                         </div>
 
                                     </div>
@@ -440,6 +636,39 @@
                                             <div class="col-md-7">
                                                 <input type="date" class="form-control" id="fecha_nacimientosele" name="fecha_nacimiento">
                                             </div>  
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="pais_nacimiento">PAIS DE NACIMIENTO</label>
+                                            <div class="col-md-7">
+                                                <div id="pais_nacimientoP1">
+                                                    <select class="form-control" id="pais_nacimientoseleP" name="pais_nacimiento">
+                                
+                                                    </select>
+                                                </div>
+                                            </div>      
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="departamento_nacimiento">DPTO. DE NACIMIENTO</label>
+                                            <div class="col-md-7">
+                                                <div id="departamento_nacimientoP1">
+                                                    <select class="form-control" id="departamento_nacimientoseleP" name="departamento_nacimiento">
+                                
+                                                    </select>
+                                                </div>
+                                            </div>      
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="municipio_nacimiento">MUNICIPIO DE NACIMIENTO</label>
+                                            <div class="col-md-7">
+                                                <div id="municipio_nacimientoP1">
+                                                    <select class="form-control" id="municipio_nacimientoseleP" name="municipio_nacimiento">
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>      
                                         </div>
 
                                     </div>
@@ -497,9 +726,73 @@
                                     <div class="panel-body">
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-4" for="perfil">PERFIL</label>
+                                            <label class="control-label col-md-4" for="pais_residencia">PAIS DE RESIDENCIA</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control" id="perfilsele" name="perfil" placeholder="Perfil">
+                                                <div id="pais_residenciaP1">
+                                                    <select class="form-control" id="pais_residenciaseleP" name="pais_residencia">
+                                
+                                                    </select>
+                                                </div>
+                                            </div>      
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="departamento_residencia">DPTO. DE RESIDENCIA</label>
+                                            <div class="col-md-7">
+                                                <div id="departamento_residenciaP1">
+                                                    <select class="form-control" id="departamento_residenciaseleP" name="departamento_residencia">
+                                
+                                                    </select>
+                                                </div>
+                                            </div>      
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="municipio_residencia">MUNICIPIO DE RESIDENCIA</label>
+                                            <div class="col-md-7">
+                                                <div id="municipio_residenciaP1">
+                                                    <select class="form-control" id="municipio_residenciaseleP" name="municipio_residencia">
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>      
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="estrato">ESTRATO</label>
+                                            <div class="col-md-5">
+                                                <select class="form-control" id="estratosele" name="estrato">
+                                                    <option value=""></option>
+                                                    <option value="1">Uno</option>
+                                                    <option value="2">Dos</option>
+                                                    <option value="3">Tres</option>
+                                                    <option value="4">Cuatro</option>
+                                                    <option value="5">Cinco</option>
+                                                    <option value="6">Seis</option>
+                                                    <option value="7">Siete</option>
+                                                    <option value="0">No Estratificado</option>
+                                                 </select>
+                                            </div>       
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane" id="tab_33">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="titulo">TÍTULO</label>
+                                            <div class="col-md-7">
+                                                <textarea class="form-control" name="titulo" id="titulosele" cols="50" rows="3" placeholder="Título" style="resize:none"></textarea>
                                             </div>
                                         </div>
 
@@ -526,21 +819,27 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-4" for="fecha_inicio">FECHA DE INICIO</label>
+                                            <label class="control-label col-md-4" for="fecha_vinculacion">FECHA DE VINCULACIÓN</label>
                                             <div class="col-md-7">
-                                                <input type="date" class="form-control" id="fecha_iniciosele" name="fecha_inicio">
+                                                <input type="date" class="form-control" id="fecha_vinculacionsele" name="fecha_vinculacion">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-4" for="tipo_contrato">TIPO CONTRATO</label>
+                                            <label class="control-label col-md-4" for="tipo_vinculacion">TIPO DE VINCULACIÓN</label>
                                             <div class="col-md-7">
-                                                <select class="form-control" id="tipo_contratosele" name="tipo_contrato">
-                                                    <option value="1">Termino fijo</option>
-                                                    <option value="2">Termino indefinido</option>
-                                                    <option value="3">Obra o labor</option>
-                                                    <option value="4">Prestacion de servicios</option>
-                                                    <option value="5">Aprendizaje</option>
+                                                <select class="form-control" id="tipo_vinculacionsele" name="tipo_vinculacion">
+                                                    <option value=""></option>
+                                                    <option value="En propiedad">En propiedad</option>
+                                                    <option value="En periodo de prueba">En periodo de prueba</option>
+                                                    <option value="En provisionalidad">En provisionalidad</option>
+                                                    <option value="Encargado">Encargado</option>
+                                                    <option value="Transitorio">Transitorio</option>
+                                                    <option value="Contrato">Contrato</option>
+                                                    <option value="Obra o labor">Obra o labor</option>
+                                                    <option value="Prestacion de servicios">Prestacion de servicios</option>
+                                                    <option value="Aprendizaje">Aprendizaje</option>
+                                                    <option value="Otro">Otro</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -548,6 +847,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4" for="decreto">DECRETO DE NOMBRAMIENTO</label>
+                                            <div class="col-md-7">
+                                                <textarea class="form-control" name="decreto" id="decretosele" cols="50" rows="3" placeholder="Decreto De Nombramiento.." style="resize:none"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>            
                         </div>
 
                     </div>
@@ -559,18 +872,13 @@
 	
         </form>
 
-        <div class="row">
-          <div class="col-md-offset-4 col-md-4">
-          	<div class="form-group"> 
-          		<button type="submit" name="btn_actualizar_profesor" id="btn_actualizar_profesor" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-          	</div>
-          </div>
-        </div>
-
       </div>
-      <!--<div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>-->
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <div class="col-md-offset-4 col-md-4">
+            <button type="submit" name="btn_actualizar_profesor" id="btn_actualizar_profesor" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+        </div>
+      </div>
     </div>
 
   </div>

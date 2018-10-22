@@ -37,25 +37,33 @@ class Profesores_model extends CI_Model {
 
 	public function buscar_profesor($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('nombres',$id,'after');
-		$this->db->or_like('apellido1',$id,'after');
-		$this->db->or_like('apellido2',$id,'after');
-		$this->db->or_like('identificacion',$id,'after');
-		$this->db->or_like('sexo',$id,'after');
+		$this->db->like('personas.identificacion',$id,'after');
+		$this->db->or_like('personas.apellido1',$id,'after');
+		$this->db->or_like('personas.apellido2',$id,'after');
+		$this->db->or_like('personas.nombres',$id,'after');
+		$this->db->or_like('personas.sexo',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
 
 		$this->db->join('profesores', 'personas.id_persona = profesores.id_persona');  //nada mas add is line
+		$this->db->join('paises', 'personas.pais_expedicion = paises.id_pais');
+		$this->db->join('departamentos', 'personas.departamento_expedicion = departamentos.id_departamento');
+		$this->db->join('municipios', 'personas.municipio_expedicion = municipios.id_municipio');
+
+		$this->db->join('paises as p', 'personas.pais_nacimiento = p.id_pais');
+		$this->db->join('departamentos as d', 'personas.departamento_nacimiento = d.id_departamento');
+		$this->db->join('municipios as m', 'personas.municipio_nacimiento = m.id_municipio');
+
+		$this->db->join('paises as pr', 'personas.pais_residencia = pr.id_pais');
+		$this->db->join('departamentos as dr', 'personas.departamento_residencia = dr.id_departamento');
+		$this->db->join('municipios as mr', 'personas.municipio_residencia = mr.id_municipio');
+
 		$query = $this->db->get('personas');
 
-		//if ($query->num_rows() > 0) {
-			return $query->result();
-		//}
-		//else{
-			//return false;
-		//}
+
+		return $query->result();
 
 	}
 
@@ -190,6 +198,29 @@ class Profesores_model extends CI_Model {
 			return true;
 		}
 
+	}
+
+
+	public function llenar_paises(){
+
+		$query = $this->db->get('paises');
+		return $query->result();
+	}
+
+
+	public function llenar_departamentos($id){
+
+		$this->db->where('id_pais',$id);
+		$query = $this->db->get('departamentos');
+		return $query->result();
+	}
+	
+
+	public function llenar_municipios($id){
+
+		$this->db->where('id_departamento',$id);
+		$query = $this->db->get('municipios');
+		return $query->result();
 	}
 	
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2018 a las 04:56:52
+-- Tiempo de generación: 22-10-2018 a las 20:06:18
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(1, '2018-10-22 02:56:16');
+(1, '2018-10-22 18:04:44');
 
 -- --------------------------------------------------------
 
@@ -2631,13 +2631,13 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `pais_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `pais_nacimiento`, `departamento_nacimiento`, `municipio_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`, `pais_residencia`, `departamento_residencia`, `municipio_residencia`, `estrato`) VALUES
-(1, '0902-73301', 'cc', '2017-04-10', NULL, 20, 404, 'Siescolar', ' ', ' ', 'm', '2017-04-10', NULL, 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza', NULL, NULL, NULL, NULL),
-(2, '0901-72200', 'cc', '2018-01-25', NULL, 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', NULL, 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco', NULL, NULL, NULL, NULL),
+(1, '0902-73301', 'cc', '2017-04-10', 1, 20, 404, 'Siescolar', ' ', ' ', 'm', '2017-04-10', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza', 1, 20, 404, '1'),
+(2, '0901-72200', 'cc', '2018-01-25', 1, 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco', 1, 20, 404, '1'),
 (3, '1065', 'ti', '2000-04-10', 1, 20, 404, 'Julio Cesar', 'Frias', 'Bossa', 'm', '2000-04-10', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal', 1, 20, 404, '1'),
 (4, '1066', 'ti', '1990-05-05', 1, 20, 404, 'Hugo Mairon', 'Sosa', 'Amaya', 'm', '1990-05-05', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha', 1, 20, 404, '1'),
 (5, '1067', 'ti', '1998-06-06', 1, 20, 404, 'Sebastian Andres', 'Romero', 'Villa', 'm', '1998-06-06', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza', 1, 20, 404, '1'),
-(6, '323', 'cc', '1990-06-07', NULL, 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', NULL, 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia', NULL, NULL, NULL, NULL),
-(7, '324', 'cc', '1990-05-10', NULL, 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', NULL, 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona', NULL, NULL, NULL, NULL);
+(6, '323', 'cc', '1990-06-07', 1, 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia', 1, 20, 404, '1'),
+(7, '324', 'cc', '1990-05-10', 1, 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 1, 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona', 1, 20, 404, '1');
 
 -- --------------------------------------------------------
 
@@ -2647,10 +2647,11 @@ INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedi
 
 CREATE TABLE `profesores` (
   `id_persona` int(11) NOT NULL,
-  `perfil` varchar(45) NOT NULL,
-  `escalafon` varchar(45) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `tipo_contrato` varchar(45) NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  `escalafon` varchar(3) NOT NULL,
+  `fecha_vinculacion` date NOT NULL,
+  `tipo_vinculacion` varchar(50) NOT NULL,
+  `decreto_nombramiento` varchar(100) NOT NULL,
   `estado_profesor` varchar(8) NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2658,9 +2659,9 @@ CREATE TABLE `profesores` (
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_persona`, `perfil`, `escalafon`, `fecha_inicio`, `tipo_contrato`, `estado_profesor`) VALUES
-(6, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo'),
-(7, 'profesional', '10', '2017-01-01', '2017-12-12', 'Activo');
+INSERT INTO `profesores` (`id_persona`, `titulo`, `escalafon`, `fecha_vinculacion`, `tipo_vinculacion`, `decreto_nombramiento`, `estado_profesor`) VALUES
+(6, 'profesional', '10', '2017-01-01', 'En propiedad', 'Decreto 08 2001', 'Activo'),
+(7, 'profesional', '10', '2017-01-01', 'En propiedad', 'Decreto 08 1998', 'Activo');
 
 -- --------------------------------------------------------
 
