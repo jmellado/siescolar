@@ -245,4 +245,19 @@ class Cursos_model extends CI_Model {
 	}
 
 
+	public function ValidarExistencia_CursoEnCargas($id_curso){
+
+		$this->db->where('id_curso',$id_curso);
+		$query = $this->db->get('cargas_academicas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 }

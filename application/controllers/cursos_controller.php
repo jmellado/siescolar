@@ -137,16 +137,22 @@ class Cursos_controller extends CI_Controller {
         if(is_numeric($id_curso)){
 
         	if($total_curso_matricula == 0){
+
+        		if ($this->cursos_model->ValidarExistencia_CursoEnCargas($id_curso)){
 			
-		        $respuesta=$this->cursos_model->eliminar_curso($id_curso);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Curso Eliminado Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
+			        $respuesta=$this->cursos_model->eliminar_curso($id_curso);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Curso Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No se Puede Eliminar Este Curso.Actualmente Tiene Cargas Académicas Asociadas.";
+		        }
 	        }
 	        else{
 	        	echo "No se Puede Eliminar Este Curso.Actualmente Tiene Alumnos Matriculados.";
