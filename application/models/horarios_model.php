@@ -263,5 +263,51 @@ class Horarios_model extends CI_Model {
 
 
 
+	//================== FUNCIONES PARA MOSTRAR EL HORARIO DE UN ESTUDIANTE ==================
+
+
+	//esta funcion me permite obtener informacion de la matricula de un estudiante
+	public function obtener_informacion_matricula($ano_lectivo,$id_estudiante){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function buscar_horario_estudiante($id_curso){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('horarios.id_curso',$id_curso);
+		$this->db->where('horarios.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('horarios.hora', 'asc');
+
+		$this->db->join('asignaturas as lu', 'horarios.lunes = lu.id_asignatura');
+		$this->db->join('asignaturas as ma', 'horarios.martes = ma.id_asignatura');
+		$this->db->join('asignaturas as mi', 'horarios.miercoles = mi.id_asignatura');
+		$this->db->join('asignaturas as ju', 'horarios.jueves = ju.id_asignatura');
+		$this->db->join('asignaturas as vi', 'horarios.viernes = vi.id_asignatura');
+		$this->db->join('asignaturas as sa', 'horarios.sabado = sa.id_asignatura');
+		$this->db->join('asignaturas as do', 'horarios.domingo = do.id_asignatura');
+
+		$this->db->select('horarios.id_horario,horarios.id_curso,horarios.hora,IF(horarios.lunes = "1","", horarios.lunes) as lunes,IF(horarios.martes = "1","", horarios.martes) as martes,IF(horarios.miercoles = "1","", horarios.miercoles) as miercoles,IF(horarios.jueves = "1","", horarios.jueves) as jueves,IF(horarios.viernes = "1","", horarios.viernes) as viernes,IF(horarios.sabado = "1","", horarios.sabado) as sabado,IF(horarios.domingo = "1","", horarios.domingo) as domingo,horarios.ano_lectivo,lu.nombre_asignatura as asiglunes,ma.nombre_asignatura as asigmartes,mi.nombre_asignatura as asigmiercoles,ju.nombre_asignatura as asigjueves,vi.nombre_asignatura as asigviernes,sa.nombre_asignatura as asigsabado,do.nombre_asignatura as asigdomingo',false);
+		
+		$query = $this->db->get('horarios');
+
+		return $query->result();
+	
+	}
+
 
 }

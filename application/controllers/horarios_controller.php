@@ -115,7 +115,41 @@ class Horarios_controller extends CI_Controller {
 	}
 
 
+	//================== FUNCIONES PARA MOSTRAR EL HORARIO DE UN ESTUDIANTE ==================
 
+
+	public function horario_estudiante()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'estudiante')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_estudiante_vista', 'horarios/horarios_estudiante_vista');
+	}
+
+
+	public function mostrarhorarios_estudiante(){
+
+		$id_estudiante = $this->input->post('id_estudiante');  
+        $ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+        $matricula = $this->horarios_model->obtener_informacion_matricula($ano_lectivo,$id_estudiante);
+        $id_curso = $matricula[0]['id_curso'];
+		
+		$data = array(
+
+			'horarios' => $this->horarios_model->buscar_horario_estudiante($id_curso),
+
+		    'totalregistros' => count($this->horarios_model->buscar_horario_estudiante($id_curso))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
 
 
 

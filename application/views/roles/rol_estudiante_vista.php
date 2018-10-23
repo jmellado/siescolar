@@ -240,6 +240,12 @@
             <span>Mis Mensajes</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url(); ?>horarios_controller/horario_estudiante">
+            <i class="fa fa-calendar"></i>
+            <span>Mi Horario</span>
+          </a>
+        </li>
       	<li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>
