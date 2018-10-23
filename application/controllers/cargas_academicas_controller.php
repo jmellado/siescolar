@@ -112,21 +112,29 @@ class Cargas_academicas_controller extends CI_Controller {
 	  	$id_carga_academica =$this->input->post('id_carga_academica');
 
 	  	$carg = $this->cargas_academicas_model->obtener_informacion_carga($id_carga_academica);
-	  	$ano_lectivo = $carg[0]['ano_lectivo']; 
+	  	$ano_lectivo = $carg[0]['ano_lectivo'];
+	  	$id_curso = $carg[0]['id_curso'];  
 
         if(is_numeric($id_carga_academica)){
 
 			if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->cargas_academicas_model->eliminar_cargas_academicas($id_carga_academica);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Carga Académica Eliminada Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
+				if ($this->cargas_academicas_model->validar_existencia_estudiantes($id_curso)){
+
+			        $respuesta=$this->cargas_academicas_model->eliminar_cargas_academicas($id_carga_academica);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Carga Académica Eliminada Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+
+		        	echo "No Se Puede Eliminar Esta Carga Académica; Actualmente Se Encuentra Asociada A Un Curso Con Estudiantes Matriculados.";
+		        }
 	        }
 	        else{
 

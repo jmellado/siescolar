@@ -242,5 +242,22 @@ class Cargas_academicas_model extends CI_Model {
 	}
 
 
+	//valido si existen estudiantes matriculados en un respectivo curso
+	public function validar_existencia_estudiantes($id_curso){
+
+		$this->db->where('id_curso',$id_curso);
+		$this->db->where('estado_matricula',"Activo");
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 
 }
