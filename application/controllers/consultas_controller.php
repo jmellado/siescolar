@@ -38,7 +38,7 @@ class Consultas_controller extends CI_Controller {
     public function mostrarasignaturasNA(){
 
 		$periodo = $this->input->post('periodo');
-		$id_estudiante = $this->input->post('id_acudiente'); 
+		$id_estudiante = $this->input->post('id_acudido'); 
 		
 		$data = array(
 
@@ -75,5 +75,61 @@ class Consultas_controller extends CI_Controller {
 
 	}
 
+
+	//===== Funciones para consultar las notas de un estudiante desde el rol estudiante =====
+
+
+	public function consultar_notasE()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'estudiante')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_estudiante_vista', 'consultas/consultar_notasE_vista');
+	}
+
+
+	//Esta funcion permite obtener las asignaturas cursadas por un estudiante
+    public function mostrarasignaturasNE(){
+
+		$periodo = $this->input->post('periodo');
+		$id_estudiante = $this->input->post('id_estudiante'); 
+		
+		$data = array(
+
+			'asignaturas' => $this->consultas_model->buscar_asignaturaNE($id_estudiante),
+
+		    'totalregistros' => count($this->consultas_model->buscar_asignaturaNE($id_estudiante))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	// Esta funcion me permite obtener las notas por actividades de un estudiante en una asignatura
+	public function mostraractividadesNE(){
+
+		$id_estudiante = $this->input->post('id_estudiante');
+		$periodo = $this->input->post('periodo'); 
+		$id_curso = $this->input->post('id_curso'); 
+		$id_asignatura = $this->input->post('id_asignatura'); 
+		
+		$data = array(
+
+			'notas' => $this->consultas_model->buscar_actividadesNE($id_estudiante,$periodo,$id_curso,$id_asignatura),
+
+		    'totalregistros' => count($this->consultas_model->buscar_actividadesNE($id_estudiante,$periodo,$id_curso,$id_asignatura))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
 
 }

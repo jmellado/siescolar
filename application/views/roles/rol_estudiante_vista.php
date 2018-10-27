@@ -246,6 +246,12 @@
             <span>Mi Horario</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url(); ?>consultas_controller/consultar_notasE">
+            <i class="fa fa-bar-chart"></i>
+            <span>Mis Calificaciones</span>
+          </a>
+        </li>
       	<li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>

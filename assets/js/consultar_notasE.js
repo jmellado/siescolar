@@ -2,20 +2,17 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 
-    id_acudiente = $("#id_persona").val();
-	llenarcombo_acudidosNA(id_acudiente);
 
+	$("#btn_consultar_NE").click(function(event){
 
-	$("#btn_consultar_NA").click(function(event){
-
-    	if($("#form_consultar_notasA").valid()==true){
+    	if($("#form_consultar_notasE").valid()==true){
 
     		periodo = $("#periodoNA").val();
-    		id_acudido = $("#id_acudidoNA").val();
+    		id_estudiante = $("#id_persona").val();
 
-    		$("#lista_asignaturasNA tbody").html("");
-    		mostrardiv_consultarnotasA();
-    		mostrarasignaturasNA("",1,5,periodo,id_acudido);
+    		$("#lista_asignaturasNE tbody").html("");
+    		mostrardiv_consultarnotasE();
+    		mostrarasignaturasNE("",1,5,periodo,id_estudiante);
 
        	}
        	else{
@@ -26,16 +23,12 @@ function inicio(){
     });
 
 
-    $("#periodoNA").change(function(){
-    	ocultardiv_consultarnotasA();
-    });
-
-    $("#id_acudidoNA").change(function(){
-    	ocultardiv_consultarnotasA();
+    $("#periodoNE").change(function(){
+    	ocultardiv_consultarnotasE();
     });
 
 
-    $("#form_consultar_notasA").validate({
+    $("#form_consultar_notasE").validate({
 
     	rules:{
 
@@ -43,13 +36,7 @@ function inicio(){
 				required: true,
 				maxlength: 8
 
-			},
-
-            id_acudido:{
-                required: true,
-                maxlength: 15   
-
-            }
+			}
 
 
 		}
@@ -58,17 +45,17 @@ function inicio(){
 	});
 
 
-    $("body").on("click","#lista_asignaturasNA button",function(event){
+    $("body").on("click","#lista_asignaturasNE button",function(event){
         event.preventDefault();
         $("#modal_ver_actividades").modal();
-        periodosele = $("#periodoNA").val();
+        periodosele = $("#periodoNE").val();
 
         id_asignaturasele = $(this).attr("value");
         id_estudiantesele = $(this).parent().parent().children("td:eq(1)").text();
         id_cursosele = $(this).parent().parent().children("td:eq(2)").text();
         nombreasignaturasele = $(this).parent().parent().children("td:eq(4)").text();
        
-        mostraractividadesNA("",1,5,id_cursosele,id_asignaturasele,periodosele,id_estudiantesele);
+        mostraractividadesNE("",1,5,id_cursosele,id_asignaturasele,periodosele,id_estudiantesele);
 
     });
 
@@ -80,43 +67,12 @@ function inicio(){
 
 
 
-function llenarcombo_acudidosNA(id_acudiente){
+function mostrarasignaturasNE(valor,pagina,cantidad,periodo,id_estudiante){
 
     $.ajax({
-        url:base_url+"consultas_controller/llenarcombo_acudidos",
+        url:base_url+"consultas_controller/mostrarasignaturasNE",
         type:"post",
-        data:{id_acudiente:id_acudiente},
-        success:function(respuesta) {
-               
-                var registros = eval(respuesta);
-
-                html = "<option value=''></option>";
-
-                if (registros.length > 0) {
-
-                    for (var i = 0; i < registros.length; i++) {
-                        
-                        html +="<option value="+registros[i]["id_estudiante"]+">"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
-                    };
-                    
-                    $("#acudidos_notasA1 select").html(html);
-                }
-                else{
-                    $("#acudidos_notasA1 select").html(html);
-                    toastr.warning('No Tiene Acudidos.', 'Success Alert', {timeOut: 3000});
-                }
-        }
-
-    });
-}
-
-
-function mostrarasignaturasNA(valor,pagina,cantidad,periodo,id_acudido){
-
-    $.ajax({
-        url:base_url+"consultas_controller/mostrarasignaturasNA",
-        type:"post",
-        data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,periodo:periodo,id_acudido:id_acudido},
+        data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,periodo:periodo,id_estudiante:id_estudiante},
         success:function(respuesta) {
                 //toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
                 //------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
@@ -130,11 +86,11 @@ function mostrarasignaturasNA(valor,pagina,cantidad,periodo,id_acudido){
                         html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.asignaturas[i].id_estudiante+"</td><td style='display:none'>"+registros.asignaturas[i].id_curso+"</td><td style='display:none'>"+registros.asignaturas[i].id_asignatura+"</td><td>"+registros.asignaturas[i].nombre_asignatura+"</td><td><button type='button' class='btn btn-warning' value="+registros.asignaturas[i].id_asignatura+" title='Ver Notas Por Actividades'><i class='fa fa-eye'></i></button></tr>";
                     };
                     
-                    $("#lista_asignaturasNA tbody").html(html);
+                    $("#lista_asignaturasNE tbody").html(html);
                 }
                 else{
                     html ="<tr><td colspan='3'><p style='text-align:center'>No Hay Asignaturas Matriculadas..</p></td></tr>";
-                    $("#lista_asignaturasNA tbody").html(html);
+                    $("#lista_asignaturasNE tbody").html(html);
                 }   
 
             }
@@ -144,10 +100,10 @@ function mostrarasignaturasNA(valor,pagina,cantidad,periodo,id_acudido){
 }
 
 
-function mostraractividadesNA(valor,pagina,cantidad,id_curso,id_asignatura,periodo,id_estudiante){
+function mostraractividadesNE(valor,pagina,cantidad,id_curso,id_asignatura,periodo,id_estudiante){
 
     $.ajax({
-        url:base_url+"consultas_controller/mostraractividadesNA",
+        url:base_url+"consultas_controller/mostraractividadesNE",
         type:"post",
         data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,id_curso:id_curso,id_asignatura:id_asignatura,periodo:periodo,id_estudiante:id_estudiante},
         success:function(respuesta) {
@@ -165,11 +121,11 @@ function mostraractividadesNA(valor,pagina,cantidad,id_curso,id_asignatura,perio
                         html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.notas[i].id_persona+"</td><td style='display:none'>"+registros.notas[i].identificacion+"</td><td style='display:none'>"+registros.notas[i].nombres+" "+registros.notas[i].apellido1+" "+registros.notas[i].apellido2+"</td><td><textarea class='form-control' cols='30' rows='2' readonly style='resize:none'>"+registros.notas[i].descripcion_actividad+"</textarea></td><td align='center'>"+registros.notas[i].nota+"</td></tr>";
                     };
                     
-                    $("#lista_actividadesNA tbody").html(html);
+                    $("#lista_actividadesNE tbody").html(html);
                 }
                 else{
                     html ="<tr><td colspan='3'><p style='text-align:center'>No Hay Actividades Registradas..</p></td></tr>";
-                    $("#lista_actividadesNA tbody").html(html);
+                    $("#lista_actividadesNE tbody").html(html);
                 }
 
             }
@@ -181,15 +137,15 @@ function mostraractividadesNA(valor,pagina,cantidad,id_curso,id_asignatura,perio
 
 
 
-function mostrardiv_consultarnotasA(){
+function mostrardiv_consultarnotasE(){
 
-    div = document.getElementById('div-consultarnotasA');
+    div = document.getElementById('div-consultarnotasE');
     div.style.display = '';
 
 }
 
-function ocultardiv_consultarnotasA(){
+function ocultardiv_consultarnotasE(){
 
-    div = document.getElementById('div-consultarnotasA');
+    div = document.getElementById('div-consultarnotasE');
     div.style.display = 'none';
 }
