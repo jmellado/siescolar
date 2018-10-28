@@ -20,6 +20,12 @@ function login(){
 						
 
 					}
+					else if(respuesta ==="usuarioinactivo"){
+						//alert(respuesta);
+						toastr.warning('El Usuario Se Encuentra Inactivo', 'Success Alert', {timeOut: 2000});
+						
+
+					}
 					else{
 						//window.location.href ="http://localhost/siescolar/login_controller";
 						window.location.href =base_url+"login_controller";

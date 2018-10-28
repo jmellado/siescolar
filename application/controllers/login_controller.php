@@ -66,11 +66,14 @@ class Login_controller extends CI_Controller {
 	                'nombres' 		=> 		$check_user->nombres,
 	                'apellido1' 	=> 		$check_user->apellido1,
 	                'apellido2' 	=> 		$check_user->apellido2
-            		);	
+            	);	
 
-					$this->session->set_userdata($data);
-					//$this->index();   nuevo coment
-					
+				$this->session->set_userdata($data);
+				//$this->index();   nuevo coment
+				
+				if ($check_user->acceso == "0") {
+					echo "usuarioinactivo";
+				}	
 
 			}
 			else{
