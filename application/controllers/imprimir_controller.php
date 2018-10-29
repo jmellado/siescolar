@@ -111,7 +111,7 @@ class Imprimir_controller extends CI_Controller {
 				        // Logo
 				        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
 				        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-				        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+				        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 				        $pdf->SetFont('helvetica', 'B', 12);
 
 				        // Title
@@ -281,7 +281,7 @@ class Imprimir_controller extends CI_Controller {
 				        	//==================================Page header - Salto De Pagina=======================================
 					        // Logo
 					        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-					        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+					        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 					        $pdf->SetFont('helvetica', 'B', 12);
 
 					        // Title
@@ -537,7 +537,7 @@ class Imprimir_controller extends CI_Controller {
 	        // Logo
 	        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
 	        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-	        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+	        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 	        $pdf->SetFont('helvetica', 'B', 12);
 
 	        // Title
@@ -626,7 +626,7 @@ class Imprimir_controller extends CI_Controller {
 	        	//==================================Page header - Salto De Pagina=======================================
 		        // Logo
 		        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-		        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 		        $pdf->SetFont('helvetica', 'B', 12);
 
 		        // Title
@@ -803,7 +803,7 @@ class Imprimir_controller extends CI_Controller {
 	        // Logo
 	        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
 	        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-	        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+	        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 	        $pdf->SetFont('helvetica', 'B', 12);
 
 	        // Title
@@ -995,7 +995,7 @@ class Imprimir_controller extends CI_Controller {
 	        // Logo
 	        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
 	        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-	        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+	        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 	        $pdf->SetFont('helvetica', 'B', 12);
 
 	        // Title
@@ -1076,7 +1076,7 @@ class Imprimir_controller extends CI_Controller {
 	        	//==================================Page header - Salto De Pagina=======================================
 		        // Logo
 		        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-		        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 		        $pdf->SetFont('helvetica', 'B', 12);
 
 		        // Title
@@ -1196,7 +1196,7 @@ class Imprimir_controller extends CI_Controller {
 		        // Logo
 		        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
 		        $image_file = 'uploads/imagenes/colegio/'.$escudo;
-		        $pdf->Image($image_file, 10, 10, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 		        $pdf->SetFont('helvetica', 'B', 12);
 
 		        // Title
