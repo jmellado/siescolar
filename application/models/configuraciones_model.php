@@ -58,6 +58,29 @@ class Configuraciones_model extends CI_Model {
 	}
 
 
+	public function llenar_paises(){
+
+		$query = $this->db->get('paises');
+		return $query->result();
+	}
+
+
+	public function llenar_departamentos($id){
+
+		$this->db->where('id_pais',$id);
+		$query = $this->db->get('departamentos');
+		return $query->result();
+	}
+	
+
+	public function llenar_municipios($id){
+
+		$this->db->where('id_departamento',$id);
+		$query = $this->db->get('municipios');
+		return $query->result();
+	}
+
+
 	//**************************** FUNCIONES PERIODOS DE EVALUACION ****************************************
 	public function validar_existencia_actividad($nombre,$ano_lectivo){
 

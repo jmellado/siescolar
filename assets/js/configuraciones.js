@@ -3,6 +3,7 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 function inicio(){
 
 	buscar_datos_institucion();
+	llenarcombo_paisesU(null);
 
 	// este metodo permite enviar la inf del formulario
 	$("#form_datos_institucion").submit(function (event) {
@@ -112,8 +113,8 @@ function inicio(){
 
 			nombre_institucion:{
 				required: true,
-				maxlength: 100,
-				lettersonly: true	
+				maxlength: 100
+				//lettersonly: true	
 
 			},
 
@@ -145,13 +146,6 @@ function inicio(){
 
 			},
 
-			direccion:{
-				required: true,
-				maxlength: 45
-					
-
-			},
-
 			telefono:{
 				required: true,
 				maxlength: 45,
@@ -167,11 +161,53 @@ function inicio(){
 
 			},
 
-			rector:{
+			direccion:{
 				required: true,
-				maxlength: 100,
-				lettersonly: true	
+				maxlength: 45
+					
 
+			},
+
+			barrio:{
+				required: true,
+				maxlength: 45	
+
+			},
+
+			pais_ubicacion:{
+				required: true
+				
+				
+			},
+
+			departamento_ubicacion:{
+				required: true
+				
+				
+			},
+
+			municipio_ubicacion:{
+				required: true
+				
+				
+			},
+
+			ultimo_grado:{
+				required: true,
+				maxlength: 10	
+
+			},
+
+			responsable:{
+				required: true,
+				maxlength: 100
+				//lettersonly: true	
+
+			},
+
+			cargo_responsable:{
+				required: true
+				
 			}
 
 
@@ -198,6 +234,16 @@ function inicio(){
 	}, "Solo Valores Alfabeticos");
 
 
+	$("#pais_ubicacion").change(function(){
+    	id_pais = $(this).val();
+    	llenarcombo_departamentosU(id_pais,null);
+    	$("#municipio_ubicacion1 select").html("");
+    });
+
+    $("#departamento_ubicacion").change(function(){
+    	id_departamento = $(this).val();
+    	llenarcombo_municipiosU(id_departamento,null);
+    });
 
 
 }
@@ -226,10 +272,17 @@ function buscar_datos_institucion(){
 						resolucion = registros[i]["resolucion"];
 						dane = registros[i]["dane"];
 						nit = registros[i]["nit"];
-						direccion = registros[i]["direccion"];
+						ultimo_grado = registros[i]["ultimo_grado"];
 						telefono = registros[i]["telefono"];
 						email = registros[i]["email"];
-						rector = registros[i]["rector"];
+						direccion = registros[i]["direccion"];
+						barrio = registros[i]["barrio"];
+						pais_ubicacion = registros[i]["pais_ubicacion"];
+						departamento_ubicacion = registros[i]["departamento_ubicacion"];
+						municipio_ubicacion = registros[i]["municipio_ubicacion"];
+						corregimiento_ubicacion = registros[i]["corregimiento_ubicacion"];
+						responsable = registros[i]["responsable"];
+						cargo_responsable = registros[i]["cargo_responsable"];
 						escudo = registros[i]["escudo"];
 
 						$("#nombre_institucion").val(nombre_institucion);
@@ -237,10 +290,21 @@ function buscar_datos_institucion(){
 	        			$("#resolucion").val(resolucion);
 	        			$("#dane").val(dane);
 	        			$("#nit").val(nit);
-	        			$("#direccion_i").val(direccion);
+	        			$("#ultimo_grado").val(ultimo_grado);
 	        			$("#telefono_i").val(telefono);
 	        			$("#email_i").val(email);
-	        			$("#rector").val(rector);
+	        			$("#direccion_i").val(direccion);
+	        			$("#barrio_i").val(barrio);
+	        			$("#pais_ubicacion").val(pais_ubicacion);
+	        			$("#departamento_ubicacion").val(departamento_ubicacion);
+	        			$("#municipio_ubicacion").val(municipio_ubicacion);
+	        			$("#corregimiento_ubicacion").val(corregimiento_ubicacion);
+	        			$("#responsable").val(responsable);
+	        			$("#cargo_responsable").val(cargo_responsable);
+
+	        			llenarcombo_paisesU(pais_ubicacion);
+	        			llenarcombo_departamentosU(pais_ubicacion,departamento_ubicacion);
+	        			llenarcombo_municipiosU(departamento_ubicacion,municipio_ubicacion);
 
 					};
 				}	
@@ -249,4 +313,88 @@ function buscar_datos_institucion(){
 		}
 
 	});
+}
+
+
+function llenarcombo_paisesU(valor){
+
+	$.ajax({
+		url:base_url+"configuraciones_controller/llenarcombo_paises",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_pais"]==valor){
+						html +="<option value="+registros[i]["id_pais"]+" selected>"+registros[i]["nombre_pais"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_pais"]+">"+registros[i]["nombre_pais"]+"</option>";
+					}
+				};
+				
+				$("#pais_ubicacion1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_departamentosU(valor,valor2){
+
+	$.ajax({
+		url:base_url+"configuraciones_controller/llenarcombo_departamentos",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_departamento"]==valor2){
+						html +="<option value="+registros[i]["id_departamento"]+" selected>"+registros[i]["nombre_departamento"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_departamento"]+">"+registros[i]["nombre_departamento"]+"</option>";
+					}
+				};
+				
+				$("#departamento_ubicacion1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_municipiosU(valor,valor2){
+
+	$.ajax({
+		url:base_url+"configuraciones_controller/llenarcombo_municipios",
+		type:"post",
+		data:{id:valor},
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "";
+				for (var i = 0; i < registros.length; i++) {
+					
+					if(registros[i]["id_municipio"]==valor2){
+						html +="<option value="+registros[i]["id_municipio"]+" selected>"+registros[i]["nombre_municipio"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_municipio"]+">"+registros[i]["nombre_municipio"]+"</option>";
+					}
+				};
+				$("#municipio_ubicacion1 select").html(html);
+		}
+
+	});
+
+
 }

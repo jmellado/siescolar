@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2018 a las 20:06:18
+-- Tiempo de generación: 30-10-2018 a las 05:32:42
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(1, '2018-10-22 18:04:44');
+(1, '2018-10-30 04:32:08');
 
 -- --------------------------------------------------------
 
@@ -283,19 +283,26 @@ CREATE TABLE `datos_institucion` (
   `resolucion` varchar(100) NOT NULL,
   `dane` varchar(45) NOT NULL,
   `nit` varchar(45) NOT NULL,
-  `direccion` varchar(45) NOT NULL,
+  `ultimo_grado` varchar(45) NOT NULL,
   `telefono` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `escudo` varchar(45) NOT NULL,
-  `rector` varchar(100) NOT NULL
+  `direccion` varchar(45) NOT NULL,
+  `barrio` varchar(45) NOT NULL,
+  `pais_ubicacion` int(11) NOT NULL,
+  `departamento_ubicacion` int(11) NOT NULL,
+  `municipio_ubicacion` int(11) NOT NULL,
+  `corregimiento_ubicacion` varchar(100) DEFAULT NULL,
+  `responsable` varchar(100) NOT NULL,
+  `cargo_responsable` varchar(45) NOT NULL,
+  `escudo` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `datos_institucion`
 --
 
-INSERT INTO `datos_institucion` (`id`, `nombre_institucion`, `niveles_educacion`, `resolucion`, `dane`, `nit`, `direccion`, `telefono`, `email`, `escudo`, `rector`) VALUES
-(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria y Media', 'Aprobado según Resolucion 000209 del 29 de octubre de 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'calle 7 # 29-90', '5807659', 'cenuestraseñoradelcarmen@gmail.com', 'escudo.png', 'Alvaro Araujo');
+INSERT INTO `datos_institucion` (`id`, `nombre_institucion`, `niveles_educacion`, `resolucion`, `dane`, `nit`, `ultimo_grado`, `telefono`, `email`, `direccion`, `barrio`, `pais_ubicacion`, `departamento_ubicacion`, `municipio_ubicacion`, `corregimiento_ubicacion`, `responsable`, `cargo_responsable`, `escudo`) VALUES
+(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria y Media', 'Aprobado según Resolucion 000209 del 29 de octubre de 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'Noveno', '5807659', 'cenuestraseñoradelcarmen@gmail.com', 'calle 7 # 29-90', 'Nueva Esperanza', 1, 20, 404, NULL, 'Alvaro Araujo', 'Rector', 'escudo.png');
 
 -- --------------------------------------------------------
 

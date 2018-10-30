@@ -60,10 +60,26 @@
 						</div>
 
 						<div class="form-group">
-							<label class="control-label col-sm-3" for="direccion">DIRECCIÓN</label>
-							<div class="col-sm-7">
-								<input type="text" class="form-control" id="direccion_i" name="direccion" placeholder="Dirección">
-							</div>
+						  	<label class="control-label col-sm-3" for="ultimo_grado">ÚLTIMO GRADO OFERTADO</label>
+						  	<div class="col-sm-7">
+							  	<select class="form-control" id="ultimo_grado" name="ultimo_grado">
+							  		<option value=""></option>
+								    <option value="Prejardín">Prejardín</option>
+									<option value="Jardín">Jardín</option>
+									<option value="Transición">Transición</option>
+									<option value="Primero">Primero</option>
+									<option value="Segundo">Segundo</option>
+									<option value="Tercero">Tercero</option>
+									<option value="Cuarto">Cuarto</option>
+									<option value="Quinto">Quinto</option>
+									<option value="Sexto">Sexto</option>
+									<option value="Séptimo">Séptimo</option>
+									<option value="Octavo">Octavo</option>
+									<option value="Noveno">Noveno</option>
+									<option value="Décimo">Décimo</option>
+									<option value="Undécimo">Undécimo</option>
+							  	</select>
+							</div>  	
 						</div>
 
 						<div class="form-group">
@@ -81,10 +97,81 @@
 						</div>
 
 						<div class="form-group">
-							<label class="control-label col-sm-3" for="rector">RECTOR</label>
+							<label class="control-label col-sm-3" for="direccion">DIRECCIÓN</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" id="rector" name="rector" placeholder="Nombre Rector">
+								<input type="text" class="form-control" id="direccion_i" name="direccion" placeholder="Dirección">
 							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-3" for="barrio">BARRIO</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" id="barrio_i" name="barrio" placeholder="Barrio">
+							</div>
+						</div>
+
+						<div class="form-group">
+		  					<label class="control-label col-sm-3" for="pais_ubicacion">PAIS DE UBICACIÓN</label>
+		  					<div class="col-sm-7">
+			  					<div id="pais_ubicacion1">
+			  						<select class="form-control" id="pais_ubicacion" name="pais_ubicacion">
+			    
+			  						</select>
+			  					</div>
+			  				</div>		
+						</div>
+
+						<div class="form-group">
+		  					<label class="control-label col-sm-3" for="departamento_ubicacion">DPTO. DE UBICACIÓN</label>
+		  					<div class="col-sm-7">
+			  					<div id="departamento_ubicacion1">
+			  						<select class="form-control" id="departamento_ubicacion" name="departamento_ubicacion">
+			    
+			  						</select>
+			  					</div>
+			  				</div>		
+						</div>
+
+						<div class="form-group">
+						 	<label class="control-label col-sm-3" for="municipio_ubicacion">MUNICIPIO DE UBICACIÓN</label>
+						 	<div class="col-sm-7">
+							 	<div id="municipio_ubicacion1">
+									<select class="form-control" id="municipio_ubicacion" name="municipio_ubicacion">
+								    
+									</select>
+								</div>
+							</div>	
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-3" for="corregimiento_ubicacion">CORREGIMIENTO DE UBICACIÓN</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" id="corregimiento_ubicacion" name="corregimiento_ubicacion" placeholder="Corregimiento De Ubicación Si Aplica">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-3" for="responsable">RESPONSABLE</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" id="responsable" name="responsable" placeholder="Nombre Del Responsable">
+							</div>
+						</div>
+
+						<div class="form-group">
+						  	<label class="control-label col-sm-3" for="cargo_responsable">CARGO DEL RESPONSABLE</label>
+						  	<div class="col-sm-7">
+							  	<select class="form-control" id="cargo_responsable" name="cargo_responsable">
+							  		<option value=""></option>
+								    <option value="Rector">Rector</option>
+									<option value="Director">Director</option>
+									<option value="Director General">Director General</option>
+									<option value="Coordinador">Coordinador</option>
+									<option value="Coordinador Académico">Coordinador Académico</option>
+									<option value="Coordinador Disciplinario">Coordinador Disciplinario</option>
+									<option value="Psicorientador">Psicorientador</option>
+									<option value="Docente">Docente</option>
+							  	</select>
+							</div>  	
 						</div>
 
 						<div class="form-group">

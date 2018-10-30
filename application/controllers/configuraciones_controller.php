@@ -37,15 +37,21 @@ class Configuraciones_controller extends CI_Controller {
 
 	public function insertar(){
 
-		$this->form_validation->set_rules('nombre_institucion', 'nombre', 'required|alpha_spaces');
-        $this->form_validation->set_rules('niveles_educacion', 'niveles', 'required|alpha_spaces');
-        $this->form_validation->set_rules('resolucion', 'resolucion', 'required|alpha_spaces');
-        $this->form_validation->set_rules('dane', 'dane', 'required|alpha_spaces');
-        $this->form_validation->set_rules('nit', 'nit', 'required|alpha_spaces');
-        $this->form_validation->set_rules('direccion', 'direccion', 'required|alpha_spaces');
-        $this->form_validation->set_rules('telefono', 'telefono', 'required|numeric');
-        $this->form_validation->set_rules('email', 'email', 'required|alpha_spaces');
-        $this->form_validation->set_rules('rector', 'rector', 'required|alpha_spaces');
+		$this->form_validation->set_rules('nombre_institucion', 'Nombre Institución', 'required|alpha_spaces');
+        $this->form_validation->set_rules('niveles_educacion', 'Niveles Educación', 'required|alpha_spaces');
+        $this->form_validation->set_rules('resolucion', 'Resolucion', 'required|alpha_spaces');
+        $this->form_validation->set_rules('dane', 'Dane', 'required|alpha_spaces');
+        $this->form_validation->set_rules('nit', 'Nit', 'required|alpha_spaces');
+        $this->form_validation->set_rules('ultimo_grado', 'Ultimo Grado', 'required');
+        $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric');
+        $this->form_validation->set_rules('email', 'Email', 'required|alpha_spaces');
+        $this->form_validation->set_rules('direccion', 'Direccion', 'required|alpha_spaces');
+        $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
+        $this->form_validation->set_rules('pais_ubicacion', 'Pais Ubicacion', 'required');
+        $this->form_validation->set_rules('departamento_ubicacion', 'Departamento Ubicacion', 'required');
+        $this->form_validation->set_rules('municipio_ubicacion', 'Municipio Ubicacion', 'required');
+        $this->form_validation->set_rules('responsable', 'Responsable', 'required|alpha_spaces');
+        $this->form_validation->set_rules('cargo_responsable', 'Cargo Responsable', 'required');
         
         if ($this->form_validation->run() == FALSE){
 
@@ -55,15 +61,22 @@ class Configuraciones_controller extends CI_Controller {
         else{
 
 
-			$nombre_institucion = strtoupper($this->input->post('nombre_institucion'));
-			$niveles_educacion = ucwords($this->input->post('niveles_educacion'));
-			$resolucion = ucwords($this->input->post('resolucion'));
-			$dane = ucwords($this->input->post('dane'));
-			$nit = ucwords($this->input->post('nit'));
-			$direccion = ucwords($this->input->post('direccion'));
-			$telefono = $this->input->post('telefono');
-			$email = $this->input->post('email');
-			$rector = ucwords($this->input->post('rector'));
+			$nombre_institucion = strtoupper(trim($this->input->post('nombre_institucion')));
+			$niveles_educacion = ucwords(mb_strtolower(trim($this->input->post('niveles_educacion'))));
+			$resolucion = ucwords(mb_strtolower(trim($this->input->post('resolucion'))));
+			$dane = ucwords(trim($this->input->post('dane')));
+			$nit = ucwords(mb_strtolower(trim($this->input->post('nit'))));
+			$ultimo_grado = $this->input->post('ultimo_grado');
+			$telefono = trim($this->input->post('telefono'));
+			$email = trim($this->input->post('email'));
+			$direccion = ucwords(mb_strtolower(trim($this->input->post('direccion'))));
+			$barrio = ucwords(mb_strtolower(trim($this->input->post('barrio'))));
+			$pais_ubicacion = $this->input->post('pais_ubicacion');
+			$departamento_ubicacion = $this->input->post('departamento_ubicacion');
+			$municipio_ubicacion = $this->input->post('municipio_ubicacion');
+			$corregimiento_ubicacion = ucwords(mb_strtolower(trim($this->input->post('corregimiento_ubicacion'))));
+			$responsable = ucwords(mb_strtolower(trim($this->input->post('responsable'))));
+			$cargo_responsable = ucwords($this->input->post('cargo_responsable'));
 
 			//array para insertar en la tabla datos_institucion----------
         	$institucion = array(
@@ -72,10 +85,17 @@ class Configuraciones_controller extends CI_Controller {
 			'resolucion' =>$resolucion,
 			'dane' =>$dane,
 			'nit' =>$nit,
-			'direccion' =>$direccion,
+			'ultimo_grado' =>$ultimo_grado,
 			'telefono' =>$telefono,
 			'email' =>$email,
-			'rector' =>$rector);
+			'direccion' =>$direccion,
+			'barrio' =>$barrio,
+			'pais_ubicacion' =>$pais_ubicacion,
+			'departamento_ubicacion' =>$departamento_ubicacion,
+			'municipio_ubicacion' =>$municipio_ubicacion,
+			'corregimiento_ubicacion' =>$corregimiento_ubicacion,
+			'responsable' =>$responsable,
+			'cargo_responsable' =>$cargo_responsable);
 
 			if ($this->configuraciones_model->validar_existencia()){
 
@@ -190,6 +210,29 @@ class Configuraciones_controller extends CI_Controller {
 		}
 	    
 	}
+
+
+	public function llenarcombo_paises(){
+
+    	$consulta = $this->configuraciones_model->llenar_paises();
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_departamentos(){
+
+    	$id =$this->input->post('id');
+    	$consulta = $this->configuraciones_model->llenar_departamentos($id);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_municipios(){
+
+    	$id =$this->input->post('id');
+    	$consulta = $this->configuraciones_model->llenar_municipios($id);
+    	echo json_encode($consulta);
+    }
 
 
 	//**************************** FUNCIONES PERIODOS DE EVALUACION ****************************************
