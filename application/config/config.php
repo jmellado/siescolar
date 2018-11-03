@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/siescolar/';
+$config['base_url'] = 'http://10.20.20.2/siescolar/';
 
 /*
 |--------------------------------------------------------------------------
