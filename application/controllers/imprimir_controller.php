@@ -740,7 +740,11 @@ class Imprimir_controller extends CI_Controller {
 		$dane = $col[0]['dane'];
 		$nit = $col[0]['nit'];
 		$escudo = $col[0]['escudo'];
-		$rector = $col[0]['rector'];
+		$responsable = $col[0]['responsable'];
+		$cargo_responsable = $col[0]['cargo_responsable'];
+		$departamento = ucwords(mb_strtolower($col[0]['nombre_departamento'], 'UTF-8'));
+		$municipio = ucwords(mb_strtolower($col[0]['nombre_municipio'], 'UTF-8'));
+		$corregimiento = $col[0]['corregimiento_ubicacion'];
 
 		$est = $this->imprimir_model->obtener_informacion_estudiante($id_persona);
 		$nombres = $est[0]['nombres'];
@@ -818,7 +822,14 @@ class Imprimir_controller extends CI_Controller {
 
 	        $pdf->SetMargins(30, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 	        $pdf->SetFont('helvetica', 'B', 12);
-	        $titulo = '          El Suscrito Director Del '.ucwords(strtolower($nombre_institucion)).' De Sempegua Municipio De Chimichagua';
+
+	        if ($corregimiento == "") {
+	        	$titulo = '          El Suscrito '.$cargo_responsable.' Del '.ucwords(mb_strtolower($nombre_institucion, 'UTF-8')).' Del Municipio De '.$municipio.'';
+	        }
+	        else{
+	        	$titulo = '          El Suscrito '.$cargo_responsable.' Del '.ucwords(mb_strtolower($nombre_institucion, 'UTF-8')).' De '.$corregimiento.' Municipio De '.$municipio.'';
+	        }
+
 	        $pdf->Write(0, $titulo, '', 0, 'C', true, 0, false, false, 0);
 	        $pdf->SetFont('helvetica', '', 12, '', true);
 	 
@@ -836,9 +847,17 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl .= '<p align="center"><b>H A C E &nbsp;&nbsp;C O N S T A R:<br /></b></p>';
 	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.$nombre_ano_lectivo.').<br /></p>';
 
-	        $tbl .= '<p>Para mayor constancia se firma la presente en el Corregimiento de Sempegua Municipio de Chimichagua Cesar a los '.$fecha_letra.'.<br /><br /><br /><br /></p>';
+	        if ($corregimiento == "") {
+	        	
+	        	$tbl .= '<p>Para mayor constancia se firma la presente en el Municipio de '.$municipio.' '.$departamento.' a los '.$fecha_letra.'.<br /><br /><br /><br /></p>';
+	        }
+	        else{
+
+	        	$tbl .= '<p>Para mayor constancia se firma la presente en el Corregimiento de '.$corregimiento.' Municipio de '.$municipio.' '.$departamento.' a los '.$fecha_letra.'.<br /><br /><br /><br /></p>';
+	        }
+
 	        $tbl .= '<p>Cordialmente,<br /><br /><br /><br /></p>';
-	        $tbl .= '<p>________________________________<br /><b>'.$rector.'<br />Director General</b></p>';
+	        $tbl .= '<p>________________________________<br /><b>'.$responsable.'<br />'.$cargo_responsable.'</b></p>';
 
 	        // Imprimimos el texto con writeHTMLCell()
 		    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = 'J', $autopadding = true);
@@ -928,7 +947,11 @@ class Imprimir_controller extends CI_Controller {
 		$dane = $col[0]['dane'];
 		$nit = $col[0]['nit'];
 		$escudo = $col[0]['escudo'];
-		$rector = $col[0]['rector'];
+		$responsable = $col[0]['responsable'];
+		$cargo_responsable = $col[0]['cargo_responsable'];
+		$departamento = ucwords(mb_strtolower($col[0]['nombre_departamento'], 'UTF-8'));
+		$municipio = ucwords(mb_strtolower($col[0]['nombre_municipio'], 'UTF-8'));
+		$corregimiento = $col[0]['corregimiento_ubicacion'];
 
 		$est = $this->imprimir_model->obtener_informacion_estudianteCT($id_persona,$ano_lectivo);
 		$nombres = $est[0]['nombres'];
@@ -1010,7 +1033,14 @@ class Imprimir_controller extends CI_Controller {
 
 	        $pdf->SetMargins(30, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 	        $pdf->SetFont('helvetica', 'B', 12);
-	        $titulo = '          El Suscrito Director Del '.ucwords(strtolower($nombre_institucion)).' De Sempegua Municipio De Chimichagua';
+
+	        if ($corregimiento == "") {
+	        	$titulo = '          El Suscrito '.$cargo_responsable.' Del '.ucwords(mb_strtolower($nombre_institucion, 'UTF-8')).' Del Municipio De '.$municipio.'';
+	        }
+	        else{
+	        	$titulo = '          El Suscrito '.$cargo_responsable.' Del '.ucwords(mb_strtolower($nombre_institucion, 'UTF-8')).' De '.$corregimiento.' Municipio De '.$municipio.'';
+	        }
+
 	        $pdf->Write(0, $titulo, '', 0, 'C', true, 0, false, false, 0);
 	        $pdf->SetFont('helvetica', '', 12, '', true);
 	 
@@ -1056,13 +1086,20 @@ class Imprimir_controller extends CI_Controller {
 
 	        //$tbl .= '<p>Se expide la presente en el Corregimiento de Sempegua, Municipio de Chimichagua Cesar a los _______ días del Mes de _______________ del Año __________.<br /><br /><br /></p>';
 
-	        $tbl .= '<p>Se expide la presente en el Corregimiento de Sempegua, Municipio de Chimichagua Cesar a los '.$fecha_letra.'.<br /><br /><br /></p>';
+	        if ($corregimiento == "") {
+
+	        	$tbl .= '<p>Se expide la presente en el Municipio de '.$municipio.' '.$departamento.' a los '.$fecha_letra.'.<br /><br /><br /></p>';
+	        }
+	        else{
+
+	        	$tbl .= '<p>Se expide la presente en el Corregimiento de '.$corregimiento.', Municipio de '.$municipio.' '.$departamento.' a los '.$fecha_letra.'.<br /><br /><br /></p>';
+	        }
 
 	        if (count($NotasEstudiante) == 11) {
 	        	$tbl .= '<p>&nbsp;<br /></p>';
 	        }
 
-	        $tbl .= '<p align="center">________________________________<br /><b>'.strtoupper($rector).'<br />DIRECTOR GENERAL</b></p>';
+	        $tbl .= '<p align="center">________________________________<br /><b>'.mb_strtoupper($responsable, 'UTF-8').'<br />'.mb_strtoupper($cargo_responsable, 'UTF-8').'</b></p>';
 
 	        // Imprimimos el texto con writeHTMLCell()
 		    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = 'J', $autopadding = true);

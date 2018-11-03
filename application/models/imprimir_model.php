@@ -137,6 +137,10 @@ class Imprimir_model extends CI_Model {
 
 	public function obtener_informacion_colegio(){
 
+		$this->db->join('paises', 'datos_institucion.pais_ubicacion = paises.id_pais');
+		$this->db->join('departamentos', 'datos_institucion.departamento_ubicacion = departamentos.id_departamento');
+		$this->db->join('municipios', 'datos_institucion.municipio_ubicacion = municipios.id_municipio');
+
 		$query = $this->db->get('datos_institucion');
 
 		if ($query->num_rows() > 0) {
