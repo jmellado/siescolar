@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2018 a las 05:32:42
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Servidor: localhost:3306
+-- Tiempo de generación: 03-11-2018 a las 22:50:16
+-- Versión del servidor: 10.2.17-MariaDB
+-- Versión de PHP: 7.1.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bd_siescolar`
+-- Base de datos: `u442806501_bd`
 --
 
 -- --------------------------------------------------------
@@ -57,6 +59,14 @@ CREATE TABLE `actividades` (
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `actividades`
+--
+
+INSERT INTO `actividades` (`id_actividad`, `descripcion_actividad`, `id_profesor`, `id_curso`, `id_asignatura`, `periodo`, `fecha_registro`, `ano_lectivo`) VALUES
+(1, 'Trabajo Escrito Sobre La Poesia', 3, 1, 11, 'Primero', '2018-10-24 03:28:41', 1),
+(2, 'Esposicion Sobre La Poesia', 3, 1, 11, 'Primero', '2018-10-24 03:33:22', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -72,6 +82,18 @@ CREATE TABLE `acudientes` (
   `estado_acudiente` varchar(8) NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `acudientes`
+--
+
+INSERT INTO `acudientes` (`id`, `id_persona`, `ocupacion`, `telefono_trabajo`, `direccion_trabajo`, `estado_acudiente`) VALUES
+(1, 53, 'Profesor', '3126573421', 'Sempegua, Barrio La Paz', 'Activo'),
+(2, 54, 'Ama De Casa', '3126753428', 'Sempegua, Barrio La Paz', 'Activo'),
+(3, 55, 'Ama De Casa', '3126784523', 'Sempegua, Barrio La Paz', 'Activo'),
+(4, 56, 'Profesora', '3126542390', 'Sempegua, Barrio La Paz', 'Activo'),
+(5, 57, 'Agricultor', '3145692310', 'Sempegua, Barrio La Paz', 'Activo'),
+(6, 58, 'Ama De Casa', '3167564312', 'Sempegua, Barrio La Paz', 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -80,7 +102,7 @@ CREATE TABLE `acudientes` (
 
 CREATE TABLE `administradores` (
   `id_persona` int(11) NOT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -88,7 +110,8 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_persona`, `fecha_registro`) VALUES
-(1, '2018-10-30 04:32:08');
+(1, '2018-10-22 18:04:44'),
+(33, '2018-10-24 05:11:28');
 
 -- --------------------------------------------------------
 
@@ -130,7 +153,17 @@ CREATE TABLE `areas` (
 --
 
 INSERT INTO `areas` (`id_area`, `nombre_area`, `ano_lectivo`, `estado_area`) VALUES
-(1, ' ', 0, 'Activo');
+(1, ' ', 0, 'Activo'),
+(2, 'Matematica', 1, 'Activo'),
+(3, 'Ciencias Sociales', 1, 'Activo'),
+(4, 'Ciencias Naturales', 1, 'Activo'),
+(5, 'Humanidades', 1, 'Activo'),
+(6, 'Religion', 1, 'Activo'),
+(8, 'Educacion Fisica', 1, 'Activo'),
+(13, 'Educacion Artistica', 1, 'Activo'),
+(16, 'Educacion Etica Y Val', 1, 'Activo'),
+(18, 'Informatica', 1, 'Activo'),
+(19, 'Emprendimiento', 1, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -151,7 +184,24 @@ CREATE TABLE `asignaturas` (
 --
 
 INSERT INTO `asignaturas` (`id_asignatura`, `nombre_asignatura`, `id_area`, `ano_lectivo`, `estado_asignatura`) VALUES
-(1, ' ', 1, 0, 'Activo');
+(1, ' ', 1, 0, 'Activo'),
+(2, 'Matematica', 2, 1, 'Activo'),
+(3, 'Geografia', 3, 1, 'Activo'),
+(4, 'Historia', 3, 1, 'Activo'),
+(5, 'Competencia Ciudadana', 3, 1, 'Activo'),
+(6, 'Catedra Afrocolombiana', 3, 1, 'Activo'),
+(7, 'Quimica', 4, 1, 'Activo'),
+(8, 'Fisica', 4, 1, 'Activo'),
+(9, 'Biologia', 4, 1, 'Activo'),
+(10, 'Ecologia', 4, 1, 'Activo'),
+(11, 'Lengua Castellana', 5, 1, 'Activo'),
+(12, 'Lengua Extrangera', 5, 1, 'Activo'),
+(13, 'Religion', 6, 1, 'Activo'),
+(14, 'Educacion Fisica', 8, 1, 'Activo'),
+(15, 'Educacion Artistica', 13, 1, 'Activo'),
+(16, 'Educacion Etica Y Val', 16, 1, 'Activo'),
+(17, 'Informatica', 18, 1, 'Activo'),
+(18, 'Emprendimiento', 19, 1, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -169,6 +219,15 @@ CREATE TABLE `candidatos_eleccion` (
   `estado_candidato` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `candidatos_eleccion`
+--
+
+INSERT INTO `candidatos_eleccion` (`id_candidato_eleccion`, `id_eleccion`, `id_estudiante`, `numero`, `partido`, `votos`, `estado_candidato`) VALUES
+(1, 1, 2, '00', 'En Blanco', '4', 'Activo'),
+(2, 1, 15, '002', 'Movimiento En Busca De La Excelencia', '14', 'Activo'),
+(3, 1, 20, '001', 'Todos Por Una Mejor Educacion', '11', 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -182,6 +241,24 @@ CREATE TABLE `cargas_academicas` (
   `id_asignatura` int(11) NOT NULL,
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cargas_academicas`
+--
+
+INSERT INTO `cargas_academicas` (`id_carga_academica`, `id_profesor`, `id_curso`, `id_asignatura`, `ano_lectivo`) VALUES
+(1, 3, 1, 11, 1),
+(2, 3, 2, 11, 1),
+(3, 27, 1, 7, 1),
+(4, 27, 2, 7, 1),
+(5, 31, 1, 17, 1),
+(6, 31, 2, 17, 1),
+(7, 17, 1, 3, 1),
+(8, 17, 2, 3, 1),
+(9, 27, 2, 10, 1),
+(10, 27, 1, 9, 1),
+(11, 27, 2, 9, 1),
+(12, 5, 1, 14, 1);
 
 -- --------------------------------------------------------
 
@@ -253,6 +330,13 @@ CREATE TABLE `cronogramas` (
   `estado_actividad` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `cronogramas`
+--
+
+INSERT INTO `cronogramas` (`id_actividad`, `nombre_actividad`, `id_categoria`, `descripcion_actividad`, `fecha_inicial`, `fecha_final`, `ano_lectivo`, `estado_actividad`) VALUES
+(1, 'Primero', 1, 'Fechas Para El Ingreso De Calificaciones.', '2018-10-20', '2018-10-27', 1, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -269,6 +353,14 @@ CREATE TABLE `cursos` (
   `jornada` varchar(6) NOT NULL,
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cursos`
+--
+
+INSERT INTO `cursos` (`id_curso`, `id_grado`, `id_grupo`, `id_salon`, `director`, `cupo_maximo`, `jornada`, `ano_lectivo`) VALUES
+(1, 9, 1, 9, 3, 30, 'Mañana', 1),
+(2, 10, 1, 10, 17, 30, 'Mañana', 1);
 
 -- --------------------------------------------------------
 
@@ -302,7 +394,7 @@ CREATE TABLE `datos_institucion` (
 --
 
 INSERT INTO `datos_institucion` (`id`, `nombre_institucion`, `niveles_educacion`, `resolucion`, `dane`, `nit`, `ultimo_grado`, `telefono`, `email`, `direccion`, `barrio`, `pais_ubicacion`, `departamento_ubicacion`, `municipio_ubicacion`, `corregimiento_ubicacion`, `responsable`, `cargo_responsable`, `escudo`) VALUES
-(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria y Media', 'Aprobado según Resolucion 000209 del 29 de octubre de 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'Noveno', '5807659', 'cenuestraseñoradelcarmen@gmail.com', 'calle 7 # 29-90', 'Nueva Esperanza', 1, 20, 404, NULL, 'Alvaro Araujo', 'Rector', 'escudo.png');
+(1, 'CENTRO EDUCATIVO NUESTRA SEÑORA DEL CARMEN', 'Educación Prescolar, Básica Primaria, Básica Secundaria Y Media', 'Aprobado Según Resolucion 000209 Del 29 De Octubre De 2015', 'Registro DANE N° 120001001219', 'Nit: 892,300,306-2', 'Noveno', '5807659', 'cenuestrasenoradelcarmen@gmail.com', 'Calle 7 # 29-90', 'Nueva Esperanza', 1, 20, 410, '', 'Jesus Aldo Nobles Mendez', 'Director', 'escudo.png');
 
 -- --------------------------------------------------------
 
@@ -590,6 +682,13 @@ CREATE TABLE `elecciones` (
   `estado_eleccion` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `elecciones`
+--
+
+INSERT INTO `elecciones` (`id_eleccion`, `nombre_eleccion`, `descripcion`, `fecha_inicio`, `hora_inicio`, `fecha_fin`, `hora_fin`, `ano_lectivo`, `estado_eleccion`) VALUES
+(1, 'Personero Estudiantil 2018-prueba Piloto', 'Prueba Piloto  Eleccion De Personero', '2018-10-24', '06:00:00', '2018-10-24', '23:59:00', 1, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -611,9 +710,41 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedencia`, `grado_cursado`, `anio`, `estado_estudiante`, `fecha_estado`) VALUES
-(3, 'ninguna', 'manuela beltran', 'Primero', '2007', 'Inscrito', '2018-10-03'),
-(4, 'ninguna', 'cotez queruz', 'Quinto', '2007', 'Inscrito', '2018-10-03'),
-(5, 'ninguna', 'la esperanza', 'Quinto', '2008', 'Inscrito', '2018-10-03');
+(6, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
+(7, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
+(8, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
+(9, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
+(10, 'Ninguna', '', 'Ninguno', '', 'Inscrito', '2018-10-24'),
+(11, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(13, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(15, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(18, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(20, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(22, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(24, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(26, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(28, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(29, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(30, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(34, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(35, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(36, 'Ninguna', 'N/a', 'Cuarto', '2017', 'Matriculado', '2018-10-24'),
+(37, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(38, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(39, 'Ninguna', 'Na', 'Séptimo', '2017', 'Matriculado', '2018-10-24'),
+(40, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(41, 'Ninguna', 'Na', 'Séptimo', '2017', 'Matriculado', '2018-10-24'),
+(42, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(43, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(44, 'Ninguna', 'N/a', 'Séptimo', '2017', 'Matriculado', '2018-10-24'),
+(45, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(46, 'Ninguna', 'Na', 'Séptimo', '2017', 'Matriculado', '2018-10-24'),
+(47, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(48, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(49, 'Ninguna', 'N/a', 'Séptimo', '2017', 'Matriculado', '2018-10-24'),
+(50, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(51, 'Ninguna', '', 'Ninguno', '', 'Matriculado', '2018-10-24'),
+(52, 'Ninguna', 'Na', 'Séptimo', '2017', 'Matriculado', '2018-10-24');
 
 -- --------------------------------------------------------
 
@@ -628,6 +759,42 @@ CREATE TABLE `estudiantes_acudientes` (
   `parentesco` varchar(45) NOT NULL,
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `estudiantes_acudientes`
+--
+
+INSERT INTO `estudiantes_acudientes` (`idestudiantes_acudientes`, `id_estudiante`, `id_acudiente`, `parentesco`, `ano_lectivo`) VALUES
+(1, 34, 56, 'Madre', 1),
+(2, 35, 53, 'Tio(a)', 1),
+(3, 37, 58, 'Tio(a)', 1),
+(4, 38, 55, 'Tio(a)', 1),
+(5, 40, 55, 'Madrina', 1),
+(6, 42, 57, 'Padrino', 1),
+(7, 43, 57, 'Cuñado(a)', 1),
+(8, 45, 57, 'Tio(a)', 1),
+(9, 47, 56, 'Tio(a)', 1),
+(10, 48, 58, 'Tio(a)', 1),
+(11, 50, 56, 'Hermano(a)', 1),
+(12, 51, 58, 'Madre', 1),
+(13, 52, 54, 'Madrina', 1),
+(14, 49, 55, 'Cuñado(a)', 1),
+(15, 46, 58, 'Cuñado(a)', 1),
+(16, 44, 55, 'Madre', 1),
+(17, 41, 57, 'Tio(a)', 1),
+(18, 39, 55, 'Madrina', 1),
+(19, 36, 55, 'Tio(a)', 1),
+(20, 11, 56, 'Tio(a)', 1),
+(21, 13, 58, 'Tio(a)', 1),
+(22, 15, 58, 'Madre', 1),
+(23, 18, 58, 'Madrina', 1),
+(24, 20, 57, 'Tio(a)', 1),
+(25, 22, 58, 'Madre', 1),
+(26, 24, 53, 'Abuelo(a)', 1),
+(27, 26, 58, 'Tio(a)', 1),
+(28, 28, 58, 'Tio(a)', 1),
+(29, 29, 58, 'Madrina', 1),
+(30, 30, 58, 'Tio(a)', 1);
 
 -- --------------------------------------------------------
 
@@ -647,16 +814,47 @@ CREATE TABLE `estudiantes_padres` (
 --
 
 INSERT INTO `estudiantes_padres` (`idestudiantes_padres`, `id_estudiante`, `id_padre`, `id_madre`) VALUES
-(1, 3, 1, 1),
-(2, 4, 2, 2),
-(3, 5, 3, 3);
+(1, 6, 1, 1),
+(2, 7, 2, 2),
+(3, 8, 3, 3),
+(4, 9, 4, 4),
+(5, 10, 5, 5),
+(6, 11, 6, 6),
+(7, 13, 7, 7),
+(8, 15, 8, 8),
+(9, 18, 9, 9),
+(10, 20, 10, 10),
+(11, 22, 11, 11),
+(12, 24, 12, 12),
+(13, 26, 13, 13),
+(14, 28, 14, 14),
+(15, 29, 15, 15),
+(16, 30, 16, 16),
+(17, 34, 17, 17),
+(18, 35, 18, 18),
+(19, 36, 19, 19),
+(20, 37, 20, 20),
+(21, 38, 21, 21),
+(22, 39, 22, 22),
+(23, 40, 23, 23),
+(24, 41, 24, 24),
+(25, 42, 25, 25),
+(26, 43, 26, 26),
+(27, 44, 27, 27),
+(28, 45, 28, 28),
+(29, 46, 29, 29),
+(30, 47, 30, 30),
+(31, 48, 31, 31),
+(32, 49, 32, 32),
+(33, 50, 33, 33),
+(34, 51, 34, 34),
+(35, 52, 35, 35);
 
 --
 -- Disparadores `estudiantes_padres`
 --
 DELIMITER $$
-CREATE TRIGGER `eliminar_padres_madres` AFTER DELETE ON `estudiantes_padres` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
-begin
+CREATE TRIGGER `eliminar_padres_madres` AFTER DELETE ON `estudiantes_padres` FOR EACH ROW begin
 -- Edit trigger body code below this line. Do not edit lines above this one
 DELETE FROM padres where id_padre=old.id_padre;
 DELETE FROM madres where id_madre=old.id_madre;
@@ -677,6 +875,22 @@ CREATE TABLE `grados` (
   `ano_lectivo` int(11) NOT NULL,
   `estado_grado` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `grados`
+--
+
+INSERT INTO `grados` (`id_grado`, `nombre_grado`, `nivel_educacion`, `ano_lectivo`, `estado_grado`) VALUES
+(1, 'Transición', 1, 1, 'Activo'),
+(2, 'Primero', 2, 1, 'Activo'),
+(3, 'Segundo', 2, 1, 'Activo'),
+(4, 'Tercero', 2, 1, 'Activo'),
+(5, 'Cuarto', 2, 1, 'Activo'),
+(6, 'Quinto', 2, 1, 'Activo'),
+(7, 'Sexto', 3, 1, 'Activo'),
+(8, 'Séptimo', 3, 1, 'Activo'),
+(9, 'Octavo', 3, 1, 'Activo'),
+(10, 'Noveno', 3, 1, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -723,6 +937,14 @@ CREATE TABLE `grupos` (
   `estado_grupo` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `grupos`
+--
+
+INSERT INTO `grupos` (`id_grupo`, `nombre_grupo`, `ano_lectivo`, `estado_grupo`) VALUES
+(1, 'A', 1, 'Activo'),
+(2, 'B', 1, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -743,9 +965,71 @@ CREATE TABLE `historial_estados` (
 --
 
 INSERT INTO `historial_estados` (`id_historial`, `id_persona`, `estado`, `observaciones`, `fecha_estado`, `ano_lectivo`) VALUES
-(1, 3, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
-(2, 4, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1),
-(3, 5, 'Inscrito', 'Estudiante Inscrito.', '2018-10-03', 1);
+(1, 6, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(2, 7, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(3, 8, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(4, 9, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(5, 10, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(6, 11, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(7, 13, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(8, 15, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(9, 18, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(10, 20, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(11, 22, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(12, 24, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(13, 26, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(14, 28, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(15, 29, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(16, 30, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(17, 34, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(18, 35, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(19, 36, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(20, 37, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(21, 38, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(22, 39, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(23, 40, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(24, 41, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(25, 42, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(26, 43, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(27, 44, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(28, 45, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(29, 46, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(30, 47, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(31, 48, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(32, 49, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(33, 50, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(34, 51, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(35, 52, 'Inscrito', 'Estudiante Inscrito.', '2018-10-24', 1),
+(36, 34, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(37, 35, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(38, 37, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(39, 38, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(40, 40, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(41, 42, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(42, 43, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(43, 45, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(44, 47, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(45, 48, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(46, 50, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(47, 51, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(48, 52, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(49, 49, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(50, 46, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(51, 44, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(52, 41, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(53, 39, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(54, 36, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(55, 11, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(56, 13, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(57, 15, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(58, 18, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(59, 20, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(60, 22, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(61, 24, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(62, 26, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(63, 28, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(64, 29, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1),
+(65, 30, 'Matriculado', 'Estudiante Matriculado.', '2018-10-24', 1);
 
 -- --------------------------------------------------------
 
@@ -757,15 +1041,41 @@ CREATE TABLE `horarios` (
   `id_horario` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
   `hora` int(11) NOT NULL,
-  `lunes` int(11) NOT NULL DEFAULT '1',
-  `martes` int(11) NOT NULL DEFAULT '1',
-  `miercoles` int(11) NOT NULL DEFAULT '1',
-  `jueves` int(11) NOT NULL DEFAULT '1',
-  `viernes` int(11) NOT NULL DEFAULT '1',
-  `sabado` int(11) NOT NULL DEFAULT '1',
-  `domingo` int(11) NOT NULL DEFAULT '1',
+  `lunes` int(11) NOT NULL DEFAULT 1,
+  `martes` int(11) NOT NULL DEFAULT 1,
+  `miercoles` int(11) NOT NULL DEFAULT 1,
+  `jueves` int(11) NOT NULL DEFAULT 1,
+  `viernes` int(11) NOT NULL DEFAULT 1,
+  `sabado` int(11) NOT NULL DEFAULT 1,
+  `domingo` int(11) NOT NULL DEFAULT 1,
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `horarios`
+--
+
+INSERT INTO `horarios` (`id_horario`, `id_curso`, `hora`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `domingo`, `ano_lectivo`) VALUES
+(1, 1, 1, 1, 11, 1, 1, 11, 1, 1, 1),
+(2, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1),
+(3, 1, 3, 1, 1, 1, 5, 1, 1, 1, 1),
+(4, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1),
+(5, 1, 5, 12, 1, 1, 1, 1, 12, 1, 1),
+(6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1),
+(7, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1),
+(8, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1),
+(9, 1, 9, 1, 13, 1, 1, 1, 13, 1, 1),
+(10, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1),
+(11, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(12, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1),
+(13, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1),
+(14, 2, 4, 1, 1, 1, 1, 1, 1, 1, 1),
+(15, 2, 5, 1, 1, 1, 1, 1, 1, 1, 1),
+(16, 2, 6, 1, 1, 1, 1, 1, 1, 1, 1),
+(17, 2, 7, 1, 1, 1, 1, 1, 1, 1, 1),
+(18, 2, 8, 1, 1, 1, 1, 1, 1, 1, 1),
+(19, 2, 9, 1, 1, 1, 1, 1, 1, 1, 1),
+(20, 2, 10, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -782,6 +1092,42 @@ CREATE TABLE `listado_votantes` (
   `fecha_voto` datetime DEFAULT NULL,
   `estado_votante` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `listado_votantes`
+--
+
+INSERT INTO `listado_votantes` (`id_listado`, `id_eleccion`, `id_curso`, `id_estudiante`, `codigo_voto`, `fecha_voto`, `estado_votante`) VALUES
+(1, 1, 1, 34, '1im001cu', '2018-10-24 12:29:27', 'si'),
+(2, 1, 1, 35, '1ar011ab', '2018-10-24 12:31:10', 'si'),
+(3, 1, 1, 37, '1la021ab', '2018-10-24 12:33:23', 'si'),
+(4, 1, 1, 38, '1al031ar', '2018-10-24 12:34:46', 'si'),
+(5, 1, 1, 40, '1ir041e ', '2018-10-24 12:49:38', 'si'),
+(6, 1, 1, 42, '1ha051lo', '2018-10-24 12:38:06', 'si'),
+(7, 1, 1, 43, '1ar061ue', '2018-10-24 12:38:57', 'si'),
+(8, 1, 1, 45, '1ar071ar', '2018-10-24 12:40:28', 'si'),
+(9, 1, 1, 47, '1ho081ar', '2018-10-24 12:41:29', 'si'),
+(10, 1, 1, 48, '1es091ed', '2018-10-24 12:42:32', 'si'),
+(11, 1, 1, 50, '1ar0101ed', '2018-10-24 12:43:38', 'si'),
+(12, 1, 1, 51, '1ay0111ob', '2018-10-24 12:43:51', 'si'),
+(13, 1, 1, 52, '1as0121ea', '2018-10-24 12:57:35', 'si'),
+(14, 1, 1, 49, '1ho0131oc', '2018-10-24 12:56:26', 'si'),
+(15, 1, 1, 46, '1ua0141oc', '2018-10-24 12:46:53', 'si'),
+(16, 1, 1, 44, '1ar0151oc', '2018-10-24 12:48:32', 'si'),
+(17, 1, 1, 41, '1ui0161oc', '2018-10-24 12:47:47', 'si'),
+(18, 1, 1, 39, '1ur0171ol', '2018-10-24 12:49:03', 'si'),
+(19, 1, 1, 36, '1na0181ol', '2018-10-24 12:49:09', 'si'),
+(20, 1, 2, 11, '1ua101ar', '2018-10-24 12:28:37', 'si'),
+(21, 1, 2, 13, '1dr111ue', '2018-10-24 12:31:00', 'si'),
+(22, 1, 2, 15, '1os121ue', '2018-10-24 12:33:19', 'si'),
+(23, 1, 2, 18, '1ua131ut', '2018-10-24 12:36:30', 'si'),
+(24, 1, 2, 20, '1ng141en', '2018-10-24 12:37:54', 'si'),
+(25, 1, 2, 22, '1ho151ob', '2018-10-24 12:39:28', 'si'),
+(26, 1, 2, 24, '1or161ob', '2018-10-24 12:40:21', 'si'),
+(27, 1, 2, 26, '1na171rt', '2018-10-24 12:41:18', 'si'),
+(28, 1, 2, 28, '1ar181ac', NULL, 'no'),
+(29, 1, 2, 29, '1ar191am', '2018-10-24 12:45:00', 'si'),
+(30, 1, 2, 30, '1ua1101ic', '2018-10-24 12:48:18', 'si');
 
 -- --------------------------------------------------------
 
@@ -847,9 +1193,41 @@ CREATE TABLE `madres` (
 --
 
 INSERT INTO `madres` (`id_madre`, `identificacion_m`, `nombres_m`, `apellido1_m`, `apellido2_m`, `parentesco_m`, `sexo_m`, `telefono_m`, `direccion_m`, `barrio_m`, `ocupacion_m`, `telefono_trabajo_m`, `direccion_trabajo_m`) VALUES
-(1, '456', 'Lola', 'Lopez', 'Lopez', 'Madre', 'f', '322', 'Calle 4', 'Popa', 'D', '32', 'Calle 3'),
-(2, '457', 'Lina', 'Caceres', 'Caceres', 'Madre', 'f', '321', 'Calle 4', 'Popa', 'D', '23', 'Calle 3'),
-(3, '457', 'Laura', 'Diaz', 'Diaz', 'Madre', 'f', '320', 'Calle 4', 'Nevada', 'D', '32', 'Calle 4');
+(1, '4100000000', 'Claudia', 'Ospino', 'Bravo', 'Madre', 'f', '3145677854', 'Sempegua', 'La Paz', 'Ama De Casa', '3145677854', 'Sempegua La Paz'),
+(2, '4100000000', 'Claudia', 'Ospino', 'Bravo', 'Madre', 'f', '3145677854', 'Sempegua', 'La Paz', 'Ama De Casa', '3145677854', 'Sempegua La Paz'),
+(3, '4100000000', 'Marcela', 'Lopez', 'Medina', 'Madre', 'f', '3145673421', 'Sempegua', 'La Paz', 'Ama De Casa', '3145673221', 'Sempegua La Paz'),
+(4, '4100000000', 'Laura', 'Toloza', 'Diaz', 'Madre', 'f', '3156759876', 'Sempegua', 'La Paz', 'Ama De Casa', '3156759876', '3156759876'),
+(5, '41000', 'Sandra', 'Gamarra', 'Lopez', 'Madre', 'f', '312456789', 'Sempegua', 'La Paz', 'Ama De Casa', '3127895788', 'Sempegua La Paz'),
+(6, '5000000000', 'Dilia', 'Castaneda', 'Perez', 'Madre', 'f', '3120000000', 'Sempegua', 'La Paz', 'Ama De Casa', '3120000000', 'Sempegua La Paz'),
+(7, '500000000', 'Bertha', 'Cadena', 'Gomez', 'Madre', 'f', '3129999999', 'Sempegua', 'La Paz', 'Ama De Casa', '3129999999', 'Sempegua La Paz'),
+(8, '500000000', 'Liliana', 'Martinez', 'Ochoa', 'Madre', 'f', '3146789088', 'Sempegua', 'La Paz', 'Ama De Casa', '3146789078', 'Semepgua La Paz'),
+(9, '50000000', 'Luisa', 'Obregon', 'Villa', 'Madre', 'f', '31456890', 'Sempegua', 'La Paz', 'Comerciante', '315567890', 'Sempegua La Paz'),
+(10, '3456789', 'Luisa', 'Cavas', 'Cavas', 'Madre', 'f', '313456789', 'Sempegua', 'La Paz', 'Ama De Casa', '312444444', 'Sempegua'),
+(11, '345678', 'Lina', 'Mendez', 'M', 'Madre', 'f', '2345678', 'Sempegua', 'La Paz', 'Vendedora', '2345678', 'La Paz'),
+(12, '3343434', 'Miriam', 'Quevedo', 'Q', 'Madre', 'f', '323232', 'Ffff', 'Fff', 'Fff', '4444', 'Ffff'),
+(13, '4567890', 'Milena', 'Mendez', 'M', 'Madre', 'f', '4567890', 'Dfghjk', 'Fghjk', 'Fghjk', '6789', '6789'),
+(14, '4567890', 'Marina', 'Nobles', 'Dfghjk', 'Madre', 'f', '567890', 'Fghjkl', 'Fghjkl', 'Fghjkl', '67890', 'Fghjkl'),
+(15, '4567890', 'Lorena', 'Mendez', 'Dfg', 'Madre', 'f', '56789', 'Fghjk', 'Fghjk', 'Fghjk', '555', 'Dfghjklñ'),
+(16, '456789', 'Lina', 'Nobles', 'Fghjk', 'Madre', 'f', '67890', 'Fghjk', 'Ghjkl', 'Ghjkl', '67890', 'Ghjkl'),
+(17, '4567890', 'Luisa', 'Toloza', 'Sdfghjkl', 'Madre', 'f', '4567890', 'Dfghjkl', 'Fghjkl', 'Fghjkl', '567890', 'Cvbnm,'),
+(18, '3456789', 'Camila', 'Crespo', 'Crespo', 'Madre', 'f', '567890', 'Cvbnm,', 'Dfghjk', 'Fghjkl', '567890', 'Fghjkl'),
+(19, '1066', 'Eva', 'Diaz', 'Picon', 'Madre', 'f', '3206919220', 'Sempegua', 'Sempegua', 'Ama De Casa', '3206919220', 'Sempegua'),
+(20, '4567890', 'Lourdes', 'Toloza', 'Toloza', 'Madre', 'f', '3456789', 'Dfghjkl', 'Dfghjk', 'Fghjkl', '456789', '3456789'),
+(21, '456789', 'Fghjk', 'Fghjk', 'Fghjk', 'Madre', 'f', '567890', 'Dfghjkl', 'Fghjkl', 'Fghjkl', '567890', 'Fghjk'),
+(22, '1066', 'Eva', 'Picon', 'Diaz', 'Madre', 'f', '3206919220', 'Sempegua', 'Sempegua', 'Ama De Casa', '3206919220', 'Sempegua'),
+(23, '456789', 'Fghjk', 'Vbnm', 'Vbnm', 'Madre', 'f', '567890', 'Fghjkl', 'Fghjkl', 'Fghjk', '6789', 'Ghjk'),
+(24, '1066', 'Eva', 'Picon', 'Diaz', 'Madre', 'f', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Ama De Casa', '3206919220', 'Sempegua'),
+(25, '456789', 'Dfghjk', 'Fghjk', 'Ghjk', 'Madre', 'f', '56789', 'Bnm', 'Dfghj', 'Dfghj', '6789', 'Fghjk'),
+(26, '2323232', 'Frrf', 'Frfr', 'Rfrfr', 'Madre', 'f', '333333', 'Dfghjk', 'Dfghjkl', 'Dfghjkl', '456789', 'Fghkl??'),
+(27, '1066', 'Eva', 'Picon', 'Diaz', 'Madre', 'f', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Ama De Casa', '3206919220', 'Calle 30a 32-86'),
+(28, '456789', 'Fghjkl', 'Fghjk', 'Fghjk', 'Madre', 'f', '567890', 'Dfghjk', 'Fghjk', 'Dfghjk', '45678', 'Dfghk'),
+(29, '1066', 'Eva', 'Picon', 'Diaz', 'Madre', 'f', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Ama De Casa', '3206919220', 'Calle 30a 32-86'),
+(30, '456789', 'Dfghjk', 'Dfghjk', 'Fghjk', 'Madre', 'f', '567890', 'Dfghjk', 'Cvbnm', 'Cvbnm', '5689', 'Cvbn'),
+(31, '456789', 'Dfghjkl', 'Fghjk', 'Ghjk', 'Madre', 'f', '567890', 'Dfghjk', 'Ghjkl', 'Ghjkl', '67890', 'Ghjkl??'),
+(32, '1065', 'Eva', 'Picon', 'Diaz', 'Madre', 'f', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Ama De Casa', '3206919220', 'Calle 30a 32-86'),
+(33, '3456789', 'Dfghjkl', 'Fghjkl', 'Fghjkl', 'Madre', 'f', '56890', 'Cvbnm', 'Fghjkl', 'Fghjk', '5689', 'Fghkl'),
+(34, '456789', 'Dfghjkl', 'Fghjkl', 'Vbnm', 'Madre', 'f', '56789', 'Dfghjkl??', 'Cvbnm', 'Cvbnm,', '67890', 'Ghjkl'),
+(35, '1066', 'Eva', 'Picon', 'Diaz', 'Madre', 'f', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Ama De Casa', '3206919220', 'Calle 30a 32-86');
 
 -- --------------------------------------------------------
 
@@ -872,19 +1250,53 @@ CREATE TABLE `matriculas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Volcado de datos para la tabla `matriculas`
+--
+
+INSERT INTO `matriculas` (`id_matricula`, `fecha_matricula`, `ano_lectivo`, `id_estudiante`, `id_curso`, `jornada`, `id_acudiente`, `parentesco`, `observaciones`, `estado_matricula`, `situacion_academica`) VALUES
+(1, '2018-10-24', 1, 34, 1, 'Mañana', 56, 'Madre', 'Ninguna', 'Activo', 'No Definida'),
+(2, '2018-10-24', 1, 35, 1, 'Mañana', 53, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(3, '2018-10-24', 1, 37, 1, 'Mañana', 58, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(4, '2018-10-24', 1, 38, 1, 'Mañana', 55, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(5, '2018-10-24', 1, 40, 1, 'Mañana', 55, 'Madrina', 'Ninguna', 'Activo', 'No Definida'),
+(6, '2018-10-24', 1, 42, 1, 'Mañana', 57, 'Padrino', 'Ninguna', 'Activo', 'No Definida'),
+(7, '2018-10-24', 1, 43, 1, 'Mañana', 57, 'Cuñado(a)', 'Ninguna', 'Activo', 'No Definida'),
+(8, '2018-10-24', 1, 45, 1, 'Mañana', 57, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(9, '2018-10-24', 1, 47, 1, 'Mañana', 56, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(10, '2018-10-24', 1, 48, 1, 'Mañana', 58, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(11, '2018-10-24', 1, 50, 1, 'Mañana', 56, 'Hermano(a)', 'Ninguna\r\n', 'Activo', 'No Definida'),
+(12, '2018-10-24', 1, 51, 1, 'Mañana', 58, 'Madre', 'Ninguna', 'Activo', 'No Definida'),
+(13, '2018-10-24', 1, 52, 1, 'Mañana', 54, 'Madrina', 'Ninguna', 'Activo', 'No Definida'),
+(14, '2018-10-24', 1, 49, 1, 'Mañana', 55, 'Cuñado(a)', 'Ninguna', 'Activo', 'No Definida'),
+(15, '2018-10-24', 1, 46, 1, 'Mañana', 58, 'Cuñado(a)', 'Ninguna', 'Activo', 'No Definida'),
+(16, '2018-10-24', 1, 44, 1, 'Mañana', 55, 'Madre', 'Ninguna\r\n', 'Activo', 'No Definida'),
+(17, '2018-10-24', 1, 41, 1, 'Mañana', 57, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(18, '2018-10-24', 1, 39, 1, 'Mañana', 55, 'Madrina', 'Ninguna', 'Activo', 'No Definida'),
+(19, '2018-10-24', 1, 36, 1, 'Mañana', 55, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(20, '2018-10-24', 1, 11, 2, 'Mañana', 56, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(21, '2018-10-24', 1, 13, 2, 'Mañana', 58, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(22, '2018-10-24', 1, 15, 2, 'Mañana', 58, 'Madre', 'Ninguna', 'Activo', 'No Definida'),
+(23, '2018-10-24', 1, 18, 2, 'Mañana', 58, 'Madrina', 'Ninguna', 'Activo', 'No Definida'),
+(24, '2018-10-24', 1, 20, 2, 'Mañana', 57, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(25, '2018-10-24', 1, 22, 2, 'Mañana', 58, 'Madre', 'Ninguna', 'Activo', 'No Definida'),
+(26, '2018-10-24', 1, 24, 2, 'Mañana', 53, 'Abuelo(a)', 'Ninguna\r\n', 'Activo', 'No Definida'),
+(27, '2018-10-24', 1, 26, 2, 'Mañana', 58, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(28, '2018-10-24', 1, 28, 2, 'Mañana', 58, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida'),
+(29, '2018-10-24', 1, 29, 2, 'Mañana', 58, 'Madrina', 'Ninguna', 'Activo', 'No Definida'),
+(30, '2018-10-24', 1, 30, 2, 'Mañana', 58, 'Tio(a)', 'Ninguna', 'Activo', 'No Definida');
+
+--
 -- Disparadores `matriculas`
 --
 DELIMITER $$
-CREATE TRIGGER `denegar_acceso_usuario` AFTER DELETE ON `matriculas` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
-begin
+CREATE TRIGGER `denegar_acceso_usuario` AFTER DELETE ON `matriculas` FOR EACH ROW begin
 -- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE usuarios set acceso="0" where id_persona=old.id_estudiante;
 end
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `permitir_acceso_usuario` AFTER INSERT ON `matriculas` FOR EACH ROW -- Edit trigger body code below this line. Do not edit lines above this one
-begin
+CREATE TRIGGER `permitir_acceso_usuario` AFTER INSERT ON `matriculas` FOR EACH ROW begin
 -- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE usuarios set acceso="1" where id_persona=new.id_estudiante;
 UPDATE usuarios set acceso="1" where id_persona=new.id_acudiente and id_rol="4";
@@ -2287,6 +2699,511 @@ CREATE TABLE `notas` (
   `estado_nota` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id_nota`, `ano_lectivo`, `id_estudiante`, `id_grado`, `id_asignatura`, `p1`, `p2`, `p3`, `p4`, `nota_final`, `id_desempeno`, `fallas`, `estado_nota`) VALUES
+(1, 1, 34, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(2, 1, 34, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(3, 1, 34, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(4, 1, 34, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(5, 1, 34, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(6, 1, 34, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(7, 1, 34, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(8, 1, 34, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(9, 1, 34, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(10, 1, 34, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(11, 1, 34, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(12, 1, 34, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(13, 1, 34, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(14, 1, 34, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(15, 1, 34, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(16, 1, 34, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(17, 1, 34, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(18, 1, 35, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(19, 1, 35, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(20, 1, 35, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(21, 1, 35, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(22, 1, 35, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(23, 1, 35, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(24, 1, 35, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(25, 1, 35, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(26, 1, 35, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(27, 1, 35, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(28, 1, 35, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(29, 1, 35, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(30, 1, 35, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(31, 1, 35, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(32, 1, 35, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(33, 1, 35, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(34, 1, 35, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(35, 1, 37, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(36, 1, 37, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(37, 1, 37, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(38, 1, 37, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(39, 1, 37, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(40, 1, 37, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(41, 1, 37, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(42, 1, 37, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(43, 1, 37, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(44, 1, 37, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(45, 1, 37, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(46, 1, 37, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(47, 1, 37, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(48, 1, 37, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(49, 1, 37, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(50, 1, 37, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(51, 1, 37, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(52, 1, 38, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(53, 1, 38, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(54, 1, 38, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(55, 1, 38, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(56, 1, 38, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(57, 1, 38, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(58, 1, 38, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(59, 1, 38, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(60, 1, 38, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(61, 1, 38, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(62, 1, 38, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(63, 1, 38, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(64, 1, 38, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(65, 1, 38, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(66, 1, 38, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(67, 1, 38, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(68, 1, 38, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(69, 1, 40, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(70, 1, 40, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(71, 1, 40, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(72, 1, 40, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(73, 1, 40, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(74, 1, 40, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(75, 1, 40, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(76, 1, 40, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(77, 1, 40, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(78, 1, 40, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(79, 1, 40, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(80, 1, 40, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(81, 1, 40, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(82, 1, 40, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(83, 1, 40, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(84, 1, 40, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(85, 1, 40, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(86, 1, 42, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(87, 1, 42, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(88, 1, 42, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(89, 1, 42, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(90, 1, 42, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(91, 1, 42, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(92, 1, 42, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(93, 1, 42, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(94, 1, 42, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(95, 1, 42, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(96, 1, 42, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(97, 1, 42, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(98, 1, 42, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(99, 1, 42, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(100, 1, 42, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(101, 1, 42, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(102, 1, 42, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(103, 1, 43, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(104, 1, 43, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(105, 1, 43, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(106, 1, 43, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(107, 1, 43, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(108, 1, 43, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(109, 1, 43, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(110, 1, 43, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(111, 1, 43, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(112, 1, 43, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(113, 1, 43, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(114, 1, 43, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(115, 1, 43, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(116, 1, 43, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(117, 1, 43, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(118, 1, 43, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(119, 1, 43, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(120, 1, 45, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(121, 1, 45, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(122, 1, 45, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(123, 1, 45, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(124, 1, 45, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(125, 1, 45, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(126, 1, 45, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(127, 1, 45, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(128, 1, 45, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(129, 1, 45, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(130, 1, 45, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(131, 1, 45, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(132, 1, 45, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(133, 1, 45, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(134, 1, 45, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(135, 1, 45, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(136, 1, 45, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(137, 1, 47, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(138, 1, 47, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(139, 1, 47, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(140, 1, 47, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(141, 1, 47, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(142, 1, 47, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(143, 1, 47, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(144, 1, 47, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(145, 1, 47, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(146, 1, 47, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(147, 1, 47, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(148, 1, 47, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(149, 1, 47, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(150, 1, 47, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(151, 1, 47, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(152, 1, 47, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(153, 1, 47, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(154, 1, 48, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(155, 1, 48, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(156, 1, 48, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(157, 1, 48, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(158, 1, 48, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(159, 1, 48, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(160, 1, 48, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(161, 1, 48, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(162, 1, 48, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(163, 1, 48, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(164, 1, 48, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(165, 1, 48, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(166, 1, 48, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(167, 1, 48, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(168, 1, 48, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(169, 1, 48, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(170, 1, 48, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(171, 1, 50, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(172, 1, 50, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(173, 1, 50, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(174, 1, 50, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(175, 1, 50, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(176, 1, 50, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(177, 1, 50, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(178, 1, 50, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(179, 1, 50, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(180, 1, 50, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(181, 1, 50, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(182, 1, 50, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(183, 1, 50, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(184, 1, 50, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(185, 1, 50, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(186, 1, 50, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(187, 1, 50, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(188, 1, 51, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(189, 1, 51, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(190, 1, 51, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(191, 1, 51, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(192, 1, 51, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(193, 1, 51, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(194, 1, 51, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(195, 1, 51, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(196, 1, 51, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(197, 1, 51, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(198, 1, 51, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(199, 1, 51, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(200, 1, 51, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(201, 1, 51, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(202, 1, 51, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(203, 1, 51, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(204, 1, 51, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(205, 1, 52, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(206, 1, 52, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(207, 1, 52, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(208, 1, 52, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(209, 1, 52, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(210, 1, 52, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(211, 1, 52, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(212, 1, 52, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(213, 1, 52, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(214, 1, 52, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(215, 1, 52, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(216, 1, 52, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(217, 1, 52, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(218, 1, 52, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(219, 1, 52, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(220, 1, 52, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(221, 1, 52, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(222, 1, 49, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(223, 1, 49, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(224, 1, 49, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(225, 1, 49, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(226, 1, 49, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(227, 1, 49, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(228, 1, 49, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(229, 1, 49, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(230, 1, 49, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(231, 1, 49, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(232, 1, 49, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(233, 1, 49, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(234, 1, 49, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(235, 1, 49, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(236, 1, 49, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(237, 1, 49, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(238, 1, 49, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(239, 1, 46, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(240, 1, 46, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(241, 1, 46, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(242, 1, 46, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(243, 1, 46, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(244, 1, 46, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(245, 1, 46, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(246, 1, 46, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(247, 1, 46, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(248, 1, 46, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(249, 1, 46, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(250, 1, 46, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(251, 1, 46, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(252, 1, 46, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(253, 1, 46, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(254, 1, 46, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(255, 1, 46, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(256, 1, 44, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(257, 1, 44, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(258, 1, 44, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(259, 1, 44, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(260, 1, 44, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(261, 1, 44, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(262, 1, 44, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(263, 1, 44, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(264, 1, 44, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(265, 1, 44, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(266, 1, 44, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(267, 1, 44, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(268, 1, 44, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(269, 1, 44, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(270, 1, 44, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(271, 1, 44, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(272, 1, 44, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(273, 1, 41, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(274, 1, 41, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(275, 1, 41, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(276, 1, 41, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(277, 1, 41, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(278, 1, 41, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(279, 1, 41, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(280, 1, 41, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(281, 1, 41, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(282, 1, 41, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(283, 1, 41, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(284, 1, 41, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(285, 1, 41, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(286, 1, 41, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(287, 1, 41, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(288, 1, 41, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(289, 1, 41, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(290, 1, 39, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(291, 1, 39, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(292, 1, 39, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(293, 1, 39, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(294, 1, 39, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(295, 1, 39, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(296, 1, 39, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(297, 1, 39, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(298, 1, 39, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(299, 1, 39, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(300, 1, 39, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(301, 1, 39, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(302, 1, 39, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(303, 1, 39, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(304, 1, 39, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(305, 1, 39, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(306, 1, 39, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(307, 1, 36, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(308, 1, 36, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(309, 1, 36, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(310, 1, 36, 9, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(311, 1, 36, 9, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(312, 1, 36, 9, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(313, 1, 36, 9, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(314, 1, 36, 9, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(315, 1, 36, 9, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(316, 1, 36, 9, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(317, 1, 36, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(318, 1, 36, 9, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(319, 1, 36, 9, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(320, 1, 36, 9, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(321, 1, 36, 9, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(322, 1, 36, 9, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(323, 1, 36, 9, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(324, 1, 11, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(325, 1, 11, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(326, 1, 11, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(327, 1, 11, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(328, 1, 11, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(329, 1, 11, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(330, 1, 11, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(331, 1, 11, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(332, 1, 11, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(333, 1, 11, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(334, 1, 11, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(335, 1, 11, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(336, 1, 11, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(337, 1, 11, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(338, 1, 11, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(339, 1, 11, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(340, 1, 13, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(341, 1, 13, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(342, 1, 13, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(343, 1, 13, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(344, 1, 13, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(345, 1, 13, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(346, 1, 13, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(347, 1, 13, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(348, 1, 13, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(349, 1, 13, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(350, 1, 13, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(351, 1, 13, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(352, 1, 13, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(353, 1, 13, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(354, 1, 13, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(355, 1, 13, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(356, 1, 15, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(357, 1, 15, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(358, 1, 15, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(359, 1, 15, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(360, 1, 15, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(361, 1, 15, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(362, 1, 15, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(363, 1, 15, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(364, 1, 15, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(365, 1, 15, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(366, 1, 15, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(367, 1, 15, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(368, 1, 15, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(369, 1, 15, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(370, 1, 15, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(371, 1, 15, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(372, 1, 18, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(373, 1, 18, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(374, 1, 18, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(375, 1, 18, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(376, 1, 18, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(377, 1, 18, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(378, 1, 18, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(379, 1, 18, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(380, 1, 18, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(381, 1, 18, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(382, 1, 18, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(383, 1, 18, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(384, 1, 18, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(385, 1, 18, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(386, 1, 18, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(387, 1, 18, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(388, 1, 20, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(389, 1, 20, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(390, 1, 20, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(391, 1, 20, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(392, 1, 20, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(393, 1, 20, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(394, 1, 20, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(395, 1, 20, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(396, 1, 20, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(397, 1, 20, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(398, 1, 20, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(399, 1, 20, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(400, 1, 20, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(401, 1, 20, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(402, 1, 20, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(403, 1, 20, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(404, 1, 22, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(405, 1, 22, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(406, 1, 22, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(407, 1, 22, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(408, 1, 22, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(409, 1, 22, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(410, 1, 22, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(411, 1, 22, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(412, 1, 22, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(413, 1, 22, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(414, 1, 22, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(415, 1, 22, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(416, 1, 22, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(417, 1, 22, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(418, 1, 22, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(419, 1, 22, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(420, 1, 24, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(421, 1, 24, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(422, 1, 24, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(423, 1, 24, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(424, 1, 24, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(425, 1, 24, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(426, 1, 24, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(427, 1, 24, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(428, 1, 24, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(429, 1, 24, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(430, 1, 24, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(431, 1, 24, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(432, 1, 24, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(433, 1, 24, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(434, 1, 24, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(435, 1, 24, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(436, 1, 26, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(437, 1, 26, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(438, 1, 26, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(439, 1, 26, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(440, 1, 26, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(441, 1, 26, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(442, 1, 26, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(443, 1, 26, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(444, 1, 26, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(445, 1, 26, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(446, 1, 26, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(447, 1, 26, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(448, 1, 26, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(449, 1, 26, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(450, 1, 26, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(451, 1, 26, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(452, 1, 28, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(453, 1, 28, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(454, 1, 28, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(455, 1, 28, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(456, 1, 28, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(457, 1, 28, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(458, 1, 28, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(459, 1, 28, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(460, 1, 28, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(461, 1, 28, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(462, 1, 28, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(463, 1, 28, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(464, 1, 28, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(465, 1, 28, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(466, 1, 28, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(467, 1, 28, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(468, 1, 29, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(469, 1, 29, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(470, 1, 29, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(471, 1, 29, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(472, 1, 29, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(473, 1, 29, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(474, 1, 29, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(475, 1, 29, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(476, 1, 29, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(477, 1, 29, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(478, 1, 29, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(479, 1, 29, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(480, 1, 29, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(481, 1, 29, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(482, 1, 29, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(483, 1, 29, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(484, 1, 30, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(485, 1, 30, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(486, 1, 30, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(487, 1, 30, 10, 6, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(488, 1, 30, 10, 9, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(489, 1, 30, 10, 7, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(490, 1, 30, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(491, 1, 30, 10, 8, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(492, 1, 30, 10, 11, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(493, 1, 30, 10, 12, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(494, 1, 30, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(495, 1, 30, 10, 13, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(496, 1, 30, 10, 15, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(497, 1, 30, 10, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(498, 1, 30, 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(499, 1, 30, 10, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -2300,6 +3217,50 @@ CREATE TABLE `notas_actividades` (
   `nota` decimal(11,1) DEFAULT NULL,
   `fecha_registro` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `notas_actividades`
+--
+
+INSERT INTO `notas_actividades` (`id_planilla`, `id_estudiante`, `id_actividad`, `nota`, `fecha_registro`) VALUES
+(1, 34, 1, '4.0', '2018-10-24 03:31:56'),
+(2, 35, 1, '4.0', '2018-10-24 03:31:56'),
+(3, 37, 1, '4.0', '2018-10-24 03:31:56'),
+(4, 38, 1, '4.0', '2018-10-24 03:31:56'),
+(5, 40, 1, '4.0', '2018-10-24 03:31:56'),
+(6, 42, 1, '4.0', '2018-10-24 03:31:56'),
+(7, 43, 1, '4.0', '2018-10-24 03:31:56'),
+(8, 45, 1, '4.0', '2018-10-24 03:31:56'),
+(9, 47, 1, '4.0', '2018-10-24 03:31:56'),
+(10, 48, 1, '4.0', '2018-10-24 03:31:56'),
+(11, 50, 1, '4.0', '2018-10-24 03:31:56'),
+(12, 51, 1, '4.0', '2018-10-24 03:31:56'),
+(13, 52, 1, '4.0', '2018-10-24 03:31:56'),
+(14, 49, 1, '4.0', '2018-10-24 03:31:56'),
+(15, 46, 1, '4.0', '2018-10-24 03:31:56'),
+(16, 44, 1, '4.0', '2018-10-24 03:31:56'),
+(17, 41, 1, '4.0', '2018-10-24 03:31:56'),
+(18, 39, 1, '4.0', '2018-10-24 03:31:56'),
+(19, 36, 1, '4.0', '2018-10-24 03:31:56'),
+(20, 34, 2, NULL, '0000-00-00 00:00:00'),
+(21, 35, 2, NULL, '0000-00-00 00:00:00'),
+(22, 37, 2, NULL, '0000-00-00 00:00:00'),
+(23, 38, 2, NULL, '0000-00-00 00:00:00'),
+(24, 40, 2, NULL, '0000-00-00 00:00:00'),
+(25, 42, 2, NULL, '0000-00-00 00:00:00'),
+(26, 43, 2, NULL, '0000-00-00 00:00:00'),
+(27, 45, 2, NULL, '0000-00-00 00:00:00'),
+(28, 47, 2, NULL, '0000-00-00 00:00:00'),
+(29, 48, 2, NULL, '0000-00-00 00:00:00'),
+(30, 50, 2, NULL, '0000-00-00 00:00:00'),
+(31, 51, 2, NULL, '0000-00-00 00:00:00'),
+(32, 52, 2, NULL, '0000-00-00 00:00:00'),
+(33, 49, 2, NULL, '0000-00-00 00:00:00'),
+(34, 46, 2, NULL, '0000-00-00 00:00:00'),
+(35, 44, 2, NULL, '0000-00-00 00:00:00'),
+(36, 41, 2, NULL, '0000-00-00 00:00:00'),
+(37, 39, 2, NULL, '0000-00-00 00:00:00'),
+(38, 36, 2, NULL, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2317,7 +3278,7 @@ CREATE TABLE `notificaciones` (
   `contenido` varchar(300) NOT NULL,
   `destinatario` varchar(45) NOT NULL,
   `rol_destinatario` varchar(45) NOT NULL,
-  `id_estudiante` int(11) DEFAULT '1',
+  `id_estudiante` int(11) DEFAULT 1,
   `id_asignatura` int(11) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,
@@ -2326,6 +3287,238 @@ CREATE TABLE `notificaciones` (
   `fecha_envio` datetime NOT NULL,
   `estado_lectura` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `notificaciones`
+--
+
+INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categoria_notificacion`, `remitente`, `titulo`, `tipo_notificacion`, `contenido`, `destinatario`, `rol_destinatario`, `id_estudiante`, `id_asignatura`, `fecha_inicio`, `hora_inicio`, `fecha_fin`, `hora_fin`, `fecha_envio`, `estado_lectura`) VALUES
+(1, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '34', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(2, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '35', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(3, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '37', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(4, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '38', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(5, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '40', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(6, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '42', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(7, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '43', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(8, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '45', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(9, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '47', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(10, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '48', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(11, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '50', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(12, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '51', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(13, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '52', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(14, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '49', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(15, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '46', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(16, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '44', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(17, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '41', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(18, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '39', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(19, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '36', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(20, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '11', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(21, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '13', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(22, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '15', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(23, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '18', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(24, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '20', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(25, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '22', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(26, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '24', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(27, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '26', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(28, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '28', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(29, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '29', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(30, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '30', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(31, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(32, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '53', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(33, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(34, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(35, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(36, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(37, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(38, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(39, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(40, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(41, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(42, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(43, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '54', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(44, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(45, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(46, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(47, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(48, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(49, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(50, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(51, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(52, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(53, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(54, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(55, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(56, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '53', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(57, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(58, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(59, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(60, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(121, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '3', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '1'),
+(122, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '4', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(123, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '5', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '1'),
+(124, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '12', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(125, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '14', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(126, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '16', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(127, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '17', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(128, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '19', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '1'),
+(129, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '21', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(130, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '23', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(131, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '25', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(132, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '27', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(133, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '31', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(134, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '32', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
+(135, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(136, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(137, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(138, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(139, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(140, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(141, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(142, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(143, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(144, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(145, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(146, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(147, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(148, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(149, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(150, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(151, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(152, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(153, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(154, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(155, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(156, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(157, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(158, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(159, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(160, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(161, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(162, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(163, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(164, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(165, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(166, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(167, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(168, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(169, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(170, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(171, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(172, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(173, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(174, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(175, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(176, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(177, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(178, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(179, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(180, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(181, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(182, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(183, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(184, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(185, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(186, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(187, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(188, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(189, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(190, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(191, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
+(192, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(193, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(194, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(195, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(196, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(197, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(198, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(199, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(200, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(201, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(202, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(203, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(204, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(205, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(206, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(207, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(208, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(209, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(210, 6, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(211, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(212, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(213, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(214, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(215, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(216, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(217, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(218, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(219, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(220, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(221, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(222, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(223, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(224, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(225, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(226, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(227, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(228, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(229, 7, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:43', '0'),
+(230, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(231, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(232, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(233, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(234, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(235, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(236, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(237, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(238, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(239, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(240, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(241, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(242, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(243, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(244, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(245, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(246, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(247, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(248, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(249, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(250, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(251, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(252, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(253, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(254, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(255, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(256, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(257, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(258, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(259, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(260, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(261, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(262, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(263, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(264, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(265, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(266, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 47, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(267, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(268, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 48, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(269, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(270, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(271, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(272, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(273, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(274, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(275, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(276, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(277, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(278, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(279, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(280, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(281, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(282, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(283, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(284, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(285, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(286, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0');
 
 -- --------------------------------------------------------
 
@@ -2354,9 +3547,41 @@ CREATE TABLE `padres` (
 --
 
 INSERT INTO `padres` (`id_padre`, `identificacion_p`, `nombres_p`, `apellido1_p`, `apellido2_p`, `parentesco_p`, `sexo_p`, `telefono_p`, `direccion_p`, `barrio_p`, `ocupacion_p`, `telefono_trabajo_p`, `direccion_trabajo_p`) VALUES
-(1, '1010', 'Flavio', 'Mindiola', 'Suarez', 'Padre', 'm', '678', 'calle 4', 'El Prado1', 'yui', '678', 'ghj'),
-(2, '1011', 'Pedro', 'Martinez', 'Mejia', 'Padre', 'm', '678', 'calle 5', 'El Prado2', 'yui', '678', 'ghj'),
-(3, '1012', 'Juan', 'Suarez', 'Diaz', 'Padre', 'm', '678', 'calle 4', 'El Prado3', 'yui', '678', 'ghj');
+(1, '4000000000', 'Jose', 'Bello', 'Mejia', 'Padre', 'm', '3145677854', 'Sempegua', 'La Paz', 'Agricultor', '3145677854', 'Sempegua La Paz'),
+(2, '4000000000', 'Jose', 'Bello', 'Mejia', 'Padre', 'm', '3145677854', 'Sempegua', 'La Paz', 'Agricultor', '3145677854', 'Sempegua La Paz'),
+(3, '4000000000', 'Carlos', 'Cabas', 'Cabas', 'Padre', 'm', '3128687679', 'Sempegua', 'La Paza', 'Agricultor', '3126767777', 'Sempegua La Paz'),
+(4, '4000000000', 'Pablo', 'Cardenas', 'Villa', 'Padre', 'm', '3124569832', 'Sempegua', 'La Paz', 'Agricultor', '3124569832', 'Sempegua La Paz'),
+(5, '410000', 'Ovidio', 'Guerrero', 'Perez', 'Padre', 'm', '3147869986', 'Sempegua', 'La Paz', 'Agricultor', '3123456789', 'Sempegua'),
+(6, '4000000000', 'Luis', 'Castaneda', 'Villa', 'Padre', 'm', '3120000000', 'Sempegua', 'La Paz', 'Comerciante', '3120000000', 'Sempegua La Paz'),
+(7, '400000000', 'Luis', 'Guerrero', 'Lopez', 'Padre', 'm', '3129876432', 'Sempegua', 'La Paz', 'Comerciante', '3126543219', 'Sempegua La Paz'),
+(8, '4000000000', 'Juan', 'Guerrero', 'Fernandez', 'Padre', 'm', '3127777777', 'Sempegua', 'La Paz', 'Comerciante', '3145555555', 'Sempegua La Paz'),
+(9, '400000000', 'Pedro', 'Gutierrez', 'Velez', 'Padre', 'm', '3143456789', 'Sempegua', 'La Paz', 'Albañil', '31245689', 'Sempegua La Paz'),
+(10, '23456799', 'Luis', 'Mendez', 'Mendez', 'Padre', 'm', '314567890', 'Sempegua', 'La Paz', 'Constructor', '314567899', 'Sempegua La Paz'),
+(11, '34568', 'Felipe', 'Nobles', 'N', 'Padre', 'm', '3456789', 'Sempegua', 'La Paz', 'Soldador', '456789', 'Sempegua'),
+(12, '234567', 'Mario', 'Nobles', 'N', 'Padre', 'm', '323232323', 'Gtgtg', 'Gtgt', 'Gtgt', '5555', 'Hhhh'),
+(13, '3456789', 'Daniel', 'Ortiz', 'O', 'Padre', 'm', '456789', 'Sssss', 'La Paz', 'Dfghjk', '67890', 'Fghjkl'),
+(14, '34567890', 'Sergio', 'Pacheco', 'P', 'Padre', 'm', '567890', 'Dfghjk', 'Fghjk', 'Fghjkl', '567890', 'Fghjklñ'),
+(15, '456789', 'Lian', 'Ramirez', 'Dfgh', 'Padre', 'm', '456789', 'Fghjk', 'Tyui', 'Fghjk', '56789', 'Fghjkl'),
+(16, '34567890', 'Jose', 'Rico', 'Rtyui', 'Padre', 'm', '56789', 'Fghjk', 'Fghjk', 'Fghjk', '67890', 'Fghjkl'),
+(17, '34567890', 'Lino', 'Acuna', 'Sdfghjk', 'Padre', 'm', '4567890', 'Dfghjkl', 'Dfghjkl', 'Dfghjkl', '456789', 'Sdfghjk'),
+(18, '456789', 'Camilo', 'Cabas', 'Cabas', 'Padre', 'm', '4567890', 'Ghjkl', 'Fghjk', 'Ghjkl', '7890', 'Ghjk'),
+(19, '1065', 'Miguel', 'Palomino', 'Cerpa', 'Padre', 'm', '3206919220', 'Sempegua', 'Sempegua', 'Estudiante', '3206919220', 'Sempegua'),
+(20, '3456789', 'Luis', 'Cabas', 'Cabas', 'Padre', 'm', '3456789', 'Dfghjkl', 'Fghjkl??', 'Fghjkl', '67890', 'Fghjkl'),
+(21, '3456789', 'Dfghjkl', 'Fghjkl', 'Fghjkl', 'Padre', 'm', '567890', 'Dfghjk', 'Fghjk', 'Fghjk', '567890', 'Ghjk'),
+(22, '1065', 'Miguel', 'Palomino', 'Cerpa', 'Padre', 'm', '3206919220', 'Sempegua', 'Sempegua', 'Estudiante', '3206919220', 'Sempegua'),
+(23, '4567890', 'Fghjkl', 'Vbnm', 'Ghjk', 'Padre', 'm', '567890', 'Dfghjk', 'Fghjk', 'Fghj', '567890', 'Fghjkl'),
+(24, '1065', 'Miguel', 'Palomino', 'Cerpa', 'Padre', 'm', '3206919220', 'Sempegua', 'Sempegua', 'Estudiante', '3206919220', 'Sempegua'),
+(25, '567890', 'Fghjkl', 'Vbnm', 'Dfghjk', 'Padre', 'm', '567890', 'Dfghjkl', 'Fghjk', 'Fghjk', '67890', 'Vbnm'),
+(26, '343434', 'Fgfgfg', 'Fgfgfg', 'Fgfgfg', 'Padre', 'm', '343434', 'Dfghjkl', 'Dfdfdfd', 'Lllehaha', '232323', 'Rgrtrt'),
+(27, '1065', 'Miguel', 'Palomino', 'Cerpa', 'Padre', 'm', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Estudiante', '3206919220', 'Calle 30a 32-86'),
+(28, '345689', 'Ddsdsd', 'Ertyui', 'Dfgk', 'Padre', 'm', '3456789', 'Dfghjk', 'Dfghjk', 'Dfghk', '45689', 'Dfghjk'),
+(29, '1065', 'Miguel', 'Palomino', 'Cerpa', 'Padre', 'm', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Estudiante', '3206919220', 'Calle 30a 32-86'),
+(30, '456890', 'Dfghjkl', 'Dfghjkl', 'Fghk', 'Padre', 'm', '4567890', '456789', 'Fghjkl', 'Ghjkl', '56789', 'Cvbnm'),
+(31, '456789', 'Fghjk', 'Fghjk', 'Fghjk', 'Padre', 'm', '5689', 'Dfghj', 'Fghjk', 'Fghjk', '5678', 'Fghjk'),
+(32, '1065', 'Miguel Jose', 'Palomino', 'Cerpa', 'Padre', 'm', '320691922', 'Calle 30a 32-86', 'Sempegua', 'Estudiante', '3206919220', 'Calle 30a 32-86'),
+(33, '456890', 'Dfghjkl', 'Fghjkl', 'Dfghjk', 'Padre', 'm', '57890', 'Dfghjkl', 'Fghjkl', '456890', '3456789', 'Dfghjkl??'),
+(34, '456789', 'Dfghjkl', 'Fghjk', 'Fghjk', 'Padre', 'm', '45689', '456789', 'Dfghjk', 'Fghjk', '56789', 'Ghjkl??'),
+(35, '1065', 'Migue', 'Palomino', 'Cerpa', 'Padre', 'm', '3206919220', 'Calle 30a 32-86', 'Sempegua', 'Estudiante', '3206919220', 'Calle 30a 32-86');
 
 -- --------------------------------------------------------
 
@@ -2598,6 +3823,45 @@ CREATE TABLE `pensum` (
   `estado_pensum` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `pensum`
+--
+
+INSERT INTO `pensum` (`id_pensum`, `id_grado`, `id_asignatura`, `intensidad_horaria`, `ano_lectivo`, `estado_pensum`) VALUES
+(1, 9, 4, 1, 1, 'Activo'),
+(2, 9, 3, 1, 1, 'Activo'),
+(3, 9, 5, 1, 1, 'Activo'),
+(4, 9, 6, 1, 1, 'Activo'),
+(5, 9, 7, 1, 1, 'Activo'),
+(6, 9, 8, 1, 1, 'Activo'),
+(7, 9, 10, 1, 1, 'Activo'),
+(8, 9, 9, 1, 1, 'Activo'),
+(9, 9, 11, 4, 1, 'Activo'),
+(10, 9, 12, 2, 1, 'Activo'),
+(11, 9, 2, 4, 1, 'Activo'),
+(12, 9, 13, 2, 1, 'Activo'),
+(13, 9, 14, 2, 1, 'Activo'),
+(14, 9, 15, 2, 1, 'Activo'),
+(15, 9, 16, 1, 1, 'Activo'),
+(16, 9, 17, 2, 1, 'Activo'),
+(17, 9, 18, 2, 1, 'Activo'),
+(18, 10, 4, 1, 1, 'Activo'),
+(19, 10, 3, 1, 1, 'Activo'),
+(20, 10, 5, 1, 1, 'Activo'),
+(21, 10, 6, 1, 1, 'Activo'),
+(22, 10, 9, 1, 1, 'Activo'),
+(23, 10, 7, 1, 1, 'Activo'),
+(24, 10, 10, 1, 1, 'Activo'),
+(25, 10, 8, 1, 1, 'Activo'),
+(26, 10, 11, 4, 1, 'Activo'),
+(27, 10, 12, 2, 1, 'Activo'),
+(28, 10, 2, 4, 1, 'Activo'),
+(29, 10, 13, 2, 1, 'Activo'),
+(30, 10, 15, 2, 1, 'Activo'),
+(31, 10, 16, 2, 1, 'Activo'),
+(32, 10, 17, 2, 1, 'Activo'),
+(33, 10, 18, 2, 1, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -2640,11 +3904,62 @@ CREATE TABLE `personas` (
 INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedicion`, `pais_expedicion`, `departamento_expedicion`, `municipio_expedicion`, `nombres`, `apellido1`, `apellido2`, `sexo`, `fecha_nacimiento`, `pais_nacimiento`, `departamento_nacimiento`, `municipio_nacimiento`, `tipo_sangre`, `eps`, `poblacion`, `telefono`, `email`, `direccion`, `barrio`, `pais_residencia`, `departamento_residencia`, `municipio_residencia`, `estrato`) VALUES
 (1, '0902-73301', 'cc', '2017-04-10', 1, 20, 404, 'Siescolar', ' ', ' ', 'm', '2017-04-10', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3135028786', 'siescolar@gmail.com', 'calle 7 # 29-90', 'nueva esperanza', 1, 20, 404, '1'),
 (2, '0901-72200', 'cc', '2018-01-25', 1, 20, 404, 'Voto', 'En', 'Blanco', 'm', '2018-01-25', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3000000000', 'blanco@gmail.com', 'calle 123', 'blanco', 1, 20, 404, '1'),
-(3, '1065', 'ti', '2000-04-10', 1, 20, 404, 'Julio Cesar', 'Frias', 'Bossa', 'm', '2000-04-10', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3126874534', 'juliocfrias@gmail.com', 'calle 7 # 29-87', 'garupal', 1, 20, 404, '1'),
-(4, '1066', 'ti', '1990-05-05', 1, 20, 404, 'Hugo Mairon', 'Sosa', 'Amaya', 'm', '1990-05-05', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3004567891', 'hugososa@gmail.com', 'calle 7c # 29-31', 'villa concha', 1, 20, 404, '1'),
-(5, '1067', 'ti', '1998-06-06', 1, 20, 404, 'Sebastian Andres', 'Romero', 'Villa', 'm', '1998-06-06', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3012345678', 'sebasromero@gmail.com', 'calle 8 # 31-39', 'esperanza', 1, 20, 404, '1'),
-(6, '323', 'cc', '1990-06-07', 1, 20, 404, 'Omar', 'Trujillo', 'Varilla', 'm', '1990-06-07', 1, 20, 404, 'o+', 'ninguna', 'ninguna', '3145123412', 'omartt@gmail.com', 'carrera 9 #12-14', 'altagracia', 1, 20, 404, '1'),
-(7, '324', 'cc', '1990-05-10', 1, 20, 404, 'Yoalis', 'Suarez', 'Saumeth', 'f', '1990-05-10', 1, 20, 404, 'o-', 'ninguna', 'ninguna', '3123123434', 'yocesusa@gmail.com', 'calle 6c # 29-86', 'arizona', 1, 20, 404, '1');
+(3, '26729304', 'cc', '1991-07-27', 1, 20, 404, 'Nereida', 'Palomino', 'Cerpa', 'f', '1973-04-12', 1, 20, 404, NULL, NULL, NULL, '3206919220', 'nepace@outlook.com', 'Sempegua', 'La Paz', 1, 20, 404, '1'),
+(4, '49752209', 'cc', '1991-07-07', 1, 20, 410, 'Elsa Elena', 'Cardiles', 'Fragozo', 'f', '1971-03-11', 1, 20, 404, NULL, NULL, NULL, '3135417974', 'elsa@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(5, '77142026', 'cc', '1991-07-07', 1, 20, 410, 'Humberto', 'Reales', 'Rodriguez', 'f', '1962-09-27', 1, 20, 410, NULL, NULL, NULL, '3182827796', 'humberto@outlook.com', 'Sempegua', 'Sempegua', 1, 20, 410, '2'),
+(6, '1065618575', 'ti', '2000-01-01', 1, 20, 410, 'Jeimar David', 'Bello', 'Ospino', 'm', '2008-07-14', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3145677854', 'jeimar@hotmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(7, '1066287536', 'ti', '2000-01-01', 1, 20, 410, 'Liliana Martha', 'Bello', 'Ospino', 'f', '2010-02-13', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3145677854', 'liliana@gmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(8, '1063491322', 'rc', '2000-01-01', 1, 20, 410, 'Andres Felipe', 'Cabas', 'Lopez', 'm', '2011-09-16', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3145097856', 'andresf@gmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(9, '1063491643', 'rc', '2000-01-01', 1, 20, 410, 'Danna Paola', 'Cardenas', 'Toloza', 'f', '2012-02-22', 1, 20, 410, 'o+', 'Salud Total', 'Ninguna', '3134567892', 'danna@gmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(10, '1063490292', 'rc', '2000-01-01', 1, 20, 410, 'Sara Patricia', 'Guerrero', 'Gamarra', 'f', '2018-10-18', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3129999999', 'sara@gmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(11, '1064707136', 'ti', '2000-01-01', 1, 20, 410, 'Juan David', 'Barragan', 'Castaneda', 'm', '2004-08-03', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3126789056', 'juanda@hotmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(12, '19655049', 'cc', '1991-07-07', 1, 20, 410, 'Alvaro', 'Morales', 'Mendoza', 'm', '1952-12-30', 1, 20, 410, NULL, NULL, NULL, '3125327605', 'alvaro@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(13, '1063480243', 'ti', '2000-01-01', 1, 20, 410, 'Adriana Yesmith', 'Guerrero', 'Cadena', 'f', '2003-12-01', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '314000000', 'adriana@hotmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(14, '26723432', 'cc', '1991-07-07', 1, 20, 410, 'Ana Julia', 'Palomino', 'Paba', 'f', '1960-12-18', 1, 20, 410, NULL, NULL, NULL, '3135157938', 'ana@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(15, '1063480230', 'ti', '2000-01-01', 1, 20, 410, 'Jose Gregorio', 'Guerrero', 'Martinez', 'm', '2003-05-07', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3120000000', 'jj@hotmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(16, '26723477', 'cc', '1991-08-07', 1, 20, 410, 'Melva Felicia', 'Lopez', 'Reales', 'f', '1959-09-09', 1, 20, 410, NULL, NULL, NULL, '3107042123', 'melva@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(17, '33213766', 'cc', '1991-07-07', 1, 13, 152, 'Edelmira', 'Mendez', 'Hernandez', 'f', '1971-11-22', 1, 13, 152, NULL, NULL, NULL, '3116794066', 'edelmira@outlook.com', 'Sempegua', 'Sempegua', 1, 20, 410, '2'),
+(18, '1007593618', 'ti', '2001-01-01', 1, 20, 410, 'Juan Jose', 'Gutierrez', 'Obregon', 'm', '2002-02-07', 1, 20, 410, 'o+', 'Ninguna', 'Ninguna', '3145678967', 'juanjo@gmail.com', 'Sempegua', 'La Paz', 1, 20, 404, '1'),
+(19, '33218816', 'cc', '1991-07-07', 1, 20, 410, 'Bilmaris', 'Berruecos', 'Reales', 'f', '1976-06-03', 1, 20, 410, NULL, NULL, NULL, '3107193176', 'bilmaris@outlook.com', 'Sempgua', 'Sempgua', 1, 20, 410, '2'),
+(20, '1063482013', 'ti', '2000-01-01', 1, 20, 404, 'Angel David', 'Mendez', 'Cabas', 'm', '2003-03-04', 1, 20, 404, 'o+', 'Ninguna', 'Ninguna', '3155678905', 'angel@hotmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '2'),
+(21, '1148198927', 'cc', '1991-07-07', 1, 20, 410, 'Danixa', 'Alfaro', 'Miranda', 'f', '1992-08-24', 1, 20, 410, NULL, NULL, NULL, '3108418652', 'danixa@outlook.com', 'Sempegua', 'Sempegua', 1, 20, 410, '2'),
+(22, '32492228', 'ti', '2000-01-01', 1, 20, 404, 'Jholger', 'Nobles', 'Mendez', 'm', '2018-10-18', 1, 20, 404, 'o+', 'Ninguna', 'Ninguna', '12345678', 'jnobles@gmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(23, '77142630', 'cc', '1991-07-07', 1, 20, 410, 'Marcial', 'Barros', 'Lopez', 'm', '1965-08-23', 1, 20, 410, NULL, NULL, NULL, '3135349627', 'marcial@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(24, '1063482622', 'ti', '2018-10-23', 1, 20, 404, 'Doris Adriana', 'Nobles', 'Quevedo', 'f', '2018-10-23', 1, 20, 410, 'o+', 'N', 'Ninguna', '1234567', 'dra@gmail.com', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(25, '49751873', 'cc', '1991-07-07', 1, 20, 410, 'Aracelis', 'Martinez', 'Vergel', 'f', '1970-02-05', 1, 20, 404, NULL, NULL, NULL, '3126301747', 'aracelis@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(26, '0300131', 'rc', '2018-10-23', 1, 20, 404, 'Ana Karina', 'Ortiz', 'Mendez', 'f', '2018-10-23', 1, 20, 404, 'o+', 'N', 'Ninguna', '23456', 'anak@gmail.com', 'S', 'La Paz', 1, 20, 404, '3'),
+(27, '49751761', 'cc', '1991-07-07', 1, 20, 410, 'Laudith Cristina', 'Queruz', 'Amaris', 'f', '1970-11-06', 1, 20, 410, NULL, NULL, NULL, '3126925793', 'laudith@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(28, '10432262', 'rc', '2000-01-01', 1, 17, 319, 'Carol Nathalia', 'Pacheco', 'Nobles', 'f', '2018-10-23', 1, 17, 319, 'o+', 'N', 'Ninguna', '34567890', 'pacheco@hotmail.com', 'Sdfghjk', 'Fghjklñ', 1, 20, 410, '2'),
+(29, '32547604', 'ti', '2018-10-23', 1, 20, 404, 'Karen Paola', 'Ramirez', 'Mendez', 'f', '2018-10-23', 1, 20, 404, 'o+', 'N', 'Ninguna', '4567890', 'pao@gmail.com', 'Dfghjkl', '67890', 1, 20, 410, '2'),
+(30, '1003238580', 'ti', '2018-10-23', 1, 20, 404, 'Juan Jose', 'Rico', 'Nobles', 'm', '2018-10-23', 1, 20, 404, 'o+', 'N', 'Ninguna', '45690', 'juacho@hotmail.com', 'Calle 34', 'Ddddd', 1, 20, 404, '1'),
+(31, '49724561', 'cc', '1991-07-07', 1, 20, 410, 'Irina Judith', 'Florez', 'Cardenas', 'f', '1984-01-08', 1, 20, 410, NULL, NULL, NULL, '3114298452', 'irina@outlook.com', 'Chimichagua', 'Chimichagua', 1, 20, 410, '2'),
+(32, '7152010', 'cc', '1991-07-07', 1, 20, 410, 'Olger E', 'Florez', 'Vanegas', 'm', '1991-10-14', 1, 20, 410, NULL, NULL, NULL, '3003587067', 'olger@outlook.com', 'Sempegua', 'Sempegua', 1, 20, 410, '2'),
+(33, '7151495', 'ti', NULL, NULL, NULL, NULL, 'Jesus Aldo', 'Nobles', 'Mendez', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3114143649', 'jesus@outlook.com', 'Sempegua', 'Sempegua', NULL, NULL, NULL, NULL),
+(34, '1063482612', 'ti', '2018-10-12', 3, 101, 1122, 'Ximena', 'Acuna', 'Toloza', 'f', '2018-10-24', 1, 20, 404, 'o+', 'Ninguna', 'Ninguna', '3456789', 'ximena@gmail.com', 'Sdfghjk', 'Sdfghjkl', 2, 100, 1121, '2'),
+(35, '1003087700', 'ti', '2018-10-24', 2, 100, 1121, 'Maria Camila', 'Cabas', 'Crespo', 'f', '2018-10-25', 15, 113, 1134, 'o+', 'N', 'Ninguna', '34567890', 'mca@gmail.com', 'Dfghjkl', 'Fghjkl??', 2, 100, 1121, '3'),
+(36, '1063481522', 'ti', '2011-02-07', 1, 20, 410, 'Ana Karina', 'Toloza', 'Silva', 'f', '2003-09-07', 1, 20, 410, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Calle 30a 32-86', 'Sempegua', 1, 20, 410, '1'),
+(37, '1063481489', 'ti', '2018-10-24', 6, 104, 1125, 'Elais', 'Cabas', 'Toloza', 'f', '2018-10-18', 2, 100, 1121, 'o+', 'N', 'Ninguna', '4567890', 'elaisc@gmail.com', 'Sdfghjkl', 'Dfghjk', 1, 52, 714, '3'),
+(38, '1002354085', 'ti', '2018-10-24', 2, 100, 1121, 'Dallanis', 'Cardenas', 'Raad', 'f', '2018-10-24', 1, 5, 1, 'o+', 'N', 'Ninguna', '34567890', 'louve@gmail.com', 'Dfghjkl', '567890', 2, 100, 1121, '2'),
+(39, '1063482078', 'ti', '2011-04-06', 1, 20, 410, 'Yureinis Tatiana', 'Toloza', 'Mieles', 'f', '2004-04-06', 1, 20, 410, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Calle 30a 32-86', 'Sempegua', 1, 20, 410, '1'),
+(40, '1007593353', 'ti', '2018-10-24', 2, 100, 1121, 'Virginia Mayela', 'De Hoyos', 'Suarez', 'f', '2018-10-22', 1, 8, 126, 'o+', 'N', 'Ninguna', '3456789', 'vg@hotmail.com', 'Fgkl', 'Fghjkl', 1, 52, 714, '2'),
+(41, '1063482864', 'ti', '2012-11-05', 1, 20, 410, 'Luis Mario', 'Rocha', 'Toloza', 'm', '2004-11-05', 1, 20, 404, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Sempegua', 'Sempegua', 1, 20, 410, '1'),
+(42, '1063481496', 'ti', '2018-10-24', 2, 100, 1121, 'Zharik Alejandra', 'Florez', 'Nunez', 'f', '2018-10-16', 3, 101, 1122, 'o+', 'N', 'Ninguna', '34567890', 'zh@hotmail.com', 'Ertyui', 'Dfghjk', 1, 47, 655, '2'),
+(43, '1063480248', 'ti', '2018-10-23', 3, 101, 1122, 'Maria Alejandra', 'Guerrero', 'Gamarra', 'f', '2018-10-10', 2, 100, 1121, 'o+', 'N', 'Ninguna', '33434', 'mj@hotmail.ccom', 'Dddfdf', 'Fdfdfd', 2, 100, 1121, '3'),
+(44, '1063480824', 'ti', '2011-07-07', 1, 20, 410, 'Karol Juliana', 'Rocha', 'Toloza', 'f', '2006-07-07', 1, 20, 410, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Calle 30a 32-86', 'Sempegua', 1, 20, 410, '2'),
+(45, '1063481180', 'cc', '2018-10-17', 1, 8, 126, 'Marloys', 'Martinez', 'Contreras', 'f', '2018-10-17', 1, 54, 778, 'o+', 'Nnn', 'Ninguna', '323232', 'marloys@hotmail.com', '23232323', '3232323', 2, 100, 1121, '2'),
+(46, '0255084', 'rc', '2011-07-07', 1, 20, 410, 'Juan Camilo', 'Rocha', 'Toloza', 'm', '2006-07-07', 1, 20, 410, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Calle 30a 32-86', 'Sempegua', 1, 20, 404, '2'),
+(47, '1063481789', 'ti', '2018-10-25', 2, 44, 650, 'Jhon Deivis', 'Martinez', 'Miranda', 'm', '2018-10-12', 1, 11, 149, 'o+', 'N', 'Ninguna', '45689', 'jjj@gmail.com', '3456789', '3456789', 1, 8, 126, '3'),
+(48, '1007247399', 'ti', '2018-10-16', 2, 100, 1121, 'Jesus Manuel', 'Medina', 'Martinez', 'm', '2018-10-23', 2, 100, 1121, 'o+', 'Rererer', 'Ninguna', '567890', 'jesys@hotmail.com', 'Sdfghjk', 'Fghjkl', 1, 5, 1, '3'),
+(49, '0255092', 'rc', '2011-07-07', 1, 20, 410, 'Jhonatan David', 'Rocha', 'Garcia', 'm', '2006-07-07', 1, 20, 410, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Calle 30a 32-86', 'Sempegua', 1, 20, 410, '2'),
+(50, '1063482030', 'ti', '2018-10-17', 15, 113, 1134, 'Sarays', 'Medina', 'Martinez', 'm', '2018-10-09', 2, 100, 1121, 'o+', '4567890', 'Ninguna', '456789', 'saray@hotmail.com', '3456789', 'Fghkl', 1, 41, 603, '2'),
+(51, '1063480826', 'ti', '2018-10-08', 16, 114, 1135, 'Dayana', 'Nobles', 'Jimenes', 'f', '2018-10-09', 3, 101, 1122, 'o+', 'Rrrtrt', 'Ninguna', '4567890', 'nobles@gmail.com', '456789', 'Fghjkl', 1, 50, 685, '2'),
+(52, '1063482620', 'ti', '2011-04-28', 1, 20, 410, 'Yasir Alejandro', 'Reales', 'Cadena', 'm', '2004-04-28', 1, 20, 410, 'o+', 'Salud Vida', 'Ninguna', '3206919220', 'jesus@outlook.com', 'Calle 30a 32-86', 'Sempegua', 1, 20, 410, '1'),
+(53, '77175911', 'cc', NULL, NULL, NULL, NULL, 'Jose Miguel', 'Hernandez', 'Chamorro', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3126573421', 'josemiguel@gmail.com', 'Semepgua', 'La Paz', NULL, NULL, NULL, NULL),
+(54, '77175912', 'cc', NULL, NULL, NULL, NULL, 'Marielis', 'Hernandez', 'Chamorro', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3126753428', 'marielis@gmail.com', 'Sempegua', 'La Paz', NULL, NULL, NULL, NULL),
+(55, '77175913', 'cc', NULL, NULL, NULL, NULL, 'Adriana Gisella', 'Nobles', 'Palomino', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3126784523', 'adriana@gmail.com', 'Semepgua', 'La Paz', NULL, NULL, NULL, NULL),
+(56, '77175914', 'cc', NULL, NULL, NULL, NULL, 'Ana Milena', 'Contreras', 'Martinez', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3126542390', 'anam@gmail.com', 'Sempegua', 'La Paz', NULL, NULL, NULL, NULL),
+(57, '77175915', 'cc', NULL, NULL, NULL, NULL, 'Flaminio', 'Ortiz', 'Ortiz', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3145692310', 'flaminio@gmail.com', 'Sempegua', 'La Paz', NULL, NULL, NULL, NULL),
+(58, '77175916', 'cc', NULL, NULL, NULL, NULL, 'Nellys Cecilia', 'Nobles', 'Mendez', '', '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, '3167564312', 'nellys@gmail.com', 'Sempegua', 'La Paz', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2667,8 +3982,20 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`id_persona`, `titulo`, `escalafon`, `fecha_vinculacion`, `tipo_vinculacion`, `decreto_nombramiento`, `estado_profesor`) VALUES
-(6, 'profesional', '10', '2017-01-01', 'En propiedad', 'Decreto 08 2001', 'Activo'),
-(7, 'profesional', '10', '2017-01-01', 'En propiedad', 'Decreto 08 1998', 'Activo');
+(3, 'Lic. Lengua Castellana', '14', '2000-04-10', 'En propiedad', 'Decreto 041 de 06/04/94', 'Activo'),
+(4, 'Lic. Preescolar', '2', '2004-04-12', 'En propiedad', 'Decreto 000410 de 13/05/10', 'Activo'),
+(5, 'Lic.basica Primaria', '14', '1994-08-10', 'En propiedad', 'Decreto. 023 de 10/08/94', 'Activo'),
+(12, 'Lic.educ. Artistica', '12', '1979-03-05', 'En propiedad', 'Res. 00845 de 03/05/79', 'Activo'),
+(14, 'Lic. Basica Primaria', '12', '1993-02-17', 'En propiedad', 'Decreto 008 de 17/02/93', 'Activo'),
+(16, 'Normalista Superior', '6', '1995-01-24', 'En propiedad', 'Res. 000084 de 24/01/95', 'Activo'),
+(17, 'Lic. Basica Primaria', '14', '1994-12-20', 'En propiedad', 'Res. 002223 de 26/07/94', 'Activo'),
+(19, 'Normalista Superior', '1', '2010-08-30', 'En propiedad', 'Decreto.000495 de 30/08/2010', 'Activo'),
+(21, 'Lic. Lengua Castellana', '2', '2017-01-17', 'En propiedad', 'Res.000151 de 17/01/ 2017', 'Activo'),
+(23, 'Administrador Empresa', '2', '0000-00-00', 'En propiedad', 'Res.000151 de 17/01/ 2017', 'Activo'),
+(25, 'Bachiller', '1', '2000-04-10', 'En propiedad', 'Decreto. 039 de 06/04/2000', 'Activo'),
+(27, 'Lic. Ciencias Naturales', '14', '1997-07-08', 'En propiedad', 'Decreto 83 de 08/07/97', 'Activo'),
+(31, 'Ingeniera Sistema', '2', '2011-06-03', 'En provisionalidad', 'Deto.000240 de 27/05/2011', 'Activo'),
+(32, 'Lic. Matematica', '2', '2007-05-30', 'En propiedad', 'Decreto.000181 de 30/05/2007', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -2724,6 +4051,22 @@ CREATE TABLE `salones` (
   `disponibilidad` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `salones`
+--
+
+INSERT INTO `salones` (`id_salon`, `nombre_salon`, `observacion`, `ano_lectivo`, `estado_salon`, `disponibilidad`) VALUES
+(1, 'Salon 000', 'Piso 1', 1, 'Activo', 'si'),
+(2, 'Salon 001', 'Piso 1', 1, 'Activo', 'si'),
+(3, 'Salon 002', 'Piso 1', 1, 'Activo', 'si'),
+(4, 'Salon 003', 'Piso 1', 1, 'Activo', 'si'),
+(5, 'Salon 004', 'Piso 1', 1, 'Activo', 'si'),
+(6, 'Salon 005', 'Piso 1', 1, 'Activo', 'si'),
+(7, 'Salon 006', 'Piso 1', 1, 'Activo', 'si'),
+(8, 'Salon 007', 'Piso 1', 1, 'Activo', 'si'),
+(9, 'Salon 008', 'Piso 1', 1, 'Activo', 'si'),
+(10, 'Salon 009', 'Piso 1', 1, 'Activo', 'si');
+
 -- --------------------------------------------------------
 
 --
@@ -2748,6 +4091,19 @@ CREATE TABLE `seguimientos_disciplinarios` (
   `estado_seguimiento` varchar(8) NOT NULL,
   `fecha_registro` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `seguimientos_disciplinarios`
+--
+
+INSERT INTO `seguimientos_disciplinarios` (`id_seguimiento`, `ano_lectivo`, `id_profesor`, `id_curso`, `id_asignatura`, `id_estudiante`, `id_tipo_causal`, `id_causal`, `descripcion_situacion`, `fecha_causal`, `id_accion_pedagogica`, `descripcion_accion_pedagogica`, `compromiso_estudiante`, `observaciones`, `estado_seguimiento`, `fecha_registro`) VALUES
+(1, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Cerrado', '2018-10-24 03:20:18'),
+(2, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:21'),
+(3, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:22'),
+(4, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:22'),
+(5, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:25'),
+(6, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:26'),
+(7, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:21:01');
 
 -- --------------------------------------------------------
 
@@ -2791,11 +4147,62 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `password`, `acceso`, `token`) VALUES
 (1, 1, 1, 'siescolar', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
 (2, 2, 5, 'adminvotante', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(3, 3, 2, 'jfirias', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(4, 4, 2, 'hsosa', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(5, 5, 2, 'sromero', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(6, 6, 3, 'omartt', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL),
-(7, 7, 3, 'yoaliss', '8cb2237d0679ca88db6464eac60da96345513964', '1', NULL);
+(3, 3, 3, 'nepalomino3', '2a01fe4dc93784387454dd6ee8e5c747bcdc1ba4', '1', NULL),
+(4, 4, 3, 'elcardiles4', 'a972cbbcbc6d6a9d30c820e879d8466238c9579a', '1', NULL),
+(5, 5, 3, 'hureales5', '0e84d572b7333fa546986efebf32b90a63edeeed', '1', NULL),
+(6, 6, 2, 'jebello6', '450987936f853e4fad9146f448a0f4f96d52fae5', '0', NULL),
+(7, 7, 2, 'libello7', 'c30dd1d276c14f77e82fbfc77e440b918c32f170', '0', NULL),
+(8, 8, 2, 'ancabas8', 'fe9e60be3a0543623bd658fe31329843f26dfe74', '0', NULL),
+(9, 9, 2, 'dacardenas9', '23a0f5bbd3e8bdd3023dd9e35bef8cd18389e953', '0', NULL),
+(10, 10, 2, 'saguerrero10', '7ec6433069d6b4da9e4e3b49f698064a65229867', '0', NULL),
+(11, 11, 2, 'jubarragan11', '8eb1206f062361c54284437453bb0a0808ccdcae', '1', NULL),
+(12, 12, 3, 'almorales12', '8a9164fe338482f77bd97f23fb85fe6685053eb2', '1', NULL),
+(13, 13, 2, 'adguerrero13', 'f42a0c944ba9de775a22d43f10a5f13457123ea8', '1', NULL),
+(14, 14, 3, 'anpalomino14', 'd1d6fa64fb614e67dd21da27fb9a2fb626c8e286', '1', NULL),
+(15, 15, 2, 'joguerrero15', '56989deed91656cc2cb6a04b6dcfb9b60c1166cc', '1', NULL),
+(16, 16, 3, 'melopez16', '30eefd8ed5c43feb7e5ad7e775b952adb7851d97', '1', NULL),
+(17, 17, 3, 'edmendez17', '75a26819087f006d7a7526decffa3522693c69db', '1', NULL),
+(18, 18, 2, 'jugutierrez18', 'fa9539fbfcd223f722690799e5bcfa32eef38032', '1', NULL),
+(19, 19, 3, 'biberruecos19', 'c4401bfb23fb9e8d901c496c52a0196fa2f2d684', '1', NULL),
+(20, 20, 2, 'anmendez20', 'fc4aa5559d637a97c25955f4bd71edf262663ba0', '1', NULL),
+(21, 21, 3, 'daalfaro21', '95e02e97fda8fca8fee81b0001d8b1fcf4815526', '1', NULL),
+(22, 22, 2, 'jhnobles22', '93cf1ac6dc121698d994061c93c2fc4d347441d5', '1', NULL),
+(23, 23, 3, 'mabarros23', '9672617f6d08887e43325df29be194e22b5eea28', '1', NULL),
+(24, 24, 2, 'donobles24', 'b93921ff3ecb6efd1d1e66157ffa58c0570dd08e', '1', NULL),
+(25, 25, 3, 'armartinez25', 'a72e5025ea3c7b6424e3d8c535e24ad029d63e6a', '1', NULL),
+(26, 26, 2, 'anortiz26', 'bf9b3acc5a5b97b3dd12c42f367ad32e70e7d2ee', '1', NULL),
+(27, 27, 3, 'laqueruz27', '2276b4f2f9ce3a0dbec9a5085260c54cc78e4c49', '1', NULL),
+(28, 28, 2, 'capacheco28', '955dda1ee2e2398e3698aa64910c353c6087c36d', '1', NULL),
+(29, 29, 2, 'karamirez29', '4a2f6bdb5e85d0f39887643a1526a780ac13e7c4', '1', NULL),
+(30, 30, 2, 'jurico30', 'c3f5da513e4acf814bbc2f8e093e733e55d35e1e', '1', NULL),
+(31, 31, 3, 'irflorez31', '3fd3e1cecb415343e6eabdd4c6c5918f7845395b', '1', NULL),
+(32, 32, 3, 'olflorez32', 'f3d1e09acd17ea92dbf658ac9ca5aea2ef535de1', '1', NULL),
+(33, 33, 1, 'jenoblesad33', '99fbef4717adbe20034bac459a15d58e2e8d0582', '1', NULL),
+(34, 34, 2, 'xiacuna34', '1ed6113f7201d5cdecc7ac7c4cc7dafe9dec48b7', '1', NULL),
+(35, 35, 2, 'macabas35', '9228d29e344d7127c6ec2374aebf22e8ac95ab86', '1', NULL),
+(36, 36, 2, 'antoloza 36', 'b42d3a17b78355ee7bda199bca127238c327dc0f', '1', NULL),
+(37, 37, 2, 'elcabas37', '0e666e6bdc471e4ac1f9bc4fface15044f176150', '1', NULL),
+(38, 38, 2, 'dacardenas 38', '5cf4f9f21fb71160d51babab3e5a8ed4d9ec7bae', '1', NULL),
+(39, 39, 2, 'yutoloza 39', '04b3f2c4aee7a8f3671561e7da0d83926bf78bdf', '1', NULL),
+(40, 40, 2, 'vide hoyos40', '3cc1444bde17f6813afc873a0f8bfe01af4e1364', '1', NULL),
+(41, 41, 2, 'lurocha 41', '41f2a31452730cb73c76204773afce25f6714580', '1', NULL),
+(42, 42, 2, 'zhflorez42', '8092ec3405bff63fbb04c398692f97684cf6ba87', '1', NULL),
+(43, 43, 2, 'maguerrero43', 'd0e50b73471e9c4c92b2ab3102c0715b7354d7e7', '1', NULL),
+(44, 44, 2, 'karocha44', '512d250abfffff298be6f82765a8d3fef6194acf', '1', NULL),
+(45, 45, 2, 'mamartinez45', '92fd49db50c6834cd7ea75c6720a97b5d0b227fb', '1', NULL),
+(46, 46, 2, 'jurocha 46', 'c3ad9a0c64b3502e478b1170db1e2887ecc7cf09', '1', NULL),
+(47, 47, 2, 'jhmartinez47', '4f86a103d1a2450457ace5bb20f4278498921ea1', '1', NULL),
+(48, 48, 2, 'jemedina48', 'b42b5e68c2b728a82f8727e10e120e459ebcc41a', '1', NULL),
+(49, 49, 2, 'jhrocha49', '1ae82da6e3c6fd417e14d8dbf3e6108711d178b4', '1', NULL),
+(50, 50, 2, 'samedina50', '3f96c795e2207679fead882e2a34c8c974270c09', '1', NULL),
+(51, 51, 2, 'danobles51', '8a93ebf9030a045e467bc7c97d54356bbb09b805', '1', NULL),
+(52, 52, 2, 'yareales52', '8bea421b79d8269d7730d6d7ace9595e4eb0fade', '1', NULL),
+(53, 53, 4, 'johernandezac53', '7b5d28ed9e66a24ab5a52ab898603aad5eea562a', '1', NULL),
+(54, 54, 4, 'mahernandezac54', 'ae4ec3d0e7717d0c9f32e56627b2713d6f797430', '1', NULL),
+(55, 55, 4, 'adnoblesac55', 'd5795ace62726bb64416a2e56f5ed2056f16347e', '1', NULL),
+(56, 56, 4, 'ancontrerasac56', '4a9967e8f08005e848d5c739dfbdca15b09c5f7f', '1', NULL),
+(57, 57, 4, 'flortizac57', 'e07deb5ca227a486bcfa6e13573c159b985cef15', '1', NULL),
+(58, 58, 4, 'nenoblesac58', 'b29e1a5c7d50f42526b541254b9a548831b0c9a7', '1', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -3143,221 +4550,265 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `acciones_pedagogicas`
   MODIFY `id_accion_pedagogica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `acudientes`
 --
 ALTER TABLE `acudientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT de la tabla `anos_lectivos`
 --
 ALTER TABLE `anos_lectivos`
   MODIFY `id_ano_lectivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
 --
 -- AUTO_INCREMENT de la tabla `asignaturas`
 --
 ALTER TABLE `asignaturas`
-  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT de la tabla `candidatos_eleccion`
 --
 ALTER TABLE `candidatos_eleccion`
-  MODIFY `id_candidato_eleccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_candidato_eleccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT de la tabla `cargas_academicas`
 --
 ALTER TABLE `cargas_academicas`
-  MODIFY `id_carga_academica` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_carga_academica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `causales`
 --
 ALTER TABLE `causales`
   MODIFY `id_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `cronogramas`
 --
 ALTER TABLE `cronogramas`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `datos_institucion`
 --
 ALTER TABLE `datos_institucion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
   MODIFY `id_departamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=293;
+
 --
 -- AUTO_INCREMENT de la tabla `desempenos`
 --
 ALTER TABLE `desempenos`
   MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
 ALTER TABLE `elecciones`
-  MODIFY `id_eleccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_eleccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `estudiantes_acudientes`
 --
 ALTER TABLE `estudiantes_acudientes`
-  MODIFY `idestudiantes_acudientes` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idestudiantes_acudientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
 --
 -- AUTO_INCREMENT de la tabla `estudiantes_padres`
 --
 ALTER TABLE `estudiantes_padres`
-  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
 --
 -- AUTO_INCREMENT de la tabla `grados`
 --
 ALTER TABLE `grados`
-  MODIFY `id_grado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_grado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT de la tabla `grados_educacion`
 --
 ALTER TABLE `grados_educacion`
   MODIFY `id_grado_educacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `historial_estados`
 --
 ALTER TABLE `historial_estados`
-  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
 --
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
 -- AUTO_INCREMENT de la tabla `listado_votantes`
 --
 ALTER TABLE `listado_votantes`
-  MODIFY `id_listado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_listado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
 --
 -- AUTO_INCREMENT de la tabla `logros`
 --
 ALTER TABLE `logros`
   MODIFY `id_logro` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `logros_asignados`
 --
 ALTER TABLE `logros_asignados`
   MODIFY `id_logro_asignacion` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `madres`
 --
 ALTER TABLE `madres`
-  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
 --
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
 --
 -- AUTO_INCREMENT de la tabla `municipios`
 --
 ALTER TABLE `municipios`
   MODIFY `id_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1314;
+
 --
 -- AUTO_INCREMENT de la tabla `nivelaciones`
 --
 ALTER TABLE `nivelaciones`
   MODIFY `id_nivelacion` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `niveles_educacion`
 --
 ALTER TABLE `niveles_educacion`
   MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500;
+
 --
 -- AUTO_INCREMENT de la tabla `notas_actividades`
 --
 ALTER TABLE `notas_actividades`
-  MODIFY `id_planilla` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_planilla` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
 --
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
+
 --
 -- AUTO_INCREMENT de la tabla `padres`
 --
 ALTER TABLE `padres`
-  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
   MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `paises`
 --
 ALTER TABLE `paises`
   MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+
 --
 -- AUTO_INCREMENT de la tabla `pensum`
 --
 ALTER TABLE `pensum`
-  MODIFY `id_pensum` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pensum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
 --
 -- AUTO_INCREMENT de la tabla `retiros`
 --
 ALTER TABLE `retiros`
   MODIFY `id_retiro` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT de la tabla `salones`
 --
 ALTER TABLE `salones`
-  MODIFY `id_salon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_salon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT de la tabla `seguimientos_disciplinarios`
 --
 ALTER TABLE `seguimientos_disciplinarios`
-  MODIFY `id_seguimiento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_seguimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT de la tabla `tipos_causales`
 --
 ALTER TABLE `tipos_causales`
   MODIFY `id_tipo_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -3483,6 +4934,7 @@ ALTER TABLE `seguimientos_disciplinarios`
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `fk_usuarios_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_usuarios_roles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
