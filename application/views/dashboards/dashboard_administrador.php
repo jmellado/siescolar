@@ -19,7 +19,7 @@
             	<div class="icon">
               		<i class="ion ion-person-stalker"></i>
             	</div>
-            	<a href="<?php echo base_url(); ?>estudiantes_controller/index2" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            	<a href="<?php echo base_url(); ?>estudiantes_controller/index2" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
         	</div>
         </div>
         
@@ -34,7 +34,7 @@
             	<div class="icon">
               		<i class="ion ion-person-stalker"></i>
             	</div>
-            	<a href="<?php echo base_url(); ?>profesores_controller/index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            	<a href="<?php echo base_url(); ?>profesores_controller/index" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
         	</div>
         </div>
         
@@ -49,7 +49,7 @@
             	<div class="icon">
               		<i class="ion ion-person-stalker"></i>
             	</div>
-            	<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            	<a href="<?php echo base_url(); ?>acudientes_controller/index" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
           	</div>
         </div>
         
@@ -57,7 +57,7 @@
         	$this->db->where('roles.nombre_rol','administrador');
         	$this->db->join('roles', 'usuarios.id_rol = roles.id_rol');
         	$query = $this->db->get('usuarios');
-			$total_admin = count($query->result());
+			    $total_admin = count($query->result());
         ?>
         <div class="col-lg-3 col-xs-6">
           
@@ -70,7 +70,7 @@
             	<div class="icon">
               		<i class="ion ion-person-stalker"></i>
             	</div>
-            	<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            	<a href="<?php echo base_url(); ?>usuarios_controller/index" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
         	</div>
         </div>
         

@@ -67,7 +67,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">Siescolar</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -75,21 +75,21 @@
                 <img src="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce 
-                  <small>Member since Nov. 2012</small>
+                  Siescolar 
+                  <small>Miembro desde Nov. 2017</small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <!--<a href="#">Followers</a>-->
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <!--<a href="#">Sales</a>-->
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                    <!--<a href="#">Friends</a>-->
                   </div>
                 </div>
                 <!-- /.row -->
@@ -97,10 +97,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="<?php echo base_url(); ?>cuenta_controller/cambiarpassword" class="btn btn-default btn-flat">Account</a>
+                  <a href="<?php echo base_url(); ?>cuenta_controller/cambiarpassword" class="btn btn-default btn-flat">Cuenta</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?php echo base_url(); ?>login_controller/logout_ci" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo base_url(); ?>login_controller/logout_ci" class="btn btn-default btn-flat">Cerrar Sesión</a>
                 </div>
               </li>
             </ul>
@@ -123,7 +123,7 @@
           <img src="<?php echo base_url(); ?>assets/plantillas/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>Siescolar</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
