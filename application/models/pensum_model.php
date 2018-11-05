@@ -198,4 +198,71 @@ class Pensum_model extends CI_Model {
 	}
 
 
+	//================== Funciones Para Adicionar Asignaturas ===================
+
+
+	public function EstudiantesMatriculadosPorGrado($id_grado,$ano_lectivo){
+
+		$this->db->where('cursos.id_grado',$id_grado);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.estado_matricula',"Activo");
+
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		$query = $this->db->get('matriculas');
+
+		return $query->result_array();
+
+	}
+
+
+	//Esta Funcion permite asociar una asignatura a los estudiantes matriculados en un grado, para el posterior registro de notas.
+	public function insertar_asignaturaPorestudiantes($id_grado,$id_asignatura,$ano_lectivo){
+
+		$estudiantes = $this->pensum_model->EstudiantesMatriculadosPorGrado($id_grado,$ano_lectivo);
+
+		if ($estudiantes != false) {
+			
+			//NUEVA TRANSACCION
+			$this->db->trans_start();
+
+				for ($i=0; $i < count($estudiantes); $i++) { 
+					
+					//array para insertar en la tabla notas
+		        	$notas = array(
+		        	'ano_lectivo' =>$ano_lectivo,
+					'id_estudiante' =>$estudiantes[$i]['id_estudiante'],
+					'id_grado' =>$id_grado,
+					'id_asignatura' =>$id_asignatura);
+
+					$this->db->insert('notas', $notas);
+				}
+
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 }

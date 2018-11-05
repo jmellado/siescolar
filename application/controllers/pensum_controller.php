@@ -222,4 +222,89 @@ class Pensum_controller extends CI_Controller {
 
 
 
+    //================== Funciones Para Adicionar Asignaturas ===================
+
+
+    public function adicionar_asignatura()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_administrador_vista', 'pensum/adicionar_asignatura_vista');
+	}
+
+
+	public function adicionar(){
+
+        $this->form_validation->set_rules('id_grado', 'grado', 'required|numeric');
+        $this->form_validation->set_rules('id_asignatura', 'asignatura', 'required|numeric');
+        $this->form_validation->set_rules('intensidad_horaria', 'horas', 'required|numeric');
+        $this->form_validation->set_rules('ano_lectivo', 'año lectivo', 'required|min_length[1]|max_length[4]');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	//obtengo el ultimo id de pensum + 1 
+        	$ultimo_id = $this->pensum_model->obtener_ultimo_id();
+        	$id_grado = $this->input->post('id_grado');
+        	$id_asignatura = $this->input->post('id_asignatura');
+        	$intensidad_horaria = $this->input->post('intensidad_horaria');
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+        	$estado_pensum = "Activo";
+
+        	//array para insertar en la tabla pensum-
+        	$pensum = array(
+        	'id_pensum' =>$ultimo_id,	
+			'id_grado' =>$id_grado,
+			'id_asignatura' =>$id_asignatura,
+			'intensidad_horaria' =>$intensidad_horaria,
+			'ano_lectivo' =>$ano_lectivo,
+			'estado_pensum' =>$estado_pensum);
+
+			if (!$this->pensum_model->ValidarExistencia_PensumEnNotas($id_grado,FALSE)){
+
+				if ($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
+
+					$respuesta=$this->pensum_model->insertar_pensum($pensum);
+
+					if($respuesta==true){
+
+						echo "registroguardado";
+
+						//======================== Asociamos La Asignatura A Los Estudiantes ====================
+						$resp = $this->pensum_model->insertar_asignaturaPorestudiantes($id_grado,$id_asignatura,$ano_lectivo);
+
+						if($resp == false){
+							echo "No Se Pudo Registrar En La Tabla Notas";
+						}
+						//=========================================================================================
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+
+				}
+				else{
+
+					echo "pensumyaexiste";
+				}
+
+			}
+			else{
+				echo "pensumnoennotas";
+			}
+
+        }
+
+	}
+
+
 }
