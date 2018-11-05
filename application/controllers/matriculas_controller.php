@@ -512,7 +512,7 @@ class Matriculas_controller extends CI_Controller {
 		$dane = $col[0]['dane'];
 		$nit = $col[0]['nit'];
 		$escudo = $col[0]['escudo'];
-		$rector = $col[0]['rector'];
+		$responsable = $col[0]['responsable'];
 
 		$matri = $this->matriculas_model->obtener_informacion_matricula_ficha($id_matricula);
 		$nombresest = $matri[0]['nombresest'];
