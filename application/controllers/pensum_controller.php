@@ -270,31 +270,38 @@ class Pensum_controller extends CI_Controller {
 
 			if (!$this->pensum_model->ValidarExistencia_PensumEnNotas($id_grado,FALSE)){
 
-				if ($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
+				if ($this->pensum_model->validar_existencia_notas($ano_lectivo)){
 
-					$respuesta=$this->pensum_model->insertar_pensum($pensum);
+					if ($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
 
-					if($respuesta==true){
+						$respuesta=$this->pensum_model->insertar_pensum($pensum);
 
-						echo "registroguardado";
+						if($respuesta==true){
 
-						//======================== Asociamos La Asignatura A Los Estudiantes ====================
-						$resp = $this->pensum_model->insertar_asignaturaPorestudiantes($id_grado,$id_asignatura,$ano_lectivo);
+							echo "registroguardado";
 
-						if($resp == false){
-							echo "No Se Pudo Registrar En La Tabla Notas";
+							//======================== Asociamos La Asignatura A Los Estudiantes ====================
+							$resp = $this->pensum_model->insertar_asignaturaPorestudiantes($id_grado,$id_asignatura,$ano_lectivo);
+
+							if($resp == false){
+								echo "No Se Pudo Registrar En La Tabla Notas";
+							}
+							//=========================================================================================
 						}
-						//=========================================================================================
+						else{
+
+							echo "registronoguardado";
+						}
+
 					}
 					else{
 
-						echo "registronoguardado";
+						echo "pensumyaexiste";
 					}
-
 				}
 				else{
 
-					echo "pensumyaexiste";
+					echo "notasingresadas";
 				}
 
 			}

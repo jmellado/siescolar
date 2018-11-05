@@ -265,4 +265,20 @@ class Pensum_model extends CI_Model {
 	}
 
 
+	public function validar_existencia_notas($ano_lectivo){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where("(p1 != '' OR p1 is NOT NULL)");
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 }

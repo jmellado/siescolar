@@ -42,6 +42,12 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="notasingresadas"){
+						
+						toastr.warning('No Se Puede Adicionar Esta Asignatura; Actualmente Existen Notas Ingresadas En El Primer Período.', 'Success Alert', {timeOut: 5000});
+							
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
