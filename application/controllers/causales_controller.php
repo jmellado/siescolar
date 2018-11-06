@@ -203,4 +203,181 @@ class Causales_controller extends CI_Controller {
 	}
 
 
+	public function insertar_causal(){
+
+		$this->form_validation->set_rules('causal', 'Causal', 'required|alpha_spaces|max_length[500]');
+        $this->form_validation->set_rules('id_tipo_causal', 'Tipo causal', 'required');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	//obtengo el ultimo id de causales + 1 
+        	$ultimo_id = $this->causales_model->obtener_ultimo_id_causal();
+        	$causal = ucwords(mb_strtolower(trim($this->input->post('causal'))));
+        	$id_tipo_causal = $this->input->post('id_tipo_causal');
+
+        	//array para insertar en la tabla causales
+        	$caus = array(
+        	'id_causal' =>$ultimo_id,	
+			'causal' =>$causal,
+			'id_tipo_causal' =>$id_tipo_causal);
+
+			if ($this->causales_model->validar_existencia_causal($causal)){
+
+				$respuesta=$this->causales_model->insertar_causal($caus);
+
+				if($respuesta==true){
+
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
+			}
+			else{
+
+				echo "causalyaexiste";
+			}
+
+        }
+
+	}
+
+
+	public function mostrarcausales(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'causales' => $this->causales_model->buscar_causal($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->causales_model->buscar_causal($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function modificar_causal(){
+
+    	$id_causal = $this->input->post('id_causal');
+    	$causal = ucwords(mb_strtolower(trim($this->input->post('causal'))));
+    	$id_tipo_causal = $this->input->post('id_tipo_causal');
+
+    	//array para actualizar en la tabla causales
+    	$caus = array(
+    	'id_causal' =>$id_causal,	
+		'causal' =>$causal,
+		'id_tipo_causal' =>$id_tipo_causal);
+
+		$causal_buscada = $this->causales_model->obtener_nombre_causal($id_causal);
+
+        if(is_numeric($id_causal)){
+
+        	if ($this->causales_model->ValidarExistencia_CausalEnSeguimientos($id_causal)){
+
+	        	if ($causal_buscada == $causal){
+
+		        	$respuesta=$this->causales_model->modificar_causal($id_causal,$caus);
+
+					if($respuesta==true){
+
+						echo "registroactualizado";
+
+		            }else{
+
+						echo "registronoactualizado";
+
+		            }
+		        }
+		        else{
+
+		        	if($this->causales_model->validar_existencia_causal($causal)){
+
+		        		$respuesta=$this->causales_model->modificar_causal($id_causal,$caus);
+
+		        		if($respuesta==true){
+
+		        			echo "registroactualizado";
+
+		        		}else{
+
+		        			echo "registronoactualizado";
+
+		        		}
+
+		        	}
+		        	else{
+
+		        		echo "causalyaexiste";
+
+		        	}
+
+					
+				}
+			}
+			else{
+				echo "causalenseguimientos";
+			}          
+         
+        }else{
+            
+            echo "digite valor numerico para identificar una causal";
+        }
+
+
+    }
+
+
+    public function eliminar_causal(){
+
+	  	$id =$this->input->post('id'); 
+
+        if(is_numeric($id)){
+
+			if ($this->causales_model->ValidarExistencia_CausalEnSeguimientos($id)){
+
+		        $respuesta=$this->causales_model->eliminar_causal($id);
+		        
+	          	if($respuesta==true){
+	              
+	              	echo "Causal Eliminada Correctamente.";
+	          	}else{
+	              
+	              	echo "No Se Pudo Eliminar.";
+	          	}
+	        }
+	        else{
+	        	echo "No Se Puede Eliminar Esta Causal; Actualmente Se Encuentra Asociada A Un Seguimiento.";
+	        }
+          
+        }else{
+          
+          	echo "digite valor numerico para identificar una causal";
+        }
+    }
+
+
+    public function llenarcombo_tipos_causales(){
+
+    	$consulta = $this->causales_model->llenar_tipos_causales();
+    	echo json_encode($consulta);
+    }	
+
+
 }

@@ -123,7 +123,7 @@
 				<div class="modal-footer">
 					<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
 					<div class="col-sm-offset-4 col-sm-4">
-						<button type="submit" name="btn_registrar_area" id="btn_registrar_area" class="btn btn-primary btn-lg btn-block">Registrar</button>
+						<button type="submit" name="btn_registrar_tipo" id="btn_registrar_tipo" class="btn btn-primary btn-lg btn-block">Registrar</button>
 					</div>
 				</div>
 			</form>
@@ -152,7 +152,7 @@
 							<input type="hidden" class="form-control" id="id_tiposele" name="id_tipo_causal">
 							
 				        	<div class="form-group">
-								<label class="control-label col-sm-3" for="nombre_area">TIPO CAUSAL</label>
+								<label class="control-label col-sm-3" for="tipo_causal">TIPO CAUSAL</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="tipo_causalsele" name="tipo_causal" placeholder="Tipo Causal">
 								</div>		 
