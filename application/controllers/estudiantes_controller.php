@@ -209,6 +209,10 @@ class Estudiantes_controller extends CI_Controller {
 
 					echo "registroguardado";
 
+					if(!copy("./uploads/imagenes/fotos/foto.jpg","./uploads/imagenes/fotos/".$ultimo_id.".jpg")){
+						echo "Error Al Copiar La Imagen.";
+					}
+
 				}
 				else{
 					echo "registronoguardado";
@@ -464,6 +468,11 @@ class Estudiantes_controller extends CI_Controller {
 	          	if($respuesta==true){
 	              
 	              	echo "Estudiante Eliminado Correctamente.";
+
+	              	if (!unlink("./uploads/imagenes/fotos/".$id.".jpg")) {
+	              		echo "Error Al Borrar La Imagen.";
+	              	}
+
 	          	}else{
 	              
 	              	echo "No Se Pudo Eliminar.";
