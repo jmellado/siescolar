@@ -102,6 +102,10 @@ class Usuarios_controller extends CI_Controller {
 							if($respuesta==true){
 
 								echo "registroguardado";
+
+								if(!copy("./uploads/imagenes/fotos/foto.jpg","./uploads/imagenes/fotos/".$ultimo_id.".jpg")){
+									echo "Error Al Copiar La Imagen.";
+								}
 							}
 							else{
 
@@ -136,6 +140,10 @@ class Usuarios_controller extends CI_Controller {
 							if($respuesta==true){
 
 								echo "registroguardado";
+
+								if(!copy("./uploads/imagenes/fotos/foto.jpg","./uploads/imagenes/fotos/".$ultimo_id.".jpg")){
+									echo "Error Al Copiar La Imagen.";
+								}
 							}
 							else{
 

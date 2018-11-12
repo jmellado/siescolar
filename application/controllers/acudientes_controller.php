@@ -107,6 +107,11 @@ class Acudientes_controller extends CI_Controller {
 							if($respuesta==true){
 
 								echo "registroguardado";
+
+								if(!copy("./uploads/imagenes/fotos/foto.jpg","./uploads/imagenes/fotos/".$ultimo_id.".jpg")){
+									echo "Error Al Copiar La Imagen.";
+								}
+
 							}
 							else{
 
@@ -290,7 +295,7 @@ class Acudientes_controller extends CI_Controller {
 		        
 		          	if($respuesta==true){
 		              
-		              	echo "Eliminado Correctamente";
+		              	echo "Acudiente Eliminado Correctamente.";
 		          	}else{
 		              
 		              	echo "No se Pudo Eliminar";
@@ -302,7 +307,7 @@ class Acudientes_controller extends CI_Controller {
 		        
 		          	if($respuesta==true){
 		              
-		              	echo "Eliminado Correctamente";
+		              	echo "Acudiente Eliminado Correctamente.";
 		          	}else{
 		              
 		              	echo "No se Pudo Eliminar";
@@ -314,7 +319,7 @@ class Acudientes_controller extends CI_Controller {
 		        
 		          	if($respuesta==true){
 		              
-		              	echo "Eliminado Correctamente";
+		              	echo "Acudiente Eliminado Correctamente.";
 		          	}else{
 		              
 		              	echo "No se Pudo Eliminar";
@@ -326,7 +331,12 @@ class Acudientes_controller extends CI_Controller {
 		        
 		          	if($respuesta==true){
 		              
-		              	echo "Eliminado Correctamente";
+		              	echo "Acudiente Eliminado Correctamente.";
+
+		              	if (!unlink("./uploads/imagenes/fotos/".$id_persona.".jpg")) {
+		              		echo "Error Al Borrar La Imagen.";
+		              	}
+
 		          	}else{
 		              
 		              	echo "No se Pudo Eliminar";

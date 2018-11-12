@@ -108,7 +108,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		
-		if(confirm("esta seguro de eliminar el registro?")){
+		if(confirm("Esta Seguro De Eliminar Este Acudiente.?")){
 			eliminar_acudiente(idsele);
 
 		}
