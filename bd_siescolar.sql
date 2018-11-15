@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 12-11-2018 a las 22:54:09
--- Versión del servidor: 10.2.17-MariaDB
--- Versión de PHP: 7.1.22
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 15-11-2018 a las 04:53:09
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `u442806501_bd`
+-- Base de datos: `bd_siescolar`
 --
 
 -- --------------------------------------------------------
@@ -102,7 +100,7 @@ INSERT INTO `acudientes` (`id`, `id_persona`, `ocupacion`, `telefono_trabajo`, `
 
 CREATE TABLE `administradores` (
   `id_persona` int(11) NOT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -681,6 +679,26 @@ INSERT INTO `desempenos` (`id_desempeno`, `nombre_desempeno`, `rango_inicial`, `
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `documentos`
+--
+
+CREATE TABLE `documentos` (
+  `id_documento` int(11) NOT NULL,
+  `descripcion_documento` varchar(500) NOT NULL,
+  `nombre_documento` varchar(300) NOT NULL,
+  `fecha_subida` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `documentos`
+--
+
+INSERT INTO `documentos` (`id_documento`, `descripcion_documento`, `nombre_documento`, `fecha_subida`) VALUES
+(1, 'Proyecto Educativo Institucional Del Centro Educativo Nuestra Señora Del Carmen.', 'PROYECTO_EDUCATIVO_INSTITUCIONAL.docx', '2018-11-14');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `elecciones`
 --
 
@@ -843,7 +861,41 @@ INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedenci
 (140, 'Ninguna', '', 'Tercero', '2017', 'Inscrito', '2018-11-06'),
 (141, 'Ninguna', '', 'Tercero', '2017', 'Inscrito', '2018-11-06'),
 (142, 'Ninguna', '', 'Ninguno', '', 'Inscrito', '2018-11-06'),
-(143, 'Ninguna', '', 'Tercero', '2017', 'Inscrito', '2018-11-06');
+(143, 'Ninguna', '', 'Tercero', '2017', 'Inscrito', '2018-11-06'),
+(144, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(145, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(146, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(147, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(148, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(149, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(150, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(151, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(152, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(153, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(154, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(155, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(156, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(157, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(158, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(159, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(160, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(161, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(162, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(163, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(164, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(165, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(166, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(167, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(168, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(169, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(170, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(171, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(172, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(173, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(174, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(175, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(176, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(177, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14');
 
 -- --------------------------------------------------------
 
@@ -1075,14 +1127,47 @@ INSERT INTO `estudiantes_padres` (`idestudiantes_padres`, `id_estudiante`, `id_p
 (117, 140, 117, 117),
 (118, 141, 118, 118),
 (119, 142, 119, 119),
-(120, 143, 120, 120);
+(120, 143, 120, 120),
+(121, 144, 121, 121),
+(122, 145, 122, 122),
+(123, 146, 123, 123),
+(124, 147, 124, 124),
+(125, 148, 125, 125),
+(126, 149, 126, 126),
+(127, 150, 127, 127),
+(128, 151, 128, 128),
+(129, 152, 129, 129),
+(130, 153, 130, 130),
+(131, 154, 131, 131),
+(132, 155, 132, 132),
+(133, 156, 133, 133),
+(134, 157, 134, 134),
+(135, 158, 135, 135),
+(136, 159, 136, 136),
+(137, 160, 137, 137),
+(138, 161, 138, 138),
+(139, 162, 139, 139),
+(140, 163, 140, 140),
+(141, 164, 141, 141),
+(142, 165, 142, 142),
+(143, 166, 143, 143),
+(144, 167, 144, 144),
+(145, 168, 145, 145),
+(146, 169, 146, 146),
+(147, 170, 147, 147),
+(148, 171, 148, 148),
+(149, 172, 149, 149),
+(150, 173, 150, 150),
+(151, 174, 151, 151),
+(152, 175, 152, 152),
+(153, 176, 153, 153),
+(154, 177, 154, 154);
 
 --
 -- Disparadores `estudiantes_padres`
 --
 DELIMITER $$
 CREATE TRIGGER `eliminar_padres_madres` AFTER DELETE ON `estudiantes_padres` FOR EACH ROW begin
--- Edit trigger body code below this line. Do not edit lines above this one
 DELETE FROM padres where id_padre=old.id_padre;
 DELETE FROM madres where id_madre=old.id_madre;
 end
@@ -1384,7 +1469,41 @@ INSERT INTO `historial_estados` (`id_historial`, `id_persona`, `estado`, `observ
 (192, 140, 'Inscrito', 'Estudiante Inscrito.', '2018-11-06', 1),
 (193, 141, 'Inscrito', 'Estudiante Inscrito.', '2018-11-06', 1),
 (194, 142, 'Inscrito', 'Estudiante Inscrito.', '2018-11-06', 1),
-(195, 143, 'Inscrito', 'Estudiante Inscrito.', '2018-11-06', 1);
+(195, 143, 'Inscrito', 'Estudiante Inscrito.', '2018-11-06', 1),
+(196, 144, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(197, 145, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(198, 146, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(199, 147, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(200, 148, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(201, 149, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(202, 150, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(203, 151, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(204, 152, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(205, 153, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(206, 154, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(207, 155, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(208, 156, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(209, 157, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(210, 158, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(211, 159, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(212, 160, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(213, 161, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(214, 162, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(215, 163, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(216, 164, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(217, 165, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(218, 166, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(219, 167, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(220, 168, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(221, 169, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(222, 170, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(223, 171, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(224, 172, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(225, 173, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(226, 174, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(227, 175, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(228, 176, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(229, 177, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1);
 
 -- --------------------------------------------------------
 
@@ -1396,13 +1515,13 @@ CREATE TABLE `horarios` (
   `id_horario` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
   `hora` int(11) NOT NULL,
-  `lunes` int(11) NOT NULL DEFAULT 1,
-  `martes` int(11) NOT NULL DEFAULT 1,
-  `miercoles` int(11) NOT NULL DEFAULT 1,
-  `jueves` int(11) NOT NULL DEFAULT 1,
-  `viernes` int(11) NOT NULL DEFAULT 1,
-  `sabado` int(11) NOT NULL DEFAULT 1,
-  `domingo` int(11) NOT NULL DEFAULT 1,
+  `lunes` int(11) NOT NULL DEFAULT '1',
+  `martes` int(11) NOT NULL DEFAULT '1',
+  `miercoles` int(11) NOT NULL DEFAULT '1',
+  `jueves` int(11) NOT NULL DEFAULT '1',
+  `viernes` int(11) NOT NULL DEFAULT '1',
+  `sabado` int(11) NOT NULL DEFAULT '1',
+  `domingo` int(11) NOT NULL DEFAULT '1',
   `ano_lectivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1423,8 +1542,8 @@ INSERT INTO `horarios` (`id_horario`, `id_curso`, `hora`, `lunes`, `martes`, `mi
 (10, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1),
 (11, 2, 1, 11, 6, 2, 10, 3, 1, 1, 1),
 (12, 2, 2, 11, 5, 13, 9, 11, 1, 1, 1),
-(13, 2, 3, 7, 12, 17, 1, 15, 1, 1, 1),
-(14, 2, 4, 8, 12, 11, 1, 2, 1, 1, 1),
+(13, 2, 3, 7, 12, 17, 14, 15, 1, 1, 1),
+(14, 2, 4, 8, 12, 11, 14, 2, 1, 1, 1),
 (15, 2, 5, 12, 2, 16, 4, 2, 1, 1, 1),
 (16, 2, 6, 17, 13, 15, 18, 18, 1, 1, 1),
 (17, 2, 7, 1, 1, 1, 1, 1, 1, 1, 1),
@@ -1767,7 +1886,41 @@ INSERT INTO `madres` (`id_madre`, `identificacion_m`, `nombres_m`, `apellido1_m`
 (117, '1073453243', 'Rosmery', 'Vasquez', 'Garrido', 'Madre', 'f', '3145464564', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '312321424', 'Sempegua'),
 (118, '130985785', 'Milena', 'Arroyo', 'Paez', 'Madre', 'f', '3253254353', 'Sempegua', 'La Playa', 'Ama De Casa', '313455465', 'Sempegua'),
 (119, '1073633433', 'Ana Judith', 'Padilla', 'Martinez', 'Madre', 'f', '324546456', 'Sempegua', 'La Plaza', 'Ama De Casa', '243243534', 'Sempegua'),
-(120, '10854654', 'Eva Maria', 'Nobles', 'Cardenas', 'Madre', 'f', '3224353543', 'Sempegua', 'La Central', 'Ama De Casa', '3234545654', 'Sempegua');
+(120, '10854654', 'Eva Maria', 'Nobles', 'Cardenas', 'Madre', 'f', '3224353543', 'Sempegua', 'La Central', 'Ama De Casa', '3234545654', 'Sempegua'),
+(121, '106544353', 'Marilin', 'Toloza', 'Vasquez', 'Madre', 'f', '321567676', 'Sempegua', 'La Plaza', 'Ama De Casa', '32543436', 'Sempegua'),
+(122, '109878686', 'Antonella', 'Cabas', 'Obregon', 'Madre', 'f', '322378799', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '32456878', 'Sempegua'),
+(123, '1007542323', 'Juliana', 'Contreras', 'Guzman', 'Madre', 'f', '3214565657', 'Sempegua', 'La Central', 'Ama De Casa', '3214655665', 'Sempegua'),
+(124, '1007542323', 'Juliana', 'Contreras', 'Guzman', 'Madre', 'f', '3214565657', 'Sempegua', 'La Central', 'Ama De Casa', '3214655665', 'Sempegua'),
+(125, '19087786', 'Maria Alejandra', 'Lopez', 'Miranda', 'Madre', 'f', '312343343', 'Sempegua', 'La Paz', 'Ama De Casa', '234353243', 'Sempegua'),
+(126, '108545678', 'Nereida', 'Zambrano', 'Nobles', 'Madre', 'f', '3235346546', 'Sempegua', 'La Central', 'Ama De Casa', '3234365465', 'Sempegua'),
+(127, '1124234234', 'Sandra Milena', 'Obregon', 'Sarmiento', 'Madre', 'f', '314667878', 'Sempegua', 'La Plaza', 'Ama De Casa', '23423535', 'Sempegua'),
+(128, '1064543778', 'Cristina', 'Toloza', 'Paez', 'Madre', 'f', '3123454654', 'Sempegua', 'La Paz', 'Ama De Casa', '31456546', 'Sempegua'),
+(129, '108973676', 'Lucelis', 'Rangel', 'Perez', 'Madre', 'f', '312454545', 'Sempegua', 'La Roca', 'Ama De Casa', '312234578', 'Sempegua'),
+(130, '1390897648', 'Solmaira', 'Hernandez', 'Florez', 'Madre', 'f', '3114546454', 'Sempegua', 'La Plaza', 'Ama De Casa', '3124534554', 'Sempegua'),
+(131, '102376678', 'Yane', 'Contreras', 'Ibanez', 'Madre', 'f', '312343245', 'Sempegua', 'Barrio Arriba', 'Ama De Casa', '323435355', 'Sempegua'),
+(132, '1053425657', 'Zeneth', 'Pinto', 'Cadena', 'Madre', 'f', '312343545', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '32345345', 'Sempegua'),
+(133, '190878685', 'Zeneth', 'Pinto', 'Cadena', 'Madre', 'f', '342344232', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '323465756', 'Sempegua'),
+(134, '198976723', 'Angelica', 'Ruiz', 'Paez', 'Madre', 'f', '312344545', 'Sempegua', 'La Central', 'Ama De Casa', '2342343', 'Sempegua'),
+(135, '127363893', 'Juana', 'Martinez', 'Berrio', 'Madre', 'f', '3234545', 'Sempegua', 'La Playa', 'Ama De Casa', '1223434545', 'Sempegua'),
+(136, '12234243', 'Paulina', 'Nobles', 'Vides', 'Madre', 'f', '3246554', 'Sempegua', 'Las Palmas', 'Ama De Casa', '23534534', 'Sempegua'),
+(137, '10764356', 'Gerogina', 'Alvarez', 'Rodriguez', 'Madre', 'f', '32157878', 'Sempegua', 'El Campo', 'Ama De Casa', '3354354', 'Sempegua'),
+(138, '198976565', 'Mercedes', 'Caballero', 'Chavez', 'Madre', 'f', '245435435', 'Sempegua', 'La Roca', 'Ama De Casa', '2343423', 'Sempegua'),
+(139, '187554656', 'Ana Sofia', 'Mendez', 'Lopez', 'Madre', 'f', '31465756', 'Sempegua', 'La Esquina', 'Ama De Casa', '34353242', 'Sempegua'),
+(140, '1078675576', 'Yamaris', 'Palomino', 'Cerpa', 'Madre', 'f', '3134545', 'Sempegua', 'La Paz', 'Ama De Casa', '3234353534', 'Sempegua'),
+(141, '17857545', 'Diana Liz', 'Cadena', 'Rocha', 'Madre', 'f', '321244355', 'Sempegua', 'La Playa', 'Ama De Casa', '3265464', 'Sempegua'),
+(142, '10987665', 'Khaterin', 'Luna', 'Hernandez', 'Madre', 'f', '344546546', 'Sempegua', 'Barrio Arriba', 'Ama De Casa', '23543534', 'Sempegua'),
+(143, '1087654635', 'Luz Mery', 'Obregon', 'Cadena', 'Madre', 'f', '323556556', 'Sempegua', 'La Palmas', 'Ama De Casa', '3254645', 'Sempegua'),
+(144, '187988363', 'Luz Enith', 'Rocha', 'Cabas', 'Madre', 'f', '32423355', 'Sempegua', 'La Playa', 'Ama De Casa', '324546464', 'Sempegua'),
+(145, '1908655445', 'Luzmary', 'Pacheco', 'Lopez', 'Madre', 'f', '32354645', 'Sempegua', 'La Central', 'Ama De Casa', '3243564564', 'Sempegua'),
+(146, '0445256373', 'Martha Sofia', 'Hernandez', 'Jimenez', 'Madre', 'f', '3267876786', 'Sempegua', 'El Campo', 'Ama De Casa', '35434534', 'Sempegua'),
+(147, '1098767', 'Norelis', 'Contreras', 'Ibanez', 'Madre', 'f', '224234234', 'Sempegua', 'La Playa', 'Ama De Casa', '234354354', 'Sempegua'),
+(148, '1233543556', 'Eva Sandrith', 'Martinez', 'Meza', 'Madre', 'f', '32565475', 'Sempegua', 'La Plaza', 'Ama De Casa', '21434544', 'Sempegua'),
+(149, '123890709', 'Yeinis', 'Martinez', 'Obregon', 'Madre', 'f', '3234222', 'Sempegua', 'La Central', 'Ama De Casa', '323544454', 'Sempegua'),
+(150, '13434533', 'Katrina', 'Jimenez', 'Cadena', 'Madre', 'f', '334543654', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '3243453543', 'Sempegua'),
+(151, '1054787437', 'Dayana', 'Luqueta', 'Mallorca', 'Madre', 'f', '325454566', 'Sempegua', 'A Plaza', 'Ama De Casa', '313453535', 'Sempegua'),
+(152, '1324656657', 'Mariana', 'Mieles', 'Ramirez', 'Madre', 'f', '2343543543', 'Sempegua', 'La Esquina', 'Ama De Casa', '124343', 'Sempegua'),
+(153, '1006563636', 'Miriam', 'Mieles', 'Ramirez', 'Madre', 'f', '312445435', 'Sempegua', 'La Esquina', 'Ama De Casa', '234335', 'Sempegua'),
+(154, '1066478584', 'Leonelda', 'Pacheco', 'Lopez', 'Madre', 'f', '323435534', 'Sempegua', 'La Roca', 'Ama De Casa', '3235435234', 'Sempegua');
 
 -- --------------------------------------------------------
 
@@ -1873,14 +2026,12 @@ INSERT INTO `matriculas` (`id_matricula`, `fecha_matricula`, `ano_lectivo`, `id_
 --
 DELIMITER $$
 CREATE TRIGGER `denegar_acceso_usuario` AFTER DELETE ON `matriculas` FOR EACH ROW begin
--- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE usuarios set acceso="0" where id_persona=old.id_estudiante;
 end
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `permitir_acceso_usuario` AFTER INSERT ON `matriculas` FOR EACH ROW begin
--- Edit trigger body code below this line. Do not edit lines above this one
 UPDATE usuarios set acceso="1" where id_persona=new.id_estudiante;
 UPDATE usuarios set acceso="1" where id_persona=new.id_acudiente and id_rol="4";
 end
@@ -4560,7 +4711,48 @@ INSERT INTO `notas` (`id_nota`, `ano_lectivo`, `id_estudiante`, `id_grado`, `id_
 (1323, 1, 98, 7, 16, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (1324, 1, 98, 7, 17, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (1325, 1, 98, 7, 18, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(1326, 1, 98, 7, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
+(1326, 1, 98, 7, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1327, 1, 34, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1328, 1, 35, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1329, 1, 37, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1330, 1, 38, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1331, 1, 40, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1332, 1, 42, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1333, 1, 43, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1334, 1, 45, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1335, 1, 47, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1336, 1, 48, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1337, 1, 50, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1338, 1, 51, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1339, 1, 52, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1340, 1, 49, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1341, 1, 46, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1342, 1, 44, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1343, 1, 41, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1344, 1, 39, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1345, 1, 36, 9, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1346, 1, 11, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1347, 1, 13, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1348, 1, 15, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1349, 1, 18, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1350, 1, 20, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1351, 1, 22, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1352, 1, 24, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1353, 1, 26, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1354, 1, 28, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1355, 1, 29, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1356, 1, 30, 10, 19, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1357, 1, 11, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1358, 1, 13, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1359, 1, 15, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1360, 1, 18, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1361, 1, 20, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1362, 1, 22, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1363, 1, 24, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1364, 1, 26, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1365, 1, 28, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1366, 1, 29, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1367, 1, 30, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
 
 -- --------------------------------------------------------
 
@@ -4636,7 +4828,7 @@ CREATE TABLE `notificaciones` (
   `contenido` varchar(300) NOT NULL,
   `destinatario` varchar(45) NOT NULL,
   `rol_destinatario` varchar(45) NOT NULL,
-  `id_estudiante` int(11) DEFAULT 1,
+  `id_estudiante` int(11) DEFAULT '1',
   `id_asignatura` int(11) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,
@@ -5024,7 +5216,41 @@ INSERT INTO `padres` (`id_padre`, `identificacion_p`, `nombres_p`, `apellido1_p`
 (117, '1075353747', 'Plinio', 'Toloza', 'Rocha', 'Padre', 'm', '3127665354', 'Sempegua', 'Divino NiÑo', 'Pescador', '3243534', 'Sempegua'),
 (118, '124356665', 'Alexander', 'Villar', 'Gutierrez', 'Padre', 'm', '3215577888', 'Sempegua', 'La Playa', 'Pescador', '3235465634', 'Sempegua'),
 (119, '1224645654', 'Jose', 'Ortega', 'Salazar', 'Padre', 'm', '24335435', 'Sempegua', 'La Plaza', 'Agricultor', '334454464', 'Sempegua'),
-(120, '109765557', 'Francisco Jose', 'Pabon', 'Hernandez', 'Padre', 'm', '315897987', 'Sempegua', 'La Central', 'Comerciante', '23432423', 'Sempegua');
+(120, '109765557', 'Francisco Jose', 'Pabon', 'Hernandez', 'Padre', 'm', '315897987', 'Sempegua', 'La Central', 'Comerciante', '23432423', 'Sempegua'),
+(121, '1007657465', 'Gilberto', 'Acuna', 'Martinez', 'Padre', 'm', '325435345', 'Sempegua', 'La Plaza', 'Pescador', '32345445', 'Sempegua'),
+(122, '1089745435', 'Alain Jose', 'Aragon', 'Toloza', 'Padre', 'm', '324556456', 'Sempegua', 'Divino NiÑo', 'Pescador', '3235645454', 'Sempegua'),
+(123, '125076757', 'Daniel Andres', 'Berrueco', 'Santos', 'Padre', 'm', '3146657634', 'Sempegua', 'La Central', 'Comerciante', '3145756876', 'Sempegua'),
+(124, '125076757', 'Daniel Andres', 'Berrueco', 'Santos', 'Padre', 'm', '3146657634', 'Sempegua', 'La Central', 'Comerciante', '3145756876', 'Sempegua'),
+(125, '107655454', 'Jose Luis', 'Cabas', 'Zambrano', 'Padre', 'm', '33234534', 'Sempegua', 'La Paz', 'Guardia De Seguridad', '24234345', 'Sempegua'),
+(126, '1098207', 'David Jose', 'Cavas', 'Gutierrez', 'Padre', 'm', '312235534', 'Sempegua', 'La Central', 'Agricultor', '32343453', 'Sempegua'),
+(127, '109075564', 'Andres', 'Cuadro', 'Cadena', 'Padre', 'm', '31254353', 'Sempegua', 'La Plaza', 'Electricista', '31235435', 'Sempegua'),
+(128, '109798677', 'Jose', 'Fernandez', 'Rocha', 'Padre', 'm', '318979789', 'Sempegua', 'La Paz', 'Pescador', '3243232323', 'Sempegua'),
+(129, '1094525363', 'Santiago', 'Gomez', 'Pina', 'Padre', 'm', '3255436', 'Sempegua', 'La Roca', 'Pescador', '312456657', 'Sempegua'),
+(130, '10897686', 'Luis', 'Gonzalez', 'Sarabia', 'Padre', 'm', '3212445454', 'Sempegua', 'La Plaza', 'Pescador', '3123455434', 'Sempegua'),
+(131, '1087667454', 'Jose Miguel', 'Hernandez', 'Chamorro', 'Padre', 'm', '3124565654', 'Sempegua', 'Barrio Arriba', 'Locutor', '312454543', 'Sempegua'),
+(132, '1037766554', 'Jhon', 'Hernandez', 'Jimenez', 'Padre', 'm', '3124743432', 'Sempegua', 'Divino NiÑo', 'AlbaÑil', '3132476534', 'Sempegua'),
+(133, '1076765634', 'Jhon', 'Hernandez', 'Nobles', 'Padre', 'm', '2124543534', 'Sempegua', 'Divino NiÑo', 'AlbaÑil', '334453453', 'Sempegua'),
+(134, '199087373', 'Ulices', 'Infante', 'Munoz', 'Padre', 'm', '312345543', 'Sempegua', 'La Central', 'Agricultor', '3124245', 'Sempegua'),
+(135, '112355435', 'Alejandro', 'Leon', 'Pava', 'Padre', 'm', '3244325354', 'Sempegua', 'La Playa', 'Pescador', '2342423', 'Sempegua'),
+(136, '10986286', 'David Andres', 'Mendez', 'Palomino', 'Padre', 'm', '2334534543', 'Sempegua', 'Las Palmas', 'Mototaxista', '24324234', 'Sempegua'),
+(137, '106553453', 'Alberto', 'Miranda', 'Ramirez', 'Padre', 'm', '32354564', 'Sempegua', 'El Campo', 'Agricultor', '2345656', 'Sempegua'),
+(138, '1906754442', 'Enrique', 'Nobles', 'Mendez', 'Padre', 'm', '32435345', 'Sempegua', 'La Roca', 'Pescador', '31323543', 'Sempegua'),
+(139, '1244657989', 'Fabio', 'Nobles', 'Martinez', 'Padre', 'm', '324554645', 'Sempegua', 'La Esquina', 'Contratista', '3124566545', 'Sempegua'),
+(140, '1873653736', 'Alfonso', 'Nobles', 'Martinez', 'Padre', 'm', '34345454', 'Sempegua', 'La Paz', 'AlbaÑil', '2343434', 'Sempegua'),
+(141, '18976556', 'Humberto', 'Obregon', 'Contreras', 'Padre', 'm', '323435455', 'Sempegua', 'La Playa', 'Pescador', '3254656', 'Sempegua'),
+(142, '1087657', 'Leonardo David', 'Otalora', 'Rocha', 'Padre', 'm', '312454466', 'Sempegua', 'Barrio Arriba', 'Eectricista', '2455654645', 'Sempegua'),
+(143, '19897654', 'Lenin', 'Pacheco', 'Lopez', 'Padre', 'm', '123453455', 'Sempegua', 'Las Palmas', 'Pescador', '34354353', 'Sempegua'),
+(144, '10987566', 'Misael', 'Pastrana', 'Paez', 'Padre', 'm', '32234353', 'Sempegua', 'La Playa', 'Ganadero', '3233535', 'Sempegua'),
+(145, '1907875673', 'Neil', 'Ramirez', 'Perez', 'Padre', 'm', '3265565465', 'Sempegua', 'La Central', 'Mototaxista', '2345453', 'Sempegua'),
+(146, '108765433', 'Luis Andres', 'Reales', 'Yanez', 'Padre', 'm', '2355464', 'Sempegua', 'El Campo', 'Comerciante', '234354343', 'Sempegua'),
+(147, '1977686655', 'Enrique David', 'Reyna', 'Pedrozo', 'Padre', 'm', '32343535', 'Sempegua', 'La Playa', 'Pescador', '24454353', 'Sempegua'),
+(148, '13535835', 'Roberto', 'Rico', 'Bolanos', 'Padre', 'm', '325354354', 'Sempegua', 'La Plaza', 'AlbaÑil', '3253534', 'Sempegua'),
+(149, '19876844', 'Romario', 'Rocha', 'Toloza', 'Padre', 'm', '3254546', 'Sempegua', 'La Central', 'Pescador', '2343253', 'Sempegua'),
+(150, '1989863443', 'Aramis', 'Toloza', 'Vides', 'Padre', 'm', '3254365464', 'Sempegua', 'Divino NiÑo', 'Pescador', '3124543543', 'Sempegua'),
+(151, '1228087767', 'Mario', 'Toloza', 'Amaris', 'Padre', 'm', '325465654', 'Sempegua', 'La Plaza', 'Comerciante', '32343532', 'Sempegua'),
+(152, '1076455744', 'Libardo Jose', 'Toloza', 'Nobles', 'Padre', 'm', '243543543', 'Sempegua', 'La Esquina', 'Comerciante', '24324343', 'Sempegua'),
+(153, '1229473842', 'Yair', 'Toloza', 'Martinez', 'Padre', 'm', '315745444', 'Sempegua', 'La Esquina', 'Pescador', '3245445645', 'Sempegua'),
+(154, '1046786857', 'Alberto', 'Waltero', 'Perez', 'Padre', 'm', '312455667', 'Sempegua', 'La Roca', 'Ganadero', '312245435', 'Sempegua');
 
 -- --------------------------------------------------------
 
@@ -5350,7 +5576,10 @@ INSERT INTO `pensum` (`id_pensum`, `id_grado`, `id_asignatura`, `intensidad_hora
 (77, 5, 16, 1, 1, 'Activo'),
 (78, 5, 17, 1, 1, 'Activo'),
 (79, 5, 19, 1, 1, 'Activo'),
-(80, 5, 21, 4, 1, 'Activo');
+(80, 5, 21, 4, 1, 'Activo'),
+(81, 9, 19, 1, 1, 'Activo'),
+(82, 10, 19, 1, 1, 'Activo'),
+(83, 10, 14, 2, 1, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -5534,7 +5763,41 @@ INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedi
 (140, '1063485580', 'ti', '2006-09-15', 1, 20, 410, 'Valmer', 'Toloza', 'Vasquez', 'm', '2006-09-15', 1, 20, 410, 'o+', 'Salud Total', 'Ninguna', '3143534656', 'VALMER@OTLOOK.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
 (141, '1068385858', 'rc', '2007-04-19', 1, 20, 410, 'Katty Yulieth', 'Villar', 'Arroyo', 'f', '2007-04-19', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '3123454645', 'KATTYYULI@HOTMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
 (142, '4225388013', 'ti', '2005-08-30', 1, 20, 410, 'Iliana Maria', 'Ortega', 'Padilla', 'f', '2005-05-30', 1, 20, 410, 'b+', 'Asmet Salud', 'Ninguna', '323435465', 'ILIANA@GMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
-(143, '4225388102', 'ti', '2007-03-04', 1, 20, 410, 'Samir Jose', 'Pabon', 'Nobles', 'm', '2007-04-04', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '3124543578', 'SAMIRJ@OUTLOOK.COM', 'Sempegua', 'La Central', 1, 20, 410, '1');
+(143, '4225388102', 'ti', '2007-03-04', 1, 20, 410, 'Samir Jose', 'Pabon', 'Nobles', 'm', '2007-04-04', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '3124543578', 'SAMIRJ@OUTLOOK.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(144, '1063486249', 'ti', '2005-10-23', 1, 20, 410, 'Vanessa', 'Acuna', 'Toloza', 'f', '2005-10-23', 1, 20, 410, 'o+', 'Barrios Unidos', 'Ninguna', '335465465', 'VANEACU@GMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(145, '1063488406', 'ti', '2008-10-18', 1, 20, 404, 'Aran Jose', 'Aragon', 'Cabas', 'm', '2008-10-18', 1, 20, 410, 'o+', 'Saludvida', 'Ninguna', '3216877689', 'ARANJ@HOTMAIL.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(146, '1127610214', 'ti', '2008-09-20', 1, 20, 410, 'Camila Andrea', 'Berrueco', 'Contreras', 'f', '2008-09-20', 1, 20, 410, 'b+', 'Emdisalud', 'Ninguna', '3115476756', 'CAMILAA@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(147, '1127610211', 'ti', '2007-08-06', 1, 20, 410, 'Gisel Patricia', 'Berrueco', 'Contreras', 'f', '2007-08-06', 1, 20, 410, 'o-', 'Ambuq', 'Ninguna', '314767665', 'GISELP@HOTMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(148, '1048872697', 'ti', '2009-11-26', 1, 20, 410, 'Jose Alejandro', 'Cabas', 'Lopez', 'm', '2009-11-26', 1, 20, 410, 'b-', 'Ambuq', 'Ninguna', '322444564', 'JOSEALEJO@GMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(149, '1063489277', 'ti', '2009-11-06', 1, 20, 410, 'Jose David', 'Cavas', 'Zambrano', 'm', '2009-11-06', 1, 20, 410, 'o+', 'Salud Total', 'Ninguna', '3152898980', 'JOSEDAVID@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(150, '163488382', 'rc', '2006-11-19', 1, 20, 410, 'Yesica	Dayanis', 'Cuadro', 'Obregon', 'f', '2006-11-19', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '3115575675', 'YESICA@OUTLOOK.COM', 'Sempegua', 'La  Plaza', 1, 20, 410, '1'),
+(151, '1063487456', 'ti', '2008-05-26', 1, 20, 410, 'Cristian David', 'Fernandez', 'Toloza', 'm', '2008-05-26', 1, 20, 410, 'a-', 'Ambuq', 'Ninguna', '316786876', 'CRISTIAND@GMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(152, '1063487031', 'ti', '2007-12-19', 1, 20, 410, 'Santiago', 'Gomez', 'Rangel', 'm', '2007-12-19', 1, 20, 410, 'o-', 'Emdisalud', 'Ninguna', '31245656', 'SANTIGR@GMAIL.COM', 'Sempegua', 'La Roca', 1, 20, 410, '1'),
+(153, '1082591261', 'ti', '2007-09-12', 1, 20, 410, 'Luis Adulfo', 'Gonzalez', 'Hernandez', 'm', '2007-09-12', 1, 20, 410, 'b+', 'Ambuq', 'Ninguna', '3142332432', 'LUISADU@GMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(154, '1063488492', 'ti', '2009-02-22', 1, 20, 410, 'Yanelis Jhoana', 'Hernandez', 'Contreras', 'f', '2009-02-22', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '3122434454', 'YNELIS@GMAIL.COM', 'Sempegua', 'Barrio Arriba', 1, 20, 410, '1'),
+(155, '1085099464', 'ti', '2010-01-03', 1, 20, 410, 'Pablo', 'Hernandez', 'Pinto', 'm', '2010-01-03', 1, 20, 410, 'o-', 'Salud Total', 'Ninguna', '324535645', 'PABLO@HOTMAIL.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(156, '1085050190', 'ti', '2008-03-07', 1, 20, 410, 'Victoria', 'Hernandez', 'Pinto', 'f', '2008-03-07', 1, 20, 410, 'a-', 'Saludvida', 'Ninguna', '31245654', 'VICTORIA@OUTLOOK.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(157, '1063489650', 'ti', '2008-11-23', 1, 20, 410, 'Valentina', 'Infante', 'Ruiz', 'f', '2008-11-23', 1, 20, 410, 'b-', 'Ambuq', 'Ninguna', '3123543554', 'VALENTINAA@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(158, '1063488527', 'ti', '2007-02-17', 1, 20, 410, 'Alexander', 'Leon', 'Martinez', 'm', '2007-02-17', 1, 20, 410, 'b+', 'Barrios Unidos', 'Ninguna', '312435453', 'ALEX@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(159, '1141322108', 'rc', '2008-09-11', 1, 20, 410, 'Eneys Patricia', 'Mendez', 'Nobles', 'f', '2008-09-11', 1, 20, 410, 'o+', 'Barrios Unidos', 'Ninguna', '31665756', 'ENEYSPAT@GMAIL.COM', 'Sempegua', 'Las Palmas', 1, 20, 410, '1'),
+(160, '1063485761', 'rc', '2006-08-19', 1, 20, 410, 'Omar David', 'Miranda', 'Alvarez', 'm', '2006-08-19', 1, 20, 410, 'a-', 'Ambuq', 'Ninguna', '3238978947', 'OMARDVD@GMAIL.COM', 'Sempegua', 'El Campo', 1, 20, 410, '1'),
+(161, '1063488431', 'ti', '2008-12-29', 1, 20, 410, 'Ilme Jose', 'Nobles', 'Caballero', 'm', '2008-12-29', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '3132454545', 'ILME@HOTMAIL.COM', 'Sempegua', 'La Roca', 1, 20, 410, '1'),
+(162, '1063489111', 'ti', '2009-10-20', 1, 20, 410, 'Jheynis Patricia', 'Nobles', 'Mendez', 'f', '2009-10-20', 1, 20, 410, 'o+', 'Salud Total', 'Ninguna', '323434543', 'JHEYNIS@GMAIL.COM', 'Sempegua', 'La Esquina', 1, 20, 410, '1'),
+(163, '1063485965', 'ti', '2007-04-19', 1, 20, 410, 'Andres Vicente', 'Nobles', 'Palomino', 'm', '2007-04-19', 1, 20, 410, 'b-', 'Cajacopi', 'Ninguna', '312445656', 'CHENTE@HOTMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(164, '1063492342', 'ti', '2009-06-03', 1, 20, 410, 'Dileydis Nicolle', 'Obregon', 'Cadena', 'f', '2009-06-03', 1, 20, 410, 'a+', 'Emdisalud', 'Ninguna', '3124565676', 'DILEDYS@GMAL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(165, '1030604392', 'ti', '2009-12-30', 1, 20, 410, 'Matias', 'Otalora', 'Luna', 'm', '2009-12-30', 1, 20, 410, 'b+', 'Saludvida', 'Ninguna', '3254545657', 'MATIAS@HOTMAIL.COM', 'Sempegua', 'Barrio Arriba', 1, 20, 410, '1'),
+(166, '1063488432', 'ti', '2009-02-05', 1, 20, 410, 'Luis Fabian', 'Pacheco', 'Obregon', 'm', '2009-02-05', 1, 20, 410, 'o+', 'Ambuq', 'Ninguna', '10768343', 'LUISFAB@OUTLOOK.COM', 'Sempegua', 'Las Palmas', 1, 20, 410, '1'),
+(167, '1063488627', 'ti', '2007-12-21', 1, 20, 410, 'Valentina', 'Pastrana', 'Rocha', 'f', '2007-12-21', 1, 20, 410, 'o-', 'Cajacopi', 'Ninguna', '3124455546', 'VALENTINAPR@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(168, '1063487869', 'ti', '2008-01-07', 1, 20, 410, 'Juan Luis', 'Ramirez', 'Pacheco', 'm', '2008-01-07', 1, 20, 410, 'b+', 'Cafesalud', 'Ninguna', '3214545645', 'JUANLUIS@HOTMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(169, '1063486739', 'ti', '2007-06-29', 1, 20, 410, 'Jorge Luis', 'Reales', 'Hernandez', 'm', '2007-06-29', 1, 20, 410, 'o+', 'Coomeva', 'Ninguna', '32146521', 'JORLUIS@OUTLOOK.COM', 'Sempegua', 'El Campo', 1, 20, 410, '1'),
+(170, '1127614212', 'ti', '2009-11-02', 1, 20, 410, 'Ana Sofia', 'Reyna', 'Contreras', 'f', '2009-11-02', 1, 20, 410, 'o+', 'Cafesalud', 'Ninguna', '3253534534', 'ANASOFI@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(171, '1063480236', 'ti', '2004-01-15', 1, 20, 410, 'Robinson', 'Rico', 'Martinez', 'm', '2004-01-15', 1, 20, 410, 'a-', 'Emdisalud', 'Ninguna', '312343543', 'ROBIN@GMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(172, '1063489209', 'ti', '2009-08-01', 1, 20, 410, 'Mateo', 'Rocha', 'Martinez', 'm', '2009-08-01', 1, 20, 410, 'o+', 'Salud Total', 'Ninguna', '31234453', 'mateo@gmail.com', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(173, '1063489741', 'rc', '2008-08-13', 1, 20, 410, 'Sergio David', 'Toloza', 'Jimenez', 'm', '2008-08-13', 1, 20, 410, 'a+', 'Cafesalud', 'Ninguna', '314435434', 'SERGIO@GMAIL.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(174, '1063488320', 'ti', '2008-11-24', 1, 20, 404, 'Neifer Jose', 'Toloza', 'Luqueta', 'm', '2008-11-24', 1, 20, 410, 'o+', 'Asmet Salud', 'Ninguna', '3214654765', 'NEIFERJ@OUTLOOK.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(175, '1063485369', 'ti', '2006-12-23', 1, 20, 410, 'Keiner Jose', 'Toloza', 'Mieles', 'm', '2006-12-23', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '3124543543', 'KEINERJ@HOTMAIL.COM', 'Sempegua', 'La Esquina', 1, 20, 410, '1'),
+(176, '1063489990', 'ti', '2010-01-22', 1, 20, 410, 'Julio Alberto', 'Toloza', 'Mieles', 'm', '2010-01-22', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '323544353', 'JULIOALB@GMAIL.COM', 'Sempegua', 'La Esquina', 1, 20, 410, '1'),
+(177, '37895770', 'ti', '2006-09-21', 1, 20, 410, 'Lenis Alberto', 'Waltero', 'Pacheco', 'm', '2006-09-21', 1, 20, 410, 'o+', 'Amet Salud', 'Ninguna', '31590324', 'lenis@gmail.com', 'Sempegua', 'La Roca', 1, 20, 410, '1');
 
 -- --------------------------------------------------------
 
@@ -5699,7 +5962,9 @@ CREATE TABLE `tipos_causales` (
 
 INSERT INTO `tipos_causales` (`id_tipo_causal`, `tipo_causal`) VALUES
 (1, 'Orden Academico'),
-(2, 'Orden Disciplinario');
+(2, 'Orden Disciplinario'),
+(3, 'De Orden Moral'),
+(4, 'De Orden Social.');
 
 -- --------------------------------------------------------
 
@@ -5864,7 +6129,41 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 (140, 140, 2, 'vatoloza140', '8cb0ffa0ec67213db3addde05d37ad19f4fa8735', '0', NULL),
 (141, 141, 2, 'kavillar 141', 'c829ae676f28f6bb7634b40ff31d5c0575ee25de', '0', NULL),
 (142, 142, 2, 'ilortega142', '2ca27f9b8cd6c81abf9e755ee0c3a8019a3acdb7', '0', NULL),
-(143, 143, 2, 'sapabon143', '817bed8983706dd6a44aaabe12551894928f48c0', '0', NULL);
+(143, 143, 2, 'sapabon143', '817bed8983706dd6a44aaabe12551894928f48c0', '0', NULL),
+(144, 144, 2, 'vaacuna144', '643cf7d15f5071d5655bbb57aeb055ea7a55ec6f', '0', NULL),
+(145, 145, 2, 'araragon145', '7e8915e4af35356f80e931903956b9fa64581b97', '0', NULL),
+(146, 146, 2, 'caberrueco146', '2cbad3b3ea1e8d9ddf09039eeca90810c7d07e50', '0', NULL),
+(147, 147, 2, 'giberrueco147', '13ee3677a4f5d6db0526e9643129f4e2d7477f0d', '0', NULL),
+(148, 148, 2, 'jocabas148', 'bf2b5c70f024689947d11bb87fea6d1249452322', '0', NULL),
+(149, 149, 2, 'jocavas149', '8a76fb61eeff062d09e2c54b7bb5bf54b5ce1f28', '0', NULL),
+(150, 150, 2, 'yecuadro150', '64aa84e7c4e9e0854907e3a70f03ac3437f5edf8', '0', NULL),
+(151, 151, 2, 'crfernandez151', 'ee083ae43475f1fa48220d71fd3af809e0d0bd55', '0', NULL),
+(152, 152, 2, 'sagomez 152', '93e08b7ac1a7ad6920b98b16f9dad2d742a7047c', '0', NULL),
+(153, 153, 2, 'lugonzalez153', '6d6791353dc5ab07e23dbe090d9cfefd9438d4f8', '0', NULL),
+(154, 154, 2, 'yahernandez154', '9de99ee47e16d926421ac8d3777543a4255f7f86', '0', NULL),
+(155, 155, 2, 'pahernandez155', '0e1a276552d4b4d6c9cdd222c51697b60cceb356', '0', NULL),
+(156, 156, 2, 'vihernandez 156', '4e912fae41f7c62a188567e2caf10c0f5cea8e70', '0', NULL),
+(157, 157, 2, 'vainfante157', 'f1cb740fb8f220a2e8dbd4106d0b99f5947c2ab7', '0', NULL),
+(158, 158, 2, 'alleon158', 'c33af22f739f2d14aaa31a8b0a015ead23c49116', '0', NULL),
+(159, 159, 2, 'enmendez159', '4aeba2bffa4729d31411115803f2221a700420f2', '0', NULL),
+(160, 160, 2, 'ommiranda160', '64f03deed3cb583d91003e7ea994758c0f651a69', '0', NULL),
+(161, 161, 2, 'ilnobles161', 'cb58836196d1a3c6fd6d2c5b80427a81c1fa0a2d', '0', NULL),
+(162, 162, 2, 'jhnobles162', '323e448fcb1f4e2564affcb113302881f00551d0', '0', NULL),
+(163, 163, 2, 'annobles163', '98f536e6e3db6570dad8e46bee11afdc4bb66cc4', '0', NULL),
+(164, 164, 2, 'diobregon164', 'd013138bdfb8899bcf102f32da4f0fb1f5c58245', '0', NULL),
+(165, 165, 2, 'maotalora165', '1bb432b739b726769975b7535fd042e62e030001', '0', NULL),
+(166, 166, 2, 'lupacheco166', 'fc4f7f90d04a999489387720ca868412152a0ac5', '0', NULL),
+(167, 167, 2, 'vapastrana167', '53ba2eb50c6f1610bba45f20709f15bc4afb5ea0', '0', NULL),
+(168, 168, 2, 'juramirez168', '77a4e22c0f902c1c0948e5e9ab714c89da84f603', '0', NULL),
+(169, 169, 2, 'joreales169', '45a8a4e1e4154a57fb685c69a0538fb5ddb57456', '0', NULL),
+(170, 170, 2, 'anreyna170', 'bf99b767b53845ce29da1069a617c087ecaf83a5', '0', NULL),
+(171, 171, 2, 'rorico171', '62e3dcdf94228fb2c0b06bef26d21604ea96d755', '0', NULL),
+(172, 172, 2, 'marocha172', '03635cd2090d529fcff19d67171c64b276c016ae', '0', NULL),
+(173, 173, 2, 'setoloza173', '30e02d3b326a2b208b20c4d6c1133e52bdd4796c', '0', NULL),
+(174, 174, 2, 'netoloza174', 'f1aa8c3152ee5eb5a01d493769200e4daa780d3b', '0', NULL),
+(175, 175, 2, 'ketoloza175', '9ddf4c75115fb4be7dd869bde0f68237d33f55d8', '0', NULL),
+(176, 176, 2, 'jutoloza176', '39c384ea0e511f8e7595eb4b00f48483a9943488', '0', NULL),
+(177, 177, 2, 'lewaltero177', '4681f9735f5034b02bc86ba48c9c58476f7eb09f', '0', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -5984,6 +6283,12 @@ ALTER TABLE `departamentos`
 --
 ALTER TABLE `desempenos`
   ADD PRIMARY KEY (`id_desempeno`);
+
+--
+-- Indices de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  ADD PRIMARY KEY (`id_documento`);
 
 --
 -- Indices de la tabla `elecciones`
@@ -6212,265 +6517,226 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `acciones_pedagogicas`
   MODIFY `id_accion_pedagogica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `acudientes`
 --
 ALTER TABLE `acudientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT de la tabla `anos_lectivos`
 --
 ALTER TABLE `anos_lectivos`
   MODIFY `id_ano_lectivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --
 ALTER TABLE `areas`
   MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
 --
 -- AUTO_INCREMENT de la tabla `asignaturas`
 --
 ALTER TABLE `asignaturas`
   MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
 --
 -- AUTO_INCREMENT de la tabla `candidatos_eleccion`
 --
 ALTER TABLE `candidatos_eleccion`
   MODIFY `id_candidato_eleccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `cargas_academicas`
 --
 ALTER TABLE `cargas_academicas`
   MODIFY `id_carga_academica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `causales`
 --
 ALTER TABLE `causales`
   MODIFY `id_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `cronogramas`
 --
 ALTER TABLE `cronogramas`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `datos_institucion`
 --
 ALTER TABLE `datos_institucion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
   MODIFY `id_departamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=293;
-
 --
 -- AUTO_INCREMENT de la tabla `desempenos`
 --
 ALTER TABLE `desempenos`
   MODIFY `id_desempeno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+--
+-- AUTO_INCREMENT de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
 ALTER TABLE `elecciones`
   MODIFY `id_eleccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `estudiantes_acudientes`
 --
 ALTER TABLE `estudiantes_acudientes`
   MODIFY `idestudiantes_acudientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
-
 --
 -- AUTO_INCREMENT de la tabla `estudiantes_padres`
 --
 ALTER TABLE `estudiantes_padres`
-  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
-
+  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 --
 -- AUTO_INCREMENT de la tabla `grados`
 --
 ALTER TABLE `grados`
   MODIFY `id_grado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT de la tabla `grados_educacion`
 --
 ALTER TABLE `grados_educacion`
   MODIFY `id_grado_educacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
   MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `historial_estados`
 --
 ALTER TABLE `historial_estados`
-  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
-
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 --
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
   MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
-
 --
 -- AUTO_INCREMENT de la tabla `listado_votantes`
 --
 ALTER TABLE `listado_votantes`
   MODIFY `id_listado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
 --
 -- AUTO_INCREMENT de la tabla `logros`
 --
 ALTER TABLE `logros`
   MODIFY `id_logro` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `logros_asignados`
 --
 ALTER TABLE `logros_asignados`
   MODIFY `id_logro_asignacion` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `madres`
 --
 ALTER TABLE `madres`
-  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
-
+  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 --
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
   MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
-
 --
 -- AUTO_INCREMENT de la tabla `municipios`
 --
 ALTER TABLE `municipios`
   MODIFY `id_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1314;
-
 --
 -- AUTO_INCREMENT de la tabla `nivelaciones`
 --
 ALTER TABLE `nivelaciones`
   MODIFY `id_nivelacion` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `niveles_educacion`
 --
 ALTER TABLE `niveles_educacion`
   MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1327;
-
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1368;
 --
 -- AUTO_INCREMENT de la tabla `notas_actividades`
 --
 ALTER TABLE `notas_actividades`
   MODIFY `id_planilla` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
 --
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
   MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
-
 --
 -- AUTO_INCREMENT de la tabla `padres`
 --
 ALTER TABLE `padres`
-  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
-
+  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
   MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `paises`
 --
 ALTER TABLE `paises`
   MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
-
 --
 -- AUTO_INCREMENT de la tabla `pensum`
 --
 ALTER TABLE `pensum`
-  MODIFY `id_pensum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
-
+  MODIFY `id_pensum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
-
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 --
 -- AUTO_INCREMENT de la tabla `retiros`
 --
 ALTER TABLE `retiros`
   MODIFY `id_retiro` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT de la tabla `salones`
 --
 ALTER TABLE `salones`
   MODIFY `id_salon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT de la tabla `seguimientos_disciplinarios`
 --
 ALTER TABLE `seguimientos_disciplinarios`
   MODIFY `id_seguimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT de la tabla `tipos_causales`
 --
 ALTER TABLE `tipos_causales`
-  MODIFY `id_tipo_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id_tipo_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
-
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 --
 -- Restricciones para tablas volcadas
 --
@@ -6596,7 +6862,6 @@ ALTER TABLE `seguimientos_disciplinarios`
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `fk_usuarios_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_usuarios_roles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
