@@ -234,4 +234,114 @@ class Inbox_controller extends CI_Controller {
     }
 
 
+    //Funciones para mostrar los mensajes, eventos, y tareas programadas por un profesor
+
+
+    public function consultar()
+    {
+
+        if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+        {
+            redirect(base_url().'login_controller');
+        }
+        $this->template->load('roles/rol_profesor_vista', 'inbox/inboxconsultar_vista');
+    }
+
+
+    public function mostrarmensajes(){
+
+        $id =$this->input->post('id_buscar');
+        $id_profesor = $this->input->post('id_persona'); 
+        $numero_pagina =$this->input->post('numero_pagina'); 
+        $cantidad =$this->input->post('cantidad'); 
+        $inicio = ($numero_pagina -1)*$cantidad;
+        
+        $data = array(
+
+            'mensajes' => $this->inbox_model->buscar_mensaje($id,$id_profesor,$inicio,$cantidad),
+
+            'totalregistros' => count($this->inbox_model->buscar_mensaje($id,$id_profesor)),
+
+            'cantidad' => $cantidad
+
+
+        );
+        echo json_encode($data);
+
+
+    }
+
+
+    public function mostrartareas(){
+
+        $id =$this->input->post('id_buscar');
+        $id_profesor = $this->input->post('id_persona'); 
+        $numero_pagina =$this->input->post('numero_pagina'); 
+        $cantidad =$this->input->post('cantidad'); 
+        $inicio = ($numero_pagina -1)*$cantidad;
+        
+        $data = array(
+
+            'tareas' => $this->inbox_model->buscar_tarea($id,$id_profesor,$inicio,$cantidad),
+
+            'totalregistros' => count($this->inbox_model->buscar_tarea($id,$id_profesor)),
+
+            'cantidad' => $cantidad
+
+
+        );
+        echo json_encode($data);
+
+
+    }
+
+
+    public function mostrareventos(){
+
+        $id =$this->input->post('id_buscar');
+        $id_profesor = $this->input->post('id_persona'); 
+        $numero_pagina =$this->input->post('numero_pagina'); 
+        $cantidad =$this->input->post('cantidad'); 
+        $inicio = ($numero_pagina -1)*$cantidad;
+        
+        $data = array(
+
+            'eventos' => $this->inbox_model->buscar_evento($id,$id_profesor,$inicio,$cantidad),
+
+            'totalregistros' => count($this->inbox_model->buscar_evento($id,$id_profesor)),
+
+            'cantidad' => $cantidad
+
+
+        );
+        echo json_encode($data);
+
+
+    }
+
+
+    public function mostrardestinatarios(){
+
+        $id =$this->input->post('id_buscar');
+        $codigo_notificacion = $this->input->post('codigo_notificacion'); 
+        $numero_pagina =$this->input->post('numero_pagina'); 
+        $cantidad =$this->input->post('cantidad'); 
+        $inicio = ($numero_pagina -1)*$cantidad;
+        
+        $data = array(
+
+            'destinatarios' => $this->inbox_model->buscar_destinatario($id,$codigo_notificacion,$inicio,$cantidad),
+
+            'totalregistros' => count($this->inbox_model->buscar_destinatario($id,$codigo_notificacion)),
+
+            'cantidad' => $cantidad
+
+
+        );
+        echo json_encode($data);
+
+
+    }
+
+
 }

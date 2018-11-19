@@ -308,11 +308,18 @@
           </a>
         </li>
 
-        <li>
-          <a href="<?php echo base_url(); ?>inbox_controller/index">
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-send"></i>
             <span>Inbox</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>inbox_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
+            <li><a href="<?php echo base_url(); ?>inbox_controller/consultar"><i class="fa fa-list-alt"></i>Consultar</a></li>
+          </ul>
         </li>
 
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>

@@ -335,4 +335,108 @@ class Inbox_model extends CI_Model {
 	}
 
 
+
+	//Funciones para mostrar los mensajes, eventos, y tareas programadas por un profesor
+
+
+	public function buscar_mensaje($id,$id_profesor,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->where('notificaciones.remitente',$id_profesor);
+		$this->db->where('notificaciones.categoria_notificacion',"Mensajes");
+		
+		$this->db->where("(notificaciones.titulo LIKE '".$id."%' OR notificaciones.tipo_notificacion LIKE '".$id."%' OR notificaciones.contenido LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('notificaciones.fecha_envio', 'desc');
+		$this->db->group_by("notificaciones.codigo_notificacion"); 
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('asignaturas', 'notificaciones.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('notificaciones.id_notificacion,notificaciones.codigo_notificacion,notificaciones.categoria_notificacion,notificaciones.remitente,notificaciones.titulo,notificaciones.tipo_notificacion,notificaciones.contenido,notificaciones.id_asignatura,notificaciones.fecha_envio,asignaturas.nombre_asignatura');
+		
+		$query = $this->db->get('notificaciones');
+
+		return $query->result();
+	
+	}
+
+
+	public function buscar_tarea($id,$id_profesor,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->where('notificaciones.remitente',$id_profesor);
+		$this->db->where('notificaciones.categoria_notificacion',"Tareas");
+		
+		$this->db->where("(notificaciones.titulo LIKE '".$id."%' OR notificaciones.contenido LIKE '".$id."%' OR notificaciones.fecha_fin LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('notificaciones.fecha_envio', 'desc');
+		$this->db->group_by("notificaciones.codigo_notificacion");
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('asignaturas', 'notificaciones.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('notificaciones.id_notificacion,notificaciones.codigo_notificacion,notificaciones.categoria_notificacion,notificaciones.remitente,notificaciones.titulo,notificaciones.contenido,notificaciones.id_asignatura,notificaciones.fecha_fin,notificaciones.fecha_envio,asignaturas.nombre_asignatura');
+		
+		$query = $this->db->get('notificaciones');
+
+		return $query->result();
+	
+	}
+
+
+	public function buscar_evento($id,$id_profesor,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->where('notificaciones.remitente',$id_profesor);
+		$this->db->where('notificaciones.categoria_notificacion',"Eventos");
+		
+		$this->db->where("(notificaciones.titulo LIKE '".$id."%' OR notificaciones.contenido LIKE '".$id."%' OR notificaciones.fecha_inicio LIKE '".$id."%' OR notificaciones.hora_inicio LIKE '".$id."%' OR notificaciones.fecha_fin LIKE '".$id."%' OR notificaciones.hora_fin LIKE '".$id."%' OR notificaciones.fecha_envio LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('notificaciones.fecha_envio', 'desc');
+		$this->db->group_by("notificaciones.codigo_notificacion");
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('asignaturas', 'notificaciones.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('notificaciones.id_notificacion,notificaciones.codigo_notificacion,notificaciones.categoria_notificacion,notificaciones.remitente,notificaciones.titulo,notificaciones.contenido,notificaciones.id_asignatura,notificaciones.fecha_inicio,notificaciones.hora_inicio,notificaciones.fecha_fin,notificaciones.hora_fin,notificaciones.fecha_envio,asignaturas.nombre_asignatura');
+		
+		$query = $this->db->get('notificaciones');
+
+		return $query->result();
+	
+	}
+
+
+	public function buscar_destinatario($id,$codigo_notificacion,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->where('notificaciones.codigo_notificacion',$codigo_notificacion);
+		
+		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			//$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('personas', 'notificaciones.id_estudiante = personas.id_persona');
+
+		$this->db->select('notificaciones.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		
+		$query = $this->db->get('notificaciones');
+
+		return $query->result();
+	
+	}
+
+
 }
