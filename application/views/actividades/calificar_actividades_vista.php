@@ -203,7 +203,7 @@
 		    			<div class="panel-heading"><i class='fa fa-list'></i>&nbsp;Ingresar Notas</div>
 		    				<div class="panel-body">
 
-		    					<div class="form-group">
+		    					<!--<div class="form-group">
 								  <label for="cantidad_nota_actividad">Mostrar Por:</label>
 								  <select class="selectpicker" id="cantidad_nota_actividad" name="cantidad_nota" >
 								    <option value="5">5</option>
@@ -211,7 +211,7 @@
 				  					<option value="15">15</option>
 				  					<option value="20">20</option>
 								  </select>
-								</div>
+								</div>-->
 
 								<div class="table-responsive">
 								<table border='1' id="lista_notas_actividad" class="table table-bordered table-condensed table-hover table-striped">
@@ -235,9 +235,9 @@
 								</table>
 								</div>
 
-								<div class="text-center paginacion_nota_actividad">
+								<!--<div class="text-center paginacion_nota_actividad">
 								
-								</div>
+								</div>-->
 
 		    				</div>
 

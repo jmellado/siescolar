@@ -47,9 +47,9 @@ class Notas_model extends CI_Model {
 		$this->db->where('matriculas.estado_matricula',"Activo");
 		
 
-		if ($inicio !== FALSE && $cantidad !== FALSE && $id_curso !== FALSE && $id_asignatura != FALSE) {
+		/*if ($inicio !== FALSE && $cantidad !== FALSE && $id_curso !== FALSE && $id_asignatura != FALSE) {
 			$this->db->limit($cantidad,$inicio);
-		}
+		}*/
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');

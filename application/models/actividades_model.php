@@ -248,9 +248,9 @@ class Actividades_model extends CI_Model {
 		$this->db->order_by('personas.apellido2', 'asc');
 		$this->db->order_by('personas.nombres', 'asc');
 
-		if ($inicio !== FALSE && $cantidad !== FALSE) {
+		/*if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
-		}
+		}*/
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
