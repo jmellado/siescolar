@@ -373,6 +373,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>fotografias_controller/estudiantes"><i class="fa fa-users"></i>Estudiantes</a></li>
             <li><a href="<?php echo base_url(); ?>fotografias_controller/profesores"><i class="fa fa-users"></i>Profesores</a></li>
+            <li><a href="<?php echo base_url(); ?>fotografias_controller/acudientes"><i class="fa fa-users"></i>Acudientes</a></li>
           </ul>
         </li>
 
