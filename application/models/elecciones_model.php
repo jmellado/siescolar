@@ -808,4 +808,43 @@ class Elecciones_model extends CI_Model {
 	}
 
 
+	//***************** FUNCIONES PARA LA ABSTENCION DE LAS ELECCIONES ***************
+
+
+	public function buscar_abstencion($id_eleccion){
+
+		$this->db->where('listado_votantes.id_eleccion',$id_eleccion);
+		$this->db->where('listado_votantes.estado_votante',"no");
+
+		$this->db->order_by('elecciones.id_eleccion', 'asc');
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('elecciones', 'listado_votantes.id_eleccion = elecciones.id_eleccion');
+		$this->db->join('cursos', 'listado_votantes.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('personas', 'listado_votantes.id_estudiante = personas.id_persona');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('listado_votantes.id_eleccion,elecciones.nombre_eleccion,elecciones.descripcion,listado_votantes.id_curso,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+		
+		$query = $this->db->get('listado_votantes');
+
+		return $query->result();
+		
+	}
+
+
+	public function llenar_eleccionesAB($ano_lectivo){
+
+		$this->db->where('elecciones.ano_lectivo',$ano_lectivo);
+
+		$query = $this->db->get('elecciones');
+		return $query->result();
+	}
 }

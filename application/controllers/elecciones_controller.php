@@ -1050,6 +1050,42 @@ class Elecciones_controller extends CI_Controller {
     }
 
 
+    //***************** FUNCIONES PARA LA ABSTENCION DE LAS ELECCIONES ***************
+
+
+    public function abstencion()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'elecciones/abstencion_vista');
+	}
+
+
+	public function mostrarabstencion(){
+
+		$id_eleccion = $this->input->post('id_eleccion'); 
+		
+		$data = array(
+
+			'elecciones' => $this->elecciones_model->buscar_abstencion($id_eleccion)
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function llenarcombo_eleccionesAB(){
+
+		$ano_lectivo = $this->input->post('ano_lectivo');
+
+    	$consulta = $this->elecciones_model->llenar_eleccionesAB($ano_lectivo);
+    	echo json_encode($consulta);
+    }
 
 
 }
