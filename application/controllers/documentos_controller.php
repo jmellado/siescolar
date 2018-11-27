@@ -235,4 +235,19 @@ class Documentos_controller extends CI_Controller {
     }
 
 
+    //=========== Consultar los documentos desde el rol Profesor ============
+
+
+    public function documentosP()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_profesor_vista', 'documentos/documentosP_vista');
+	}
+
+
 }
