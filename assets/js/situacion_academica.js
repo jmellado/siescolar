@@ -27,6 +27,9 @@ function inicio(){
 
     $("#jornadaSA").change(function(){
     	ocultardiv_situacionacademica();
+
+    	jornada = $("#jornadaSA").val();
+    	llenarcombo_cursosSA(jornada);
     });
 
     $("#id_cursoSA").change(function(){
