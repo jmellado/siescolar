@@ -579,9 +579,10 @@ class Matriculas_model extends CI_Model {
 
 
 	//Esta funcion me permite obtener todos los estudiantes matriculados en un respectivo año lectivo
-	public function buscar_estudiantes_matriculados($ano_lectivo){
+	public function buscar_estudiantes_matriculados($ano_lectivo,$id_curso){
 
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_curso',$id_curso);
 
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
@@ -652,12 +653,12 @@ class Matriculas_model extends CI_Model {
 
 
 	// Esta funcion me permite actualizar el estado o situacion_academica de la matricula en la tabla matriculas.
-	public function modificar_estado_matricula(){
+	public function modificar_estado_matricula($jornada,$id_curso){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-		$estudiantes = $this->matriculas_model->buscar_estudiantes_matriculados($ano_lectivo);
+		$estudiantes = $this->matriculas_model->buscar_estudiantes_matriculados($ano_lectivo,$id_curso);
 
 		//NUEVA TRANSACCION
 		$this->db->trans_start();
@@ -751,6 +752,29 @@ class Matriculas_model extends CI_Model {
 			return 0;
 		}
 
+	}
+
+
+	//llenar el combo con todos los cursos de una respectiva jornada
+	public function llenar_cursosCM($jornada){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
 	}
 
 

@@ -445,6 +445,9 @@ class Matriculas_controller extends CI_Controller {
 
 	public function consolidar(){
 
+		$jornada = $this->input->post('jornada'); 
+		$id_curso = $this->input->post('id_curso');
+
 		$PeriodosRegistrados = $this->matriculas_model->PeriodosRegistrados();
 		$PeriodosActivos = $this->matriculas_model->PeriodosActivos();
 		$PeriodosCerrados = $this->matriculas_model->PeriodosCerrados();
@@ -457,7 +460,7 @@ class Matriculas_controller extends CI_Controller {
 
 					if ($PeriodosCerrados == 4) {
 
-						$respuesta = $this->matriculas_model->modificar_estado_matricula();
+						$respuesta = $this->matriculas_model->modificar_estado_matricula($jornada,$id_curso);
 
 						if($respuesta==true){
 			              
@@ -488,6 +491,15 @@ class Matriculas_controller extends CI_Controller {
 			echo "nohayperiodos";
 		}
 	}
+
+
+	public function llenarcombo_cursosCM(){
+
+    	$jornada = $this->input->post('jornada');
+
+    	$consulta = $this->matriculas_model->llenar_cursosCM($jornada);
+    	echo json_encode($consulta);
+    }
 
 
 
