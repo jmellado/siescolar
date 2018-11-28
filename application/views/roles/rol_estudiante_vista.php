@@ -252,7 +252,7 @@
             <span>Mis Calificaciones</span>
           </a>
         </li>
-      	<li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+      	<li><a href="<?php echo base_url(); ?>documentos_controller/documentosE"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -250,4 +250,19 @@ class Documentos_controller extends CI_Controller {
 	}
 
 
+	//=========== Consultar los documentos desde el rol Estudiante ============
+
+
+    public function documentosE()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'estudiante')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_estudiante_vista', 'documentos/documentosE_vista');
+	}
+
+
 }
