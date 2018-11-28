@@ -265,4 +265,19 @@ class Documentos_controller extends CI_Controller {
 	}
 
 
+	//=========== Consultar los documentos desde el rol Acudiente ============
+
+
+    public function documentosAC()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'acudiente')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_acudiente_vista', 'documentos/documentosAC_vista');
+	}
+
+
 }
