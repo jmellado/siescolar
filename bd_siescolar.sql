@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2018 a las 04:53:09
+-- Tiempo de generación: 16-12-2018 a las 18:40:26
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -204,6 +204,25 @@ INSERT INTO `asignaturas` (`id_asignatura`, `nombre_asignatura`, `id_area`, `ano
 (19, 'Comportamiento Escolar', 20, 1, 'Activo'),
 (20, 'Ciencias Naturales', 4, 1, 'Activo'),
 (21, 'Ciencias Sociales', 3, 1, 'Activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asistencias`
+--
+
+CREATE TABLE `asistencias` (
+  `id_asistencia` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_profesor` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `periodo` varchar(8) NOT NULL,
+  `fecha` date NOT NULL,
+  `asistencia` varchar(45) NOT NULL,
+  `fecha_registro` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -694,7 +713,7 @@ CREATE TABLE `documentos` (
 --
 
 INSERT INTO `documentos` (`id_documento`, `descripcion_documento`, `nombre_documento`, `fecha_subida`) VALUES
-(1, 'Proyecto Educativo Institucional Del Centro Educativo Nuestra Señora Del Carmen.', 'PROYECTO_EDUCATIVO_INSTITUCIONAL.docx', '2018-11-14');
+(1, 'Proyecto Educativo Institucional', 'PROYECTO_EDUCATIVO_INSTITUCIONAL.docx', '2018-10-16');
 
 -- --------------------------------------------------------
 
@@ -742,7 +761,7 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedencia`, `grado_cursado`, `anio`, `estado_estudiante`, `fecha_estado`) VALUES
-(6, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
+(6, 'Ninguna', 'Ninguna', 'Transición', '2017', 'Inscrito', '2018-10-24'),
 (7, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
 (8, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
 (9, 'Ninguna', 'Ninguna', 'Ninguno', '', 'Inscrito', '2018-10-24'),
@@ -895,7 +914,50 @@ INSERT INTO `estudiantes` (`id_persona`, `discapacidad`, `institucion_procedenci
 (174, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
 (175, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
 (176, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
-(177, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14');
+(177, 'Ninguna', '', 'Segundo', '2017', 'Inscrito', '2018-11-14'),
+(178, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(179, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(180, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(181, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(182, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(183, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(184, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(185, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(186, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(187, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(188, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(189, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(190, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(191, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(192, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-15'),
+(193, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-21'),
+(194, 'Ninguna', '', 'Primero', '2017', 'Inscrito', '2018-11-21'),
+(195, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(196, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(197, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(198, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(199, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(200, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(201, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(202, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(203, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(204, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(205, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(206, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(207, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(208, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(209, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(210, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(211, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(212, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(213, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(214, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(215, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(216, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(217, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(218, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(219, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29'),
+(220, 'Ninguna', '', 'Transición', '2017', 'Inscrito', '2018-11-29');
 
 -- --------------------------------------------------------
 
@@ -1161,7 +1223,50 @@ INSERT INTO `estudiantes_padres` (`idestudiantes_padres`, `id_estudiante`, `id_p
 (151, 174, 151, 151),
 (152, 175, 152, 152),
 (153, 176, 153, 153),
-(154, 177, 154, 154);
+(154, 177, 154, 154),
+(155, 178, 155, 155),
+(156, 179, 156, 156),
+(157, 180, 157, 157),
+(158, 181, 158, 158),
+(159, 182, 159, 159),
+(160, 183, 160, 160),
+(161, 184, 161, 161),
+(162, 185, 162, 162),
+(163, 186, 163, 163),
+(164, 187, 164, 164),
+(165, 188, 165, 165),
+(166, 189, 166, 166),
+(167, 190, 167, 167),
+(168, 191, 168, 168),
+(169, 192, 169, 169),
+(170, 193, 170, 170),
+(171, 194, 171, 171),
+(172, 195, 172, 172),
+(173, 196, 173, 173),
+(174, 197, 174, 174),
+(175, 198, 175, 175),
+(176, 199, 176, 176),
+(177, 200, 177, 177),
+(178, 201, 178, 178),
+(179, 202, 179, 179),
+(180, 203, 180, 180),
+(181, 204, 181, 181),
+(182, 205, 182, 182),
+(183, 206, 183, 183),
+(184, 207, 184, 184),
+(185, 208, 185, 185),
+(186, 209, 186, 186),
+(187, 210, 187, 187),
+(188, 211, 188, 188),
+(189, 212, 189, 189),
+(190, 213, 190, 190),
+(191, 214, 191, 191),
+(192, 215, 192, 192),
+(193, 216, 193, 193),
+(194, 217, 194, 194),
+(195, 218, 195, 195),
+(196, 219, 196, 196),
+(197, 220, 197, 197);
 
 --
 -- Disparadores `estudiantes_padres`
@@ -1503,7 +1608,50 @@ INSERT INTO `historial_estados` (`id_historial`, `id_persona`, `estado`, `observ
 (226, 174, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
 (227, 175, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
 (228, 176, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
-(229, 177, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1);
+(229, 177, 'Inscrito', 'Estudiante Inscrito.', '2018-11-14', 1),
+(230, 178, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(231, 179, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(232, 180, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(233, 181, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(234, 182, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(235, 183, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(236, 184, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(237, 185, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(238, 186, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(239, 187, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(240, 188, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(241, 189, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(242, 190, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(243, 191, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(244, 192, 'Inscrito', 'Estudiante Inscrito.', '2018-11-15', 1),
+(245, 193, 'Inscrito', 'Estudiante Inscrito.', '2018-11-21', 1),
+(246, 194, 'Inscrito', 'Estudiante Inscrito.', '2018-11-21', 1),
+(247, 195, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(248, 196, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(249, 197, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(250, 198, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(251, 199, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(252, 200, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(253, 201, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(254, 202, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(255, 203, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(256, 204, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(257, 205, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(258, 206, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(259, 207, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(260, 208, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(261, 209, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(262, 210, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(263, 211, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(264, 212, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(265, 213, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(266, 214, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(267, 215, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(268, 216, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(269, 217, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(270, 218, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(271, 219, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1),
+(272, 220, 'Inscrito', 'Estudiante Inscrito.', '2018-11-29', 1);
 
 -- --------------------------------------------------------
 
@@ -1920,7 +2068,50 @@ INSERT INTO `madres` (`id_madre`, `identificacion_m`, `nombres_m`, `apellido1_m`
 (151, '1054787437', 'Dayana', 'Luqueta', 'Mallorca', 'Madre', 'f', '325454566', 'Sempegua', 'A Plaza', 'Ama De Casa', '313453535', 'Sempegua'),
 (152, '1324656657', 'Mariana', 'Mieles', 'Ramirez', 'Madre', 'f', '2343543543', 'Sempegua', 'La Esquina', 'Ama De Casa', '124343', 'Sempegua'),
 (153, '1006563636', 'Miriam', 'Mieles', 'Ramirez', 'Madre', 'f', '312445435', 'Sempegua', 'La Esquina', 'Ama De Casa', '234335', 'Sempegua'),
-(154, '1066478584', 'Leonelda', 'Pacheco', 'Lopez', 'Madre', 'f', '323435534', 'Sempegua', 'La Roca', 'Ama De Casa', '3235435234', 'Sempegua');
+(154, '1066478584', 'Leonelda', 'Pacheco', 'Lopez', 'Madre', 'f', '323435534', 'Sempegua', 'La Roca', 'Ama De Casa', '3235435234', 'Sempegua'),
+(155, '100646743', 'Ana Maria', 'Mendez', 'Ruiz', 'Madre', 'f', '323435433', 'Sempegua', 'La Plaza', 'Ama De Casa', '312435345', 'Sempegua'),
+(156, '105063737', 'Sabrina', 'Toloza', 'Miranda', 'Madre', 'f', '3124546546', 'Sempegua', 'La Central', 'Ama De Casa', '3124353453', 'Sempegua'),
+(157, '109876342', 'Elena Judith', 'Reales', 'Yanez', 'Madre', 'f', '24323533', 'Sempeua', 'La Playa', 'Ama De Casa', '32424232', 'Sempegua'),
+(158, '19877353', 'Cecilia', 'Contreras', 'Diaz', 'Madre', 'f', '254654645', 'Sempegua', 'La Central', 'Ama De Casa', '3243640843', 'Sempegua'),
+(159, '187839795', 'Greys', 'Ramirez', 'Hernandez', 'Madre', 'f', '3254354', 'Sempegua', 'La Central', 'Ama De Casa', '325435464', 'Sempegua'),
+(160, '1007644643', 'Lorena', 'Contreras', 'Florez', 'Madre', 'f', '32435454', 'Sempegua', 'La Central', 'Ama De Casa', '234353453', 'Sempegua'),
+(161, '209876567', 'Patricia', 'Toloza', 'Mendez', 'Madre', 'f', '234454645', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '32543635', 'Sempegua'),
+(162, '109968534', 'Yadis Adriana', 'Martinez', 'Vasquez', 'Madre', 'f', '234354354', 'Sempegua', 'La Playa', 'Ama De Casa', '324325432', 'Sempegua'),
+(163, '1656634874', 'Centih', 'Martinez', 'Lopez', 'Madre', 'f', '322576575', 'Sempegua', 'La Esquina', 'Ama De Casa', '321435435', 'Sempegua'),
+(164, '1766457344', 'Yadira', 'Viloria', 'Mendez', 'Madre', 'f', '242366756', 'Sempegua', 'La Paz', 'Ama De Casa', '246574323', 'Sempegua'),
+(165, '2234547709', 'Fabiola', 'Nobles', 'Fernandez', 'Madre', 'f', '3146547654', 'Sempegua', 'Las Palmas', 'Ama De Casa', '1335435433', 'Sempegua'),
+(166, '897523342', 'Yulieth Maria', 'Cabas', 'Gonzales', 'Madre', 'f', '323543654', 'Sempegua', 'Divino NiÑo', 'Docente', '32544353', 'Sempegua'),
+(167, '23874365', 'Isabel Cristina', 'Martinez', 'Garrido', 'Madre', 'f', '323565656', 'Sempegua', 'La Paz', 'Ama De Casa', '33454654', 'Sempegua'),
+(168, '13567544', 'Ana Idalides', 'Cerpa', 'Mallorca', 'Madre', 'f', '335445636', 'Sempegua', 'La Paz', 'Ama De Casa', '24342342', 'Sempegua'),
+(169, '1897673478', 'Gil Maria', 'De La Cruz', 'Santos', 'Madre', 'f', '32565756', 'Sempegua', 'La Central', 'Ama De Casa', '234645645', 'Sempegua'),
+(170, '1006537632', 'Diana Luz', 'Martinez', 'Obregon', 'Madre', 'f', '31245433', 'Sempegua', 'Barrio Arriba', 'Ama De Casa', '33234353', 'Sempegua'),
+(171, '108646534', 'Renata Maria', 'Arroyo', 'Pertuz', 'Madre', 'f', '3251287565', 'Sempegua', 'La Plaza', 'Ama De Casa', '3124545645', 'Sempegua'),
+(172, '19087356', 'Dina Luz', 'Obregon', 'Perez', 'Madre', 'f', '316788003', 'Sempegua', 'La Central', 'Ama De Casa', '3124343543', 'Sempegua'),
+(173, '109829765', 'Sara Cristina', 'Martinez', 'Ramirez', 'Madre', 'f', '3124454664', 'Sempegua', 'La Plaza', 'Sempegua', '323432534', 'Sempegua'),
+(174, '10939649', 'Josefina', 'Nobles', 'Lopez', 'Madre', 'f', '23443646', 'Sempegua', 'La Paz', 'Ama De Casa', '31344534', 'Sempegua'),
+(175, '1009864785', 'Sandrith Maria', 'Toloza', 'Fernandez', 'Madre', 'f', '343253543', 'Sempegua', 'La Playa', 'Ama De Casa', '32346454', 'Sempegua'),
+(176, '1390784430', 'Abril Maria', 'Miranda', 'Torres', 'Madre', 'f', '315346450', 'Sempegua', 'Barrio Arriba', 'Ama De Casa', '313425546', 'Sempegua'),
+(177, '109475834', 'Yaniris', 'Cardenas', 'Perez', 'Madre', 'f', '323435436', 'Sempegua', 'El Campo', 'Ama De Casa', '31245436', 'Sempegua'),
+(178, '10987465', 'Yoledis', 'Florez', 'Chavez', 'Madre', 'f', '3124325436', 'Sempegua', 'La Paz', 'Ama De Casa', '312443643', 'Sempegua'),
+(179, '109734984', 'Yajaira Helena', 'Padilla', 'Rocha', 'Madre', 'f', '3342357063', 'Sempegu', 'La Playa', 'Ama De Casa', '312432535', 'Sempegua'),
+(180, '1374234329', 'Yajaira Helena', 'Padilla', 'Rocha', 'Madre', 'f', '312365765', 'Sempegua', 'La Playa', 'Ama De Casa', '32343543', 'Sempegua'),
+(181, '408879463', 'Helena Jhoana', 'Martinez', 'Toloza', 'Madre', 'f', '312343253', 'Sempegua', 'La Plaza', 'Ama De Casa', '3233543', 'Sempegua'),
+(182, '107436762', 'Helena Jhoana', 'Martinez', 'Toloza', 'Madre', 'f', '3152897643', 'Sempegua', 'La Plaza', 'Ama De Casa', '32132423', 'Sempegua'),
+(183, '1243465464', 'Vanessa', 'Munoz', 'Jimenez', 'Madre', 'f', '312354343', 'Sempegua', 'La Central', 'Ama De Casa', '312369007', 'Sempegua'),
+(184, '90878436', 'Selena Maria', 'Mayorga', 'De Hoyos', 'Madre', 'f', '32276108', 'Sempegua', 'La Roca', 'Ama De Casa', '312435345', 'Sempegua'),
+(185, '1087857689', 'Natalia', 'Hernandez', 'Mendez', 'Madre', 'f', '234345464', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '31243534', 'Sempegua'),
+(186, '1943957435', 'Tatiana', 'Luqueta', 'Mejia', 'Madre', 'f', '312546545', 'Sempegua', 'La Central', 'Ama De Casa', '312654765', 'Sempegua'),
+(187, '1093473245', 'Tatiana', 'Luqueta', 'Mejia', 'Madre', 'f', '3245654754', 'Sempegua', 'La Central', 'Ama De Casa', '312434534', 'Sempegua'),
+(188, '3284932432', 'Samanta', 'Martinez', 'Escobar', 'Madre', 'f', '312423534', 'Sempegua', 'Barrio Arriba', 'Ama De Casa', '3177867753', 'Sempegua'),
+(189, '19328749', 'Ana Maria', 'Quevedo', 'Nobles', 'Madre', 'f', '3115466575', 'Sempegua', 'La Plaza', 'Ama De Casa', '31234454', 'Sempegua'),
+(190, '1999874332', 'Sandra Milena', 'Velasquez', 'Torres', 'Madre', 'f', '31243534', 'Sempegua', 'La  Playa', 'Ama De Casa', '312445345', 'Sempegua'),
+(191, '197242346', 'Sandra Milena', 'Velasquez', 'Torres', 'Madre', 'f', '3169865445', 'Sempegua', 'La Playa', 'Ama De Casa', '31234575', 'Sempegua'),
+(192, '184732423', 'Patricia', 'Acosta', 'Martinez', 'Madre', 'f', '323546457', 'Sempegua', 'Las Palmas', 'Ama De Casa', '3126876453', 'Sempegua'),
+(193, '107634763', 'Marisol', 'Mendez', 'Rocha', 'Madre', 'f', '3257897665', 'Sempegua', 'Divino NiÑo', 'Ama De Casa', '3124325435', 'Sempegua'),
+(194, '2230957353', 'Sol', 'Rico', 'Marquez', 'Madre', 'f', '3146687698', 'Sempegua', 'El Campo', 'Ama De Casa', '3168765546', 'Sempegua'),
+(195, '8364523842', 'Norfalia', 'Arroyo', 'Jimenez', 'Madre', 'f', '32435436', 'Sempegua', 'La Paz', 'Ama De Casa', '3235756', 'Sempegua'),
+(196, '465687443', 'Isabela', 'Palomino', 'Gutierrez', 'Madre', 'f', '322689790', 'Sempegua', 'La Plaza', 'Ama De Casa', '32536544', 'Sempegua'),
+(197, '364327583', 'Leonelda', 'Pacheco', 'Lopez', 'Madre', 'f', '312346547', 'Sempegua', 'La Roca', 'Ama De Casa', '323546657', 'Sempegua');
 
 -- --------------------------------------------------------
 
@@ -5250,7 +5441,50 @@ INSERT INTO `padres` (`id_padre`, `identificacion_p`, `nombres_p`, `apellido1_p`
 (151, '1228087767', 'Mario', 'Toloza', 'Amaris', 'Padre', 'm', '325465654', 'Sempegua', 'La Plaza', 'Comerciante', '32343532', 'Sempegua'),
 (152, '1076455744', 'Libardo Jose', 'Toloza', 'Nobles', 'Padre', 'm', '243543543', 'Sempegua', 'La Esquina', 'Comerciante', '24324343', 'Sempegua'),
 (153, '1229473842', 'Yair', 'Toloza', 'Martinez', 'Padre', 'm', '315745444', 'Sempegua', 'La Esquina', 'Pescador', '3245445645', 'Sempegua'),
-(154, '1046786857', 'Alberto', 'Waltero', 'Perez', 'Padre', 'm', '312455667', 'Sempegua', 'La Roca', 'Ganadero', '312245435', 'Sempegua');
+(154, '1046786857', 'Alberto', 'Waltero', 'Perez', 'Padre', 'm', '312455667', 'Sempegua', 'La Roca', 'Ganadero', '312245435', 'Sempegua'),
+(155, '1057326667', 'Jose', 'Avila', 'Camacho', 'Padre', 'm', '3124354564', 'Sempegua', 'La Plaza', 'Agricultor', '321456567', 'Sempegua'),
+(156, '1088967678', 'Angel David', 'Barrios', 'Guzman', 'Padre', 'm', '315678876', 'Sempegua', 'La Central', 'Docente', '3235676567', 'Sempegua'),
+(157, '076373233', 'Julio', 'Cadena', 'Perez', 'Padre', 'm', '3157687087', 'Sempegua', 'La Playa', 'Pescador', '32546544', 'Sempegua'),
+(158, '1947345673', 'Armando Jose', 'Cardenas', 'Escobar', 'Padre', 'm', '3123465464', 'Sempegua', 'La Central', 'Pescador', '324345435', 'Sempegua'),
+(159, '1987856575', 'Santiago Jose', 'Diaz', 'Garcia', 'Padre', 'm', '32334546', 'Sempegua', 'La Central', 'Electricista', '325435433', 'Sempegua'),
+(160, '190626785', 'Libardo', 'Florez', 'Nobles', 'Padre', 'm', '323244789', 'Sempegua', 'La Central', 'Comerciante', '233543534', 'Sempegua'),
+(161, '108876354', 'Luis Jose', 'Infante', 'Martinez', 'Padre', 'm', '3256575657', 'Sempegua', 'Divino NiÑo', 'Electricista', '3255465507', 'Sempegua'),
+(162, '1836546433', 'Ramiro', 'Leon', 'Nunez', 'Padre', 'm', '332435345', 'Sempegua', 'La Playa', 'Pescador', '3543543543', 'Sempegua'),
+(163, '1076563275', 'Marcos', 'Medina', 'Rocha', 'Padre', 'm', '3124546546', 'Sempegua', 'La Esquina', 'Agricultor', '312435454', 'Sempegua'),
+(164, '190734632', 'Pablo Emilio', 'Miranda', 'Gaviria', 'Padre', 'm', '323435435', 'Sempegua', 'La Paz', 'AlbaÑil', '321343534', 'Sempegua'),
+(165, '2078478443', 'Sadith', 'Pabon', 'Cerpa', 'Padre', 'm', '3124565654', 'Sempegua', 'Las Palmas', 'Pescador', '312465465', 'Sempegua'),
+(166, '352332398', 'Daniel Andres', 'Perez', 'Caballero', 'Padre', 'm', '3223898797', 'Sempegua', 'Divino NiÑo', 'Agricultor', '235345345', 'Sempegua'),
+(167, '289093536', 'Juan', 'Rangel', 'Toloza', 'Padre', 'm', '312566786', 'Sempegua', 'La Paz', 'Pescador', '323565464', 'Sempegua'),
+(168, '190389632', 'Edinson', 'Rondon', 'Ruiz', 'Padre', 'm', '323543345', 'Sempegua', 'La Paz', '´pescador', '325543554', 'Sempegua'),
+(169, '189677387', 'Saul', 'Toloza', 'Lascarro', 'Padre', 'm', '323545343', 'Sempegua', 'La Central', 'Pescador', '3243245532', 'Sempegua'),
+(170, '1098764385', 'Jamer', 'Valle', 'Nobles', 'Padre', 'm', '3167567776', 'Sempegua', 'Barrio Arriba', 'Pescador', '3124455676', 'Sempegua'),
+(171, '3255678087', 'Arnaldo', 'Villar', 'Jimenez', 'Padre', 'm', '3125698047', 'Sempegua', 'La Plaza', 'Pescador', '314804034', 'Sempegua'),
+(172, '1987683654', 'Danilo', 'Gutierrez', 'Silva', 'Padre', 'm', '324356675', 'Sempegua', 'La Central', 'Agricultor', '2342352423', 'Sempegua'),
+(173, '1907654654', 'Eidilson', 'Leon', 'Garrido', 'Padre', 'm', '3176778034', 'Sempegua', 'La Plaza', 'Pescador', '32534645', 'Sempegua'),
+(174, '1087653824', 'Daniel Andres', 'Martinez', 'Hernandez', 'Padre', 'm', '3235435645', 'Sempegua', 'La Paz', 'Agricultor', '2346554645', 'Sempegua'),
+(175, '190897763', 'Saul Andres', 'Martinez', 'Rocha', 'Padre', 'm', '32348963', 'Sempegua', 'La Playa', 'Pescador', '3123545676', 'Sempegua'),
+(176, '1097736433', 'Dario', 'Mejia', 'Ramos', 'Padre', 'm', '312345464', 'Sempegua', 'Barrio Arriba', 'Pescador', '324342425', 'Sempegua'),
+(177, '109879363', 'Ivaldo', 'Nobles', 'Lopez', 'Padre', 'm', '312354364', 'Sempegua', 'El Campo', 'Agricultor', '3129505644', 'Sempegua'),
+(178, '190364323', 'Juvenal', 'Nobles', 'Martinez', 'Padre', 'm', '314325345', 'Sempegua', 'La Paz', 'Plomero', '3124387537', 'Sempegua'),
+(179, '109873643', 'Pablo Cesar', 'Ortega', 'Diaz', 'Padre', 'm', '3128768743', 'Sempegua', 'La Playa', 'Pescador', '312432235', 'Sempegua'),
+(180, '198763542', 'Pablo Cesar', 'Ortega', 'Diaz', 'Padre', 'm', '323584357', 'Sempegua', 'La Playa', 'Pescador', '323353535', 'Sempegua'),
+(181, '1903742334', 'Sergio Alberto', 'Rico', 'Ramirez', 'Padre', 'm', '343254325', 'Sempegua', 'La Plaza', 'Agricultor', '3124353534', 'Sempegua'),
+(182, '1000973643', 'Sergio Alberto', 'Rico', 'Ramirez', 'Padre', 'm', '3121453454', 'Sempegua', 'La Plaza', 'Agricultor', '3124436686', 'Sempegua'),
+(183, '1097382343', 'Dairo', 'Rodriguez', 'Medina', 'Padre', 'm', '31254543', 'Sempegua', 'La Central', 'Comerciante', '32354654', 'Sempegua'),
+(184, '124983842', 'Luis Andres', 'Suarez', 'Caballero', 'Padre', 'm', '312435435', 'Sempegua', 'La Roca', 'Pescador', '3234543543', 'Sempegua'),
+(185, '10984754', 'Luis Angel', 'Toloza', 'Rocha', 'Padre', 'm', '312345446', 'Sempegua', 'Divino NiÑo', 'Agricultor', '33123432', 'Sempegua'),
+(186, '1987634543', 'David Jose', 'Toloza', 'Palomino', 'Padre', 'm', '312432874', 'Sempegua', 'La Central', 'Agricultor', '31245436', 'Sempegua'),
+(187, '1807532563', 'David Jose', 'Toloza', 'Palomino', 'Padre', 'm', '3124436547', 'Sempegua', 'La Central', 'Agricultor', '213432523', 'Sempegua'),
+(188, '9083476835', 'Andres Fernando', 'Toloza', 'Nobles', 'Padre', 'm', '312446456', 'Sempegua', 'Barrio Arriba', 'Pescador', '32343543', 'Sempegua'),
+(189, '20976253', 'Albeiro Enrique', 'Toloza', 'Rocha', 'Padre', 'm', '31245646', 'Sempegua', 'La Plaza', 'Pescador', '31233543', 'Sempegua'),
+(190, '109876443', 'Raul Jose', 'Toloza', 'Sarmiento', 'Padre', 'm', '312435436', 'Sempegua', 'La Playa', 'Pescador', '3157888975', 'Sempegua'),
+(191, '1038763', 'Raul Jose', 'Toloza', 'Sarmiento', 'Padre', 'm', '31243225', 'Sempegua', 'La Playa', 'Pescador', '3135464', 'Sempegua'),
+(192, '1087365432', 'Yamith', 'Torres', 'Gamez', 'Padre', 'm', '326768238', 'Sempegua', 'Las Palmas', 'Comerciante', '3124863265', 'Sempegua'),
+(193, '1937849634', 'Yesid', 'Vega', 'Ruiz', 'Padre', 'm', '315894332', 'Sempegua', 'Divino NiÑo', 'Pescador', '3254645723', 'Sempegua'),
+(194, '1837436376', 'Martin', 'Velasquez', 'Luna', 'Padre', 'm', '31895745', 'Sempegua', 'El Campo', 'Pescador', '34546452', 'Sempegua'),
+(195, '1023743535', 'Luis Alberto', 'Villar', 'Lobos', 'Padre', 'm', '3123434564', 'Sempegua', 'La Paz', 'Pescador', '3325435436', 'Sempegua'),
+(196, '184347343', 'Denis Jose', 'Villarreal', 'Toloza', 'Padre', 'm', '323554564', 'Sempegua', 'La Plaza', 'Agricultor', '3126547756', 'Sempegua'),
+(197, '347767565', 'Carlos Alberto', 'Waltero', 'Jaramillo', 'Padre', 'm', '313766878', 'Sempegua', 'La Roca', 'Agricultor', '3126457654', 'Sempegua');
 
 -- --------------------------------------------------------
 
@@ -5797,7 +6031,50 @@ INSERT INTO `personas` (`id_persona`, `identificacion`, `tipo_id`, `fecha_expedi
 (174, '1063488320', 'ti', '2008-11-24', 1, 20, 404, 'Neifer Jose', 'Toloza', 'Luqueta', 'm', '2008-11-24', 1, 20, 410, 'o+', 'Asmet Salud', 'Ninguna', '3214654765', 'NEIFERJ@OUTLOOK.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
 (175, '1063485369', 'ti', '2006-12-23', 1, 20, 410, 'Keiner Jose', 'Toloza', 'Mieles', 'm', '2006-12-23', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '3124543543', 'KEINERJ@HOTMAIL.COM', 'Sempegua', 'La Esquina', 1, 20, 410, '1'),
 (176, '1063489990', 'ti', '2010-01-22', 1, 20, 410, 'Julio Alberto', 'Toloza', 'Mieles', 'm', '2010-01-22', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '323544353', 'JULIOALB@GMAIL.COM', 'Sempegua', 'La Esquina', 1, 20, 410, '1'),
-(177, '37895770', 'ti', '2006-09-21', 1, 20, 410, 'Lenis Alberto', 'Waltero', 'Pacheco', 'm', '2006-09-21', 1, 20, 410, 'o+', 'Amet Salud', 'Ninguna', '31590324', 'lenis@gmail.com', 'Sempegua', 'La Roca', 1, 20, 410, '1');
+(177, '37895770', 'ti', '2006-09-21', 1, 20, 410, 'Lenis Alberto', 'Waltero', 'Pacheco', 'm', '2006-09-21', 1, 20, 410, 'o+', 'Amet Salud', 'Ninguna', '31590324', 'lenis@gmail.com', 'Sempegua', 'La Roca', 1, 20, 410, '1'),
+(178, '1064777243', 'ti', '2011-02-06', 1, 20, 410, 'Laura Vanessa', 'Avila', 'Mendez', 'f', '2011-02-06', 1, 20, 410, 'o+', 'Ambuq', 'Ninguna', '3145878647', 'lauvane@gmail.com', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(179, '1063494530', 'ti', '2010-07-23', 1, 20, 410, 'Juan David', 'Barrios', 'Toloza', 'm', '2010-07-23', 1, 20, 410, 'o-', 'Cafesalud', 'Ninguna', '3157687687', 'JUANDA@OUTLOOK.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(180, '1127587282', 'ti', '2007-11-27', 1, 20, 410, 'Mario Andres', 'Cadena', 'Reales', 'm', '2007-11-27', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '312435454', 'marioa@hotmail.com', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(181, '1063490528', 'ti', '2010-12-26', 1, 20, 410, 'Andrea Carolina', 'Cardenas', 'Contreras', 'f', '2010-12-26', 1, 20, 410, 'a+', 'Emdisalud', 'Ninguna', '3115660087', 'ANDREAK@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(182, '1063489572', 'ti', '2009-09-10', 1, 20, 410, 'Santiago', 'Diaz', 'Ramirez', 'm', '2009-09-10', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '321454564', 'SANTIDIAZ@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(183, '1063490476', 'ti', '2010-10-14', 1, 20, 410, 'Naslyn Lorena', 'Florez', 'Contreras', 'f', '2010-10-14', 1, 20, 410, 'b-', 'Ambuq', 'Ninguna', '2343443455', 'NASLYN@OUTLOOK.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(184, '1063489036', 'ti', '2009-08-31', 1, 20, 410, 'Geronimo', 'Infante', 'Toloza', 'm', '2009-08-31', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '312789393', 'GERONIMO@HOTMAIL.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(185, '1063488528', 'ti', '2008-07-24', 1, 20, 410, 'Yesmit Adriana', 'Leon', 'Martinez', 'f', '2008-07-24', 1, 20, 410, 'o+', 'Cajacopi', 'Ninguna', '312479876', 'YESMITADR@HOTMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(186, '1063489737', 'ti', '2010-04-06', 1, 20, 410, 'Carlos Alberto', 'Medina', 'Martinez', 'm', '2010-04-06', 1, 20, 410, 'b+', 'Barrios Unidos', 'Ninguna', '3131354543', 'CARLOS@HOTMAIL.COM', 'Sempegua', 'La Esquina', 1, 20, 410, '1'),
+(187, '1082372525', 'ti', '2008-06-28', 1, 20, 410, 'Rosa Emilia', 'Miranda', 'Viloria', 'f', '2008-06-28', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '312445546', 'ROSAEMI@HOTMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(188, '4225388012', 'ti', '2009-10-03', 1, 20, 410, 'Luis Jose', 'Pabon', 'Nobles', 'm', '2009-10-03', 1, 20, 410, 'a+', 'Salud Total', 'Ninguna', '3214544654', 'LUIJOSE@GMAIL.COM', 'Sempegua', 'Las Palmas', 1, 20, 410, '1'),
+(189, '1127592274', 'ti', '2011-04-01', 1, 20, 410, 'Sihao Daniel', 'Perez', 'Cabas', 'f', '2011-04-01', 1, 20, 410, 'o-', 'Saludvida', 'Ninguna', '3213347989', 'SHIADANI@GMAIL.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(190, '1063484043', 'ti', '2005-12-28', 1, 20, 410, 'Janner', 'Rangel', 'Martinez', 'm', '2005-12-28', 1, 20, 410, 'b+', 'Asmet Salud', 'Ninguna', '312334546', 'JANNER@HOTMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(191, '4225388273', 'ti', '2010-02-22', 1, 20, 410, 'Daikaroly', 'Rondon', 'Cerpa', 'f', '2010-05-22', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '315465464', 'DAIKAR@OUTLOOK.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(192, '1085103301', 'ti', '2008-06-27', 1, 20, 410, 'Saul Alfonso', 'Toloza', 'De La Cruz', 'm', '2008-06-27', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '343456576', 'SAUL@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(193, '1063484571', 'ti', '2006-05-06', 1, 20, 410, 'Cindy Jhoana', 'Valle', 'Martinez', 'f', '2006-05-06', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '31156809', 'CINDYJHO@GMAIL.COM', 'Sempegua', 'Barrio Arriba', 1, 20, 410, '1'),
+(194, '1085098357', 'ti', '2009-09-10', 1, 20, 410, 'Karol Dayana', 'Villar', 'Arroyo', 'f', '2009-09-10', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '3123548045', 'KAROLDAY@HOTMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(195, '1063489156', 'ti', '2009-10-10', 1, 20, 410, 'Silvia Juliana', 'Gutierrez', 'Obregon', 'f', '2009-10-10', 1, 20, 410, 'o+', 'Ambuq', 'Ninguna', '312445765', 'SILVIAJUL@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(196, '1064801671', 'ti', '2010-05-01', 1, 20, 410, 'Ediober', 'Leon', 'Martinez', 'm', '2010-05-01', 1, 20, 410, 'a-', 'Cajacopi', 'Ninguna', '3123478098', 'EDIOBER@GMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(197, '1063491057', 'ti', '2011-07-02', 1, 20, 410, 'Luz Danellys', 'Martinez', 'Nobles', 'f', '2011-07-02', 1, 20, 410, 'a+', 'Saludvida', 'Ninguna', '331235676', 'LUZDANE@HOTMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(198, '1083491721', 'ti', '2012-02-24', 1, 20, 410, 'Saul Jose', 'Martinez', 'Toloza', 'm', '2012-02-24', 1, 20, 410, 'o+', 'Salud Total', 'Ninguna', '324644575', 'SAULJ@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(199, '8052855', 'ti', '2010-12-05', 1, 20, 410, 'Yonathan Dario', 'Mejia', 'Miranda', 'm', '2010-12-05', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '3234455436', 'YONATHAN@OUTLOOK.COM', 'Sempegua', 'Barrio Arriba', 1, 20, 410, '1'),
+(200, '1063490949', 'ti', '2011-07-06', 1, 20, 410, 'Adrian David', 'Nobles', 'Cardenas', 'm', '2011-07-06', 1, 20, 410, 'o-', 'Emdisalud', 'Ninguna', '217926429', 'ADRIAND@GMAIL.COM', 'Sempegua', 'El Campo', 1, 20, 410, '1'),
+(201, '1063490995', 'ti', '2011-07-18', 1, 20, 410, 'Regina Isabel', 'Nobles', 'Florez', 'f', '2011-07-18', 1, 20, 410, 'b+', 'Saludvida', 'Ninguna', '3128479843', 'REGINAISA@GMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(202, '4225388278', 'ti', '2009-04-25', 1, 20, 410, 'Clarixa Isabel', 'Ortega', 'Padilla', 'f', '2009-04-25', 1, 20, 411, 'a+', 'Asmet Salud', 'Ninguna', '3129408045', 'CLARIXA@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(203, '4225387972', 'ti', '2007-11-10', 1, 20, 410, 'Miguel Antonio', 'Ortega', 'Padilla', 'm', '2007-11-10', 1, 20, 410, 'o+', 'Asmet Salud', 'Ninguna', '31234346', 'MIGUELA.@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(204, '1063486601', 'ti', '2007-08-17', 1, 20, 410, 'Jesus Alberto', 'Rico', 'Martinez', 'm', '2007-08-17', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '3190838732', 'JESUSALBER@OUTLOOK.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(205, '1063489742', 'ti', '2009-06-26', 1, 20, 410, 'Luis Mario', 'Rico', 'Martinez', 'm', '2009-06-26', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '312423532', 'LUISMA@HOTMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(206, '1067619905', 'ti', '2012-03-23', 1, 20, 410, 'Shaireth Michel', 'Rodriguez', 'Munoz', 'f', '2012-03-23', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '312903358', 'SHAIMCHEL@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(207, '1100085494', 'ti', '2009-07-25', 1, 20, 410, 'Carlos Mario', 'Suarez', 'Mayorga', 'm', '2009-07-25', 1, 20, 410, 'b+', 'Salud Total', 'Ninguna', '12247932', 'CARLOSMARIO@HOTMAIL.COM', 'Sempegua', 'La Roca', 1, 20, 410, '1'),
+(208, '1063491955', 'ti', '2012-05-16', 1, 20, 410, 'Jeronimo Jose', 'Toloza', 'Hernandez', 'm', '2012-05-16', 1, 20, 410, 'b+', 'Asmet Salud', 'Ninguna', '3124465409', 'JEROJOSE@OUTLOOK.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(209, '1063491156', 'ti', '2011-08-28', 1, 20, 410, 'Yisel', 'Toloza', 'Luqueta', 'f', '2011-08-28', 1, 20, 410, 'b-', 'Coomeva', 'Ninguna', '3118674608', 'YISEL@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(210, '1063491155', 'ti', '2011-08-28', 1, 20, 410, 'Yisela', 'Toloza', 'Luqueta', 'f', '2011-08-28', 1, 20, 410, 'b+', 'Ambuq', 'Ninguna', '3123254534', 'YISELA@GMAIL.COM', 'Sempegua', 'La Central', 1, 20, 410, '1'),
+(211, '1127603262', 'ti', '2012-10-02', 1, 20, 410, 'Oriana', 'Toloza', 'Martinez', 'f', '2012-10-02', 1, 20, 410, 'o-', 'Asmet Salud', 'Ninguna', '312544645', 'ORIANA@HOTMAIL.COM', 'Sempegua', 'Barrio Arriba', 1, 20, 410, '1'),
+(212, '1063488489', 'ti', '2008-11-27', 1, 20, 410, 'Alber Jose', 'Toloza', 'Quevedo', 'm', '2008-11-27', 1, 20, 410, 'b+', 'Cajacopi', 'Ninguna', '312354543', 'ALBER@GMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(213, '1063489035', 'ti', '2009-08-22', 1, 20, 410, 'Jose Raul', 'Toloza', 'Velasquez', 'm', '2009-08-22', 1, 20, 410, 'a+', 'Saludvida', 'Ninguna', '31537593', 'JOSERAUL@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(214, '1063490477', 'ti', '2011-01-15', 1, 20, 410, 'Mayte', 'Toloza', 'Velasquez', 'f', '2011-01-15', 1, 20, 410, 'b-', 'Ambuq', 'Ninguna', '312564454', 'MAYTE.@GMAIL.COM', 'Sempegua', 'La Playa', 1, 20, 410, '1'),
+(215, '1119817251', 'ti', '2010-10-25', 1, 20, 410, 'Jesus David', 'Torres', 'Acosta', 'm', '2010-10-25', 1, 20, 410, 'o-', 'Coomeva', 'Ninguna', '3165690554', 'JESUSDA@HOTMAIL.COM', 'Sempegua', 'Las Palmas', 1, 20, 410, '1'),
+(216, '1063489993', 'ti', '2010-07-02', 1, 20, 410, 'Andres Yesid', 'Vega', 'Mendez', 'm', '2010-07-02', 1, 20, 410, 'a+', 'Asmet Salud', 'Ninguna', '322365756', 'ANDRESYESID@GMAIL.COM', 'Sempegua', 'Divino NiÑo', 1, 20, 410, '1'),
+(217, '1216964092', 'ti', '2010-12-10', 1, 20, 410, 'Morelia', 'Velasquez', 'Rico', 'f', '2010-12-10', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '3132334654', 'MORELIA@GMAIL.COM', 'Sempegua', 'El Campo', 1, 20, 410, '1'),
+(218, '1068387803', 'ti', '2011-10-24', 1, 20, 410, 'Luis Felipe', 'Villar', 'Arroyo', 'm', '2011-10-24', 1, 20, 410, 'a+', 'Ambuq', 'Ninguna', '325820937', 'LUISFELIPE@HOTMAIL.COM', 'Sempegua', 'La Paz', 1, 20, 410, '1'),
+(219, '1063491282', 'ti', '2011-09-30', 1, 20, 410, 'Adriana Lucia', 'Villarreal', 'Palomino', 'f', '2011-09-30', 1, 20, 410, 'a+', 'Cajacopi', 'Ninguna', '315678768', 'ADRIANALUCI@HOTMAIL.COM', 'Sempegua', 'La Plaza', 1, 20, 410, '1'),
+(220, '1063490048', 'ti', '2010-08-03', 1, 20, 410, 'Carlos Daniel', 'Waltero', 'Pacheco', 'm', '2010-08-03', 1, 20, 410, 'b+', 'Saludvida', 'Ninguna', '310748684', 'CARLOSDANI@OUTLOOK.COM', 'Sempegua', 'La Roca', 1, 20, 410, '1');
 
 -- --------------------------------------------------------
 
@@ -6163,7 +6440,50 @@ INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `username`, `passw
 (174, 174, 2, 'netoloza174', 'f1aa8c3152ee5eb5a01d493769200e4daa780d3b', '0', NULL),
 (175, 175, 2, 'ketoloza175', '9ddf4c75115fb4be7dd869bde0f68237d33f55d8', '0', NULL),
 (176, 176, 2, 'jutoloza176', '39c384ea0e511f8e7595eb4b00f48483a9943488', '0', NULL),
-(177, 177, 2, 'lewaltero177', '4681f9735f5034b02bc86ba48c9c58476f7eb09f', '0', NULL);
+(177, 177, 2, 'lewaltero177', '4681f9735f5034b02bc86ba48c9c58476f7eb09f', '0', NULL),
+(178, 178, 2, 'laavila178', '8b58ae06ddba1f6284586430393e2fab48f4e0df', '0', NULL),
+(179, 179, 2, 'jubarrios179', '708dae5f9d858a555c72b3a98a5fa9f91825d0cf', '0', NULL),
+(180, 180, 2, 'macadena180', '64942e73410658d4ae46b6083698b4dc00270b8b', '0', NULL),
+(181, 181, 2, 'ancardenas181', '7164a55bb3cd90782ab10b916fb2f5e7612ce2db', '0', NULL),
+(182, 182, 2, 'sadiaz182', '4b0f9c4caec28eb03b1e384e48af778b27bd73c7', '0', NULL),
+(183, 183, 2, 'naflorez183', 'd24436d3a3222a23eacc4e18f78730c4b2897e67', '0', NULL),
+(184, 184, 2, 'geinfante184', '5bca0416dc03ec00378c47b36357ae4f07481344', '0', NULL),
+(185, 185, 2, 'yeleon185', '2b44f9598826e14fbcb095cc0afefe201506ee9e', '0', NULL),
+(186, 186, 2, 'camedina186', '10d89cf81b08c508f015bd8ba9458463806a3887', '0', NULL),
+(187, 187, 2, 'romiranda187', 'f1f09b4307ec327568e23f5920f42c3cb9f601a3', '0', NULL),
+(188, 188, 2, 'lupabon188', '2ddbfae3e8836b0956de8f95265b4d82796e7852', '0', NULL),
+(189, 189, 2, 'siperez189', '90d0886360536d2e804ac88f7a06e0cb0a1c1e83', '0', NULL),
+(190, 190, 2, 'jarangel 190', '1da7d199713f1c0eae442fde739a05aa8e8c9dfe', '0', NULL),
+(191, 191, 2, 'darondon191', '6074dd2ae7d478c274877a834f5d72acaae44105', '0', NULL),
+(192, 192, 2, 'satoloza192', '8812a3349caa7ac137915dacc0818211107dd029', '0', NULL),
+(193, 193, 2, 'civalle 193', '6be249f376e16a2b9038a0812acb169542daa604', '0', NULL),
+(194, 194, 2, 'kavillar194', '5bebce609759f3dda0122c2a3e3eae1940eb4c1a', '0', NULL),
+(195, 195, 2, 'sigutierrez195', '519f950328ba6c1cc2a7755a7f0b2509a96367c1', '0', NULL),
+(196, 196, 2, 'edleon196', '91978e588c131668b3cc52e60ce0d0cb9d583408', '0', NULL),
+(197, 197, 2, 'lumartinez197', '0a0164359f35dab05182c71b92625e670425d46b', '0', NULL),
+(198, 198, 2, 'samartinez198', '0a7d4f455b7b67a78117f0c50c3fe98a401f1100', '0', NULL),
+(199, 199, 2, 'yomejia199', 'c6b2f3cf422fc58599d1b37e513e932f6dc349c8', '0', NULL),
+(200, 200, 2, 'adnobles 200', 'e1d515273ac140a6ba3100252c1a06044c57012f', '0', NULL),
+(201, 201, 2, 'renobles201', 'bbdb60ab11036fc2dd166ff6c9c9b2f1ea27ca4a', '0', NULL),
+(202, 202, 2, 'clortega 202', 'c05a50d54561dcc6d95bb1f15f0c4cf0e8aceb66', '0', NULL),
+(203, 203, 2, 'miortega 203', 'f3a2756f78720c9430d6c620a46f4213d6fe3bdc', '0', NULL),
+(204, 204, 2, 'jerico204', '613e652a85a59723aeff04bbb4ad794545d0c228', '0', NULL),
+(205, 205, 2, 'lurico205', 'c6c30ab6234dbe6a3bf5b9a231c665263301f182', '0', NULL),
+(206, 206, 2, 'shrodriguez206', 'b893ac9b8d2f093b9140ffa5040944afc8764a94', '0', NULL),
+(207, 207, 2, 'casuarez207', 'ff88c7ac28858492480cce5d66c8c85baaa88bdc', '0', NULL),
+(208, 208, 2, 'jetoloza208', '9162ba5f42f311fd38cd93df1164679ff301d2ec', '0', NULL),
+(209, 209, 2, 'yitoloza209', 'ace622b269a3f5674253aac89b84e0db7bac47ad', '0', NULL),
+(210, 210, 2, 'yitoloza210', 'b52ef45c4c5028288ce751d22de5392c39d62052', '0', NULL),
+(211, 211, 2, 'ortoloza 211', '2224215b399d31750a0595921c4d12055b80b1da', '0', NULL),
+(212, 212, 2, 'altoloza212', '8547781bc53e56b5e950e858d9150d047281d300', '0', NULL),
+(213, 213, 2, 'jotoloza213', '4f7f3a1d34f96adaff9614d3261000419051d2a7', '0', NULL),
+(214, 214, 2, 'matoloza214', 'ff28428955742ce5522cec6cb4be8cc761fdf876', '0', NULL),
+(215, 215, 2, 'jetorres 215', '7fd50e1febcc325ebe92c0fbe048a0ec36daeb6c', '0', NULL),
+(216, 216, 2, 'anvega216', '39e7a83329c897e3f296adbe7814bf7108092ef9', '0', NULL),
+(217, 217, 2, 'movelasquez217', '15856fd6d610061dc23cdfe68176ce1ab7276a02', '0', NULL),
+(218, 218, 2, 'luvillar218', '542e0a3b2c3a28c903a290b138265cfc331f8c95', '0', NULL),
+(219, 219, 2, 'advillarreal 219', 'd081b14f65919929261f437ffaa564e65696141e', '0', NULL),
+(220, 220, 2, 'cawaltero220', '6d7a54d3efce9cc760b70d396d9186356889ea2a', '0', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -6212,6 +6532,12 @@ ALTER TABLE `areas`
 ALTER TABLE `asignaturas`
   ADD PRIMARY KEY (`id_asignatura`),
   ADD KEY `fk_asignaturas_areas_idx` (`id_area`);
+
+--
+-- Indices de la tabla `asistencias`
+--
+ALTER TABLE `asistencias`
+  ADD PRIMARY KEY (`id_asistencia`);
 
 --
 -- Indices de la tabla `candidatos_eleccion`
@@ -6543,6 +6869,11 @@ ALTER TABLE `areas`
 ALTER TABLE `asignaturas`
   MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
+-- AUTO_INCREMENT de la tabla `asistencias`
+--
+ALTER TABLE `asistencias`
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `candidatos_eleccion`
 --
 ALTER TABLE `candidatos_eleccion`
@@ -6601,7 +6932,7 @@ ALTER TABLE `estudiantes_acudientes`
 -- AUTO_INCREMENT de la tabla `estudiantes_padres`
 --
 ALTER TABLE `estudiantes_padres`
-  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `idestudiantes_padres` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 --
 -- AUTO_INCREMENT de la tabla `grados`
 --
@@ -6621,7 +6952,7 @@ ALTER TABLE `grupos`
 -- AUTO_INCREMENT de la tabla `historial_estados`
 --
 ALTER TABLE `historial_estados`
-  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
 --
 -- AUTO_INCREMENT de la tabla `horarios`
 --
@@ -6646,7 +6977,7 @@ ALTER TABLE `logros_asignados`
 -- AUTO_INCREMENT de la tabla `madres`
 --
 ALTER TABLE `madres`
-  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `id_madre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 --
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
@@ -6686,7 +7017,7 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `padres`
 --
 ALTER TABLE `padres`
-  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `id_padre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
@@ -6706,7 +7037,7 @@ ALTER TABLE `pensum`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 --
 -- AUTO_INCREMENT de la tabla `retiros`
 --
@@ -6736,7 +7067,7 @@ ALTER TABLE `tipos_causales`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 --
 -- Restricciones para tablas volcadas
 --
