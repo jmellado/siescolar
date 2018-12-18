@@ -91,6 +91,9 @@ class Asistencias_controller extends CI_Controller {
 				if($respuesta == true){
 
 		        	echo "registroguardado";
+
+		        	//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+                	$respuesta_firebase = $this->asistencias_model->enviar_notificacionFirebase($estudiantes,$id_asignatura,$asistencias);
 		        }
 		        else{
 
