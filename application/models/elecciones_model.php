@@ -682,11 +682,27 @@ class Elecciones_model extends CI_Model {
 	}
 
 
-	public function validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual){
+	/*public function validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual){
 
 		$estado_eleccion = "Activo";
 
 		$sql= "SELECT nombre_eleccion FROM elecciones WHERE id_eleccion ='". $id_eleccion."' AND estado_eleccion ='".$estado_eleccion."' AND '".$fecha_actual."' >= fecha_inicio AND '".$fecha_actual."' <= fecha_fin AND '".$hora_actual."' >= hora_inicio AND '".$hora_actual."' <= hora_fin";
+
+		$query = $this->db->query($sql);
+
+		if ($query->num_rows() > 0) 
+			return true;
+		else
+			return false;
+		
+	}*/
+
+
+	public function validar_fechaIngresoVotacion($id_eleccion,$fecha_ac){
+
+		$estado_eleccion = "Activo";
+
+		$sql= "SELECT nombre_eleccion FROM elecciones WHERE id_eleccion ='". $id_eleccion."' AND estado_eleccion ='".$estado_eleccion."' AND '".$fecha_ac."' >= CONCAT_WS(' ',fecha_inicio,hora_inicio) AND '".$fecha_ac."' <= CONCAT_WS(' ',fecha_fin,hora_fin)";
 
 		$query = $this->db->query($sql);
 

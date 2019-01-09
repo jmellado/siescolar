@@ -891,12 +891,15 @@ class Elecciones_controller extends CI_Controller {
         		$estado_votante = $consulta[0]['estado_votante'];
         		$fecha = $this->elecciones_model->obtener_fecha_actual();
 
-        		$fecha_actual = substr($fecha, 0,10);
-        		$hora_actual = substr($fecha, 11,8);
+        		//$fecha_actual = substr($fecha, 0,10);
+        		//$hora_actual = substr($fecha, 11,8);
+
+        		//extraigo los 19 caracteres de fecha, 2019-01-09 06:00:00 omitiendo el am o pm
+        		$fecha_ac = substr($fecha, 0,19);
 
         		if ($estado_votante == "no") {
         			
-        			if ($this->elecciones_model->validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual)) {
+        			if ($this->elecciones_model->validar_fechaIngresoVotacion($id_eleccion,$fecha_ac)) {
         				
         				echo "ok";
         			}
@@ -941,12 +944,12 @@ class Elecciones_controller extends CI_Controller {
     		$estado_votante = $consulta[0]['estado_votante'];
     		$fecha = $this->elecciones_model->obtener_fecha_actual();
 
-    		$fecha_actual = substr($fecha, 0,10);
-    		$hora_actual = substr($fecha, 11,8);
+    		//extraigo los 19 caracteres de fecha, 2019-01-09 06:00:00 omitiendo el am o pm
+    		$fecha_ac = substr($fecha, 0,19);
 
     		if ($estado_votante == "no") {
     			
-    			if ($this->elecciones_model->validar_fechaIngresoVotacion($id_eleccion,$fecha_actual,$hora_actual)) {
+    			if ($this->elecciones_model->validar_fechaIngresoVotacion($id_eleccion,$fecha_ac)) {
     				
     				$data['candidatos'] = $this->elecciones_model->candidatos_eleccion($id_eleccion);
     				$data['institucion'] = $this->elecciones_model->buscar_datos_institucion();
