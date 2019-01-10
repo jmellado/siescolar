@@ -203,7 +203,7 @@ class Estadisticas_controller extends CI_Controller {
 	        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 	 
 			// establecer margenes
-	        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        $pdf->SetMargins(PDF_MARGIN_LEFT, 70, PDF_MARGIN_RIGHT);
 	        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 	        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 	 
