@@ -759,7 +759,7 @@ class Elecciones_controller extends CI_Controller {
 		        $pdf->SetFont('helvetica', '', 10, '', true);
 		 
 				//fijar efecto de sombra en el texto
-		        $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+		        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
 
 		        // Establecemos el contenido para imprimir
 		        //**********************************************************************************************************
@@ -775,9 +775,10 @@ class Elecciones_controller extends CI_Controller {
 
 		        $tbl .= '<tr>
 		        			<td align="center" width="22"><b>#</b></td>
-		        			<td align="center" width="333"><b>NOMBRES Y APELLIDOS</b></td>
-		        			<td align="center" width="226"><b>CÓDIGO DE VOTACIÓN</b></td>
-		        			<td align="center" width="49"></td>
+		        			<td align="center" width="120"><b>IDENTIFICACIÓN</b></td>
+		        			<td align="center" width="220"><b>NOMBRES Y APELLIDOS</b></td>
+		        			<td align="center" width="100"><b>CÓDIGO DE VOTACIÓN</b></td>
+		        			<td align="center" width="169"><b>FIRMA</b></td>
 		        		</tr>';
 
 		        $id_curso = $cursos_votantes[$i]['id_curso'];
@@ -791,9 +792,10 @@ class Elecciones_controller extends CI_Controller {
 					$tbl .= '<tr nobr="true">
 
 								<td align="center" width="22">'.$cont.'</td>
-			        			<td align="center" width="333">'.$estudiantes_votantes[$j]['nombres'].' '.$estudiantes_votantes[$j]['apellido1'].' '.$estudiantes_votantes[$j]['apellido2'].'</td>
-			        			<td align="center" width="226">'.$estudiantes_votantes[$j]['codigo_voto'].'</td>
-			        			<td width="49"></td>
+								<td align="center" width="120">'.$estudiantes_votantes[$j]['identificacion'].'</td>
+			        			<td align="center" width="220">'.$estudiantes_votantes[$j]['nombres'].' '.$estudiantes_votantes[$j]['apellido1'].' '.$estudiantes_votantes[$j]['apellido2'].'</td>
+			        			<td align="center" width="100" height="28">'.$estudiantes_votantes[$j]['codigo_voto'].'</td>
+			        			<td width="169"></td>
 
 							</tr>';
 				}
@@ -839,9 +841,10 @@ class Elecciones_controller extends CI_Controller {
 
 			        $tbl .= '<tr>
 			        			<td align="center" width="22"><b>#</b></td>
-			        			<td align="center" width="333"><b>NOMBRES Y APELLIDOS</b></td>
-			        			<td align="center" width="226"><b>CÓDIGO DE VOTACIÓN</b></td>
-		        				<td align="center" width="49"><b></b></td>
+			        			<td align="center" width="120"><b>IDENTIFICACIÓN</b></td>
+			        			<td align="center" width="220"><b>NOMBRES Y APELLIDOS</b></td>
+			        			<td align="center" width="100"><b>CÓDIGO DE VOTACIÓN</b></td>
+		        				<td align="center" width="169"><b>FIRMA</b></td>
 			        		</tr>';
 			        $tbl .= '</table>';
 
