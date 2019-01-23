@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-12-2018 a las 18:40:26
+-- Tiempo de generación: 23-01-2019 a las 20:48:17
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -333,6 +333,46 @@ CREATE TABLE `conceptos_pagos` (
   `valor` decimal(10,0) NOT NULL,
   `fecha_creacion` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `criterios`
+--
+
+CREATE TABLE `criterios` (
+  `id_criterio` int(11) NOT NULL,
+  `nombre_criterio` varchar(500) NOT NULL,
+  `codigo_criterio` int(11) NOT NULL,
+  `prioridad` int(11) NOT NULL,
+  `categoria` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `criterios`
+--
+
+INSERT INTO `criterios` (`id_criterio`, `nombre_criterio`, `codigo_criterio`, `prioridad`, `categoria`) VALUES
+(1, 'Número De Áreas o Asignaturas Reprobadas', 1, 3, 'Estudiante'),
+(2, 'Porcentaje Total De Inasistencias', 2, 1, 'Estudiante'),
+(3, 'Reprobación Por Perdida De Asignaturas Especificas', 3, 2, 'Estudiante');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `criterios_asignados`
+--
+
+CREATE TABLE `criterios_asignados` (
+  `id_criterio_asignado` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `id_criterio` int(11) NOT NULL,
+  `numero_areas_asignaturas` int(11) DEFAULT NULL,
+  `porcentaje_inasistencias` int(11) DEFAULT NULL,
+  `asignatura_especifica` int(11) DEFAULT NULL,
+  `promedio_general` decimal(11,1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -5096,7 +5136,7 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (60, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (121, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '3', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '1'),
 (122, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '4', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
-(123, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '5', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '1'),
+(123, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '5', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
 (124, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '12', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
 (125, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '14', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
 (126, 2, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bienvenido Queridos Profesores.\r\nSocializacion Proyecto Siescolar.', '16', '2', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 03:05:17', '0'),
@@ -5252,7 +5292,7 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (276, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (277, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (278, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(279, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(279, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
 (280, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (281, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (282, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
@@ -6576,6 +6616,20 @@ ALTER TABLE `conceptos_pagos`
   ADD PRIMARY KEY (`id_concepto_pago`);
 
 --
+-- Indices de la tabla `criterios`
+--
+ALTER TABLE `criterios`
+  ADD PRIMARY KEY (`id_criterio`),
+  ADD UNIQUE KEY `codigo_criterio_UNIQUE` (`codigo_criterio`);
+
+--
+-- Indices de la tabla `criterios_asignados`
+--
+ALTER TABLE `criterios_asignados`
+  ADD PRIMARY KEY (`id_criterio_asignado`),
+  ADD KEY `fk_criteriosasignados_criterios_idx` (`id_criterio`);
+
+--
 -- Indices de la tabla `cronogramas`
 --
 ALTER TABLE `cronogramas`
@@ -6872,7 +6926,7 @@ ALTER TABLE `asignaturas`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `candidatos_eleccion`
 --
@@ -6893,6 +6947,16 @@ ALTER TABLE `categorias`
 --
 ALTER TABLE `causales`
   MODIFY `id_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `criterios`
+--
+ALTER TABLE `criterios`
+  MODIFY `id_criterio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `criterios_asignados`
+--
+ALTER TABLE `criterios_asignados`
+  MODIFY `id_criterio_asignado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `cronogramas`
 --
@@ -7097,6 +7161,12 @@ ALTER TABLE `cargas_academicas`
 --
 ALTER TABLE `causales`
   ADD CONSTRAINT `fk_tipo_causal` FOREIGN KEY (`id_tipo_causal`) REFERENCES `tipos_causales` (`id_tipo_causal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `criterios_asignados`
+--
+ALTER TABLE `criterios_asignados`
+  ADD CONSTRAINT `fk_criteriosasignados_criterios` FOREIGN KEY (`id_criterio`) REFERENCES `criterios` (`id_criterio`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `cronogramas`
