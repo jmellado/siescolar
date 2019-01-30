@@ -13,12 +13,12 @@ function inicio(){
     		id_curso = $("#id_cursoSA").val();
 
     		$("#lista_situacionacademica tbody").html("");
-    		mostrardiv_situacionacademica();
+    		ocultardiv_situacionacademica();
     		mostrarsituacionacademica("",1,5,jornada,id_curso);
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
 		
        
@@ -43,8 +43,8 @@ function inicio(){
 
 
 			id_curso:{
-				required: true,
-				maxlength: 15	
+				required: true
+
 
 			},
 
@@ -70,7 +70,7 @@ function inicio(){
 function llenarcombo_cursosSA(jornada){
 
 	$.ajax({
-		url:base_url+"matriculas_controller/llenarcombo_cursosSA",
+		url:base_url+"situacion_academica_controller/llenarcombo_cursosSA",
 		type:"post",
 		data:{jornada:jornada},
 		success:function(respuesta) {
@@ -95,28 +95,44 @@ function llenarcombo_cursosSA(jornada){
 function mostrarsituacionacademica(valor,pagina,cantidad,jornada,id_curso){
 
 	$.ajax({
-		url:base_url+"matriculas_controller/mostrarsituacionacademica",
+		url:base_url+"situacion_academica_controller/mostrarsituacionacademica",
 		type:"post",
 		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,jornada:jornada,id_curso:id_curso},
 		success:function(respuesta) {
 				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				//------------------------CUANDO OBTENGO UN JSON OBJETCH ----//
-				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
-				html ="";
-
-				if (registros.situacion.length > 0) {
-
-					for (var i = 0; i < registros.situacion.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.situacion[i].id_persona+"</td><td>"+registros.situacion[i].identificacion+"</td><td>"+registros.situacion[i].apellido1+" "+registros.situacion[i].apellido2+" "+registros.situacion[i].nombres+"</td><td style='display:none'>"+registros.situacion[i].id_curso+"</td><td>"+registros.situacion[i].nombre_grado+" "+registros.situacion[i].nombre_grupo+" "+registros.situacion[i].jornada+"</td><td style='text-align: center;'>"+registros.situacion[i].asig_reprobadas+"</td><td style='text-align: center;'>"+registros.situacion[i].total_fallas+"</td><td>"+registros.situacion[i].estado_matricula+"</td></tr>";
-					};
+				if(respuesta==="nohayestudiantes"){
 					
-					$("#lista_situacionacademica tbody").html(html);
+					toastr.warning('No Existen Estudiantes Matriculados En El Curso Seleccionado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="nohaycriterios"){
+					
+					toastr.warning('El Curso Seleccionado No Tiene Criterios De Promoción Asignados.', 'Success Alert', {timeOut: 3000});
+
 				}
 				else{
-					html ="<tr><td colspan='7'><p style='text-align:center'>No Hay Estudiantes Matriculados..</p></td></tr>";
-					$("#lista_situacionacademica tbody").html(html);
-				}	
+
+					registros = JSON.parse(respuesta);
+
+					html ="";
+
+					if (registros.situacion.length > 0) {
+
+						for (var i = 0; i < registros.situacion.length; i++) {
+							html +="<tr><td width='30'>"+[i+1]+"</td><td style='display:none'>"+registros.situacion[i].id_estudiante+"</td><td width='130'>"+registros.situacion[i].identificacion+"</td><td width='150'>"+registros.situacion[i].apellido1+" "+registros.situacion[i].apellido2+" "+registros.situacion[i].nombres+"</td><td style='display:none'>"+registros.situacion[i].id_curso+"</td><td style='display:none'>"+registros.situacion[i].nombre_grado+" "+registros.situacion[i].nombre_grupo+" "+registros.situacion[i].jornada+"</td><td width='70' style='text-align: center;'>"+registros.situacion[i].asig_reprobadas+"</td><td width='70' style='text-align: center;'>"+registros.situacion[i].areas_reprobadas+"</td><td width='70' style='text-align: center;'>"+registros.situacion[i].total_fallas+"</td><td width='70' style='text-align: center;'>"+registros.situacion[i].porcentaje_fallas+"</td><td width='280'><b>"+registros.situacion[i].situacion_academica+"</b><br/>"+registros.situacion[i].nombre_criterio+"</td></tr>";
+						};
+						
+						$("#lista_situacionacademica tbody").html(html);
+					}
+					else{
+						html ="<tr><td colspan='8'><p style='text-align:center'>Ocurrió Un Error Al Consultar La Situación Académica..</p></td></tr>";
+						$("#lista_situacionacademica tbody").html(html);
+					}
+
+					mostrardiv_situacionacademica();
+
+				}
 
 			}
 
