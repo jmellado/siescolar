@@ -30,7 +30,6 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pensum.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/cargas_academicas.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/matriculas.js" defer></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/consolidar_matriculas.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/logros.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asignar_logros.js" defer></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notas.js" defer></script>
@@ -447,8 +446,6 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>matriculas_controller/index"><i class="fa fa-clipboard"></i> Matricular</a></li>
             <li><a href="<?php echo base_url(); ?>matriculas_controller/retirar_estudiante"><i class="fa fa-clipboard"></i>Retirar</a></li>
-            <li><a href="<?php echo base_url(); ?>matriculas_controller/situacion_academica"><i class="fa fa fa-shield"></i>Situación Academica</a></li>
-            <li><a href="<?php echo base_url(); ?>matriculas_controller/consolidar_matriculas"><i class="fa fa-tasks"></i> Consolidar Matriculas</a></li>
           </ul>
         </li>
         <li class="header">MAIN PROFESORES</li>
