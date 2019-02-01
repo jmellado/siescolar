@@ -479,14 +479,21 @@
             <li><a href="<?php echo base_url(); ?>asignar_logros_controller/index"><i class="fa fa-indent"></i>Asignar</a></li>
           </ul>
         </li>
-        <li>
-          <a href="<?php echo base_url(); ?>notas_controller/index">
-            <i class="fa fa-sticky-note"></i> <span>Gestionar Notas</span>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-sticky-note"></i>
+            <span>Gestionar Notas</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">4</small>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>notas_controller/index"><i class="fa fa-clipboard"></i>Registrar Notas</a></li>
+            <li><a href="<?php echo base_url(); ?>notas_finales_controller/notas_finales"><i class="fa fa-list-alt"></i>Consultar Notas Finales</a></li>
+          </ul>
         </li>
+
         <li>
           <a href="<?php echo base_url(); ?>nivelaciones_controller/index">
             <i class="fa fa-sliders"></i>
