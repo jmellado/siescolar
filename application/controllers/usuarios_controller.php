@@ -284,16 +284,24 @@ class Usuarios_controller extends CI_Controller {
 
 			if(is_numeric($id_usuario)){
 
-				$respuesta=$this->usuarios_model->modificar_usuario($id_usuario,$usuario);
+				if($this->usuarios_model->validar_sesion($id_usuario)){
 
-				if($respuesta==true){
+					$respuesta=$this->usuarios_model->modificar_usuario($id_usuario,$usuario);
 
-					echo "registroactualizado";
+					if($respuesta==true){
 
-				}else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+					}else{
 
+						echo "registronoactualizado";
+
+					}
+
+				}
+				else{
+
+					echo "sesionactiva";
 				}
 
 			}

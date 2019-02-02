@@ -117,6 +117,21 @@ class Usuarios_model extends CI_Model {
 	}
 
 
+	public function validar_sesion($id_usuario){
+
+		$id_usuario_sesion = $this->session->userdata('id_usuario');
+
+		if ($id_usuario == $id_usuario_sesion) {
+			
+			return false;
+		}
+		else{
+
+			return true;
+		}
+	}
+
+
 
 	//==================  FUNCIONES PARA VALIDAR EL USUARIO ==================
 

@@ -389,6 +389,15 @@ function actualizar_usuario(){
 					toastr.error('Usuario No Actualizado.', 'Success Alert', {timeOut: 3000});	
 
 				}
+				else if(respuesta==="sesionactiva"){
+					
+					toastr.warning('Usuario No Actualizado, Actualmente Tíene Una Sesión Activa.', 'Success Alert', {timeOut: 3000});	
+
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
 				
 				$("#form_usuarios_actualizar")[0].reset();
 
