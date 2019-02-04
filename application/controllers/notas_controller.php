@@ -87,6 +87,7 @@ class Notas_controller extends CI_Controller {
 	                'p3' => $p3,
 	                'p4' => $p4,
 	                'nota_final' => $nota_final,
+	                'definitiva' => $nota_final,
 	                'id_desempeno' => $desempeno,
 	                'fallas' => $fallas,
 	                'estado_nota' => $estado
