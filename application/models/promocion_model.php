@@ -116,7 +116,7 @@ class Promocion_model extends CI_Model {
 
 				for ($j=0; $j < count($NotasAsignaturas); $j++) {
 
-					$nota_final = $NotasAsignaturas[$j]['nota_final'];
+					$nota_final = $NotasAsignaturas[$j]['definitiva'];
 
 					if ($nota_final >= $minino && $nota_final <= $maximo) {
 						
@@ -278,7 +278,7 @@ class Promocion_model extends CI_Model {
 		$this->db->where('notas.ano_lectivo',$ano_lectivo);
 		$this->db->where('notas.id_estudiante',$id_estudiante);
 
-		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.nota_final, 0.0) as nota_final',false);
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.definitiva, 0.0) as definitiva',false);
 
 		$query = $this->db->get('notas');
 
@@ -395,14 +395,14 @@ class Promocion_model extends CI_Model {
 		$this->db->where('notas.id_estudiante',$id_estudiante);
 		$this->db->where('notas.id_asignatura',$asignatura_especifica);
 
-		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.nota_final, 0.0) as nota_final',false);
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.definitiva, 0.0) as definitiva',false);
 
 		$query = $this->db->get('notas');
 
 		if ($query->num_rows() > 0) {
 	
 			$NotaAsigEsp = $query->result_array();
-        	return $NotaAsigEsp[0]['nota_final'];
+        	return $NotaAsigEsp[0]['definitiva'];
         }
 		else{
 
