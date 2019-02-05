@@ -22,7 +22,7 @@
 
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><i class='fa fa-sliders'></i>&nbsp;GESTIÓN DE NIVELACIONES</h1>
+            <h1 class="page-header"><i class='fa fa-sliders'></i>&nbsp;GESTIÓN DE NIVELACIONES POR PERÍODO</h1>
         </div>
     </div>
 
@@ -210,7 +210,7 @@
 		    				<div class="col-md-9">
 								<div class="form-group">
 									<label for="descripcion_situacion">OBSERVACIONES</label>
-									<textarea class="form-control" name="observaciones" id="observacionesNV" cols="50" rows="3" placeholder="Descripción De La Situación.." style="resize:none"></textarea>
+									<textarea class="form-control" name="observaciones" id="observacionesNV" cols="50" rows="3" placeholder="Observaciones.." style="resize:none"></textarea>
 								</div>
 							</div>	
 		    			</div>
@@ -327,7 +327,7 @@
 		    				<div class="col-md-9">
 								<div class="form-group">
 									<label for="descripcion_situacion">OBSERVACIONES</label>
-									<textarea class="form-control" name="observaciones" id="observacionesseleNV" cols="50" rows="3" placeholder="Descripción De La Situación.." style="resize:none" disabled></textarea>
+									<textarea class="form-control" name="observaciones" id="observacionesseleNV" cols="50" rows="3" placeholder="Observaciones.." style="resize:none" disabled></textarea>
 								</div>
 							</div>	
 		    			</div>

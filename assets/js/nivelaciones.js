@@ -10,7 +10,7 @@ function inicio(){
 
     	if($("#form_nivelaciones").valid()==true){
     		if(validarCampoNivelacionNV()==true){
-    			if(confirm("Esta Seguro De Registrar Esta Nivelación.? Este Procedimiento Reemplazara La Nota Definitiva.")){
+    			if(confirm("Esta Seguro De Registrar Esta Nivelación.? Este Procedimiento Reemplazara La Nota Del Período.")){
 		       		registrar_nivelacion();
 		       	}	
 	       	}
@@ -19,7 +19,7 @@ function inicio(){
 	       	}	
       	}
        	else{
-			toastr.success('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
 		
     });
@@ -147,7 +147,8 @@ function inicio(){
 
     $("#modal_agregar_nivelacion").on('hidden.bs.modal', function () {
         limpiar_camposNV();
-        $("#form_nivelaciones").valid()==true;
+        var validator = $("#form_nivelaciones").validate();
+        validator.resetForm();
     });
 
 
@@ -157,22 +158,19 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15,
-				digits: true,
+				digits: true
 				
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15,
-				digits: true,
+				digits: true
 				
 			},
 
 			id_profesor:{
 				required: true,
-				maxlength: 15,
-				digits: true,
+				digits: true
 				
 			},
 
@@ -185,7 +183,6 @@ function inicio(){
 
 			id_estudiante:{
 				required: true,
-				maxlength: 15,
 				digits: true	
 
 			},

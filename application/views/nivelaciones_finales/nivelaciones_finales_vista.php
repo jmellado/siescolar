@@ -311,7 +311,7 @@
 		    				<div class="col-md-9">
 								<div class="form-group">
 									<label for="descripcion_situacion">OBSERVACIONES</label>
-									<textarea class="form-control" name="observaciones" id="observacionesseleNV" cols="50" rows="3" placeholder="Descripción De La Situación.." style="resize:none" disabled></textarea>
+									<textarea class="form-control" name="observaciones" id="observacionesseleNV" cols="50" rows="3" placeholder="Observaciones.." style="resize:none" disabled></textarea>
 								</div>
 							</div>	
 		    			</div>

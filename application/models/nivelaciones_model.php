@@ -141,41 +141,45 @@ class Nivelaciones_model extends CI_Model {
 		$query = $this->db->get('notas');
 
 		$NotaAsignatura = $query->result_array();
+
+		$DesempenoBajo = $this->nivelaciones_model->obtener_DesempenoBajo($ano_lectivo);
+		$minino = $DesempenoBajo[0]['rango_inicial'];
+		$maximo = $DesempenoBajo[0]['rango_final'];
 		
 		if ($periodo == "Primero") {
 
-			if ($NotaAsignatura[0]['p1'] >= 3.0 && $NotaAsignatura[0]['p1'] <= 5.0) {
-				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p1'];
+			if ($NotaAsignatura[0]['p1'] >= $minino && $NotaAsignatura[0]['p1'] <= $maximo) {
+				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p1'];
 			}
 			else{
-				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p1'];
+				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p1'];
 			}	
 		}
 		if ($periodo == "Segundo") {
 
-			if ($NotaAsignatura[0]['p2'] >= 3.0 && $NotaAsignatura[0]['p2'] <= 5.0) {
-				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p2'];
+			if ($NotaAsignatura[0]['p2'] >= $minino && $NotaAsignatura[0]['p2'] <= $maximo) {
+				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p2'];
 			}
 			else{
-				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p2'];
+				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p2'];
 			}
 		}	
 		if ($periodo == "Tercero") {
 
-			if ($NotaAsignatura[0]['p3'] >= 3.0 && $NotaAsignatura[0]['p3'] <= 5.0) {
-				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p3'];
+			if ($NotaAsignatura[0]['p3'] >= $minino && $NotaAsignatura[0]['p3'] <= $maximo) {
+				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p3'];
 			}
 			else{
-				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p3'];
+				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p3'];
 			}	
 		}
 		if ($periodo == "Cuarto") {
 
-			if ($NotaAsignatura[0]['p4'] >= 3.0 && $NotaAsignatura[0]['p4'] <= 5.0) {
-				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p4'];
+			if ($NotaAsignatura[0]['p4'] >= $minino && $NotaAsignatura[0]['p4'] <= $maximo) {
+				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p4'];
 			}
 			else{
-				$asignaturas_reprobadas[] = $NotaAsignatura[0]['p4'];
+				$asignaturas_aprobadas[] = $NotaAsignatura[0]['p4'];
 			}
 		}
 
@@ -203,7 +207,7 @@ class Nivelaciones_model extends CI_Model {
 		$this->db->where('id_grado',$id_grado);
 		$this->db->where('id_asignatura',$id_asignatura);
 
-		$this->db->select('IFNULL(p1, 0.0) as p1,IFNULL(p2, 0.0) as p2,IFNULL(p3, 0.0) as p3,IFNULL(p4, 0.0) as p4',false);
+		$this->db->select('IFNULL(p1, "Sin Nota") as p1,IFNULL(p2, "Sin Nota") as p2,IFNULL(p3, "Sin Nota") as p3,IFNULL(p4, "Sin Nota") as p4',false);
 
 		$query = $this->db->get('notas');
 
@@ -261,7 +265,7 @@ class Nivelaciones_model extends CI_Model {
 
 			$nota_final = $this->nivelaciones_model->calcularNota_final($ano_lectivo,$id_estudiante,$id_grado,$id_asignatura);
 			$desempeno = $this->nivelaciones_model->obtener_desempeno($nota_final,$ano_lectivo);
-			$NotaDesempeño = array('nota_final' => $nota_final, 'id_desempeno' => $desempeno);
+			$NotaDesempeño = array('nota_final' => $nota_final,'definitiva' => $nota_final,'id_desempeno' => $desempeno);
 
 			$this->db->where('ano_lectivo',$ano_lectivo);
 			$this->db->where('id_estudiante',$id_estudiante);
@@ -296,6 +300,9 @@ class Nivelaciones_model extends CI_Model {
 		$this->db->or_like('asignaturas.nombre_asignatura',$id,'after');
 		$this->db->or_like('nivelaciones.fecha_nivelacion',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",est.identificacion,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",est.apellido1,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,anos_lectivos.nombre_ano_lectivo)',$id,'after');
 
 		$this->db->order_by('nivelaciones.ano_lectivo', 'desc');
 		$this->db->order_by('nivelaciones.fecha_registro', 'desc');
@@ -409,6 +416,26 @@ class Nivelaciones_model extends CI_Model {
 		
 			$row = $query->result_array();
         	return $row[0]['id_desempeno'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function obtener_DesempenoBajo($ano_lectivo){
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+		$this->db->where('desempenos.nombre_desempeno','Bajo');
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final,desempenos.ano_lectivo');
+
+		$query = $this->db->get('desempenos');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
 		}
 		else{
 			return false;
