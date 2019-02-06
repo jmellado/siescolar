@@ -33,6 +33,8 @@ class Promocion_model extends CI_Model {
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
+		$id_grado = $this->promocion_model->obtener_gradoDelcurso($id_curso);
+
 		$estudiantes = $this->promocion_model->buscar_estudiantes_matriculados_curso($ano_lectivo,$id_curso);
 
 		//NUEVA TRANSACCION
@@ -41,7 +43,7 @@ class Promocion_model extends CI_Model {
 			for ($i=0; $i < count($estudiantes); $i++) { 
 				
 				$id_estudiante = $estudiantes[$i]['id_estudiante'];
-				$situacion_academica = $this->promocion_model->calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso);
+				$situacion_academica = $this->promocion_model->calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
 
 				$matriculas = array('situacion_academica' => $situacion_academica);
 
@@ -91,10 +93,10 @@ class Promocion_model extends CI_Model {
 
 
 	//Esta funcion me permite calcular la situacion academica de un estudiante.
-	public function calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso){
+	public function calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado){
 
 		$situacion_academica = "";
-		$criterios = $this->promocion_model->obtener_criterios_promocion($ano_lectivo,$id_curso);
+		$criterios = $this->promocion_model->obtener_criterios_promocion($ano_lectivo,$id_grado);
 
 		for ($i=0; $i < count($criterios); $i++) {
 
@@ -108,7 +110,7 @@ class Promocion_model extends CI_Model {
 				$asignaturas_aprobadas = array();
 				$asignaturas_reprobadas = array();
 
-				$NotasAsignaturas = $this->promocion_model->obtener_NotasPorAsignaturas($ano_lectivo,$id_estudiante);
+				$NotasAsignaturas = $this->promocion_model->obtener_NotasPorAsignaturas($ano_lectivo,$id_estudiante,$id_grado);
 
 				$DesempenoBajo = $this->promocion_model->obtener_DesempenoBajo($ano_lectivo);
 				$minino = $DesempenoBajo[0]['rango_inicial'];
@@ -148,7 +150,7 @@ class Promocion_model extends CI_Model {
 			if ($codigo_criterio == 2) {
 
 				$inasistencias = $this->promocion_model->obtener_inasistencias($ano_lectivo,$id_estudiante);
-				$horas_semanales = $this->promocion_model->obtener_horas_semanales($ano_lectivo,$id_curso);
+				$horas_semanales = $this->promocion_model->obtener_horas_semanales($ano_lectivo,$id_grado);
 
 				$horas_totales = 40 * $horas_semanales;
 
@@ -172,7 +174,7 @@ class Promocion_model extends CI_Model {
 				$AsigEsp_aprobadas = array();
 				$AsigEsp_reprobadas = array();
 
-				$AsigEsp = $this->promocion_model->obtener_AsignaturasEspecificas($ano_lectivo,$id_curso,$id_criterio);
+				$AsigEsp = $this->promocion_model->obtener_AsignaturasEspecificas($ano_lectivo,$id_grado,$id_criterio);
 
 				$DesempenoBajo = $this->promocion_model->obtener_DesempenoBajo($ano_lectivo);
 				$minino = $DesempenoBajo[0]['rango_inicial'];
@@ -182,7 +184,7 @@ class Promocion_model extends CI_Model {
 
 					$asignatura_especifica = $AsigEsp[$k]['asignatura_especifica'];
 
-					$nota_final = $this->promocion_model->obtener_NotaPorAsignaturaEspecifica($ano_lectivo,$id_estudiante,$asignatura_especifica);
+					$nota_final = $this->promocion_model->obtener_NotaPorAsignaturaEspecifica($ano_lectivo,$id_estudiante,$id_grado,$asignatura_especifica);
 					
 					if ($nota_final >= $minino && $nota_final <= $maximo) {
 						
@@ -223,9 +225,7 @@ class Promocion_model extends CI_Model {
 
 
 	//Esta Funcion me permite obtener los criterios de promocion asignados para el curso seleccionado
-	public function obtener_criterios_promocion($ano_lectivo,$id_curso){
-
-		$id_grado = $this->promocion_model->obtener_gradoDelcurso($id_curso);
+	public function obtener_criterios_promocion($ano_lectivo,$id_grado){
 
 		$this->db->where('criterios_asignados.ano_lectivo',$ano_lectivo);
 		$this->db->where('criterios_asignados.id_grado',$id_grado);
@@ -273,10 +273,11 @@ class Promocion_model extends CI_Model {
 	//1) FUNCIONES PARA CALCULAR (NUMERO DE AREAS O ASIGNATURAS REPROBADAS)
 
 
-	public function obtener_NotasPorAsignaturas($ano_lectivo,$id_estudiante){
+	public function obtener_NotasPorAsignaturas($ano_lectivo,$id_estudiante,$id_grado){
 
 		$this->db->where('notas.ano_lectivo',$ano_lectivo);
 		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.id_grado',$id_grado);
 
 		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.definitiva, 0.0) as definitiva',false);
 
@@ -339,9 +340,7 @@ class Promocion_model extends CI_Model {
 	}
 
 
-	public function obtener_horas_semanales($ano_lectivo,$id_curso){
-
-		$id_grado = $this->promocion_model->obtener_gradoDelcurso($id_curso);
+	public function obtener_horas_semanales($ano_lectivo,$id_grado){
 
 		$this->db->where('pensum.ano_lectivo',$ano_lectivo);
 		$this->db->where('pensum.id_grado',$id_grado);
@@ -366,9 +365,7 @@ class Promocion_model extends CI_Model {
 
 
 	//Esta Funcion me permite obtener las asignaturas seleccionadas como criterio de promocion
-	public function obtener_AsignaturasEspecificas($ano_lectivo,$id_curso,$id_criterio){
-
-		$id_grado = $this->promocion_model->obtener_gradoDelcurso($id_curso);
+	public function obtener_AsignaturasEspecificas($ano_lectivo,$id_grado,$id_criterio){
 
 		$this->db->where('criterios_asignados.ano_lectivo',$ano_lectivo);
 		$this->db->where('criterios_asignados.id_grado',$id_grado);
@@ -389,10 +386,11 @@ class Promocion_model extends CI_Model {
 	}
 
 
-	public function obtener_NotaPorAsignaturaEspecifica($ano_lectivo,$id_estudiante,$asignatura_especifica){
+	public function obtener_NotaPorAsignaturaEspecifica($ano_lectivo,$id_estudiante,$id_grado,$asignatura_especifica){
 
 		$this->db->where('notas.ano_lectivo',$ano_lectivo);
 		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.id_grado',$id_grado);
 		$this->db->where('notas.id_asignatura',$asignatura_especifica);
 
 		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.definitiva, 0.0) as definitiva',false);
