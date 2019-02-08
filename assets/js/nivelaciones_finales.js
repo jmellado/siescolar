@@ -213,7 +213,7 @@ function inicio(){
 function llenarcombo_anos_lectivosNV(){
 
 	$.ajax({
-		url:base_url+"funciones_globales_controller/llenarcombo_anos_lectivos",
+		url:base_url+"nivelaciones_finales_controller/llenarcombo_anos_lectivos",
 		type:"post",
 		success:function(respuesta) {
 

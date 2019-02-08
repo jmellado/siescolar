@@ -3,6 +3,13 @@
 class Nivelaciones_finales_model extends CI_Model {
 
 
+	public function llenar_anos_lectivos(){
+
+		$query = $this->db->get('anos_lectivos');
+		return $query->result();
+	}
+
+	
 	public function llenar_cursos($ano_lectivo){
 
 		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
