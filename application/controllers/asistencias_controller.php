@@ -82,28 +82,45 @@ class Asistencias_controller extends CI_Controller {
 		$asistencias = $this->input->post('asistencia');
 		$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
+		$horas = $this->asistencias_model->obtener_HorasAsignaturaPorFecha($ano_lectivo,$id_curso,$id_asignatura,$fecha);
+		$fecha_ac = substr($fecha_registro, 0, 10);
+
 		if($estudiantes !=""){
 
-			if ($this->asistencias_model->validar_existencia($id_profesor,$id_curso,$id_asignatura,$periodo,$fecha)){
+			if ($this->asistencias_model->validar_fechaIngresoAsistencias($periodo,$fecha_ac,$ano_lectivo)){
 
-				$respuesta = $this->asistencias_model->insertar_asistencia($ano_lectivo,$id_profesor,$id_curso,$id_asignatura,$estudiantes,$periodo,$fecha,$asistencias,$fecha_registro);
+				if ($this->asistencias_model->validar_existencia($id_profesor,$id_curso,$id_asignatura,$periodo,$fecha)){
 
-				if($respuesta == true){
+					if ($horas > 0){
 
-		        	echo "registroguardado";
+						$respuesta = $this->asistencias_model->insertar_asistencia($ano_lectivo,$id_profesor,$id_curso,$id_asignatura,$estudiantes,$periodo,$fecha,$asistencias,$horas,$fecha_registro);
 
-		        	//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
-                	$respuesta_firebase = $this->asistencias_model->enviar_notificacionFirebase($estudiantes,$id_asignatura,$asistencias);
-		        }
-		        else{
+						if($respuesta == true){
 
-		        	echo "registronoguardado";
-		        }
-		    }
-		    else{
+				        	echo "registroguardado";
 
-		    	echo "asistenciayaexiste";
-		    }
+				        	//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+		                	$respuesta_firebase = $this->asistencias_model->enviar_notificacionFirebase($estudiantes,$id_asignatura,$asistencias);
+				        }
+				        else{
+
+				        	echo "registronoguardado";
+				        }
+				    }
+				    else{
+
+				    	echo "nohayhoras";
+				    }
+			    }
+			    else{
+
+			    	echo "asistenciayaexiste";
+			    }
+			}
+			else{
+
+				echo "periodocerrado";
+			}
 
 	    }else{
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-02-2019 a las 19:06:12
+-- Tiempo de generación: 10-02-2019 a las 01:29:14
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -221,6 +221,7 @@ CREATE TABLE `asistencias` (
   `periodo` varchar(8) NOT NULL,
   `fecha` date NOT NULL,
   `asistencia` varchar(45) NOT NULL,
+  `horas` int(11) NOT NULL,
   `fecha_registro` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

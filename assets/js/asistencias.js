@@ -72,6 +72,16 @@ function inicio(){
 						toastr.warning('No Hay Información Por Registrar.', 'Success Alert', {timeOut: 3000});
 							
 					}
+					else if(respuesta==="periodocerrado"){
+						
+						toastr.warning('No Existen Fechas Para El Registro De Asistencias.', 'Success Alert', {timeOut: 3000});
+							
+					}
+					else if(respuesta==="nohayhoras"){
+						
+						toastr.warning('La Asignatura No Tiene Horas De Clase Registradas Para La Fecha Seleccionada.', 'Success Alert', {timeOut: 3000});
+							
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
@@ -219,7 +229,7 @@ function mostrarestudiantes(valor,pagina,cantidad,id_curso){
 				if (registros.estudiantes.length > 0) {
 
 					for (var i = 0; i < registros.estudiantes.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.estudiantes[i].id_estudiante+"' size='2'></td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].apellido1+" "+registros.estudiantes[i].apellido2+" "+registros.estudiantes[i].nombres+"</td><td style='display:none'>"+registros.estudiantes[i].id_curso+"</td><td>"+registros.estudiantes[i].nombre_grado+" "+registros.estudiantes[i].nombre_grupo+" "+registros.estudiantes[i].jornada+"</td><td><select class='form-control' name='asistencia[]' id='asistencia' style='width: 140px;'><option></option><option value='Asistió'>Asistió</option><option value='Faltó'>Faltó</option><option value='Tardanza'>Tardanza</option><option value='Falta Justificada'>Falta Justificada</option><option value='Tardanza Justificada'>Tardanza Justificada</option></select></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.estudiantes[i].id_estudiante+"' size='2'></td><td>"+registros.estudiantes[i].identificacion+"</td><td>"+registros.estudiantes[i].apellido1+" "+registros.estudiantes[i].apellido2+" "+registros.estudiantes[i].nombres+"</td><td style='display:none'>"+registros.estudiantes[i].id_curso+"</td><td>"+registros.estudiantes[i].nombre_grado+" "+registros.estudiantes[i].nombre_grupo+" "+registros.estudiantes[i].jornada+"</td><td align='center'><select class='form-control' name='asistencia[]' id='asistencia' style='width: 140px;'><option></option><option value='Asistió'>Asistió</option><option value='Faltó'>Faltó</option><option value='Tardanza'>Tardanza</option><option value='Falta Justificada'>Falta Justificada</option><option value='Tardanza Justificada'>Tardanza Justificada</option></select></td></tr>";
 					};
 					
 					$("#lista_estudiantes tbody").html(html);

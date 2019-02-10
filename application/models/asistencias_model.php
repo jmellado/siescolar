@@ -69,7 +69,7 @@ class Asistencias_model extends CI_Model {
 	}
 
 
-	public function insertar_asistencia($ano_lectivo,$id_profesor,$id_curso,$id_asignatura,$estudiantes,$periodo,$fecha,$asistencias,$fecha_registro){
+	public function insertar_asistencia($ano_lectivo,$id_profesor,$id_curso,$id_asignatura,$estudiantes,$periodo,$fecha,$asistencias,$horas,$fecha_registro){
 
 		if ($estudiantes != false) {
 			
@@ -86,6 +86,7 @@ class Asistencias_model extends CI_Model {
 					'periodo' 		=>$periodo,
 					'fecha' 		=>$fecha,
 					'asistencia'	=>$asistencias[$i],
+					'horas' 		=>$horas,
 					'fecha_registro'=>$fecha_registro);
 
 					$this->db->insert('asistencias', $asistencia);
@@ -152,11 +153,71 @@ class Asistencias_model extends CI_Model {
 		$this->db->join('asignaturas', 'asistencias.id_asignatura = asignaturas.id_asignatura');
 		$this->db->join('anos_lectivos', 'asistencias.ano_lectivo = anos_lectivos.id_ano_lectivo');
 
-		$this->db->select('asistencias.id_asistencia,asistencias.ano_lectivo,asistencias.id_profesor,asistencias.id_curso,asistencias.id_asignatura,asistencias.id_estudiante,asistencias.periodo,asistencias.fecha,asistencias.asistencia,asistencias.fecha_registro,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo');
+		$this->db->select('asistencias.id_asistencia,asistencias.ano_lectivo,asistencias.id_profesor,asistencias.id_curso,asistencias.id_asignatura,asistencias.id_estudiante,asistencias.periodo,asistencias.fecha,asistencias.asistencia,asistencias.horas,asistencias.fecha_registro,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo');
 		
 		$query = $this->db->get('asistencias');
 
 		return $query->result_array();
+		
+	}
+
+
+	// esta funcion permite obtener el numero de horas de clase que tiene una asigntura en una fecha dada
+	// obteniendo el dia de la semana y consultando en la tabla horarios
+	public function obtener_HorasAsignaturaPorFecha($ano_lectivo,$id_curso,$id_asignatura,$fecha){
+
+		$dia_semana = $this->asistencias_model->obtener_dia_semana($fecha);
+
+		$this->db->where('horarios.ano_lectivo',$ano_lectivo);
+		$this->db->where('horarios.id_curso',$id_curso);
+		$this->db->where($dia_semana,$id_asignatura);
+
+		$this->db->select('horarios.id_horario,horarios.id_curso,horarios.hora,horarios.ano_lectivo');
+
+		$query = $this->db->get('horarios');
+
+		if ($query->num_rows() > 0) {
+
+			return count($query->result_array());
+		}
+		else{
+			return 0;
+		}
+
+	}
+
+
+	public function obtener_dia_semana($fecha){
+
+		$fech = strtotime($fecha);  //fecha como numero
+
+		$dia_semana = date("w", $fech); //dia de la semana en numero 0 a 6
+
+		switch ($dia_semana) {
+			case '0': return "domingo"; break;
+			case '1': return "lunes"; break;
+			case '2': return "martes"; break;
+			case '3': return "miercoles"; break;
+			case '4': return "jueves"; break;
+			case '5': return "viernes"; break;
+			case '6': return "sabado"; break;
+		}
+
+	}
+
+
+	public function validar_fechaIngresoAsistencias($periodo,$fecha_actual,$ano_lectivo){
+
+		$estado_actividad = "Activo";
+
+		$sql= "SELECT nombre_actividad FROM cronogramas WHERE nombre_actividad ='". $periodo."' AND ano_lectivo ='".$ano_lectivo."' AND estado_actividad ='".$estado_actividad."' AND '".$fecha_actual."' >= fecha_inicial AND '".$fecha_actual."' <= fecha_final";
+
+		$query = $this->db->query($sql);
+
+		if ($query->num_rows() > 0) 
+			return true;
+		else
+			return false;
 		
 	}
 
