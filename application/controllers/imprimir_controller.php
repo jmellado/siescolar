@@ -37,6 +37,7 @@ class Imprimir_controller extends CI_Controller {
 		$curs = $this->imprimir_model->obtener_informacion_curso($id_curso);
 		$nombre_curso = $curs[0]['nombre_grado'].'-'.$curs[0]['nombre_grupo'];
 		$director_curso = $curs[0]['nombres'].' '.$curs[0]['apellido1'].' '.$curs[0]['apellido2'];
+		$ano_lectivo = $curs[0]['ano_lectivo'];
 
 		$estudiantes = $this->imprimir_model->EstudiantesPorCursos($id_curso,$periodo);
 		$total_estudiantes = count($this->imprimir_model->EstudiantesPorCursos($id_curso,$periodo));
@@ -167,7 +168,10 @@ class Imprimir_controller extends CI_Controller {
 						$total_notas = count($this->imprimir_model->Notas_Logros($id_curso,$periodo,$id_estudiante));
 
 						  
-				        for ($j=0; $j < $total_notas; $j++) { 
+				        for ($j=0; $j < $total_notas; $j++) {
+
+				        	$id_asignatura = $notas_logros[$j]['id_asignatura'];
+				        	$inasistencias = $this->imprimir_model->obtener_inasistencias($ano_lectivo,$id_asignatura,$id_estudiante,$periodo); 
 
 				        	if($p=="Primero"){
 
@@ -179,7 +183,7 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p1'].'</td>
-				        					<td align="center" width="18"></td>
+				        					<td align="center" width="18">'.$inasistencias.'</td>
 				        					<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
 				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
 				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
@@ -199,7 +203,7 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p2'].'</td>
-				        					<td align="center" width="18"></td>
+				        					<td align="center" width="18">'.$inasistencias.'</td>
 											<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
 				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
 				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
@@ -219,7 +223,7 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p3'].'</td>
-				        					<td align="center" width="18"></td>
+				        					<td align="center" width="18">'.$inasistencias.'</td>
 											<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
 				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
 				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
@@ -239,7 +243,7 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20">'.$notas_logros[$j]['p3'].'</td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p4'].'</td>
-				        					<td align="center" width="18"></td>
+				        					<td align="center" width="18">'.$inasistencias.'</td>
 											<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
 				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
 				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;

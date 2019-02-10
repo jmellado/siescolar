@@ -392,6 +392,31 @@ class Imprimir_model extends CI_Model {
 	}
 
 
+	//funcion para obtener las inasistencias por estudiante en una determinada asignatura y periodo
+	public function obtener_inasistencias($ano_lectivo,$id_asignatura,$id_estudiante,$periodo){
+
+		$this->db->where('asistencias.ano_lectivo',$ano_lectivo);
+		$this->db->where('asistencias.id_asignatura',$id_asignatura);
+		$this->db->where('asistencias.id_estudiante',$id_estudiante);
+		$this->db->where('asistencias.periodo',$periodo);
+		$this->db->where('asistencias.asistencia','Faltó');
+
+		$this->db->select('asistencias.ano_lectivo,asistencias.id_estudiante,IFNULL(SUM(asistencias.horas), "") as inasistencias',false);
+
+		$query = $this->db->get('asistencias');
+
+		if ($query->num_rows() > 0) {
+		
+        	$row = $query->result_array();
+        	return $row[0]['inasistencias'];
+		}
+		else{
+			return 0;
+		}
+
+	}
+
+
 	//********************************** FUNCIONES PARA IMPRIMIR PLANILLAS *********************************
 
 
