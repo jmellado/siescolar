@@ -171,13 +171,14 @@ class Libro_calificaciones_model extends CI_Model {
 		$this->db->where('asistencias.id_estudiante',$id_estudiante);
 		$this->db->where('asistencias.asistencia','Faltó');
 
-		$this->db->select('asistencias.ano_lectivo,asistencias.id_asignatura,asistencias.id_estudiante');
+		$this->db->select('asistencias.ano_lectivo,asistencias.id_estudiante,IFNULL(SUM(asistencias.horas), 0) as inasistencias',false);
 
 		$query = $this->db->get('asistencias');
 
 		if ($query->num_rows() > 0) {
 		
-        	return count($query->result_array());
+        	$row = $query->result_array();
+        	return $row[0]['inasistencias'];
 		}
 		else{
 			return 0;
