@@ -63,9 +63,9 @@ class Notas_finales_model extends CI_Model {
 		$this->db->join('personas', 'notas.id_estudiante = personas.id_persona');
 		$this->db->join('estudiantes', 'notas.id_estudiante = estudiantes.id_persona');
 		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
-		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno');
+		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno','left');
 
-		$this->db->select('notas.id_nota,notas.ano_lectivo,notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,notas.id_desempeno,IF(notas.fallas = "","0", notas.fallas) as fallas,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,asignaturas.nombre_asignatura,desempenos.nombre_desempeno', false);
+		$this->db->select('notas.id_nota,notas.ano_lectivo,notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,IFNULL(notas.definitiva,"") as definitiva,notas.id_desempeno,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,asignaturas.nombre_asignatura,IFNULL(desempenos.nombre_desempeno, "") as nombre_desempeno', false);
 		
 		$query = $this->db->get('notas');
 

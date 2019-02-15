@@ -88,9 +88,9 @@
 											<th width="40" style="text-align: center;">2°P</th>
 											<th width="40" style="text-align: center;">3°P</th>
 											<th width="40" style="text-align: center;">4°P</th>
+											<th width="80" style="text-align: center;">Final</th>
 											<th width="80" style="text-align: center;">Definitiva</th>
 											<th width="80" style="text-align: center;">Desempeño</th>
-											<th width="80" style="text-align: center;">Inasistencias</th>
 										</tr>
 									</thead>
 									<tfoot>
