@@ -125,9 +125,9 @@ class Libro_calificaciones_model extends CI_Model {
 		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 
 		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
-		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno');
+		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno','left');
 
-		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.p1, 0.0) as p1,IFNULL(notas.p2, 0.0) as p2,IFNULL(notas.p3, 0.0) as p3,IFNULL(notas.p4, 0.0) as p4,IFNULL(notas.definitiva, 0.0) as definitiva,IF(notas.fallas = "","0", notas.fallas) as fallas,asignaturas.nombre_asignatura,desempenos.nombre_desempeno',false);
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.p1, "") as p1,IFNULL(notas.p2, "") as p2,IFNULL(notas.p3, "") as p3,IFNULL(notas.p4, "") as p4,IFNULL(notas.definitiva, "") as definitiva,asignaturas.nombre_asignatura,IFNULL(desempenos.nombre_desempeno, "") as nombre_desempeno',false);
 
 		$query = $this->db->get('notas');
 
