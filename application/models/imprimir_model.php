@@ -705,9 +705,11 @@ class Imprimir_model extends CI_Model {
 		$this->db->where('notas.ano_lectivo',$ano_lectivo);
 		$this->db->where('pensum.id_grado',$id_grado);
 
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
 		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
 		$this->db->join('pensum', 'notas.id_asignatura = pensum.id_asignatura');
-		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno');
+		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno','left');
 
 		$this->db->select('notas.id_estudiante,notas.id_asignatura,notas.nota_final,notas.id_desempeno,asignaturas.nombre_asignatura,pensum.intensidad_horaria,desempenos.nombre_desempeno');
 

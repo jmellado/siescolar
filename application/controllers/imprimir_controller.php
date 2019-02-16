@@ -966,6 +966,7 @@ class Imprimir_controller extends CI_Controller {
 		$grado = $est[0]['nombre_grado'];
 		$jornada = $est[0]['jornada'];
 		$nombre_ano_lectivo = $est[0]['nombre_ano_lectivo'];
+		$situacion_academica = $est[0]['situacion_academica'];
 
 		if ($est[0]['tipo_id'] == "cc") {
 			$tipo_id = "cédula de ciudadania";
@@ -975,6 +976,19 @@ class Imprimir_controller extends CI_Controller {
 		}
 		if ($est[0]['tipo_id'] == "ti") {
 			$tipo_id = "tarjeta de identidad";
+		}
+
+		if ($situacion_academica == "Reprobado") {
+			$situacion = "reprobó";
+		}
+		if ($situacion_academica == "Aprobado") {
+			$situacion = "aprobó";
+		}
+		if ($situacion_academica == "No Definida") {
+			$situacion = "no definió";
+		}
+		if ($situacion_academica == "Nivelacion") {
+			$situacion = "no definió";
 		}
 
 		//variable que almacena el array de las calificaciones del estudiante
@@ -1060,7 +1074,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl = '';
 	        $tbl .= '<br />';
 	        $tbl .= '<p align="center"><b>CERTIFICA:</b><br /></p>';
-	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y aprobó en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.$nombre_ano_lectivo.') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
+	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y '.$situacion.' en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.$nombre_ano_lectivo.') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
 
 	        $tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
 	        $tbl .= '<tr>
