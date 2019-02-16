@@ -205,12 +205,47 @@ class Promocion_model extends CI_Model {
 					$situacion_academica = "Reprobado";
 					return $situacion_academica;
 				}
-				elseif ($Total_AsigEspReprob > 0 && $Total_AsigEspReprob < $Total_AsigEsp) {
-					
-					$situacion_academica = "Nivelacion";
-					return $situacion_academica;
-				}
+				else{
 
+					//Se debe validar en este criterio(asignaturas espeficas), que si el estudiante solo pierde
+					//una de las asignaturas especificas estipuladas quedaria para nivelacion; siempre y cuando 
+					//el estudiante no incumpla el criterio(numero de areas o asignaturas reprobadas), si lo 
+					//incumple es reprobado por tal criterio.
+
+					$id_crit = 1;
+					$validacion = $this->promocion_model->validar_criterio_asignado($ano_lectivo,$id_grado,$id_crit);
+
+					if ($validacion == true) {
+
+						$crit = $this->promocion_model->obtener_criterio_asignado($ano_lectivo,$id_grado,$id_crit);
+						$nombre_crit = $crit[0]['nombre_criterio'];
+						$numero_areas_asignaturas = $crit[0]['numero_areas_asignaturas'];
+
+						$AsigReprob = $this->promocion_model->calcular_asignaturas_reprobadas($ano_lectivo,$id_estudiante,$id_grado);
+
+						if ($AsigReprob >= $numero_areas_asignaturas) {
+
+							$situacion_academica = "Reprobado";
+							return $situacion_academica;
+						}
+						elseif ($Total_AsigEspReprob > 0 && $Total_AsigEspReprob < $Total_AsigEsp) {
+					
+							$situacion_academica = "Nivelacion";
+							return $situacion_academica;
+						}
+						
+					}
+					else{
+
+						if ($Total_AsigEspReprob > 0 && $Total_AsigEspReprob < $Total_AsigEsp) {
+						
+							$situacion_academica = "Nivelacion";
+							return $situacion_academica;
+						}
+
+					}
+					
+				}
 				
 			}
 			
@@ -409,6 +444,89 @@ class Promocion_model extends CI_Model {
 		}
 
 	}
+
+
+	//Esta Funcion me permite validar si el grado tiene asignado un criterio de prom. determinado
+	public function validar_criterio_asignado($ano_lectivo,$id_grado,$id_criterio){
+
+		$this->db->where('criterios_asignados.ano_lectivo',$ano_lectivo);
+		$this->db->where('criterios_asignados.id_grado',$id_grado);
+		$this->db->where('criterios_asignados.id_criterio',$id_criterio);
+
+		$query = $this->db->get('criterios_asignados');
+
+		if ($query->num_rows() > 0) {
+		
+        	return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	//Esta Funcion me permite obtener informacion de un criterio de promocion asignado para un grado determinado
+	public function obtener_criterio_asignado($ano_lectivo,$id_grado,$id_criterio){
+
+		$this->db->where('criterios_asignados.ano_lectivo',$ano_lectivo);
+		$this->db->where('criterios_asignados.id_grado',$id_grado);
+		$this->db->where('criterios_asignados.id_criterio',$id_criterio);
+
+		$this->db->join('criterios', 'criterios_asignados.id_criterio = criterios.id_criterio');
+
+		$this->db->select('criterios_asignados.id_criterio_asignado,criterios_asignados.ano_lectivo,criterios_asignados.id_grado,criterios_asignados.id_criterio,criterios_asignados.numero_areas_asignaturas,criterios_asignados.porcentaje_inasistencias,criterios_asignados.asignatura_especifica,criterios.nombre_criterio,criterios.codigo_criterio,criterios.prioridad');
+
+		$query = $this->db->get('criterios_asignados');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+
+	//================ OTRAS FUNCIONES ===================
+
+
+	public function calcular_asignaturas_reprobadas($ano_lectivo,$id_estudiante,$id_grado){
+
+		//array sencillo para las asignaturas aprobadas y reprobadas
+		$asignaturas_aprobadas = array();
+		$asignaturas_reprobadas = array();
+
+		$NotasAsignaturas = $this->promocion_model->obtener_NotasPorAsignaturas($ano_lectivo,$id_estudiante,$id_grado);
+
+		$DesempenoBajo = $this->promocion_model->obtener_DesempenoBajo($ano_lectivo);
+		$minino = $DesempenoBajo[0]['rango_inicial'];
+		$maximo = $DesempenoBajo[0]['rango_final'];
+
+		for ($j=0; $j < count($NotasAsignaturas); $j++) {
+
+			$nota_final = $NotasAsignaturas[$j]['definitiva'];
+
+			if ($nota_final >= $minino && $nota_final <= $maximo) {
+				
+				$asignaturas_reprobadas[] = $nota_final;
+			}
+			else{
+
+				$asignaturas_aprobadas[] = $nota_final;
+			}
+			
+		}
+
+		$TotalAsigReprob = count($asignaturas_reprobadas);
+
+		return $TotalAsigReprob;
+
+	}
+
 
 
 	//============================ VALIDACIONES =============================
