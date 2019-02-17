@@ -235,6 +235,8 @@ class Nivelaciones_finales_model extends CI_Model {
 			$this->db->where('id_asignatura',$id_asignatura);
 			$this->db->update('notas', $Desempeño);
 
+			$situacion = $this->nivelaciones_finales_model->actualizar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
+
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE){
@@ -322,6 +324,36 @@ class Nivelaciones_finales_model extends CI_Model {
 		}
 		else{
 			return false;
+		}
+
+	}
+
+
+	//Esta funcion permite actualizar la situacion academica de un estudiante, en el momento que se le
+	//registran nivelaciones finales de una respectiva asignatura.
+	public function actualizar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado){
+
+		$this->load->model('promocion_model');
+		$situacion_academica = $this->promocion_model->calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
+
+		$matriculas = array('situacion_academica' => $situacion_academica);
+
+		$this->db->trans_start();
+
+			$this->db->where('ano_lectivo',$ano_lectivo);
+			$this->db->where('id_estudiante',$id_estudiante);
+			$this->db->where('id_curso',$id_curso);
+			$this->db->update('matriculas', $matriculas);
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
 		}
 
 	}
