@@ -118,7 +118,7 @@ class Nivelaciones_finales_controller extends CI_Controller {
 
         	//obtengo el ultimo id de nivelaciones_finales + 1 
         	$id_nivelacion_final = $this->nivelaciones_finales_model->obtener_ultimo_id();
-        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	$ano_lectivo = $this->input->post('ano_lectivo');
         	$id_estudiante = $this->input->post('id_estudiante');
         	$id_curso = $this->input->post('id_curso');
         	$id_asignatura = $this->input->post('id_asignatura');

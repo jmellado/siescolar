@@ -176,12 +176,14 @@ function inicio(){
 
 			calificacion:{
 				required: true,
+				number: true,
 				maxlength: 3	
 
 			},
 
 			nivelacion:{
 				required: true,
+				number: true,
 				maxlength: 3
 
 			},
@@ -324,7 +326,7 @@ function llenarcombo_estudiantesNV(id_curso,id_asignatura,ano_lectivo){
 				}
 				else{
 					$("#estudiante_nivelacion1 select").html(html);
-					toastr.warning('No hay Estudiantes Pendientes Por Nivelación, Para Este Período Y Asignatura.', 'Success Alert', {timeOut: 3000});
+					toastr.info('No hay Estudiantes Pendientes Por Nivelación, Para Esta Asignatura.', 'Success Alert', {timeOut: 3000});
 				}
 		}
 
