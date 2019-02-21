@@ -46,6 +46,8 @@ class Inbox_model extends CI_Model {
 		$CI = & get_instance();
 		$CI->load->helper('date');
 
+		$this->config->set_item('time_reference', 'gmt');  //Se indica al sistema usar la hora convertida a gmt
+
 		$fecha_horaGMT = now();  //Obtenemos la fecha actual en formato GMT
 
 		$esVerano = date('I', $fecha_horaGMT); //Obtenemos TRUE si es horario de verano
@@ -53,7 +55,7 @@ class Inbox_model extends CI_Model {
 
 		$fechaLocal = gmt_to_local($fecha_horaGMT, $zona_horaria, $esVerano); //Convertimos la fecha GMT a local a partir del código de zona horaria
 
-		$fechaLocal_Formateada = mdate("%Y/%m/%d %h:%i:%s %a", $fechaLocal); //Formato español (dd/mm/yyyy HH:mm:ss)
+		$fechaLocal_Formateada = mdate("%Y/%m/%d %H:%i:%s %a", $fechaLocal); //Formato español (dd/mm/yyyy HH:mm:ss)
 
 		return $fechaLocal_Formateada; 
 

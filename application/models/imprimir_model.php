@@ -518,6 +518,8 @@ class Imprimir_model extends CI_Model {
 		$CI = & get_instance();
 		$CI->load->helper('date');
 
+		$this->config->set_item('time_reference', 'gmt');  //Se indica al sistema usar la hora convertida a gmt
+
 		$fecha_horaGMT = now();  //Obtenemos la fecha actual en formato GMT
 
 		$esVerano = date('I', $fecha_horaGMT); //Obtenemos TRUE si es horario de verano
