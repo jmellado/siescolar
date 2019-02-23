@@ -3,7 +3,7 @@
 class Matriculas_model extends CI_Model {
 
 
-	public function insertar_matricula($matricula,$est_acud,$estado,$historial,$id_estudiante){
+	public function insertar_matricula($matricula,$est_acud,$estado,$historial,$promocion,$id_estudiante){
 
 		$this->db->trans_start();
 		$this->db->insert('matriculas', $matricula);
@@ -13,6 +13,8 @@ class Matriculas_model extends CI_Model {
 		$this->db->update('estudiantes', $estado);
 
 		$this->db->insert('historial_estados', $historial);
+
+		$this->db->insert('promocion', $promocion);
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE){
@@ -108,6 +110,10 @@ class Matriculas_model extends CI_Model {
 		$this->db->where('estado',"Matriculado");
 		$this->db->where('ano_lectivo',$ano_lectivo);
 		$this->db->delete('historial_estados');
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->delete('promocion');
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE){

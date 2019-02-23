@@ -91,11 +91,23 @@ class Matriculas_controller extends CI_Controller {
 			'fecha_estado' =>$fecha_actual,
 			'ano_lectivo' =>$ano_lectivo);
 
+			//array para insertar en la tabla promocion
+			$promocion = array(
+			'ano_lectivo' 			  =>$ano_lectivo,
+        	'id_estudiante'           =>$id_estudiante,
+        	'id_curso' 		          =>$id_curso,	
+			'asignaturas_reprobadas'  =>"0",
+			'areas_reprobadas' 		  =>"0",
+			'areas_reprobadas' 		  =>"0",
+			'inasistencias' 		  =>"0",
+			'porcentaje_inasistencias'=>"0",
+			'situacion_academica' 	  =>"No Definida");
+
 			if ($this->matriculas_model->validar_existencia($id_estudiante,$ano_lectivo)){
 
 				if ($this->matriculas_model->validar_existencia_pensum($id_curso,$ano_lectivo)){
 
-					$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud,$estado,$historial,$id_estudiante);
+					$respuesta=$this->matriculas_model->insertar_matricula($matricula,$est_acud,$estado,$historial,$promocion,$id_estudiante);
 
 					if($respuesta==true){
 

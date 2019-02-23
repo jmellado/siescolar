@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-02-2019 a las 01:29:14
+-- Tiempo de generación: 23-02-2019 a las 21:53:46
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -6178,6 +6178,26 @@ INSERT INTO `profesores` (`id_persona`, `titulo`, `escalafon`, `fecha_vinculacio
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `promocion`
+--
+
+CREATE TABLE `promocion` (
+  `id_promocion` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `asignaturas_reprobadas` int(11) NOT NULL,
+  `areas_reprobadas` int(11) NOT NULL,
+  `inasistencias` int(11) NOT NULL,
+  `porcentaje_inasistencias` int(11) NOT NULL,
+  `situacion_academica` varchar(15) NOT NULL,
+  `causa` varchar(500) NOT NULL,
+  `fecha_registro` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `retiros`
 --
 
@@ -6876,6 +6896,12 @@ ALTER TABLE `profesores`
   ADD PRIMARY KEY (`id_persona`);
 
 --
+-- Indices de la tabla `promocion`
+--
+ALTER TABLE `promocion`
+  ADD PRIMARY KEY (`id_promocion`);
+
+--
 -- Indices de la tabla `retiros`
 --
 ALTER TABLE `retiros`
@@ -7136,6 +7162,11 @@ ALTER TABLE `pensum`
 --
 ALTER TABLE `personas`
   MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
+--
+-- AUTO_INCREMENT de la tabla `promocion`
+--
+ALTER TABLE `promocion`
+  MODIFY `id_promocion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `retiros`
 --
