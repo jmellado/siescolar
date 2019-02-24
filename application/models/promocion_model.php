@@ -32,6 +32,7 @@ class Promocion_model extends CI_Model {
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
 		$id_grado = $this->promocion_model->obtener_gradoDelcurso($id_curso);
 
@@ -44,12 +45,33 @@ class Promocion_model extends CI_Model {
 				
 				$id_estudiante = $estudiantes[$i]['id_estudiante'];
 				$situacion_academica = $this->promocion_model->calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
+				$AsigReprob = $this->promocion_model->calcular_asignaturas_reprobadas($ano_lectivo,$id_estudiante,$id_grado);
+				$AreasReprob = $this->promocion_model->calcular_areas_reprobadas($ano_lectivo,$id_estudiante,$id_grado);
+				$fallas = $this->promocion_model->calcular_inasistencias($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
 
-				$matriculas = array('situacion_academica' => $situacion_academica);
+				$matriculas = array('situacion_academica' => $situacion_academica[0]);
+
+				$promocion = array(
+				'ano_lectivo'              => $ano_lectivo,
+				'id_estudiante'            => $id_estudiante,
+				'id_curso'                 => $id_curso,
+				'asignaturas_reprobadas'   => $AsigReprob,
+				'areas_reprobadas'         => $AreasReprob,
+				'inasistencias'            => $fallas[0],
+				'porcentaje_inasistencias' => $fallas[1],
+				'situacion_academica'      => $situacion_academica[0],
+				'causa'                    => $situacion_academica[1],
+				'fecha_registro'           => $fecha_registro);
 
 				$this->db->where('ano_lectivo',$ano_lectivo);
 				$this->db->where('id_estudiante',$id_estudiante);
+				$this->db->where('id_curso',$id_curso);
 				$this->db->update('matriculas', $matriculas);
+
+				$this->db->where('ano_lectivo',$ano_lectivo);
+				$this->db->where('id_estudiante',$id_estudiante);
+				$this->db->where('id_curso',$id_curso);
+				$this->db->update('promocion', $promocion);
 			}
 
 
@@ -95,7 +117,7 @@ class Promocion_model extends CI_Model {
 	//Esta funcion me permite calcular la situacion academica de un estudiante.
 	public function calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado){
 
-		$situacion_academica = "";
+		$situacion_academica = array();
 		$criterios = $this->promocion_model->obtener_criterios_promocion($ano_lectivo,$id_grado);
 
 		for ($i=0; $i < count($criterios); $i++) {
@@ -136,12 +158,12 @@ class Promocion_model extends CI_Model {
 
 				if ($TotalAsigReprob >= $numero_areas_asignaturas) {
 
-					$situacion_academica = "Reprobado";
+					$situacion_academica = array("Reprobado",$nombre_criterio);
 					return $situacion_academica;
 				}
 				elseif ($TotalAsigReprob > 0 && $TotalAsigReprob < $numero_areas_asignaturas) {
 
-					$situacion_academica = "Nivelacion";
+					$situacion_academica = array("Nivelacion",$nombre_criterio);
 					return $situacion_academica;
 				}
 				
@@ -162,7 +184,7 @@ class Promocion_model extends CI_Model {
 
 					if ($PorcentajeI > $porcentaje_inasistencias) {
 						
-						$situacion_academica = "Reprobado";
+						$situacion_academica = array("Reprobado",$nombre_criterio);
 						return $situacion_academica;
 					}
 
@@ -202,7 +224,7 @@ class Promocion_model extends CI_Model {
 
 				if ($Total_AsigEspReprob == $Total_AsigEsp) {
 
-					$situacion_academica = "Reprobado";
+					$situacion_academica = array("Reprobado",$nombre_criterio);
 					return $situacion_academica;
 				}
 				else{
@@ -225,12 +247,12 @@ class Promocion_model extends CI_Model {
 
 						if ($AsigReprob >= $numero_areas_asignaturas) {
 
-							$situacion_academica = "Reprobado";
+							$situacion_academica = array("Reprobado",$nombre_crit);
 							return $situacion_academica;
 						}
 						elseif ($Total_AsigEspReprob > 0 && $Total_AsigEspReprob < $Total_AsigEsp) {
 					
-							$situacion_academica = "Nivelacion";
+							$situacion_academica = array("Nivelacion",$nombre_criterio);
 							return $situacion_academica;
 						}
 						
@@ -239,7 +261,7 @@ class Promocion_model extends CI_Model {
 
 						if ($Total_AsigEspReprob > 0 && $Total_AsigEspReprob < $Total_AsigEsp) {
 						
-							$situacion_academica = "Nivelacion";
+							$situacion_academica = array("Nivelacion",$nombre_criterio);
 							return $situacion_academica;
 						}
 
@@ -251,9 +273,11 @@ class Promocion_model extends CI_Model {
 			
 		}
 
-		if ($situacion_academica == "") {
+		if (count($situacion_academica) == 0) {
 
-			return "Aprobado";
+			$situacion_academica = array("Aprobado","");
+
+			return $situacion_academica;
 		}
 
 	}
@@ -524,6 +548,123 @@ class Promocion_model extends CI_Model {
 		$TotalAsigReprob = count($asignaturas_reprobadas);
 
 		return $TotalAsigReprob;
+
+	}
+
+
+	public function calcular_inasistencias($ano_lectivo,$id_estudiante,$id_curso,$id_grado){
+
+		$InaPor = array();
+
+		$inasistencias = $this->promocion_model->obtener_inasistencias($ano_lectivo,$id_estudiante);
+		$horas_semanales = $this->promocion_model->obtener_horas_semanales($ano_lectivo,$id_grado);
+
+		$horas_totales = 40 * $horas_semanales;
+
+		if ($horas_totales > 0) {
+			
+			$PorcentajeI = round(($inasistencias / $horas_totales) * 100, 2);
+
+			$InaPor = array($inasistencias,$PorcentajeI);
+
+			return $InaPor;
+
+		}
+
+	}
+
+
+	public function calcular_areas_reprobadas($ano_lectivo,$id_estudiante,$id_grado){
+
+		$areas_reprobadas = array();
+
+		$areas = $this->promocion_model->obtener_AreasPorEstudiante($ano_lectivo,$id_estudiante,$id_grado);
+
+		$DesempenoBajo = $this->promocion_model->obtener_DesempenoBajo($ano_lectivo);
+		$minino = $DesempenoBajo[0]['rango_inicial'];
+		$maximo = $DesempenoBajo[0]['rango_final'];
+
+		for ($i=0; $i < count($areas); $i++) { 
+			
+			$id_area = $areas[$i]['id_area'];
+			$asignaturas_reprobadas = array();
+
+			$asignaturas = $this->promocion_model->obtener_AsignaturasPorArea($ano_lectivo,$id_estudiante,$id_grado,$id_area);
+
+			for ($j=0; $j < count($asignaturas); $j++) {
+
+				$nota_final = $asignaturas[$j]['definitiva'];
+
+				if ($nota_final >= $minino && $nota_final <= $maximo) {
+					
+					$asignaturas_reprobadas[] = $nota_final;
+				} 
+
+			}
+
+			if (count($asignaturas_reprobadas) == count($asignaturas)) {
+				
+				$areas_reprobadas[] = $id_area;
+			}
+
+		}
+
+		return count($areas_reprobadas);
+
+	}
+
+
+	//Esta funcion permite obtener las areas que esta cursando un estudiante
+	public function obtener_AreasPorEstudiante($ano_lectivo,$id_estudiante,$id_grado){
+
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.id_grado',$id_grado);
+		$this->db->group_by("areas.id_area"); 
+
+		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('areas', 'asignaturas.id_area = areas.id_area');
+
+		$this->db->select('areas.id_area,areas.nombre_area');
+
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+	
+			$areas = $query->result_array();
+        	return $areas;
+        }
+		else{
+
+			return false;
+		}
+
+	}
+
+
+	//Esta funcion permite obtener las asignaturas de una area
+	public function obtener_AsignaturasPorArea($ano_lectivo,$id_estudiante,$id_grado,$id_area){
+
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.id_grado',$id_grado);
+		$this->db->where('asignaturas.id_area',$id_area); 
+
+		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('notas.id_estudiante,notas.id_grado,notas.id_asignatura,IFNULL(notas.definitiva, 0.0) as definitiva',false);
+
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+	
+			$asignaturas = $query->result_array();
+        	return $asignaturas;
+        }
+		else{
+
+			return false;
+		}
 
 	}
 
