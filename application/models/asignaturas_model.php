@@ -164,4 +164,22 @@ class Asignaturas_model extends CI_Model {
 		return $query->result();
 	}
 
+
+	public function obtener_anio_asignatura($id_asignatura){
+
+		$this->db->where('id_asignatura',$id_asignatura);
+		$query = $this->db->get('asignaturas');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['ano_lectivo'];
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
 }

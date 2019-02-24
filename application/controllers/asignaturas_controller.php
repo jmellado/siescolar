@@ -5,6 +5,7 @@ class Asignaturas_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('asignaturas_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -97,25 +98,34 @@ class Asignaturas_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id =$this->input->post('id');
+
+	  	$ano_lectivo = $this->asignaturas_model->obtener_anio_asignatura($id);  
 
         if(is_numeric($id)){
 
-			if ($this->asignaturas_model->ValidarExistencia_AsignaturaEnPensum($id)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->asignaturas_model->eliminar_asignatura($id);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Asignatura Eliminada Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar Esta Asignatura; Actualmente Se Encuentra Asociada A Un Pensum.";
-	        }
+				if ($this->asignaturas_model->ValidarExistencia_AsignaturaEnPensum($id)){
+
+			        $respuesta=$this->asignaturas_model->eliminar_asignatura($id);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Asignatura Eliminada Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar Esta Asignatura; Actualmente Se Encuentra Asociada A Un Pensum.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }
           
         }else{
           
@@ -144,50 +154,57 @@ class Asignaturas_controller extends CI_Controller {
 
         if(is_numeric($id_asignatura)){
 
-        	if ($this->asignaturas_model->ValidarExistencia_AsignaturaEnPensum($id_asignatura)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($nombre_buscado == $nombre_asignatura && $ano_lectivo_buscado == $ano_lectivo){
+	        	if ($this->asignaturas_model->ValidarExistencia_AsignaturaEnPensum($id_asignatura)){
 
-		        	$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
+		        	if ($nombre_buscado == $nombre_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-					 if($respuesta==true){
+			        	$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
 
-						echo "registroactualizado";
+						 if($respuesta==true){
 
-		             }else{
+							echo "registroactualizado";
 
-						echo "registronoactualizado";
+			             }else{
 
-		             }
-		        }
-		        else{
+							echo "registronoactualizado";
 
-		        	if($this->asignaturas_model->validar_existencia($nombre_asignatura,$ano_lectivo)){
+			             }
+			        }
+			        else{
 
-		        		$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
+			        	if($this->asignaturas_model->validar_existencia($nombre_asignatura,$ano_lectivo)){
 
-		        		if($respuesta==true){
+			        		$respuesta=$this->asignaturas_model->modificar_asignatura($id_asignatura,$asignatura);
 
-		        			echo "registroactualizado";
+			        		if($respuesta==true){
 
-		        		}else{
+			        			echo "registroactualizado";
 
-		        			echo "registronoactualizado";
-		        		}
+			        		}else{
+
+			        			echo "registronoactualizado";
+			        		}
 
 
 
-		        	}else{
+			        	}else{
 
-		        		echo "asignaturayaexiste";
+			        		echo "asignaturayaexiste";
 
-		        	}
+			        	}
 
-					
+						
+					}
+				}
+				else{
+					echo "asignaturaenpensum";
 				}
 			}
 			else{
-				echo "asignaturaenpensum";
+
+				echo "anolectivocerrado";
 			}    
                 
         }else{

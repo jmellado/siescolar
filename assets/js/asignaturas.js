@@ -392,6 +392,11 @@ function actualizar_asignatura(){
 					toastr.warning('No Se Puede Modificar La Información De Esta Asignatura; Actualmente Se Encuentra Asociada A Un Pensum.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('La Información Corresponde A Un Año Lectivo Cerrado.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
