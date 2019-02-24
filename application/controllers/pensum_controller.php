@@ -5,6 +5,7 @@ class Pensum_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('pensum_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -107,25 +108,34 @@ class Pensum_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id =$this->input->post('id');
+
+	  	$ano_lectivo = $this->pensum_model->obtener_anio_pensum($id); 
 
         if(is_numeric($id)){
 
-			if ($this->pensum_model->ValidarExistencia_PensumEnNotas(FALSE,$id)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->pensum_model->eliminar_pensum($id);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Asignatura Eliminada De Este Pensum Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar Este Pensum; Actualmente Se Encuentra Asociado A Un Estudiante.";
-	        }
+				if ($this->pensum_model->ValidarExistencia_PensumEnNotas(FALSE,$id)){
+
+			        $respuesta=$this->pensum_model->eliminar_pensum($id);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Asignatura Eliminada De Este Pensum Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar Este Pensum; Actualmente Se Encuentra Asociado A Un Estudiante.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }
           
         }else{
           
@@ -157,51 +167,58 @@ class Pensum_controller extends CI_Controller {
 
         if(is_numeric($id_pensum)){
 
-        	if ($this->pensum_model->ValidarExistencia_PensumEnNotas(FALSE,$id_pensum)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($grado_buscado == $id_grado && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
+	        	if ($this->pensum_model->ValidarExistencia_PensumEnNotas(FALSE,$id_pensum)){
 
-		        	$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
+		        	if ($grado_buscado == $id_grado && $asignatura_buscada == $id_asignatura && $ano_lectivo_buscado == $ano_lectivo){
 
-					 if($respuesta==true){
+			        	$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
 
-						echo "registroactualizado";
+						 if($respuesta==true){
 
-		             }else{
+							echo "registroactualizado";
 
-						echo "registronoactualizado";
+			             }else{
 
-		             }
-		        }
-		        else{
+							echo "registronoactualizado";
 
-		        	if($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
+			             }
+			        }
+			        else{
 
-		        		$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
+			        	if($this->pensum_model->validar_existencia($id_grado,$id_asignatura,$ano_lectivo)){
 
-		        		if($respuesta==true){
+			        		$respuesta=$this->pensum_model->modificar_pensum($id_pensum,$pensum);
 
-		        			echo "registroactualizado";
+			        		if($respuesta==true){
 
-		        		}else{
+			        			echo "registroactualizado";
 
-		        			echo "registronoactualizado";
-		        		}
+			        		}else{
+
+			        			echo "registronoactualizado";
+			        		}
 
 
 
-		        	}else{
+			        	}else{
 
-		        		echo "pensumyaexiste";
+			        		echo "pensumyaexiste";
 
-		        	}
+			        	}
 
-					
-				}    
-            }
-            else{
-            	echo "pensumennotas";
-            }    
+						
+					}    
+	            }
+	            else{
+	            	echo "pensumennotas";
+	            }
+	        }
+	        else{
+
+	        	echo "anolectivocerrado";
+	        }    
          
         }else{
             

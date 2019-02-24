@@ -419,6 +419,11 @@ function actualizar_pensum(){
 					toastr.warning('No Se Puede Modificar La Información De Este Pensum; Actualmente Se Encuentra Asociado A Un Estudiante.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('La Información Corresponde A Un Año Lectivo Cerrado.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

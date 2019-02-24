@@ -198,6 +198,24 @@ class Pensum_model extends CI_Model {
 	}
 
 
+	public function obtener_anio_pensum($id_pensum){
+
+		$this->db->where('id_pensum',$id_pensum);
+		$query = $this->db->get('pensum');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['ano_lectivo'];
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
+
 	//================== Funciones Para Adicionar Asignaturas ===================
 
 
