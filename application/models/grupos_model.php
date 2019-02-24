@@ -132,4 +132,22 @@ class Grupos_model extends CI_Model {
 
 	}
 
+
+	public function obtener_anio_grupo($id_grupo){
+
+		$this->db->where('id_grupo',$id_grupo);
+		$query = $this->db->get('grupos');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['ano_lectivo'];
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
 }

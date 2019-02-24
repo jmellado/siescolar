@@ -5,6 +5,7 @@ class Grupos_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('grupos_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -91,25 +92,34 @@ class Grupos_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id =$this->input->post('id');
+
+	  	$ano_lectivo = $this->grupos_model->obtener_anio_grupo($id); 
 
         if(is_numeric($id)){
 
-			if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->grupos_model->eliminar_grupo($id);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Grupo Eliminado Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar Este Grupo; Actualmente Se Encuentra Asociado A Un Curso.";
-	        }
+				if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
+
+			        $respuesta=$this->grupos_model->eliminar_grupo($id);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Grupo Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar Este Grupo; Actualmente Se Encuentra Asociado A Un Curso.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }
           
         }else{
           
@@ -127,53 +137,61 @@ class Grupos_controller extends CI_Controller {
 		'estado_grupo' =>$this->input->post('estado_grupo'));
         
 		$id = $this->input->post('id_grupo');
+		$ano_lectivo = $this->input->post('ano_lectivo');
 		$nombre_buscado = $this->grupos_model->obtener_nombre_grupo($id);
 		$ano_lectivo_buscado = $this->grupos_model->obtener_ano_lectivo($id);
 
         if(is_numeric($id)){
 
-        	if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($nombre_buscado == $this->input->post('nombre_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+	        	if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
 
-		        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+		        	if ($nombre_buscado == $this->input->post('nombre_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
 
-					 if($respuesta==true){
+			        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
-						echo "registroactualizado";
+						 if($respuesta==true){
 
-		             }else{
+							echo "registroactualizado";
 
-						echo "registronoactualizado";
+			             }else{
 
-		             }
-		        }
-		        else{
+							echo "registronoactualizado";
 
-		        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
+			             }
+			        }
+			        else{
 
-		        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+			        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
 
-		        		if($respuesta==true){
+			        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
 
-		        			echo "registroactualizado";
-		        		}else{
+			        		if($respuesta==true){
 
-		        			echo "registronoactualizado";
-		        		}
+			        			echo "registroactualizado";
+			        		}else{
+
+			        			echo "registronoactualizado";
+			        		}
 
 
-		        	}else{
+			        	}else{
 
-		        		echo "grupoyaexiste";
-		        	}
+			        		echo "grupoyaexiste";
+			        	}
 
-					
-				}    
-            }
-            else{
-            	echo "grupoencursos";
-            }    
+						
+					}    
+	            }
+	            else{
+	            	echo "grupoencursos";
+	            }
+	        }
+	        else{
+
+	        	echo "anolectivocerrado";
+	        }    
          
         }else{
             
