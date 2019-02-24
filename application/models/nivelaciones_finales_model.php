@@ -335,8 +335,26 @@ class Nivelaciones_finales_model extends CI_Model {
 
 		$this->load->model('promocion_model');
 		$situacion_academica = $this->promocion_model->calcular_situacion_academica($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
+		$AsigReprob = $this->promocion_model->calcular_asignaturas_reprobadas($ano_lectivo,$id_estudiante,$id_grado);
+		$AreasReprob = $this->promocion_model->calcular_areas_reprobadas($ano_lectivo,$id_estudiante,$id_grado);
+		$fallas = $this->promocion_model->calcular_inasistencias($ano_lectivo,$id_estudiante,$id_curso,$id_grado);
 
-		$matriculas = array('situacion_academica' => $situacion_academica);
+		$this->load->model('funciones_globales_model');
+		$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
+
+		$matriculas = array('situacion_academica' => $situacion_academica[0]);
+
+		$promocion = array(
+		'ano_lectivo'              => $ano_lectivo,
+		'id_estudiante'            => $id_estudiante,
+		'id_curso'                 => $id_curso,
+		'asignaturas_reprobadas'   => $AsigReprob,
+		'areas_reprobadas'         => $AreasReprob,
+		'inasistencias'            => $fallas[0],
+		'porcentaje_inasistencias' => $fallas[1],
+		'situacion_academica'      => $situacion_academica[0],
+		'causa'                    => $situacion_academica[1],
+		'fecha_registro'           => $fecha_registro);
 
 		$this->db->trans_start();
 
@@ -344,6 +362,11 @@ class Nivelaciones_finales_model extends CI_Model {
 			$this->db->where('id_estudiante',$id_estudiante);
 			$this->db->where('id_curso',$id_curso);
 			$this->db->update('matriculas', $matriculas);
+
+			$this->db->where('ano_lectivo',$ano_lectivo);
+			$this->db->where('id_estudiante',$id_estudiante);
+			$this->db->where('id_curso',$id_curso);
+			$this->db->update('promocion', $promocion);
 
 		$this->db->trans_complete();
 
