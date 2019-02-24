@@ -189,12 +189,14 @@ function inicio(){
 
 			calificacion:{
 				required: true,
+				number: true,
 				maxlength: 3	
 
 			},
 
 			nivelacion:{
 				required: true,
+				number: true,
 				maxlength: 3
 
 			},
