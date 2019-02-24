@@ -5,6 +5,7 @@ class Cursos_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('cursos_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -129,34 +130,43 @@ class Cursos_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id_curso =$this->input->post('id'); 
+	  	$id_curso =$this->input->post('id');
+
+	  	$ano_lectivo = $this->cursos_model->obtener_anio_curso($id_curso); 
 
 	  	//Obtengo el total de estudiantes matriculados en este curso
 		$total_curso_matricula = $this->cursos_model->total_cursos_matricula($id_curso);
 
         if(is_numeric($id_curso)){
 
-        	if($total_curso_matricula == 0){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-        		if ($this->cursos_model->ValidarExistencia_CursoEnCargas($id_curso)){
-			
-			        $respuesta=$this->cursos_model->eliminar_curso($id_curso);
-			        
-		          	if($respuesta==true){
-		              
-		              	echo "Curso Eliminado Correctamente.";
-		          	}else{
-		              
-		              	echo "No Se Pudo Eliminar.";
-		          	}
+	        	if($total_curso_matricula == 0){
+
+	        		if ($this->cursos_model->ValidarExistencia_CursoEnCargas($id_curso)){
+				
+				        $respuesta=$this->cursos_model->eliminar_curso($id_curso);
+				        
+			          	if($respuesta==true){
+			              
+			              	echo "Curso Eliminado Correctamente.";
+			          	}else{
+			              
+			              	echo "No Se Pudo Eliminar.";
+			          	}
+			        }
+			        else{
+			        	echo "No se Puede Eliminar Este Curso.Actualmente Tiene Cargas Académicas Asociadas.";
+			        }
 		        }
 		        else{
-		        	echo "No se Puede Eliminar Este Curso.Actualmente Tiene Cargas Académicas Asociadas.";
+		        	echo "No se Puede Eliminar Este Curso.Actualmente Tiene Alumnos Matriculados.";
 		        }
-	        }
-	        else{
-	        	echo "No se Puede Eliminar Este Curso.Actualmente Tiene Alumnos Matriculados.";
-	        }	
+		    }
+		    else{
+		    	
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }	
           
         }else{
           
@@ -201,61 +211,35 @@ class Cursos_controller extends CI_Controller {
 
         if(is_numeric($id_curso)){
 
-        	if ($director_buscado == $director && $salon_buscado == $id_salon){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-        		if($cupo_maximo >= $total_curso_matricula){
+	        	if ($director_buscado == $director && $salon_buscado == $id_salon){
 
-		        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
+	        		if($cupo_maximo >= $total_curso_matricula){
 
-					 if($respuesta==true){
+			        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
 
-						echo "registroactualizado";
+						 if($respuesta==true){
 
-		             }else{
+							echo "registroactualizado";
 
-						echo "registronoactualizado";
+			             }else{
 
-		             }
-        		}
-        		else{
+							echo "registronoactualizado";
 
-        			echo "cuponovalido";
-        		}
+			             }
+	        		}
+	        		else{
 
-	        }
-	        else{
+	        			echo "cuponovalido";
+	        		}
 
-	        	if ($salon_buscado == $id_salon){
+		        }
+		        else{
 
-					if($this->cursos_model->validar_director($director,$jornada,$ano_lectivo)){
+		        	if ($salon_buscado == $id_salon){
 
-						if($cupo_maximo >= $total_curso_matricula){
-
-				        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
-
-							 if($respuesta==true){
-
-								echo "registroactualizado";
-
-				             }else{
-								echo "registronoactualizado";
-				             }
-		        		}
-		        		else{
-		        			echo "cuponovalido";
-		        		}
-
-					}
-					else{
-						echo "directoryaexiste";
-					}
-					
-
-				}else{ 
-
-					if ($director_buscado == $director) {
-
-						if ($this->cursos_model->validar_salon($id_salon,$jornada,$ano_lectivo)){
+						if($this->cursos_model->validar_director($director,$jornada,$ano_lectivo)){
 
 							if($cupo_maximo >= $total_curso_matricula){
 
@@ -266,27 +250,24 @@ class Cursos_controller extends CI_Controller {
 									echo "registroactualizado";
 
 					             }else{
-
 									echo "registronoactualizado";
-
 					             }
 			        		}
 			        		else{
 			        			echo "cuponovalido";
 			        		}
 
-							
 						}
 						else{
-							echo "salonyaexiste";
+							echo "directoryaexiste";
 						}
-									
-					}
-					else{
+						
 
-						if ($this->cursos_model->validar_salon($id_salon,$jornada,$ano_lectivo)){
+					}else{ 
 
-							if($this->cursos_model->validar_director($director,$jornada,$ano_lectivo)){
+						if ($director_buscado == $director) {
+
+							if ($this->cursos_model->validar_salon($id_salon,$jornada,$ano_lectivo)){
 
 								if($cupo_maximo >= $total_curso_matricula){
 
@@ -303,27 +284,61 @@ class Cursos_controller extends CI_Controller {
 						             }
 				        		}
 				        		else{
-
 				        			echo "cuponovalido";
 				        		}
 
+								
 							}
 							else{
-
-								echo "directoryaexiste";
-
+								echo "salonyaexiste";
 							}
+										
 						}
 						else{
 
-							echo "salonyaexiste";
+							if ($this->cursos_model->validar_salon($id_salon,$jornada,$ano_lectivo)){
+
+								if($this->cursos_model->validar_director($director,$jornada,$ano_lectivo)){
+
+									if($cupo_maximo >= $total_curso_matricula){
+
+							        	$respuesta=$this->cursos_model->modificar_curso($id_curso,$curso);
+
+										 if($respuesta==true){
+
+											echo "registroactualizado";
+
+							             }else{
+
+											echo "registronoactualizado";
+
+							             }
+					        		}
+					        		else{
+
+					        			echo "cuponovalido";
+					        		}
+
+								}
+								else{
+
+									echo "directoryaexiste";
+
+								}
+							}
+							else{
+
+								echo "salonyaexiste";
+
+							}
 
 						}
-
-					}
-				}	
-			}					
-			
+					}	
+				}					
+			}
+			else{
+				echo "anolectivocerrado";
+			}
 
         }else{
             
