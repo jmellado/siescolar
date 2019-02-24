@@ -5,6 +5,7 @@ class Areas_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('areas_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -94,25 +95,34 @@ class Areas_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id =$this->input->post('id');
+
+	  	$ano_lectivo = $this->areas_model->obtener_anio_area($id); 
 
         if(is_numeric($id)){
 
-			if ($this->areas_model->ValidarExistencia_AreaEnAsignaturas($id)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->areas_model->eliminar_area($id);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Área Eliminada Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar Esta Área; Actualmente Tiene Asignaturas Asociadas.";
-	        }
+				if ($this->areas_model->ValidarExistencia_AreaEnAsignaturas($id)){
+
+			        $respuesta=$this->areas_model->eliminar_area($id);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Área Eliminada Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar Esta Área; Actualmente Tiene Asignaturas Asociadas.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }
           
         }else{
           
@@ -138,50 +148,57 @@ class Areas_controller extends CI_Controller {
 
         if(is_numeric($id_area)){
 
-        	if ($this->areas_model->ValidarExistencia_AreaEnAsignaturas($id_area)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($nombre_buscado == $nombre_area){
+	        	if ($this->areas_model->ValidarExistencia_AreaEnAsignaturas($id_area)){
 
-		        	$respuesta=$this->areas_model->modificar_area($id_area,$area);
+		        	if ($nombre_buscado == $nombre_area){
 
-					 if($respuesta==true){
+			        	$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
-						echo "registroactualizado";
+						 if($respuesta==true){
 
-		             }else{
+							echo "registroactualizado";
 
-						echo "registronoactualizado";
+			             }else{
 
-		             }
-		        }
-		        else{
+							echo "registronoactualizado";
 
-		        	if($this->areas_model->validar_existencia($nombre_area,$ano_lectivo)){
+			             }
+			        }
+			        else{
 
-		        		$respuesta=$this->areas_model->modificar_area($id_area,$area);
+			        	if($this->areas_model->validar_existencia($nombre_area,$ano_lectivo)){
 
-		        		if($respuesta==true){
+			        		$respuesta=$this->areas_model->modificar_area($id_area,$area);
 
-		        			echo "registroactualizado";
+			        		if($respuesta==true){
 
-		        		}else{
+			        			echo "registroactualizado";
 
-		        			echo "registronoactualizado";
+			        		}else{
 
-		        		}
+			        			echo "registronoactualizado";
 
-		        	}
-		        	else{
+			        		}
 
-		        		echo "areayaexiste";
+			        	}
+			        	else{
 
-		        	}
+			        		echo "areayaexiste";
 
-					
+			        	}
+
+						
+					}
+				}
+				else{
+					echo "areaenasignaturas";
 				}
 			}
 			else{
-				echo "areaenasignaturas";
+
+				echo "anolectivocerrado";
 			}          
          
         }else{

@@ -116,4 +116,22 @@ class Areas_model extends CI_Model {
 
 	}
 
+
+	public function obtener_anio_area($id_area){
+
+		$this->db->where('id_area',$id_area);
+		$query = $this->db->get('areas');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['ano_lectivo'];
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
 }
