@@ -118,5 +118,23 @@ class Salones_model extends CI_Model {
 	}
 
 
+	public function obtener_anio_salon($id_salon){
+
+		$this->db->where('id_salon',$id_salon);
+		$query = $this->db->get('salones');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['ano_lectivo'];
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
+
 
 }

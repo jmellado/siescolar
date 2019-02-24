@@ -5,6 +5,7 @@ class Salones_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('salones_model');
+		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
 		//$this->load->database('default');
 	}
@@ -99,25 +100,34 @@ class Salones_controller extends CI_Controller {
 
 	public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id =$this->input->post('id');
+
+	  	$ano_lectivo = $this->salones_model->obtener_anio_salon($id); 
 
         if(is_numeric($id)){
 
-			if ($this->salones_model->ValidarExistencia_SalonEnCursos($id)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->salones_model->eliminar_salon($id);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Salón Eliminado Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar Este Salón; Actualmente Se Encuentra Asociado A Un Curso.";
-	        }
+				if ($this->salones_model->ValidarExistencia_SalonEnCursos($id)){
+
+			        $respuesta=$this->salones_model->eliminar_salon($id);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Salón Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar Este Salón; Actualmente Se Encuentra Asociado A Un Curso.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }
           
         }else{
           
@@ -149,51 +159,58 @@ class Salones_controller extends CI_Controller {
 		
         if(is_numeric($id_salon)){
 
-        	if ($this->salones_model->ValidarExistencia_SalonEnCursos($id_salon)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($nombre_buscado == $nombre_salon && $ano_lectivo_buscado == $ano_lectivo){
+	        	if ($this->salones_model->ValidarExistencia_SalonEnCursos($id_salon)){
 
-	        		
-		        	$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
+		        	if ($nombre_buscado == $nombre_salon && $ano_lectivo_buscado == $ano_lectivo){
 
-					if($respuesta==true){
-
-						echo "registroactualizado";
-
-		            }else{
-
-						echo "registronoactualizado";
-
-		            }
-		         	
-		        }
-		        else{
-
-		        	if($this->salones_model->validar_existencia($nombre_salon,$ano_lectivo)){
-
-		        	
-		        		$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
-
-		        		if($respuesta==true){
-
-		        			echo "registroactualizado";
-
-		        		}else{
-
-		        			echo "registronoactualizado";
-		        		}
 		        		
-		        	}
-		        	else{
+			        	$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
 
-		        		echo "salonyaexiste";
-		        	}
-		
-				}    
-            }
-            else{
-            	echo "salonencursos";
-            }    
+						if($respuesta==true){
+
+							echo "registroactualizado";
+
+			            }else{
+
+							echo "registronoactualizado";
+
+			            }
+			         	
+			        }
+			        else{
+
+			        	if($this->salones_model->validar_existencia($nombre_salon,$ano_lectivo)){
+
+			        	
+			        		$respuesta=$this->salones_model->modificar_salon($id_salon,$salon);
+
+			        		if($respuesta==true){
+
+			        			echo "registroactualizado";
+
+			        		}else{
+
+			        			echo "registronoactualizado";
+			        		}
+			        		
+			        	}
+			        	else{
+
+			        		echo "salonyaexiste";
+			        	}
+			
+					}    
+	            }
+	            else{
+	            	echo "salonencursos";
+	            }
+	        }
+	        else{
+
+	        	echo "anolectivocerrado";
+	        }    
          
         }else{
             
