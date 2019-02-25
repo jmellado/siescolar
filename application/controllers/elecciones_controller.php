@@ -159,31 +159,40 @@ class Elecciones_controller extends CI_Controller {
 
 	public function eliminar_eleccion(){
 
-	  	$id_eleccion =$this->input->post('id'); 
+	  	$id_eleccion =$this->input->post('id');
+
+	  	$ano_lectivo = $this->elecciones_model->obtener_anio_eleccion($id_eleccion); 
 
         if(is_numeric($id_eleccion)){
 
-			if($this->elecciones_model->validar_eleccion_candidatos($id_eleccion)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-				if($this->elecciones_model->validar_eleccion_votantes($id_eleccion)){
+				if($this->elecciones_model->validar_eleccion_candidatos($id_eleccion)){
 
-			        $respuesta=$this->elecciones_model->eliminar_eleccion($id_eleccion);
-			        
-		          	if($respuesta==true){
-		              
-		              	echo "Elección Eliminada Correctamente.";
-		          	}else{
-		              
-		              	echo "No Se Pudo Eliminar.";
-		          	}
+					if($this->elecciones_model->validar_eleccion_votantes($id_eleccion)){
+
+				        $respuesta=$this->elecciones_model->eliminar_eleccion($id_eleccion);
+				        
+			          	if($respuesta==true){
+			              
+			              	echo "Elección Eliminada Correctamente.";
+			          	}else{
+			              
+			              	echo "No Se Pudo Eliminar.";
+			          	}
+			        }
+			        else{
+			        	echo "No Se Puede Eliminar; Existen Votantes Registrados En Esta Elección.";
+			        }
 		        }
 		        else{
-		        	echo "No Se Puede Eliminar; Existen Votantes Registrados En Esta Elección.";
+		        	echo "No Se Puede Eliminar; Existen Candidatos Registrados En Esta Elección.";
 		        }
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar; Existen Candidatos Registrados En Esta Elección.";
-	        }  	
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }  	
           
         }else{
           
@@ -223,44 +232,51 @@ class Elecciones_controller extends CI_Controller {
 		
         if(is_numeric($id_eleccion)){
 
-        	if ($nombre_buscado == $nombre_eleccion){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	$respuesta=$this->elecciones_model->modificar_eleccion($id_eleccion,$eleccion);
+	        	if ($nombre_buscado == $nombre_eleccion){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->elecciones_model->modificar_eleccion($id_eleccion,$eleccion);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-	             }else{
+						echo "registroactualizado";
 
-					echo "registronoactualizado";
+		             }else{
 
-	             }
-	        }
-	        else{
+						echo "registronoactualizado";
 
-	        	if($this->elecciones_model->validar_existencia($nombre_eleccion,$ano_lectivo)){
+		             }
+		        }
+		        else{
 
-	        		$respuesta=$this->elecciones_model->modificar_eleccion($id_eleccion,$eleccion);
+		        	if($this->elecciones_model->validar_existencia($nombre_eleccion,$ano_lectivo)){
 
-	        		if($respuesta==true){
+		        		$respuesta=$this->elecciones_model->modificar_eleccion($id_eleccion,$eleccion);
 
-	        			echo "registroactualizado";
+		        		if($respuesta==true){
 
-	        		}else{
+		        			echo "registroactualizado";
 
-	        			echo "registronoactualizado";
-	        		}
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
 
 
 
-	        	}else{
+		        	}else{
 
-	        		echo "eleccionyaexiste";
+		        		echo "eleccionyaexiste";
 
-	        	}
+		        	}
 
-				
+					
+				}
+			}
+			else{
+
+				echo "anolectivocerrado";
 			}    
                 
          

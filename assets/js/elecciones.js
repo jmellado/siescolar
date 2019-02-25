@@ -412,6 +412,11 @@ function actualizar_eleccion(){
 					toastr.warning('Elección Ya Existente.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('La Información Corresponde A Un Año Lectivo Cerrado.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
