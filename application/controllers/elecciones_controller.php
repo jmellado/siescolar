@@ -1145,4 +1145,11 @@ class Elecciones_controller extends CI_Controller {
     }
 
 
+    public function llenarcombo_anos_lectivosAB(){
+
+    	$consulta = $this->elecciones_model->llenar_anos_lectivosAB();
+    	echo json_encode($consulta);
+    }
+
+
 }

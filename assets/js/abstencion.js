@@ -22,7 +22,7 @@ function inicio(){
 function llenarcombo_anos_lectivosAB(){
 
 	$.ajax({
-		url:base_url+"funciones_globales_controller/llenarcombo_anos_lectivos",
+		url:base_url+"elecciones_controller/llenarcombo_anos_lectivosAB",
 		type:"post",
 		success:function(respuesta) {
 

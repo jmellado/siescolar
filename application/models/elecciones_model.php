@@ -883,4 +883,11 @@ class Elecciones_model extends CI_Model {
 		$query = $this->db->get('elecciones');
 		return $query->result();
 	}
+
+
+	public function llenar_anos_lectivosAB(){
+
+		$query = $this->db->get('anos_lectivos');
+		return $query->result();
+	}
 }
