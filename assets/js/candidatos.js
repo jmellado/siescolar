@@ -124,12 +124,14 @@ function inicio(){
 		$("#modal_actualizar_candidato").modal();
 		id_candidato_eleccion = $(this).attr("href");
 		id_eleccionsele = $(this).parent().parent().children("td:eq(2)").text();
+		eleccionsele = $(this).parent().parent().children("td:eq(3)").text();
 		candidatosele = $(this).parent().parent().children("td:eq(5)").text();
 		partidosele = $(this).parent().parent().children("td:eq(6)").text();  //como estoy en la etiqueta a me dirijo a su padre que es td,a su padre que tr y los hijos de tr que son los td 
 		numerosele = $(this).parent().parent().children("td:eq(7)").text();
 		
 		$("#id_candidato_eleccion").val(id_candidato_eleccion);
 		$("#id_eleccionsele").val(id_eleccionsele);
+		$("#eleccionsele").val(eleccionsele);
         $("#candidatosele").val(candidatosele);
         $("#partidosele").val(partidosele);
         $("#numerosele").val(numerosele);
@@ -269,8 +271,8 @@ function inicio(){
 			numero:{
 				required: true,
 				digits: true,
-				maxlength: 2,
-				minlength: 2
+				maxlength: 3,
+				minlength: 1
 
 			}
 
@@ -462,6 +464,11 @@ function actualizar_candidato(){
 				else if(respuesta==="numeroyaexiste"){
 					
 					toastr.warning('El Número De Tarjetón Ya Fue Asignado.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('La Información Corresponde A Un Año Lectivo Cerrado.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else{

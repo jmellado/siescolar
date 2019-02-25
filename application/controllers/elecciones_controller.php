@@ -384,36 +384,45 @@ class Elecciones_controller extends CI_Controller {
 	public function eliminar_candidato(){
 
 	  	$id_candidato_eleccion =$this->input->post('id');
-	  	$id_eleccion =$this->input->post('id_eleccion');  
+	  	$id_eleccion =$this->input->post('id_eleccion');
+
+	  	$ano_lectivo = $this->elecciones_model->obtener_anio_eleccion($id_eleccion);  
 
         if(is_numeric($id_candidato_eleccion)){
 
-			if($this->elecciones_model->validar_votos_candidato($id_candidato_eleccion)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-				if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+				if($this->elecciones_model->validar_votos_candidato($id_candidato_eleccion)){
 
-			        $respuesta=$this->elecciones_model->eliminar_candidato($id_candidato_eleccion);
-			        
-		          	if($respuesta==true){
-		              
-		              	echo "Candidato Eliminado Correctamente.";
+					if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
 
-		              	if (!unlink("./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")) {
-		              		echo "Error Al Borrar La Imagen.";
-		              	}
+				        $respuesta=$this->elecciones_model->eliminar_candidato($id_candidato_eleccion);
+				        
+			          	if($respuesta==true){
+			              
+			              	echo "Candidato Eliminado Correctamente.";
 
-		          	}else{
-		              
-		              	echo "No Se Pudo Eliminar.";
-		          	}
+			              	if (!unlink("./uploads/imagenes/elecciones/candidatos/".$id_candidato_eleccion.".jpg")) {
+			              		echo "Error Al Borrar La Imagen.";
+			              	}
+
+			          	}else{
+			              
+			              	echo "No Se Pudo Eliminar.";
+			          	}
+			        }
+			        else{
+			        	echo "No Se Puede Eliminar; Las Votaciones Para La Elección En La Cual El Candidato Es Aspirante Ya Iniciaron.";
+			        }
 		        }
 		        else{
-		        	echo "No Se Puede Eliminar; Las Votaciones Para La Elección En La Cual El Candidato Es Aspirante Ya Iniciaron.";
+		        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Este Candidato.";
 		        }
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Este Candidato.";
-	        }  	
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }  	
           
         }else{
           
@@ -438,60 +447,68 @@ class Elecciones_controller extends CI_Controller {
 		$candidatos = $this->elecciones_model->obtener_informacion_candidato($id_candidato_eleccion);
 		$numero_buscado = $candidatos[0]['numero'];
 		$eleccion_buscada = $candidatos[0]['id_eleccion'];
+
+		$ano_lectivo = $this->elecciones_model->obtener_anio_eleccion($eleccion_buscada);
 		
         if(is_numeric($id_candidato_eleccion)){
 
-        	if ($numero_buscado == $numero){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	$respuesta=$this->elecciones_model->modificar_candidato($id_candidato_eleccion,$candidato);
+	        	if ($numero_buscado == $numero){
 
-				 if($respuesta==true){
+		        	$respuesta=$this->elecciones_model->modificar_candidato($id_candidato_eleccion,$candidato);
 
-					echo "registroactualizado";
+					 if($respuesta==true){
 
-					if ($_FILES['foto_candidato']['name'] != ""){
+						echo "registroactualizado";
 
-						$respuesta=$this->elecciones_model->subir_foto_candidato($id_candidato_eleccion,$foto_candidato);
-						echo $respuesta;
-					}
-
-	             }else{
-
-					echo "registronoactualizado";
-
-	             }
-	        }
-	        else{
-
-	        	if ($this->elecciones_model->validar_existencia_numerocandidato($eleccion_buscada,$numero)){
-
-	        		$respuesta=$this->elecciones_model->modificar_candidato($id_candidato_eleccion,$candidato);
-
-	        		if($respuesta==true){
-
-	        			echo "registroactualizado";
-
-	        			if ($_FILES['foto_candidato']['name'] != ""){
+						if ($_FILES['foto_candidato']['name'] != ""){
 
 							$respuesta=$this->elecciones_model->subir_foto_candidato($id_candidato_eleccion,$foto_candidato);
 							echo $respuesta;
 						}
 
-	        		}else{
+		             }else{
 
-	        			echo "registronoactualizado";
-	        		}
+						echo "registronoactualizado";
+
+		             }
+		        }
+		        else{
+
+		        	if ($this->elecciones_model->validar_existencia_numerocandidato($eleccion_buscada,$numero)){
+
+		        		$respuesta=$this->elecciones_model->modificar_candidato($id_candidato_eleccion,$candidato);
+
+		        		if($respuesta==true){
+
+		        			echo "registroactualizado";
+
+		        			if ($_FILES['foto_candidato']['name'] != ""){
+
+								$respuesta=$this->elecciones_model->subir_foto_candidato($id_candidato_eleccion,$foto_candidato);
+								echo $respuesta;
+							}
+
+		        		}else{
+
+		        			echo "registronoactualizado";
+		        		}
 
 
-	        	}else{
+		        	}else{
 
-	        		echo "numeroyaexiste";
+		        		echo "numeroyaexiste";
 
-	        	}
+		        	}
 
-				
-			}    
-                
+					
+				}
+			}
+			else{
+
+				echo "anolectivocerrado";
+			}           
          
         }else{
             

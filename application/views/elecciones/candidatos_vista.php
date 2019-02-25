@@ -273,15 +273,11 @@
 		        <form class="form-horizontal" role="form" id="form_candidatos_actualizar" enctype="multipart/form-data">
 
 		        	<input type="hidden" class="form-control" id="id_candidato_eleccion" name="id_candidato_eleccion">
-										    
+
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="id_eleccion">ELECCIÓN</label>
+						<label class="control-label col-sm-3" for="eleccion">ELECCIÓN</label>
 						<div class="col-sm-7">
-							<div id="eleccion1">
-								<select class="form-control" id="id_eleccionsele" name="id_eleccion" disabled>
-										
-								</select>
-							</div>	
+							<textarea class="form-control" name="eleccion" id="eleccionsele" cols="50" rows="3" placeholder="Elección.." style="resize:none" disabled></textarea>	
 						</div>	
 					</div>
 
