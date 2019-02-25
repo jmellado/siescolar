@@ -15,21 +15,32 @@
     </div>
 
     <div class="panel panel-default">
-		<div class="panel-body form-horizontal">
+		<div class="panel-body">
 		    <div class="row">
-		    	<div class="col-md-offset-3 col-md-6">
+		    	<div class="col-md-12">
 		    		<div class="panel panel-default">
-				    	<div class="panel-body form-horizontal">
+				    	<div class="panel-body">
 
-				    		<div class="form-group">
-								<label class="control-label col-sm-3" for="id_eleccionR">ELECCIÓN</label>
-								<div class="col-sm-7">
+				    		<div class="col-md-offset-1 col-md-4">
+					    		<div class="form-group">
+									<label for="ano_lectivo">AÑO LECTIVO</label>
+									<div id="ano_lectivoR1">
+										<select class="form-control" id="ano_lectivoR" name="ano_lectivo">
+														    
+										</select>
+									</div>	
+								</div>
+							</div>
+
+				    		<div class="col-md-6">
+					    		<div class="form-group">
+									<label class="control-label" for="id_eleccionR">ELECCIÓN</label>
 									<div id="eleccionR1">
 										<select class="form-control" id="id_eleccionR" name="id_eleccion">
 												
 										</select>
-									</div>	
-								</div>	
+									</div>
+								</div>
 							</div>
 
 				    	</div>

@@ -2,7 +2,13 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 
-	llenarcombo_eleccionesR();
+	llenarcombo_anos_lectivosR();
+
+	$("#ano_lectivoR").change(function(){
+    	ano_lectivo = $(this).val();
+    	limpiar_lista_candidatos();
+    	llenarcombo_eleccionesR(ano_lectivo);
+    });
 
 	$("#id_eleccionR").change(function(){
     	id_eleccion = $(this).val();
@@ -12,11 +18,34 @@ function inicio(){
 }
 
 
-function llenarcombo_eleccionesR(){
+function llenarcombo_anos_lectivosR(){
+
+	$.ajax({
+		url:base_url+"elecciones_controller/llenarcombo_anos_lectivosR",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+			
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+					
+					html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
+				};
+				
+				$("#ano_lectivoR1 select").html(html);
+		}
+
+	});
+}
+
+
+function llenarcombo_eleccionesR(ano_lectivo){
 
 	$.ajax({
 		url:base_url+"elecciones_controller/llenarcombo_eleccionesR",
 		type:"post",
+		data:{ano_lectivo:ano_lectivo},
 		success:function(respuesta) {
 
 				var registros = eval(respuesta);
@@ -69,5 +98,15 @@ function mostrarresultados(id_eleccion){
 			}
 
 	});
+
+}
+
+
+function limpiar_lista_candidatos(){
+
+	htmll ="<tr><td colspan='5'></td></tr>";
+
+	$("#lista_candidatos_eleccionR tbody").html("");
+    $("#lista_candidatos_eleccionR tfoot").html(htmll);
 
 }

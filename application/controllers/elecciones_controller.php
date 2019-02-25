@@ -1102,7 +1102,16 @@ class Elecciones_controller extends CI_Controller {
 
 	public function llenarcombo_eleccionesR(){
 
-    	$consulta = $this->elecciones_model->llenar_eleccionesR();
+		$ano_lectivo = $this->input->post('ano_lectivo');
+
+    	$consulta = $this->elecciones_model->llenar_eleccionesR($ano_lectivo);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_anos_lectivosR(){
+
+    	$consulta = $this->elecciones_model->llenar_anos_lectivosR();
     	echo json_encode($consulta);
     }
 

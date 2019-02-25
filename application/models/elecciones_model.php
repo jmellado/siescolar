@@ -807,7 +807,7 @@ class Elecciones_model extends CI_Model {
 
 		$this->db->where('candidatos_eleccion.id_eleccion',$id_eleccion);
 
-		$this->db->order_by('candidatos_eleccion.votos', 'desc');
+		$this->db->order_by('CAST(candidatos_eleccion.votos AS SIGNED)', 'desc');
 		$this->db->order_by('candidatos_eleccion.numero', 'asc');
 
 		$this->db->join('elecciones', 'candidatos_eleccion.id_eleccion = elecciones.id_eleccion');
@@ -837,9 +837,18 @@ class Elecciones_model extends CI_Model {
 	}
 
 
-	public function llenar_eleccionesR(){
+	public function llenar_eleccionesR($ano_lectivo){
+
+		$this->db->where('elecciones.ano_lectivo',$ano_lectivo);
 
 		$query = $this->db->get('elecciones');
+		return $query->result();
+	}
+
+
+	public function llenar_anos_lectivosR(){
+
+		$query = $this->db->get('anos_lectivos');
 		return $query->result();
 	}
 
