@@ -615,25 +615,34 @@ class Elecciones_controller extends CI_Controller {
 
 	public function eliminar_votante(){
 
-	  	$id_eleccion =$this->input->post('id'); 
+	  	$id_eleccion =$this->input->post('id');
+
+	  	$ano_lectivo = $this->elecciones_model->obtener_anio_eleccion($id_eleccion); 
 
         if(is_numeric($id_eleccion)){
 
-			if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->elecciones_model->eliminar_votante($id_eleccion);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Elección Eliminada Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Elección.";
-	        }  	
+				if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+
+			        $respuesta=$this->elecciones_model->eliminar_votante($id_eleccion);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Elección Eliminada Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Elección.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }  	
           
         }else{
           
@@ -661,23 +670,32 @@ class Elecciones_controller extends CI_Controller {
 	  	$id_eleccion =$this->input->post('id');
 	  	$id_curso =$this->input->post('id_curso');
 
+	  	$ano_lectivo = $this->elecciones_model->obtener_anio_eleccion($id_eleccion);
+
         if(is_numeric($id_eleccion)){
 
-			if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		        $respuesta=$this->elecciones_model->eliminarcurso_votante($id_eleccion,$id_curso);
-		        
-	          	if($respuesta==true){
-	              
-	              	echo "Curso Votante Eliminado Correctamente.";
-	          	}else{
-	              
-	              	echo "No Se Pudo Eliminar.";
-	          	}
-	        }
-	        else{
-	        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Elección.";
-	        }  	
+				if($this->elecciones_model->validar_votos_eleccion($id_eleccion)){
+
+			        $respuesta=$this->elecciones_model->eliminarcurso_votante($id_eleccion,$id_curso);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Curso Votante Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+		        }
+		        else{
+		        	echo "No Se Puede Eliminar; Existen Votos Registrados Para Esta Elección.";
+		        }
+		    }
+		    else{
+
+		    	echo "La Información Corresponde A Un Año Lectivo Cerrado.";
+		    }  	
           
         }else{
           
