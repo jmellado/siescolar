@@ -119,31 +119,23 @@ class Nivelaciones_controller extends CI_Controller {
         	$fecha_nivelacion = $this->input->post('fecha_nivelacion');
         	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
-        	//array para insertar en la tabla nivelaciones----------
-        	/*$nivelacion = array(
-        	'id_nivelacion' =>$id_nivelacion,	
-			'ano_lectivo' =>$ano_lectivo,
-			'id_estudiante' =>$id_estudiante,
-			'id_curso' =>$id_curso,
-			'id_asignatura' =>$id_asignatura,
-			'id_profesor' =>$id_profesor,
-			'periodo' =>$periodo,
-			'nota' =>$calificacion,
-			'nivelacion' =>$nivelacion,
-			'observaciones' =>$observaciones,
-			'fecha_nivelacion' =>$fecha_nivelacion,
-			'fecha_registro' =>$fecha_registro);*/
+			if ($this->nivelaciones_model->validar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso)){
 
-			
-			$respuesta = $this->nivelaciones_model->insertar_nivelacion($id_nivelacion,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$periodo,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
+				$respuesta = $this->nivelaciones_model->insertar_nivelacion($id_nivelacion,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$periodo,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
 
-			if($respuesta == true){
+				if($respuesta == true){
 
-				echo "registroguardado";
+					echo "registroguardado";
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
 			}
 			else{
 
-				echo "registronoguardado";
+				echo "situaciondefinida";
 			}
 
         }

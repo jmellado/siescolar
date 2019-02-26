@@ -402,6 +402,12 @@ function registrar_nivelacion(){
 					
 
 			}
+			else if(respuesta==="situaciondefinida"){
+				
+				toastr.info('Nivelación No Registrada; El Estudiante Se Encuentra Con Situación Académica Definida.', 'Success Alert', {timeOut: 3000});
+					
+
+			}
 			else{
 
 				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

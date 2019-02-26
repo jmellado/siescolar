@@ -444,5 +444,26 @@ class Nivelaciones_model extends CI_Model {
 	}
 
 
+	public function validar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso){
+
+		$this->db->where('promocion.ano_lectivo',$ano_lectivo);
+		$this->db->where('promocion.id_estudiante',$id_estudiante);
+		$this->db->where('promocion.id_curso',$id_curso);
+		$this->db->where('promocion.situacion_academica','No Definida');
+
+		$query = $this->db->get('promocion');
+
+		if ($query->num_rows() > 0) {
+		
+        	return true;
+		}
+		else{
+
+			return false;
+		}
+
+	}
+
+
 
 }
