@@ -104,8 +104,8 @@ class Nivelaciones_finales_controller extends CI_Controller {
         $this->form_validation->set_rules('id_asignatura', 'Asignatura', 'required|numeric');
         $this->form_validation->set_rules('id_profesor', 'Profesor', 'required|numeric');
         $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
-        $this->form_validation->set_rules('calificacion', 'Calificacion', 'required|numeric|min_length[3]|max_length[3]');
-        $this->form_validation->set_rules('nivelacion', 'Nivelacion', 'required|numeric|min_length[1]|max_length[3]');
+        $this->form_validation->set_rules('calificacion', 'Calificacion', 'required|numeric');
+        $this->form_validation->set_rules('nivelacion', 'Nivelacion', 'required|numeric');
         $this->form_validation->set_rules('observaciones', 'Observaciones', 'required|alpha_spaces|min_length[1]|max_length[500]');
         $this->form_validation->set_rules('fecha_nivelacion', 'Fecha Nivelacion', 'required');
 
@@ -130,15 +130,30 @@ class Nivelaciones_finales_controller extends CI_Controller {
         	$fecha_nivelacion = $this->input->post('fecha_nivelacion');
         	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
-			$respuesta = $this->nivelaciones_finales_model->insertar_nivelacion($id_nivelacion_final,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
+        	if ($this->nivelaciones_finales_model->validar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso)){
 
-			if($respuesta == true){
+	        	if ($this->nivelaciones_finales_model->validar_nivelacion($ano_lectivo,$nivelacion)){
 
-				echo "registroguardado";
+					$respuesta = $this->nivelaciones_finales_model->insertar_nivelacion($id_nivelacion_final,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
+
+					if($respuesta == true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
+				}
+				else{
+
+					echo "nivelacionincorrecta";
+				}
+
 			}
 			else{
 
-				echo "registronoguardado";
+				echo "situacionnodefinida";
 			}
 
         }

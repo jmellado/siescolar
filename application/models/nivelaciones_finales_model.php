@@ -382,5 +382,68 @@ class Nivelaciones_finales_model extends CI_Model {
 	}
 
 
+	//Funcion para validar si al estudiante se le proceso la promocion
+	public function validar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso){
+
+		$this->db->where('promocion.ano_lectivo',$ano_lectivo);
+		$this->db->where('promocion.id_estudiante',$id_estudiante);
+		$this->db->where('promocion.id_curso',$id_curso);
+		$this->db->where('promocion.situacion_academica','No Definida');
+
+		$query = $this->db->get('promocion');
+
+		if ($query->num_rows() > 0) {
+		
+        	return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
+
+	//Funcion para validar la nota de la nivelacion
+	public function validar_nivelacion($ano_lectivo,$nivelacion){
+
+		$desempenos = $this->nivelaciones_finales_model->obtener_Desempenos($ano_lectivo);
+
+		$superior_i = $desempenos[0]['rango_inicial'];
+		$superior_f = $desempenos[0]['rango_final'];
+		$bajo_i = $desempenos[3]['rango_inicial'];
+		$bajo_f = $desempenos[3]['rango_final'];
+
+		if ($nivelacion >= $bajo_i && $nivelacion <= $superior_f) {
+			
+			return true;
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
+
+	public function obtener_Desempenos($ano_lectivo){
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final,desempenos.ano_lectivo');
+
+		$query = $this->db->get('desempenos');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
 
 }

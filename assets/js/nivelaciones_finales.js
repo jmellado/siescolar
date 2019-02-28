@@ -15,7 +15,7 @@ function inicio(){
 		       	}	
 	       	}
 	       	else{
-	       		toastr.warning('La Nivelación Ingresada Es Incorrecta.', 'Success Alert', {timeOut: 3000});
+	       		toastr.warning('Debe Ingresar Una Nivelación.', 'Success Alert', {timeOut: 3000});
 	       	}	
       	}
        	else{
@@ -176,15 +176,13 @@ function inicio(){
 
 			calificacion:{
 				required: true,
-				number: true,
-				maxlength: 3	
+				number: true	
 
 			},
 
 			nivelacion:{
 				required: true,
-				number: true,
-				maxlength: 3
+				number: true
 
 			},
 
@@ -397,6 +395,18 @@ function registrar_nivelacion(){
 					
 
 			}
+			else if(respuesta==="nivelacionincorrecta"){
+				
+				toastr.warning('La Nivelación Ingresada Es Incorrecta.', 'Success Alert', {timeOut: 3000});
+					
+
+			}
+			else if(respuesta==="situacionnodefinida"){
+				
+				toastr.info('Nivelación No Registrada; El Estudiante Se Encuentra Con Situación Académica No Definida.', 'Success Alert', {timeOut: 3000});
+					
+
+			}
 			else{
 
 				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
@@ -538,7 +548,7 @@ function validarCampoNivelacionNV(){
 
     var notas = document.getElementsByName("nivelacion");
     
-	if(notas[0].value != vacio && notas[0].value >= 0 && notas[0].value <= 5){
+	if(notas[0].value != vacio){
 
 		resy.push("si")
 	}
