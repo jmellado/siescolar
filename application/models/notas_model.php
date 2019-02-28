@@ -216,7 +216,7 @@ class Notas_model extends CI_Model {
         }else{
             $def= ($n1 + $n2 + $n3 + $n4)/4;
         }
-        return $def;
+        return round($def, 1);
 
 	}
 
