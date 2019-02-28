@@ -401,7 +401,7 @@ class Nivelaciones_model extends CI_Model {
         }else{
             $def= ($n1 + $n2 + $n3 + $n4)/4;
         }
-        return $def;
+        return round($def, 1);
 
 	}
 
@@ -459,6 +459,47 @@ class Nivelaciones_model extends CI_Model {
 		}
 		else{
 
+			return false;
+		}
+
+	}
+
+
+	//Funcion para validar la nota de la nivelacion
+	public function validar_nivelacion($ano_lectivo,$nivelacion){
+
+		$desempenos = $this->nivelaciones_model->obtener_Desempenos($ano_lectivo);
+
+		$superior_i = $desempenos[0]['rango_inicial'];
+		$superior_f = $desempenos[0]['rango_final'];
+		$bajo_i = $desempenos[3]['rango_inicial'];
+		$bajo_f = $desempenos[3]['rango_final'];
+
+		if ($nivelacion >= $bajo_i && $nivelacion <= $superior_f) {
+			
+			return true;
+		}
+		else{
+			
+			return false;
+		}
+
+	}
+
+
+	public function obtener_Desempenos($ano_lectivo){
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final,desempenos.ano_lectivo');
+
+		$query = $this->db->get('desempenos');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
 			return false;
 		}
 

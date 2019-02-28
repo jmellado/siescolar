@@ -93,8 +93,8 @@ class Nivelaciones_controller extends CI_Controller {
         $this->form_validation->set_rules('id_profesor', 'Profesor', 'required|numeric');
         $this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
         $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
-        $this->form_validation->set_rules('calificacion', 'Calificacion', 'required|numeric|min_length[3]|max_length[3]');
-        $this->form_validation->set_rules('nivelacion', 'Nivelacion', 'required|numeric|min_length[1]|max_length[3]');
+        $this->form_validation->set_rules('calificacion', 'Calificacion', 'required|numeric');
+        $this->form_validation->set_rules('nivelacion', 'Nivelacion', 'required|numeric');
         $this->form_validation->set_rules('observaciones', 'Observaciones', 'required|alpha_spaces|min_length[1]|max_length[500]');
         $this->form_validation->set_rules('fecha_nivelacion', 'Fecha Nivelacion', 'required');
 
@@ -121,15 +121,22 @@ class Nivelaciones_controller extends CI_Controller {
 
 			if ($this->nivelaciones_model->validar_situacion_academica($ano_lectivo,$id_estudiante,$id_curso)){
 
-				$respuesta = $this->nivelaciones_model->insertar_nivelacion($id_nivelacion,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$periodo,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
+				if ($this->nivelaciones_model->validar_nivelacion($ano_lectivo,$nivelacion)){
 
-				if($respuesta == true){
+					$respuesta = $this->nivelaciones_model->insertar_nivelacion($id_nivelacion,$ano_lectivo,$id_estudiante,$id_curso,$id_asignatura,$id_profesor,$periodo,$calificacion,$nivelacion,$observaciones,$fecha_nivelacion,$fecha_registro);
 
-					echo "registroguardado";
+					if($respuesta == true){
+
+						echo "registroguardado";
+					}
+					else{
+
+						echo "registronoguardado";
+					}
 				}
 				else{
 
-					echo "registronoguardado";
+					echo "nivelacionincorrecta";
 				}
 
 			}
