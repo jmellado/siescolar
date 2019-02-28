@@ -3,16 +3,70 @@
 class Notas_model extends CI_Model {
 
 
-	public function modificar_nota($data,$id_estudiante,$id_asignatura){
+	public function modificar_nota($ano_lectivo,$estudiantes,$id_curso,$id_asignatura,$pe1,$pe2,$pe3,$pe4,$fallast,$estado_nota){
 
-		$this->db->where('id_estudiante',$id_estudiante);
-		$this->db->where('id_asignatura',$id_asignatura);
+		//NUEVA TRANSACCION
+		$this->db->trans_start();
 
-		if ($this->db->update('notas', $data))
+			for ($i=0; $i < count($estudiantes); $i++) { 
+				
+				$id_estudiante = $estudiantes[$i];
+				$p1 = $pe1[$i];
+				$p2 = $pe2[$i];
+				$p3 = $pe3[$i];
+				$p4 = $pe4[$i];
+				$fallas = $fallast[$i];
+
+				$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
+				$id_desempeno = $this->notas_model->obtener_desempeno($nota_final,$ano_lectivo);
+				$id_grado = $this->notas_model->obtener_gradoPorcurso($id_curso);
+
+				if ($p1==""){
+		            $p1=NULL;
+		        }
+		        if ($p2==""){
+		            $p2=NULL;
+		        }
+		        if ($p3==""){
+		            $p3=NULL;
+		        }
+		        if ($p4==""){
+		            $p4=NULL;
+		        }
+
+		        $notas = array(
+		        'ano_lectivo'   => $ano_lectivo,
+		        'id_estudiante' => $id_estudiante,
+		        'id_asignatura' => $id_asignatura,
+		        'p1'            => $p1,
+		        'p2'            => $p2,
+		        'p3'            => $p3,
+		        'p4'            => $p4,
+		        'nota_final'    => $nota_final,
+		        'definitiva'    => $nota_final,
+		        'id_desempeno'  => $id_desempeno,
+		        'fallas'        => $fallas,
+		        'estado_nota'   => $estado_nota);
+
+		        $this->db->where('ano_lectivo',$ano_lectivo);
+		        $this->db->where('id_estudiante',$id_estudiante);
+		        $this->db->where('id_grado',$id_grado);
+				$this->db->where('id_asignatura',$id_asignatura);
+				$this->db->update('notas', $notas);
+
+			}
+
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
 
 			return true;
-		else
-			return false;
+		}
 
 	}
 
@@ -55,8 +109,7 @@ class Notas_model extends CI_Model {
 		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
 		$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
 
-		//$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas.p1,notas.p2,notas.p3,notas.p4,notas.nota_final,notas.fallas');
-		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,notas.fallas', false);
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,IFNULL(notas.p1,"") as p1,IFNULL(notas.p2,"") as p2,IFNULL(notas.p3,"") as p3,IFNULL(notas.p4,"") as p4,IFNULL(notas.nota_final,"") as nota_final,notas.fallas', false);
 		
 		$query = $this->db->get('matriculas');
 
@@ -84,7 +137,7 @@ class Notas_model extends CI_Model {
 	}
 
 
-	public function llenar_grados_profesor($id_profesor){
+	public function llenar_cursos_profesor($id_profesor){
 
 		$this->load->model('funciones_globales_model');
 		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
@@ -92,9 +145,14 @@ class Notas_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
 		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('DISTINCT(cargas_academicas.id_curso),grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 
@@ -110,8 +168,9 @@ class Notas_model extends CI_Model {
 
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.id_curso',$id_curso);
-		//$this->db->where('cargas_academicas.id_grupo',$id_grupo);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 		
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
 
@@ -180,12 +239,91 @@ class Notas_model extends CI_Model {
 	}
 
 
+	public function validar_notas($ano_lectivo,$periodo,$p1,$p2,$p3,$p4){
+
+		$desempenos = $this->notas_model->obtener_Desempenos($ano_lectivo);
+
+		$superior_i = $desempenos[0]['rango_inicial'];
+		$superior_f = $desempenos[0]['rango_final'];
+		$bajo_i = $desempenos[3]['rango_inicial'];
+		$bajo_f = $desempenos[3]['rango_final'];
+
+		$notas_validas = array();
+		$notas_novalidas = array();
+
+		if ($periodo == "Primero") {
+			$notas = $p1;
+		}
+		elseif ($periodo == "Segundo") {
+			$notas = $p2;
+		}
+		elseif ($periodo == "Tercero") {
+			$notas = $p3;
+		}
+		elseif ($periodo == "Cuarto") {
+			$notas = $p4;
+		}
+
+		for ($i=0; $i < count($notas); $i++) { 
+
+			if ($notas[$i] >= $bajo_i && $notas[$i] <= $superior_f) {
+				$notas_validas[] = $notas[$i];
+			}
+			else{
+				$notas_novalidas[] = $notas[$i];
+			}
+		}
+
+		if (count($notas_validas) == count($notas)) {
+
+			return true;
+		}
+		else{
+
+			return false;
+		}
+
+	}
 
 
+	public function obtener_Desempenos($ano_lectivo){
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final,desempenos.ano_lectivo');
+
+		$query = $this->db->get('desempenos');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
 
 
+	//Esta Funcion me permite obtener el id_grado del curso seleccionado
+	public function obtener_gradoPorcurso($id_curso){
 
+		$this->db->where('cursos.id_curso',$id_curso);
 
+		$this->db->select('cursos.id_grado');
+
+		$query = $this->db->get('cursos');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_grado'];
+		}
+		else{
+			return false;
+		}
+
+	}
 
 
 }

@@ -38,85 +38,57 @@ class Notas_controller extends CI_Controller {
 
 	public function insertar(){
 
-		//$items1 = $this->input->post('id_persona');
-		//$items2 = $this->input->post('p1');
+		$this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
+		$this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
+        $this->form_validation->set_rules('id_asignatura', 'Asignatura', 'required|numeric');
 
-		//var_dump($items1);
-		//var_dump($items2);
-		if($this->input->post('id_persona')!=""){
+        if ($this->form_validation->run() == FALSE){
 
-			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	echo validation_errors();
+
+        }
+        else{
+
+			//$p1 = $this->input->post('p2');
+			//var_dump($p1);
+
+			$periodo = $this->input->post('periodo');
+			$id_curso = $this->input->post('id_curso');
 			$id_asignatura = $this->input->post('id_asignatura');
-			$estado = "activo";
+			$estudiantes = $this->input->post('id_estudiante');
+			$p1 = $this->input->post('p1');
+			$p2 = $this->input->post('p2');
+			$p3 = $this->input->post('p3');
+			$p4 = $this->input->post('p4');
+			$fallas = $this->input->post('fallas');
+			$estado_nota = "activo";
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-			//$data = array();
+			if($estudiantes != ""){
 
-			for ($i=0; $i < count($this->input->post('id_persona')) ; $i++) {
+				if ($this->notas_model->validar_notas($ano_lectivo,$periodo,$p1,$p2,$p3,$p4)){
 
-				$id_estudiante = $this->input->post('id_persona')[$i];
-				$p1 = $this->input->post('p1')[$i];
-				$p2 = $this->input->post('p2')[$i];
-				$p3 = $this->input->post('p3')[$i];
-				$p4 = $this->input->post('p4')[$i];
-				$fallas = $this->input->post('fallas')[$i];
+					$respuesta = $this->notas_model->modificar_nota($ano_lectivo,$estudiantes,$id_curso,$id_asignatura,$p1,$p2,$p3,$p4,$fallas,$estado_nota);
 
-				$nota_final = $this->notas_model->calcularNota_final($p1,$p2,$p3,$p4);
-				$desempeno = $this->notas_model->obtener_desempeno($nota_final,$ano_lectivo);
+					if($respuesta == true){
 
-				if ($p1==""){
-		            $p1=NULL;
-		        }
-		        if ($p2==""){
-		            $p2=NULL;
-		        }
-		        if ($p3==""){
-		            $p3=NULL;
-		        }
-		        if ($p4==""){
-		            $p4=NULL;
-		        }
+			        	echo "registroguardado";
+			        }
+			        else{
+			        	echo "registronoguardado";
+			        }
+			    }
+			    else{
 
-				//$data[]
-				$data = array(
+			    	echo "notasincorrectas";
+			    }
 
-	            	'ano_lectivo' => $ano_lectivo,
-	                'id_estudiante' => $id_estudiante,
-	                'id_asignatura' => $id_asignatura,
-	                'p1' => $p1,
-	                'p2' => $p2,
-	                'p3' => $p3,
-	                'p4' => $p4,
-	                'nota_final' => $nota_final,
-	                'definitiva' => $nota_final,
-	                'id_desempeno' => $desempeno,
-	                'fallas' => $fallas,
-	                'estado_nota' => $estado
-	                
-	            );
+		    }else{
 
-	            //asi para guardar de uno en uno sin el update_batch
-	            $respuesta = $this->notas_model->modificar_nota($data,$id_estudiante,$id_asignatura);
+		    	echo "nohayestudiantes";
+		    }
 
-	            if($respuesta == false){
-					echo "error al ingresar notas";
-				}
-
-			}
-
-			// $respuesta = $this->notas_model->modificar_nota($data);
-
-			if($respuesta == true){
-
-	        	echo "registroguardado";
-	        }
-	        else{
-	        	echo "registronoguardado";
-	        }
-
-	    }else{
-
-	    	echo "nohayestudiantes";
-	    }
+		}
 
 	}
 
@@ -169,7 +141,7 @@ class Notas_controller extends CI_Controller {
 
 		$id_profesor = $this->input->post('id_persona');
 
-    	$consulta = $this->notas_model->llenar_grados_profesor($id_profesor);
+    	$consulta = $this->notas_model->llenar_cursos_profesor($id_profesor);
     	echo json_encode($consulta);
     }
 

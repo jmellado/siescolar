@@ -2,7 +2,6 @@ $(document).on("ready",inicio); //al momento de cargar nuestra vista html se ini
 
 function inicio(){
 
-	
 	llenarcombo_cursos_profesorN($("#id_persona").val());
 
 	// este metodo permite enviar la inf del formulario
@@ -10,7 +9,7 @@ function inicio(){
 		//validar()
 		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
 
-		$("#id_asignaturaseleN").removeAttr("disabled");
+		desbloquear_variables();
 		p = $("#periodoN").val();
 		if(validarCampoNota(p)==true){
 
@@ -40,13 +39,19 @@ function inicio(){
 							
 
 					}
+					else if(respuesta==="notasincorrectas"){
+						
+						toastr.warning('Las Notas Ingresadas Son Incorrectas.', 'Success Alert', {timeOut: 3000});
+							
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
 						
 					}
 
-					$("#id_asignaturaseleN").attr("disabled", "disabled");
+					bloquear_variables();
 
 						
 						
@@ -56,9 +61,8 @@ function inicio(){
 
 		}else{
 
-			toastr.warning('Las Notas Ingresadas Son Incorrectas', 'Success Alert', {timeOut: 3000});
-			$("#id_asignaturaseleN").attr("disabled", "disabled");
-			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+			toastr.warning('Faltan Notas Por Ingresar.', 'Success Alert', {timeOut: 3000});
+			bloquear_variables();
 		}
 
 	});
@@ -141,10 +145,6 @@ function inicio(){
 
 	    		mostrarnotas("",1,5,id_curso,id_asignatura);
 
-	    		//llenarcombo_grados_profesorN(id_persona);
-	    		//llenarcombo_grupos_profesorN(id_persona,id_grado);
-	    		//llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
-
 	    		$("#periodoseleN").val(periodo);
 	    		$("#id_cursoseleN").val(id_curso);
 	    		$("#id_asignaturaseleN").val(id_asignatura);
@@ -181,19 +181,19 @@ function inicio(){
 
 			id_persona:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			},
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			}
 
@@ -226,16 +226,16 @@ function mostrarnotas(valor,pagina,cantidad,id_curso,id_asignatura){
 				for (var i = 0; i < registros.notas.length; i++) {
 					
 					if(p=="Primero"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p2' value='"+registros.notas[i].p2+"'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p3' value='"+registros.notas[i].p3+"'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p4' value='"+registros.notas[i].p4+"'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.notas[i].id_estudiante+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p2' value='"+registros.notas[i].p2+"'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p3' value='"+registros.notas[i].p3+"'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p4' value='"+registros.notas[i].p4+"'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
 					}
 					if(p=="Segundo"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p3' value='"+registros.notas[i].p3+"'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p4' value='"+registros.notas[i].p4+"'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.notas[i].id_estudiante+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p3' value='"+registros.notas[i].p3+"'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p4' value='"+registros.notas[i].p4+"'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
 					}
 					if(p=="Tercero"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p2' value='"+registros.notas[i].p2+"'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p4' value='"+registros.notas[i].p4+"'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.notas[i].id_estudiante+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p2' value='"+registros.notas[i].p2+"'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' disabled><input type='hidden' name='p4[]' id='p4' value='"+registros.notas[i].p4+"'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
 					}
 					if(p=="Cuarto"){
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p2' value='"+registros.notas[i].p2+"'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p3' value='"+registros.notas[i].p3+"'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.notas[i].id_estudiante+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='p1[]' id='p1' value='"+registros.notas[i].p1+"' size='2' disabled><input type='hidden' name='p1[]' id='p1' value='"+registros.notas[i].p1+"'></td><td><input type='text' name='p2[]' id='p2' value='"+registros.notas[i].p2+"' size='2' disabled><input type='hidden' name='p2[]' id='p2' value='"+registros.notas[i].p2+"'></td><td><input type='text' name='p3[]' id='p3' value='"+registros.notas[i].p3+"' size='2' disabled><input type='hidden' name='p3[]' id='p3' value='"+registros.notas[i].p3+"'></td><td><input type='text' name='p4[]' id='p4' value='"+registros.notas[i].p4+"' size='2' onKeypress='return valida_nota(event)'></td><td><input type='text' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"' size='2' disabled><input type='hidden' name='nota_final[]' id='nota_final' value='"+registros.notas[i].nota_final+"'></td><td style='display:none'><input type='text' name='fallas[]' id='fallas' value='"+registros.notas[i].fallas+"' size='2' onKeypress='return valida_falla(event)'></td></tr>";
 					}
 				};
 				
@@ -425,10 +425,6 @@ function validar_fechaIngresoNotas(nombre_periodo,fecha_actual){
 
 		    		mostrarnotas("",1,5,id_curso,id_asignatura);
 
-		    		//llenarcombo_grados_profesorN(id_persona);
-		    		//llenarcombo_grupos_profesorN(id_persona,id_grado);
-		    		//llenarcombo_asignaturas_profesorN(id_persona,id_grado,id_grupo);
-
 		    		$("#periodoseleN").val(periodo);
 		    		$("#id_cursoseleN").val(id_curso);
 		    		$("#id_asignaturaseleN").val(id_asignatura);
@@ -515,8 +511,8 @@ function validarCampoNota(periodo){
 
 
    	for(i = 0; i < notas.length; i++){
-
-   		if(notas[i].value != vacio && notas[i].value >= 0 && notas[i].value <= 5){
+   		//notas[i].value != vacio && notas[i].value >= 0 && notas[i].value <= 5
+   		if(notas[i].value != vacio){
 
    			resy.push("si")
    		}
@@ -551,4 +547,22 @@ function valida_falla(e){
     patron =/[0-9]/;
     tecla_final = String.fromCharCode(tecla);
     return patron.test(tecla_final);
+}
+
+
+function bloquear_variables(){
+
+	$("#periodoseleN").attr("disabled", "disabled");
+	$("#id_cursoseleN").attr("disabled", "disabled");
+	$("#id_asignaturaseleN").attr("disabled", "disabled");
+
+}
+
+
+function desbloquear_variables(){
+
+	$("#periodoseleN").removeAttr("disabled");
+	$("#id_cursoseleN").removeAttr("disabled");
+	$("#id_asignaturaseleN").removeAttr("disabled");
+
 }
