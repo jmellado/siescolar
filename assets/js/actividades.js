@@ -158,7 +158,7 @@ function inicio(){
 
 			id_profesor:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			},
 
@@ -170,13 +170,13 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			},
 
@@ -262,13 +262,13 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			}
 
@@ -359,6 +359,11 @@ function inicio(){
 						toastr.warning('No Hay Información Por Registrar.', 'Success Alert', {timeOut: 5000});
 							
 					}
+					else if(respuesta==="notasincorrectas"){
+						
+						toastr.warning('Las Notas Ingresadas Son Incorrectas.', 'Success Alert', {timeOut: 3000});	
+
+					}
 					else{
 
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
@@ -372,7 +377,7 @@ function inicio(){
 
 		}else{
 
-			toastr.warning('Las Notas Ingresadas Son Incorrectas.', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Faltan Notas Por Ingresar.', 'Success Alert', {timeOut: 3000});
 		}
        
     });
@@ -454,13 +459,13 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			}
 
@@ -816,7 +821,7 @@ function mostrarnotasactividad(valor,pagina,cantidad,id_curso,id_actividad){
 
 					for (var i = 0; i < registros.notas.length; i++) {
 						
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_persona[]' id='id_persona' value='"+registros.notas[i].id_persona+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='nota[]' id='nota' value='"+registros.notas[i].nota+"' size='2' onKeypress='return valida_nota_actividad(event)'></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'><input type='text' name='id_estudiante[]' id='id_estudiante' value='"+registros.notas[i].id_estudiante+"' size='2'></td><td>"+registros.notas[i].identificacion+"</td><td>"+registros.notas[i].nombres+"</td><td>"+registros.notas[i].apellido1+"</td><td>"+registros.notas[i].apellido2+"</td><td><input type='text' name='nota[]' id='nota' value='"+registros.notas[i].nota+"' size='2' onKeypress='return valida_nota_actividad(event)'></td></tr>";
 					};
 					
 					$("#lista_notas_actividad tbody").html(html);
@@ -919,7 +924,7 @@ function validarCampoNotaCA(){
 
    	for(i = 0; i < notas.length; i++){
 
-   		if(notas[i].value != vacio && notas[i].value >= 0 && notas[i].value <= 5){
+   		if(notas[i].value != vacio){
 
    			resy.push("si")
    		}
@@ -976,7 +981,7 @@ function mostrarnotasasignatura(valor,pagina,cantidad,id_persona,periodo,id_curs
 				if (registros.notas.length > 0) {
 
 					for (var i = 0; i < registros.notas.length; i++) {
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.notas[i].id_persona+"</td><td>"+registros.notas[i].apellido1+" "+registros.notas[i].apellido2+" "+registros.notas[i].nombres+"</td><td>"+registros.notas[i].periodo+"</td><td style='display:none'>"+registros.notas[i].id_curso+"</td><td>"+registros.notas[i].nombre_grado+" "+registros.notas[i].nombre_grupo+" "+registros.notas[i].jornada+"</td><td style='display:none'>"+registros.notas[i].id_asignatura+"</td><td>"+registros.notas[i].nombre_asignatura+"</td><td>"+registros.notas[i].nota+"</td><td><button type='button' class='btn btn-warning' value="+registros.notas[i].id_persona+" title='Ver Notas Por Actividades'><i class='fa fa-eye'></i></button></td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.notas[i].id_estudiante+"</td><td>"+registros.notas[i].apellido1+" "+registros.notas[i].apellido2+" "+registros.notas[i].nombres+"</td><td>"+registros.notas[i].periodo+"</td><td style='display:none'>"+registros.notas[i].id_curso+"</td><td>"+registros.notas[i].nombre_grado+" "+registros.notas[i].nombre_grupo+" "+registros.notas[i].jornada+"</td><td style='display:none'>"+registros.notas[i].id_asignatura+"</td><td>"+registros.notas[i].nombre_asignatura+"</td><td>"+registros.notas[i].nota+"</td><td><button type='button' class='btn btn-warning' value="+registros.notas[i].id_estudiante+" title='Ver Notas Por Actividades'><i class='fa fa-eye'></i></button></td></tr>";
 					};
 					
 					$("#lista_notas_asignatura tbody").html(html);
@@ -1072,7 +1077,7 @@ function mostrarnotasactividades(valor,pagina,cantidad,id_curso,id_asignatura,pe
 
 					for (var i = 0; i < registros.notas.length; i++) {
 						
-						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.notas[i].id_persona+"</td><td style='display:none'>"+registros.notas[i].identificacion+"</td><td style='display:none'>"+registros.notas[i].nombres+" "+registros.notas[i].apellido1+" "+registros.notas[i].apellido2+"</td><td><textarea class='form-control' cols='30' rows='2' readonly style='resize:none'>"+registros.notas[i].descripcion_actividad+"</textarea></td><td align='center'>"+registros.notas[i].nota+"</td></tr>";
+						html +="<tr><td>"+[i+1]+"</td><td style='display:none'>"+registros.notas[i].id_estudiante+"</td><td style='display:none'>"+registros.notas[i].identificacion+"</td><td style='display:none'>"+registros.notas[i].nombres+" "+registros.notas[i].apellido1+" "+registros.notas[i].apellido2+"</td><td><textarea class='form-control' cols='30' rows='2' readonly style='resize:none'>"+registros.notas[i].descripcion_actividad+"</textarea></td><td align='center'>"+registros.notas[i].nota+"</td></tr>";
 					};
 					
 					$("#lista_notas_actividades tbody").html(html);

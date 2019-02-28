@@ -268,25 +268,33 @@ class Actividades_controller extends CI_Controller {
 	public function insertar_notas(){
 
 
-		if($this->input->post('id_persona')!=""){
+		if($this->input->post('id_estudiante')!=""){
 
 			$fecha_registro = $this->actividades_model->obtener_fecha_actual();
-			$estudiantes = $this->input->post('id_persona');
+			$estudiantes = $this->input->post('id_estudiante');
 			$id_actividad = $this->input->post('id_actividad');
 			$notas = $this->input->post('nota');
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-			$respuesta = $this->actividades_model->modificar_nota($estudiantes,$id_actividad,$notas,$fecha_registro);
+			if ($this->actividades_model->validar_notas($ano_lectivo,$notas)){
 
-			if($respuesta == true){
+				$respuesta = $this->actividades_model->modificar_nota($estudiantes,$id_actividad,$notas,$fecha_registro);
 
-	        	echo "registroguardado";
+				if($respuesta == true){
 
-	        	//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
-                $respuesta_firebase = $this->actividades_model->enviar_notificacionFirebase($estudiantes,$id_actividad,$notas);
-	        }
-	        else{
-	        	echo "registronoguardado";
-	        }
+		        	echo "registroguardado";
+
+		        	//*Enviar Notificacion Via Firebase A Los Acudientes Conectados En La App Movil *
+	                $respuesta_firebase = $this->actividades_model->enviar_notificacionFirebase($estudiantes,$id_actividad,$notas);
+		        }
+		        else{
+		        	echo "registronoguardado";
+		        }
+		    }
+		    else{
+
+		    	echo "notasincorrectas";
+		    }
 
 	    }else{
 

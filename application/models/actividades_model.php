@@ -82,9 +82,14 @@ class Actividades_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
 		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('DISTINCT(cargas_academicas.id_curso),grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 
@@ -101,6 +106,8 @@ class Actividades_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.id_curso',$id_curso);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 		
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
 
@@ -258,7 +265,7 @@ class Actividades_model extends CI_Model {
 		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
 		$this->db->join('notas_actividades', 'matriculas.id_estudiante = notas_actividades.id_estudiante');
 
-		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas_actividades.id_actividad,IFNULL(notas_actividades.nota,"") as nota', false);
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas_actividades.id_actividad,IFNULL(notas_actividades.nota,"") as nota', false);
 		
 		$query = $this->db->get('matriculas');
 
@@ -305,6 +312,60 @@ class Actividades_model extends CI_Model {
 		}
 
 	}
+
+
+	public function validar_notas($ano_lectivo,$notas){
+
+		$desempenos = $this->actividades_model->obtener_Desempenos($ano_lectivo);
+
+		$superior_i = $desempenos[0]['rango_inicial'];
+		$superior_f = $desempenos[0]['rango_final'];
+		$bajo_i = $desempenos[3]['rango_inicial'];
+		$bajo_f = $desempenos[3]['rango_final'];
+
+		$notas_validas = array();
+		$notas_novalidas = array();
+
+		for ($i=0; $i < count($notas); $i++) { 
+
+			if ($notas[$i] >= $bajo_i && $notas[$i] <= $superior_f) {
+				$notas_validas[] = $notas[$i];
+			}
+			else{
+				$notas_novalidas[] = $notas[$i];
+			}
+		}
+
+		if (count($notas_validas) == count($notas)) {
+
+			return true;
+		}
+		else{
+
+			return false;
+		}
+
+	}
+
+
+	public function obtener_Desempenos($ano_lectivo){
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final,desempenos.ano_lectivo');
+
+		$query = $this->db->get('desempenos');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
 
 
 	//***************************** Funciones Para El Envio De Notificicaciones *****************
@@ -502,10 +563,6 @@ class Actividades_model extends CI_Model {
 			$this->db->where('actividades.id_asignatura',$id_asignatura);
 			$this->db->where('notas_actividades.id_estudiante',$id_estudiante);
 
-			/*$this->db->order_by('personas.apellido1', 'asc');
-			$this->db->order_by('personas.apellido2', 'asc');
-			$this->db->order_by('personas.nombres', 'asc');*/
-
 			$this->db->join('actividades', 'notas_actividades.id_actividad = actividades.id_actividad');
 			$this->db->join('personas', 'notas_actividades.id_estudiante = personas.id_persona');
 			$this->db->join('cursos', 'actividades.id_curso = cursos.id_curso');
@@ -513,7 +570,7 @@ class Actividades_model extends CI_Model {
 			$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 			$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 
-			$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas_actividades.nota, 0.0)),1) as nota,actividades.periodo,actividades.id_curso,actividades.id_asignatura,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura',false);
+			$this->db->select('notas_actividades.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,ROUND(AVG(IFNULL(notas_actividades.nota, 0.0)),1) as nota,actividades.periodo,actividades.id_curso,actividades.id_asignatura,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura',false);
 		
 			$query2 = $this->db->get('notas_actividades');
 
@@ -545,7 +602,7 @@ class Actividades_model extends CI_Model {
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 
-		$this->db->select('personas.id_persona,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas_actividades.id_actividad,IFNULL(notas_actividades.nota,"Sin Nota") as nota,actividades.descripcion_actividad', false);
+		$this->db->select('notas_actividades.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,notas_actividades.id_actividad,IFNULL(notas_actividades.nota,"Sin Nota") as nota,actividades.descripcion_actividad', false);
 		
 		$query = $this->db->get('notas_actividades');
 
