@@ -4,13 +4,17 @@
 
 	    #modal_agregar_matricula .modal-body
 		{
-  			height:505px;
+  			height:490px;
   			overflow:auto;
 		}
 		#modal_actualizar_matricula .modal-body
 		{
-  			height:490px;
+  			height:440px;
   			overflow:auto;
+		}
+
+		.panel-margen{
+			margin-bottom: 0px;
 		}
 	</style>
 
@@ -68,8 +72,8 @@
 							<thead>
 								<tr>
 									<th><i class='fa fa-sort-amount-asc'></i></th>
-									<th><i class='fa fa-newspaper-o'></i>&nbsp;Identificación</th>
-									<th><i class='fa fa-file-text-o'></i>&nbsp;Nombres Y Apellidos</th>
+									<th width="130"><i class='fa fa-newspaper-o'></i>&nbsp;Identificación</th>
+									<th width="160"><i class='fa fa-user'></i>&nbsp;Nombres Y Apellidos</th>
 									<th><i class='fa fa-graduation-cap'></i>&nbsp;Grado</th>
 									<th><i class='fa fa-object-group'></i>&nbsp;Grupo</th>
 									<th><i class='fa fa-calendar-o'></i>&nbsp;Jornada</th>
@@ -118,7 +122,7 @@
       </div>
       <div class="modal-body">
 
-      	<div class="nav-tabs-custom">
+      	<div class="nav-tabs-custom panel-margen">
 
       		<ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab"><i class='fa fa-plus-square'></i>&nbsp;Nuevos</a></li>
@@ -397,7 +401,7 @@
       </div>
       <div class="modal-body">
         
-      	<div class="panel panel-default">
+      	<div class="panel panel-default panel-margen">
 		    <div class="panel-body">
 
 		        <form class="form-horizontal" role="form" id="form_matriculas_actualizar">
@@ -479,24 +483,20 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="observaciones">OBSERVACIONES</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="observacionessele" name="observaciones" placeholder="Observaciones">
+							<textarea class="form-control" name="observaciones" id="observacionessele" cols="50" rows="2" placeholder="Observaciones.." style="resize:none"></textarea>
 						</div>	
 					</div>
 
 		        </form>
-
-		        <div class="form-group">
-		        	<div class="col-sm-offset-4 col-sm-5"> 
-		        		<button type="submit" name="btn_actualizar_matricula" id="btn_actualizar_matricula" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-		        	</div>	
-		        </div>
 
 		    </div>
 		</div>        
         	
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <div class="col-sm-offset-4 col-sm-4"> 
+    		<button type="submit" name="btn_actualizar_matricula" id="btn_actualizar_matricula" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+    	</div>
       </div>
     </div>
 

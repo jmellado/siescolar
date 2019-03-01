@@ -43,7 +43,7 @@ function inicio(){
 					}
 					else if(respuesta==="pensumnoexiste"){
 						
-						toastr.warning('Estudiante No Matriculado; No Se Encontro Un Pensum Para El Grado Al Que Aspira.', 'Success Alert', {timeOut: 3000});
+						toastr.info('Estudiante No Matriculado; No Se Encontro Un Pensum Para El Grado Al Que Aspira.', 'Success Alert', {timeOut: 3000});
 						
 
 					}
@@ -62,7 +62,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 5000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -166,7 +166,7 @@ function inicio(){
        		actualizar_matricula();
         }
         else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000})
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000})
 			//alert($("#form_matriculas_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
@@ -246,7 +246,7 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 				//lettersonly: true	
 
 			},
@@ -260,7 +260,7 @@ function inicio(){
 
 			id_acudiente:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			},
 
@@ -289,7 +289,7 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 				//lettersonly: true	
 
 			},
@@ -303,7 +303,7 @@ function inicio(){
 
 			id_acudiente:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			},
 
@@ -681,7 +681,7 @@ function buscar_estudiante(valor){
 				}
 				else if(respuesta==="estudianteantiguo"){
 
-					toastr.error('El N° De Identificación Corresponde A Un Estudiante Antiguo.', 'Success Alert', {timeOut: 3000});
+					toastr.info('El N° De Identificación Corresponde A Un Estudiante Antiguo.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculas")[0].reset();
 					$("#id_persona").val("");
 					bloquear_cajas_texto();

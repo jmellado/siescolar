@@ -64,6 +64,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->like('personas.identificacion',$id,'after');
 		$this->db->or_like('personas.nombres',$id,'after');
 		$this->db->or_like('personas.apellido1',$id,'after');
+		$this->db->or_like('personas.apellido2',$id,'after');
 		$this->db->or_like('grados.nombre_grado',$id,'after');
 		$this->db->or_like('grupos.nombre_grupo',$id,'after');
 		$this->db->or_like('matriculas.jornada',$id,'after');
@@ -71,9 +72,20 @@ class Matriculas_model extends CI_Model {
 		$this->db->or_like('matriculas.fecha_matricula',$id,'after');
 		$this->db->or_like('matriculas.estado_matricula',$id,'after');
 		$this->db->or_like('matriculas.situacion_academica',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,personas.apellido2)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido1,personas.apellido2)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,grupos.nombre_grupo,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,anos_lectivos.nombre_ano_lectivo)',$id,'after');
 
 		$this->db->order_by('matriculas.ano_lectivo', 'desc');
-		$this->db->order_by('matriculas.fecha_matricula', 'asc');
+		$this->db->order_by('matriculas.jornada', 'asc');
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
@@ -84,6 +96,7 @@ class Matriculas_model extends CI_Model {
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
 		$this->db->join('anos_lectivos', 'matriculas.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('matriculas.id_matricula,matriculas.fecha_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,grados.nombre_grado,grupos.nombre_grupo,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,matriculas.observaciones,matriculas.estado_matricula,matriculas.situacion_academica,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo');
 		
@@ -207,7 +220,9 @@ class Matriculas_model extends CI_Model {
 		$this->db->where('cursos.jornada',$jornada);
 		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
 		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
 		
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
