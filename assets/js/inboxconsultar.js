@@ -35,7 +35,7 @@ function inicio(){
 
     	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
 
-			mostrarmensajes(buscar,1,valorcantidad,id_persona);
+			mostrarmensajes(buscar,numero_pagina,valorcantidad,id_persona);
 		}
 
 
@@ -96,7 +96,7 @@ function inicio(){
 
     	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
 
-			mostrartareas(buscar,1,valorcantidad,id_persona);
+			mostrartareas(buscar,numero_pagina,valorcantidad,id_persona);
 		}
 
 
@@ -156,7 +156,7 @@ function inicio(){
 
     	if(numero_pagina !="#" && numero_pagina != "javascript:void(0)"){
 
-			mostrareventos(buscar,1,valorcantidad,id_persona);
+			mostrareventos(buscar,numero_pagina,valorcantidad,id_persona);
 		}
 
 
