@@ -782,4 +782,27 @@ class Promocion_model extends CI_Model {
 
 
 
+	//======== FUNCIONES PARA CONSULTAR LA PROMOCION ==========
+
+
+	public function buscar_promocion($jornada,$id_curso){
+
+		$this->db->where('promocion.id_curso',$id_curso);
+
+		$this->db->join('cursos', 'promocion.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('personas', 'promocion.id_estudiante = personas.id_persona');
+		$this->db->join('anos_lectivos', 'promocion.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->select('promocion.id_promocion,promocion.ano_lectivo,promocion.id_estudiante,promocion.id_curso,promocion.asignaturas_reprobadas,promocion.areas_reprobadas,promocion.inasistencias,promocion.porcentaje_inasistencias,promocion.situacion_academica,promocion.causa,promocion.fecha_registro,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('promocion');
+
+		return $query->result();
+		
+	}
+
+
+
 }

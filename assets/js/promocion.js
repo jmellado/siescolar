@@ -28,8 +28,19 @@ function inicio(){
 
     $("#jornadaPP").change(function(){
     	
+    	ocultardiv_promocion();
+    	$("#lista_promocion tbody").html("");
+
     	jornada = $("#jornadaPP").val();
     	llenarcombo_cursosPP(jornada);
+    });
+
+
+    $("#id_cursoPP").change(function(){
+
+    	jornada = $("#jornadaPP").val();
+    	id_curso = $("#id_cursoPP").val();
+    	mostrarpromocion(jornada,id_curso);
     });
 
 
@@ -60,7 +71,7 @@ function inicio(){
 }
 
 
-function procesar_promocion(){
+function procesar_promocion(jornada,id_curso){
 
 	$.ajax({
 		url:base_url+"promocion_controller/procesar_promocion",
@@ -72,6 +83,7 @@ function procesar_promocion(){
 				if (respuesta==="promocionrealizada") {
 					
 					toastr.success('Proceso De Promoción Realizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+					mostrarpromocion(jornada,id_curso);
 
 				}
 				else if(respuesta==="promocionnorealizada"){
@@ -146,4 +158,55 @@ function llenarcombo_cursosPP(jornada){
 
 	});
 
+}
+
+
+
+function mostrarpromocion(jornada,id_curso){
+
+	$.ajax({
+		url:base_url+"promocion_controller/mostrarpromocion",
+		type:"post",
+		data:{jornada:jornada,id_curso:id_curso},
+		success:function(respuesta) {
+				//toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
+
+				registros = JSON.parse(respuesta);
+
+				html ="";
+
+				if (registros.promocion.length > 0) {
+
+					for (var i = 0; i < registros.promocion.length; i++) {
+						html +="<tr><td width='30'>"+[i+1]+"</td><td style='display:none'>"+registros.promocion[i].id_estudiante+"</td><td width='130'>"+registros.promocion[i].identificacion+"</td><td width='150'>"+registros.promocion[i].apellido1+" "+registros.promocion[i].apellido2+" "+registros.promocion[i].nombres+"</td><td style='display:none'>"+registros.promocion[i].id_curso+"</td><td style='display:none'>"+registros.promocion[i].nombre_grado+" "+registros.promocion[i].nombre_grupo+" "+registros.promocion[i].jornada+"</td><td width='70' style='text-align: center;'>"+registros.promocion[i].asignaturas_reprobadas+"</td><td width='70' style='text-align: center;'>"+registros.promocion[i].areas_reprobadas+"</td><td width='70' style='text-align: center;'>"+registros.promocion[i].inasistencias+"</td><td width='70' style='text-align: center;'>"+registros.promocion[i].porcentaje_inasistencias+"</td><td width='280'><b>"+registros.promocion[i].situacion_academica+"</b><br/>"+registros.promocion[i].causa+"</td></tr>";
+					};
+					
+					$("#lista_promocion tbody").html(html);
+				}
+				else{
+					html ="<tr><td colspan='8'><p style='text-align:center'>No Hay Estudiantes Matriculados..</p></td></tr>";
+					$("#lista_promocion tbody").html(html);
+				}
+
+				mostrardiv_promocion();
+
+			}
+
+	});
+
+}
+
+
+function mostrardiv_promocion(){
+
+	div = document.getElementById('div-promocion');
+    div.style.display = '';
+
+}
+
+
+function ocultardiv_promocion(){
+
+	div = document.getElementById('div-promocion');
+    div.style.display = 'none';
 }

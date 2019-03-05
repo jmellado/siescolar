@@ -97,4 +97,23 @@ class Promocion_controller extends CI_Controller {
 
 	}
 
+
+	public function mostrarpromocion(){
+
+		$jornada = $this->input->post('jornada'); 
+		$id_curso = $this->input->post('id_curso');
+		
+		$data = array(
+
+			'promocion' => $this->promocion_model->buscar_promocion($jornada,$id_curso),
+
+		    'totalregistros' => count($this->promocion_model->buscar_promocion($jornada,$id_curso))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
 }
