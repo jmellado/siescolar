@@ -261,7 +261,7 @@ function inicio(){
 
 	});
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
-  	return this.optional(element) || /^[a-z\s]+$/i.test(value);
+  	return this.optional(element) || /^[a-záéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/i.test(value);
 	}, "Solo Valores Alfabeticos");
 	/*$.validator.addMethod("time", function(value, element) {  
 	return this.optional(element) || /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/i.test(value);  

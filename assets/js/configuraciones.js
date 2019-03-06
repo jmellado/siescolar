@@ -230,7 +230,7 @@ function inicio(){
 
 	});
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
-  	return this.optional(element) || /^[a-z\s]+$/i.test(value);
+  	return this.optional(element) || /^[a-záéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/i.test(value);
 	}, "Solo Valores Alfabeticos");
 
 
