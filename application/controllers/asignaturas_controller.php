@@ -38,7 +38,7 @@ class Asignaturas_controller extends CI_Controller {
 
         	//obtengo el ultimo id de asignaturas + 1 
         	$ultimo_id = $this->asignaturas_model->obtener_ultimo_id();
-        	$nombre_asignatura = ucwords(strtolower(trim($this->input->post('nombre_asignatura'))));
+        	$nombre_asignatura = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_asignatura'))), MB_CASE_TITLE);
         	$id_area = $this->input->post('id_area');
         	$ano_lectivo = $this->input->post('ano_lectivo');
         	$estado_asignatura = $this->input->post('estado_asignatura');
@@ -136,7 +136,8 @@ class Asignaturas_controller extends CI_Controller {
     public function modificar(){
 
     	$id_asignatura = $this->input->post('id_asignatura');
-    	$nombre_asignatura = ucwords(strtolower(trim($this->input->post('nombre_asignatura'))));
+    	$nombre_asignatura = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_asignatura'))), 
+    		MB_CASE_TITLE);
     	$id_area = $this->input->post('id_area');
     	$ano_lectivo = $this->input->post('ano_lectivo');
     	$estado_asignatura = $this->input->post('estado_asignatura');
