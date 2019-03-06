@@ -53,8 +53,8 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
-			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
+			
 		}
 
 	});
@@ -153,7 +153,8 @@ function inicio(){
 
     		causal:{
 				required: true,
-				maxlength: 500
+				maxlength: 500,
+				lettersonly: true
 
 			},
 
@@ -173,7 +174,8 @@ function inicio(){
 
     		causal:{
 				required: true,
-				maxlength: 500
+				maxlength: 500,
+				lettersonly: true
 
 			},
 
@@ -186,6 +188,9 @@ function inicio(){
 
 
 	});
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-záéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/i.test(value);
+	}, "Solo Valores Alfabeticos");
 
 
 }

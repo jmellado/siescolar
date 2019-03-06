@@ -217,7 +217,7 @@ class Causales_controller extends CI_Controller {
 
         	//obtengo el ultimo id de causales + 1 
         	$ultimo_id = $this->causales_model->obtener_ultimo_id_causal();
-        	$causal = ucwords(mb_strtolower(trim($this->input->post('causal'))));
+        	$causal = mb_convert_case(mb_strtolower(trim($this->input->post('causal'))), MB_CASE_TITLE);
         	$id_tipo_causal = $this->input->post('id_tipo_causal');
 
         	//array para insertar en la tabla causales
@@ -276,7 +276,7 @@ class Causales_controller extends CI_Controller {
 	public function modificar_causal(){
 
     	$id_causal = $this->input->post('id_causal');
-    	$causal = ucwords(mb_strtolower(trim($this->input->post('causal'))));
+    	$causal = mb_convert_case(mb_strtolower(trim($this->input->post('causal'))), MB_CASE_TITLE);
     	$id_tipo_causal = $this->input->post('id_tipo_causal');
 
     	//array para actualizar en la tabla causales
