@@ -37,7 +37,7 @@ class Areas_controller extends CI_Controller {
 
         	//obtengo el ultimo id de areas + 1 
         	$ultimo_id = $this->areas_model->obtener_ultimo_id();
-        	$nombre_area = ucwords(strtolower(trim($this->input->post('nombre_area'))));
+        	$nombre_area = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_area'))), MB_CASE_TITLE);
         	$ano_lectivo = $this->input->post('ano_lectivo');
         	$estado_area = $this->input->post('estado_area');
 
@@ -133,7 +133,7 @@ class Areas_controller extends CI_Controller {
     public function modificar(){
 
     	$id_area = $this->input->post('id_area');
-    	$nombre_area = ucwords(strtolower(trim($this->input->post('nombre_area'))));
+    	$nombre_area = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_area'))), MB_CASE_TITLE);
     	$ano_lectivo = $this->input->post('ano_lectivo');
     	$estado_area = $this->input->post('estado_area');
 
