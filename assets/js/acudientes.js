@@ -59,7 +59,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 2000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -513,6 +513,10 @@ function actualizar_acudiente(){
 					
 					toastr.error('Información Del Acudiente No Actualizada.', 'Success Alert', {timeOut: 3000});	
 
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
 				}
 				
 				$("#form_acudientes_actualizar")[0].reset();

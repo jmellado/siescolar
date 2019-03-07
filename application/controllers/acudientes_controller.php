@@ -28,7 +28,7 @@ class Acudientes_controller extends CI_Controller {
         $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido2', 'Segundo Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
 
@@ -49,16 +49,16 @@ class Acudientes_controller extends CI_Controller {
 
         	$identificacion = trim($this->input->post('identificacion'));
         	$tipo_id = $this->input->post('tipo_id');
-        	$nombres = ucwords(strtolower(trim($this->input->post('nombres'))));
-        	$apellido1 = ucwords(strtolower(trim($this->input->post('apellido1'))));
-        	$apellido2 = ucwords(strtolower(trim($this->input->post('apellido2'))));
+        	$nombres = mb_convert_case(mb_strtolower(trim($this->input->post('nombres'))), MB_CASE_TITLE);
+        	$apellido1 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido1'))), MB_CASE_TITLE);
+        	$apellido2 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido2'))), MB_CASE_TITLE);
         	$telefono = trim($this->input->post('telefono'));
         	$correo = trim($this->input->post('correo'));
-        	$direccion = ucwords(strtolower(trim($this->input->post('direccion'))));
-        	$barrio = ucwords(strtolower(trim($this->input->post('barrio'))));
-        	$ocupacion = ucwords(strtolower(trim($this->input->post('ocupacion'))));
+        	$direccion = mb_convert_case(mb_strtolower(trim($this->input->post('direccion'))), MB_CASE_TITLE);
+        	$barrio = mb_convert_case(mb_strtolower(trim($this->input->post('barrio'))), MB_CASE_TITLE);
+        	$ocupacion = mb_convert_case(mb_strtolower(trim($this->input->post('ocupacion'))), MB_CASE_TITLE);
         	$telefono_trabajo = trim($this->input->post('telefono_trabajo'));
-        	$direccion_trabajo = ucwords(strtolower(trim($this->input->post('direccion_trabajo'))));
+        	$direccion_trabajo = mb_convert_case(mb_strtolower(trim($this->input->post('direccion_trabajo'))), MB_CASE_TITLE);
 
         	//array para insertar en la tabla personas----------
         	$acudiente = array(
@@ -81,8 +81,8 @@ class Acudientes_controller extends CI_Controller {
 			'direccion_trabajo' =>$direccion_trabajo);
 
 			//aqui creamos el username de un estudiante
-			$user = strtolower(substr($nombres, 0, 2));
-			$name = strtolower($apellido1);
+			$user = mb_strtolower(substr($nombres, 0, 2));
+			$name = mb_strtolower($apellido1);
 			$username = $user.$name."ac".$ultimo_id;
 
 			//array para insertar en la tabla usuarios
@@ -131,8 +131,8 @@ class Acudientes_controller extends CI_Controller {
 							'direccion_trabajo' =>$direccion_trabajo);
 
 							//aqui creamos el username de un estudiante
-							$user = strtolower(substr($nombres, 0, 2));
-							$name = strtolower($apellido1);
+							$user = mb_strtolower(substr($nombres, 0, 2));
+							$name = mb_strtolower($apellido1);
 							$username = $user.$name."ac".$id_persona;
 
 							//array para insertar en la tabla usuarios
@@ -169,8 +169,8 @@ class Acudientes_controller extends CI_Controller {
 						'direccion_trabajo' =>$direccion_trabajo);
 
 						//aqui creamos el username de un estudiante
-						$user = strtolower(substr($nombres, 0, 2));
-						$name = strtolower($apellido1);
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
 						$username = $user.$name."ac".$id_persona;
 
 						//array para insertar en la tabla usuarios
@@ -212,8 +212,8 @@ class Acudientes_controller extends CI_Controller {
 						'direccion_trabajo' =>$direccion_trabajo);
 
 						//aqui creamos el username de un estudiante
-						$user = strtolower(substr($nombres, 0, 2));
-						$name = strtolower($apellido1);
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
 						$username = $user.$name."ac".$id_persona;
 
 						//array para insertar en la tabla usuarios
@@ -357,83 +357,102 @@ class Acudientes_controller extends CI_Controller {
 
     public function modificar(){
 
-    	$id_persona = $this->input->post('id_persona');
-    	$identificacion = trim($this->input->post('identificacion'));
-    	$tipo_id = $this->input->post('tipo_id');
-    	$nombres = ucwords(strtolower(trim($this->input->post('nombres'))));
-    	$apellido1 = ucwords(strtolower(trim($this->input->post('apellido1'))));
-    	$apellido2 = ucwords(strtolower(trim($this->input->post('apellido2'))));
-    	$telefono = trim($this->input->post('telefono'));
-    	$correo = trim($this->input->post('correo'));
-    	$direccion = ucwords(strtolower(trim($this->input->post('direccion'))));
-    	$barrio = ucwords(strtolower(trim($this->input->post('barrio'))));
-    	$ocupacion = ucwords(strtolower(trim($this->input->post('ocupacion'))));
-    	$telefono_trabajo = trim($this->input->post('telefono_trabajo'));
-    	$direccion_trabajo = ucwords(strtolower(trim($this->input->post('direccion_trabajo'))));
-    	$estado_acudiente = $this->input->post('estado_acudiente');
+    	$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+		$this->form_validation->set_rules('tipo_id', 'Tipo Identificación', 'required|max_length[2]');
+        $this->form_validation->set_rules('nombres', 'Nombres', 'required|alpha_spaces');
+        $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('apellido2', 'Segundo Apellido', 'required|alpha_spaces');
+        $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
+        $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
+        $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
 
+        $this->form_validation->set_rules('ocupacion', 'Ocupacion', 'required|alpha_spaces');
+        $this->form_validation->set_rules('telefono_trabajo', 'Telefono Trabajo', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('direccion_trabajo', 'Dirección Trabajo', 'required|alpha_spaces');
 
-    	//array para insertar en la tabla personas----------
-    	$acudiente = array(
-		'id_persona' =>$id_persona,
-		'identificacion' =>$identificacion,
-		'tipo_id' =>$tipo_id,
-		'nombres' =>$nombres,
-		'apellido1' =>$apellido1,
-		'apellido2' =>$apellido2,
-		'telefono' =>$telefono,
-		'email' =>$correo,
-		'direccion' =>$direccion,
-		'barrio' =>$barrio);
+        if ($this->form_validation->run() == FALSE){
 
-		//array para insertar en la tabla acudientes----------
-    	$acudiente2 = array(
-		'id_persona' =>$id_persona,
-		'ocupacion' =>$ocupacion,
-		'telefono_trabajo' =>$telefono_trabajo,
-		'direccion_trabajo' =>$direccion_trabajo,
-		'estado_acudiente' =>$estado_acudiente);
+        	echo validation_errors();
 
-		//aqui creamos el username de un estudiante
-		$user = strtolower(substr($nombres, 0, 2));
-		$name = strtolower($apellido1);
-		$username = $user.$name."ac".$id_persona;
-
-		//array para insertar en la tabla usuarios
-		$usuario = array(
-		'id_persona' =>$id_persona,
-		'id_rol' => 4,
-		'username' =>$username,
-		'password' =>sha1($identificacion),
-		'acceso' =>0);
-
-		$row = $this->acudientes_model->obtener_informacion_persona($id_persona,"2");
-		$identificacion_buscada = $row[0]['identificacion'];
-
-        if(is_numeric($identificacion)){
-
-        	if ($identificacion_buscada == $identificacion){
-
-	        	$respuesta=$this->acudientes_model->modificar_acudiente($id_persona,$acudiente,$acudiente2,$usuario);
-
-				 if($respuesta==true){
-
-					echo "registroactualizado";
-
-	             }else{
-
-					echo "registronoactualizado";
-
-	             }
-	        }          
-         
-        }else{
-            
-            echo "digite valor numerico para identificar un acudiente";
         }
+        else{
 
+	    	$id_persona = $this->input->post('id_persona');
+	    	$identificacion = trim($this->input->post('identificacion'));
+	    	$tipo_id = $this->input->post('tipo_id');
+	    	$nombres = mb_convert_case(mb_strtolower(trim($this->input->post('nombres'))), MB_CASE_TITLE);
+	    	$apellido1 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido1'))), MB_CASE_TITLE);
+	    	$apellido2 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido2'))), MB_CASE_TITLE);
+	    	$telefono = trim($this->input->post('telefono'));
+	    	$correo = trim($this->input->post('correo'));
+	    	$direccion = mb_convert_case(mb_strtolower(trim($this->input->post('direccion'))), MB_CASE_TITLE);
+	    	$barrio = mb_convert_case(mb_strtolower(trim($this->input->post('barrio'))), MB_CASE_TITLE);
+	    	$ocupacion = mb_convert_case(mb_strtolower(trim($this->input->post('ocupacion'))), MB_CASE_TITLE);
+	    	$telefono_trabajo = trim($this->input->post('telefono_trabajo'));
+	    	$direccion_trabajo = mb_convert_case(mb_strtolower(trim($this->input->post('direccion_trabajo'))),  MB_CASE_TITLE);
+	    	$estado_acudiente = $this->input->post('estado_acudiente');
 
+	    	//array para insertar en la tabla personas----------
+	    	$acudiente = array(
+			'id_persona' =>$id_persona,
+			'identificacion' =>$identificacion,
+			'tipo_id' =>$tipo_id,
+			'nombres' =>$nombres,
+			'apellido1' =>$apellido1,
+			'apellido2' =>$apellido2,
+			'telefono' =>$telefono,
+			'email' =>$correo,
+			'direccion' =>$direccion,
+			'barrio' =>$barrio);
 
+			//array para insertar en la tabla acudientes----------
+	    	$acudiente2 = array(
+			'id_persona' =>$id_persona,
+			'ocupacion' =>$ocupacion,
+			'telefono_trabajo' =>$telefono_trabajo,
+			'direccion_trabajo' =>$direccion_trabajo,
+			'estado_acudiente' =>$estado_acudiente);
+
+			//aqui creamos el username de un estudiante
+			$user = mb_strtolower(substr($nombres, 0, 2));
+			$name = mb_strtolower($apellido1);
+			$username = $user.$name."ac".$id_persona;
+
+			//array para insertar en la tabla usuarios
+			$usuario = array(
+			'id_persona' =>$id_persona,
+			'id_rol' => 4,
+			'username' =>$username,
+			'password' =>sha1($identificacion),
+			'acceso' =>0);
+
+			$row = $this->acudientes_model->obtener_informacion_persona($id_persona,"2");
+			$identificacion_buscada = $row[0]['identificacion'];
+
+	        if(is_numeric($identificacion)){
+
+	        	if ($identificacion_buscada == $identificacion){
+
+		        	$respuesta=$this->acudientes_model->modificar_acudiente($id_persona,$acudiente,$acudiente2,$usuario);
+
+					if($respuesta==true){
+
+						echo "registroactualizado";
+
+		            }else{
+
+						echo "registronoactualizado";
+
+		            }
+		        }          
+	         
+	        }else{
+	            
+	            echo "digite valor numerico para identificar un acudiente";
+	        }
+
+	    }
 
     }
 
