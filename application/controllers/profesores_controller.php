@@ -37,7 +37,7 @@ class Profesores_controller extends CI_Controller {
         $this->form_validation->set_rules('pais_nacimiento', 'Pais De Nacimiento', 'required');
         $this->form_validation->set_rules('departamento_nacimiento', 'Dpto. De Nacimiento', 'required');
         $this->form_validation->set_rules('municipio_nacimiento', 'Mcpio. De Nacimiento', 'required');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
@@ -60,57 +60,86 @@ class Profesores_controller extends CI_Controller {
         	//obtengo el ultimo id de persona + 1 
         	$ultimo_id = $this->profesores_model->obtener_ultimo_id();
 
+        	$identificacion = $this->input->post('identificacion');
+			$tipo_id = $this->input->post('tipo_id');
+			$fecha_expedicion = $this->input->post('fecha_expedicion');
+			$pais_expedicion = $this->input->post('pais_expedicion');
+			$departamento_expedicion = $this->input->post('departamento_expedicion');
+			$municipio_expedicion = $this->input->post('municipio_expedicion');
+			$nombres = mb_convert_case(mb_strtolower(trim($this->input->post('nombres'))), MB_CASE_TITLE);
+			$apellido1 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido1'))), MB_CASE_TITLE);
+			$apellido2 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido2'))), MB_CASE_TITLE);
+			$sexo = $this->input->post('sexo');
+			$fecha_nacimiento = $this->input->post('fecha_nacimiento');
+			$pais_nacimiento = $this->input->post('pais_nacimiento');
+			$departamento_nacimiento = $this->input->post('departamento_nacimiento');
+			$municipio_nacimiento = $this->input->post('municipio_nacimiento');
+			$telefono = trim($this->input->post('telefono'));
+			$email = trim($this->input->post('correo'));
+			$direccion = mb_convert_case(mb_strtolower(trim($this->input->post('direccion'))), MB_CASE_TITLE);
+			$barrio = mb_convert_case(mb_strtolower(trim($this->input->post('barrio'))), MB_CASE_TITLE);
+			$pais_residencia = $this->input->post('pais_residencia');
+			$departamento_residencia = $this->input->post('departamento_residencia');
+			$municipio_residencia = $this->input->post('municipio_residencia');
+			$estrato = $this->input->post('estrato');
+
+			$titulo = mb_convert_case(mb_strtolower(trim($this->input->post('titulo'))), MB_CASE_TITLE);
+			$escalafon = mb_convert_case(mb_strtolower($this->input->post('escalafon')), MB_CASE_TITLE);
+			$fecha_vinculacion = $this->input->post('fecha_vinculacion');
+			$tipo_vinculacion = $this->input->post('tipo_vinculacion');
+			$decreto_nombramiento = mb_convert_case(mb_strtolower(trim($this->input->post('decreto'))), MB_CASE_TITLE);
+
         	//array para insertar en la tabla personas
-        	$profesor = array(
-        	'id_persona' =>$ultimo_id,	
-			'identificacion' =>trim($this->input->post('identificacion')),
-			'tipo_id' =>$this->input->post('tipo_id'),
-			'fecha_expedicion' =>$this->input->post('fecha_expedicion'),
-			'pais_expedicion' =>$this->input->post('pais_expedicion'),
-			'departamento_expedicion' =>$this->input->post('departamento_expedicion'),
-			'municipio_expedicion' =>$this->input->post('municipio_expedicion'),
-			'nombres' =>ucwords(strtolower(trim($this->input->post('nombres')))),
-			'apellido1' =>ucwords(strtolower(trim($this->input->post('apellido1')))),
-			'apellido2' =>ucwords(strtolower(trim($this->input->post('apellido2')))),
-			'sexo' =>$this->input->post('sexo'),
-			'fecha_nacimiento' =>$this->input->post('fecha_nacimiento'),
-			'pais_nacimiento' =>$this->input->post('pais_nacimiento'),
-			'departamento_nacimiento' =>$this->input->post('departamento_nacimiento'),
-			'municipio_nacimiento' =>$this->input->post('municipio_nacimiento'),
-			'telefono' =>trim($this->input->post('telefono')),
-			'email' =>trim($this->input->post('correo')),
-			'direccion' =>ucwords(strtolower(trim($this->input->post('direccion')))),
-			'barrio' =>ucwords(strtolower(trim($this->input->post('barrio')))),
-			'pais_residencia' =>$this->input->post('pais_residencia'),
-			'departamento_residencia' =>$this->input->post('departamento_residencia'),
-			'municipio_residencia' =>$this->input->post('municipio_residencia'),
-			'estrato' =>$this->input->post('estrato'));
+			$profesor = array(
+        	'id_persona'       =>$ultimo_id,	
+			'identificacion'   =>$identificacion,
+			'tipo_id'          =>$tipo_id,
+			'fecha_expedicion' =>$fecha_expedicion,
+			'pais_expedicion'  =>$pais_expedicion,
+			'departamento_expedicion' =>$departamento_expedicion,
+			'municipio_expedicion'    =>$municipio_expedicion,
+			'nombres'          =>$nombres,
+			'apellido1'        =>$apellido1,
+			'apellido2'        =>$apellido2,
+			'sexo'             =>$sexo,
+			'fecha_nacimiento' =>$fecha_nacimiento,
+			'pais_nacimiento'  =>$pais_nacimiento,
+			'departamento_nacimiento' =>$departamento_nacimiento,
+			'municipio_nacimiento'    =>$municipio_nacimiento,
+			'telefono'         =>$telefono,
+			'email'            =>$email,
+			'direccion'        =>$direccion,
+			'barrio'           =>$barrio,
+			'pais_residencia'  =>$pais_residencia,
+			'departamento_residencia' =>$departamento_residencia,
+			'municipio_residencia'    =>$municipio_residencia,
+			'estrato'          =>$estrato);
 
         	//array para insertar en la tabla profesores
 			$profesor2 = array(
-			'id_persona' =>$ultimo_id,
-			'titulo' =>ucwords(strtolower(trim($this->input->post('titulo')))),
-			'escalafon' =>ucwords(strtolower($this->input->post('escalafon'))),
-			'fecha_vinculacion' =>$this->input->post('fecha_vinculacion'),
-			'tipo_vinculacion' =>$this->input->post('tipo_vinculacion'),
-			'decreto_nombramiento' =>ucfirst(strtolower(trim($this->input->post('decreto')))));
+			'id_persona'           =>$ultimo_id,
+			'titulo'               =>$titulo,
+			'escalafon'            =>$escalafon,
+			'fecha_vinculacion'    =>$fecha_vinculacion,
+			'tipo_vinculacion'     =>$tipo_vinculacion,
+			'decreto_nombramiento' =>$decreto_nombramiento);
 
 			//aqui creamos el username de un profesor
-			$user = strtolower(substr(trim($this->input->post('nombres')), 0, 2));
-			$name = strtolower(trim($this->input->post('apellido1')));
+			$user = mb_strtolower(substr($nombres, 0, 2));
+			$name = mb_strtolower($apellido1);
 			$username = $user.$name.$ultimo_id;
 
 			//array para insertar en la tabla usuarios
 			$usuario = array(
 			'id_usuario' =>$ultimo_id,
 			'id_persona' =>$ultimo_id,
-			'id_rol' => 3,
-			'username' =>$username,
-			'password' =>sha1($this->input->post('identificacion')),
-			'acceso' =>1);
+			'id_rol'     =>3,
+			'username'   =>$username,
+			'password'   =>sha1($identificacion),
+			'acceso'     =>1);
 
 			
-			if ($this->profesores_model->validar_existencia($this->input->post('identificacion'))){
+			if ($this->profesores_model->validar_existencia($identificacion)){
 
 				$respuesta=$this->profesores_model->insertar_profesor($profesor,$profesor2,$usuario);
 				
@@ -184,7 +213,7 @@ class Profesores_controller extends CI_Controller {
         $this->form_validation->set_rules('pais_nacimiento', 'Pais De Nacimiento', 'required');
         $this->form_validation->set_rules('departamento_nacimiento', 'Dpto. De Nacimiento', 'required');
         $this->form_validation->set_rules('municipio_nacimiento', 'Mcpio. De Nacimiento', 'required');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
@@ -204,64 +233,91 @@ class Profesores_controller extends CI_Controller {
         }
         else{
 
+        	$id_persona = $this->input->post('id_persona');
+        	$identificacion = $this->input->post('identificacion');
+			$tipo_id = $this->input->post('tipo_id');
+			$fecha_expedicion = $this->input->post('fecha_expedicion');
+			$pais_expedicion = $this->input->post('pais_expedicion');
+			$departamento_expedicion = $this->input->post('departamento_expedicion');
+			$municipio_expedicion = $this->input->post('municipio_expedicion');
+			$nombres = mb_convert_case(mb_strtolower(trim($this->input->post('nombres'))), MB_CASE_TITLE);
+			$apellido1 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido1'))), MB_CASE_TITLE);
+			$apellido2 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido2'))), MB_CASE_TITLE);
+			$sexo = $this->input->post('sexo');
+			$fecha_nacimiento = $this->input->post('fecha_nacimiento');
+			$pais_nacimiento = $this->input->post('pais_nacimiento');
+			$departamento_nacimiento = $this->input->post('departamento_nacimiento');
+			$municipio_nacimiento = $this->input->post('municipio_nacimiento');
+			$telefono = trim($this->input->post('telefono'));
+			$email = trim($this->input->post('correo'));
+			$direccion = mb_convert_case(mb_strtolower(trim($this->input->post('direccion'))), MB_CASE_TITLE);
+			$barrio = mb_convert_case(mb_strtolower(trim($this->input->post('barrio'))), MB_CASE_TITLE);
+			$pais_residencia = $this->input->post('pais_residencia');
+			$departamento_residencia = $this->input->post('departamento_residencia');
+			$municipio_residencia = $this->input->post('municipio_residencia');
+			$estrato = $this->input->post('estrato');
+
+			$titulo = mb_convert_case(mb_strtolower(trim($this->input->post('titulo'))), MB_CASE_TITLE);
+			$escalafon = mb_convert_case(mb_strtolower($this->input->post('escalafon')), MB_CASE_TITLE);
+			$fecha_vinculacion = $this->input->post('fecha_vinculacion');
+			$tipo_vinculacion = $this->input->post('tipo_vinculacion');
+			$decreto_nombramiento = mb_convert_case(mb_strtolower(trim($this->input->post('decreto'))), MB_CASE_TITLE);
+
 			//array para actualizar en la tabla personas
 			$profesor = array(
-	    	'id_persona' =>$this->input->post('id_persona'),	
-			'identificacion' =>trim($this->input->post('identificacion')),
-			'tipo_id' =>$this->input->post('tipo_id'),
-			'fecha_expedicion' =>$this->input->post('fecha_expedicion'),
-			'pais_expedicion' =>$this->input->post('pais_expedicion'),
-			'departamento_expedicion' =>$this->input->post('departamento_expedicion'),
-			'municipio_expedicion' =>$this->input->post('municipio_expedicion'),
-			'nombres' =>ucwords(strtolower(trim($this->input->post('nombres')))),
-			'apellido1' =>ucwords(strtolower(trim($this->input->post('apellido1')))),
-			'apellido2' =>ucwords(strtolower(trim($this->input->post('apellido2')))),
-			'sexo' =>$this->input->post('sexo'),
-			'fecha_nacimiento' =>$this->input->post('fecha_nacimiento'),
-			'pais_nacimiento' =>$this->input->post('pais_nacimiento'),
-			'departamento_nacimiento' =>$this->input->post('departamento_nacimiento'),
-			'municipio_nacimiento' =>$this->input->post('municipio_nacimiento'),
-			'telefono' =>trim($this->input->post('telefono')),
-			'email' =>trim($this->input->post('correo')),
-			'direccion' =>ucwords(strtolower(trim($this->input->post('direccion')))),
-			'barrio' =>ucwords(strtolower(trim($this->input->post('barrio')))),
-			'pais_residencia' =>$this->input->post('pais_residencia'),
-			'departamento_residencia' =>$this->input->post('departamento_residencia'),
-			'municipio_residencia' =>$this->input->post('municipio_residencia'),
-			'estrato' =>$this->input->post('estrato'));
+        	'id_persona'       =>$id_persona,	
+			'identificacion'   =>$identificacion,
+			'tipo_id'          =>$tipo_id,
+			'fecha_expedicion' =>$fecha_expedicion,
+			'pais_expedicion'  =>$pais_expedicion,
+			'departamento_expedicion' =>$departamento_expedicion,
+			'municipio_expedicion'    =>$municipio_expedicion,
+			'nombres'          =>$nombres,
+			'apellido1'        =>$apellido1,
+			'apellido2'        =>$apellido2,
+			'sexo'             =>$sexo,
+			'fecha_nacimiento' =>$fecha_nacimiento,
+			'pais_nacimiento'  =>$pais_nacimiento,
+			'departamento_nacimiento' =>$departamento_nacimiento,
+			'municipio_nacimiento'    =>$municipio_nacimiento,
+			'telefono'         =>$telefono,
+			'email'            =>$email,
+			'direccion'        =>$direccion,
+			'barrio'           =>$barrio,
+			'pais_residencia'  =>$pais_residencia,
+			'departamento_residencia' =>$departamento_residencia,
+			'municipio_residencia'    =>$municipio_residencia,
+			'estrato'          =>$estrato);
 
 			//array para actualizar en la tabla profesores
 			$profesor2 = array(
-			'id_persona' =>$this->input->post('id_persona'),
-			'titulo' =>ucwords(strtolower(trim($this->input->post('titulo')))),
-			'escalafon' =>ucwords(strtolower($this->input->post('escalafon'))),
-			'fecha_vinculacion' =>$this->input->post('fecha_vinculacion'),
-			'tipo_vinculacion' =>$this->input->post('tipo_vinculacion'),
-			'decreto_nombramiento' =>ucfirst(strtolower(trim($this->input->post('decreto')))));
+			'id_persona'           =>$id_persona,
+			'titulo'               =>$titulo,
+			'escalafon'            =>$escalafon,
+			'fecha_vinculacion'    =>$fecha_vinculacion,
+			'tipo_vinculacion'     =>$tipo_vinculacion,
+			'decreto_nombramiento' =>$decreto_nombramiento);
 
 			//aqui creamos el username de un profesor
-			$id_persona = $this->input->post('id_persona');
-			$user = strtolower(substr(trim($this->input->post('nombres')), 0, 2));
-			$name = strtolower(trim($this->input->post('apellido1')));
+			$user = mb_strtolower(substr($nombres, 0, 2));
+			$name = mb_strtolower($apellido1);
 			$username = $user.$name.$id_persona;
 
 			//array para actualizar en la tabla usuarios	
 			$usuario = array(
-			'id_usuario' =>$this->input->post('id_persona'),
-			'id_persona' =>$this->input->post('id_persona'),
-			'id_rol' => 3,
-			'username' =>$username,
-			'password' =>sha1($this->input->post('identificacion')),
-			'acceso' =>1);
+			'id_usuario' =>$id_persona,
+			'id_persona' =>$id_persona,
+			'id_rol'     =>3,
+			'username'   =>$username,
+			'password'   =>sha1($identificacion),
+			'acceso'     =>1);
 
-			
-			
-	    	$id_persona = $this->input->post('id_persona');
+
 	    	$identificacion_buscada = $this->profesores_model->obtener_identificacion($id_persona);
 
 	        if(is_numeric($id_persona)){
 
-	        	if($identificacion_buscada == $this->input->post('identificacion')){
+	        	if($identificacion_buscada == $identificacion){
 	          
 	                $respuesta=$this->profesores_model->modificar_profesor($id_persona,$profesor,$profesor2,$usuario);
 	                
@@ -276,7 +332,7 @@ class Profesores_controller extends CI_Controller {
 	            }
 	            else{
 
-	            	if($this->profesores_model->validar_existencia($this->input->post('identificacion'))){
+	            	if($this->profesores_model->validar_existencia($identificacion)){
 
 	            		$respuesta=$this->profesores_model->modificar_profesor($id_persona,$profesor,$profesor2,$usuario);
 	                	  

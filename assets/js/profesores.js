@@ -53,7 +53,7 @@ function inicio(){
 
 			});
 		}else{
-			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 5000});
 			//alert($("#form_profesores").validate().numberOfInvalids()+"errores");
 		}
 
@@ -193,7 +193,7 @@ function inicio(){
        	
         }
         else{
-			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_profesores_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
