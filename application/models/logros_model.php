@@ -202,8 +202,11 @@ class Logros_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+
 		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('DISTINCT(cursos.id_grado),grados.nombre_grado');
 
@@ -220,6 +223,8 @@ class Logros_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cursos.id_grado',$id_grado);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 		
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
 		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');

@@ -1,6 +1,16 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
+	    #modal_agregar_logro .modal-body
+		{
+			height:460px;
+			overflow:auto;
+		}
+
+	    .panel-margen{
+			margin-bottom: 0px;
+		}
 	</style>
 
 
@@ -17,7 +27,6 @@
     	<div class="col-lg-3">
     		<div class="form-group">
     			<button type="submit" name="btn_agregar_logro" id="btn_agregar_logro" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Logro</button>
-    		<!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_agregar_logro">Open Modal</button>-->
     		</div>
     	</div>
 
@@ -104,7 +113,7 @@
       </div>
       <div class="modal-body">
 
-      	<div class="panel panel-default">
+      	<div class="panel panel-default panel-margen">
 		    <div class="panel-body">
 
 		    	<div class="row">
@@ -112,7 +121,7 @@
 						<div class="input-group custom-search-form">
 							<input type="text" class="form-control" id="identificacion_profesor" name="identificacion_profesor" placeholder="Identificación Profesor" onkeypress="return valida(event)">
 						    	<span class="input-group-btn">
-						        	<button class="btn btn-primary" type="button" name="btn_buscar_profesor" id="btn_buscar_profesor">
+						        	<button class="btn btn-primary" type="button" name="btn_buscar_profesor" id="btn_buscar_profesorL">
 						            	<i class="fa fa-search"></i>
 						            </button>
 						        </span>
@@ -218,7 +227,7 @@
       </div>
       <div class="modal-body">
         
-      	<div class="panel panel-default">
+      	<div class="panel panel-default panel-margen">
 		    <div class="panel-body">
 		        <form role="form" id="form_logros_actualizar">
 
@@ -270,19 +279,15 @@
 					</div>	
 					
 		        </form>
-
-		        <div class="row">
-			        <div class="col-md-offset-4 col-md-4">
-			        	<button type="submit" name="btn_actualizar_logro" id="btn_actualizar_logro" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-			        </div>
-			    </div>
 			        
 		    </div>
 		</div>        
 
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <div class="col-md-offset-4 col-md-4">
+        	<button type="submit" name="btn_actualizar_logro" id="btn_actualizar_logro" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+        </div>
       </div>
     </div>
 

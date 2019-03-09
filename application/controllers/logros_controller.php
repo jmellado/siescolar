@@ -36,11 +36,11 @@ class Logros_controller extends CI_Controller {
 
 	public function insertar(){
 
-        $this->form_validation->set_rules('descripcion_logro', 'descripcion', 'required|alpha_spaces');
-        $this->form_validation->set_rules('periodo', 'periodo', 'required|max_length[7]');
-        $this->form_validation->set_rules('id_persona', 'id persona', 'required|numeric|max_length[10]');
-        $this->form_validation->set_rules('id_grado', 'grado', 'required|numeric|max_length[10]');
-        $this->form_validation->set_rules('id_asignatura', 'asignatura', 'required|numeric|max_length[10]');
+        $this->form_validation->set_rules('descripcion_logro', 'Descripcion', 'required|alpha_spaces|max_length[200]');
+        $this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
+        $this->form_validation->set_rules('id_persona', 'Persona', 'required|numeric');
+        $this->form_validation->set_rules('id_grado', 'Grado', 'required|numeric');
+        $this->form_validation->set_rules('id_asignatura', 'Asignatura', 'required|numeric');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -54,7 +54,7 @@ class Logros_controller extends CI_Controller {
 
         	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
-        	$descripcion_logro = ucwords(mb_strtolower(trim($this->input->post('descripcion_logro'))));
+        	$descripcion_logro = mb_convert_case(mb_strtolower(trim($this->input->post('descripcion_logro'))), MB_CASE_TITLE);
         	$periodo = $this->input->post('periodo');
         	$id_profesor = $this->input->post('id_persona');
         	$id_grado = $this->input->post('id_grado');
@@ -179,7 +179,7 @@ class Logros_controller extends CI_Controller {
     public function modificar(){
 
     	$id_logro = $this->input->post('id_logro');
-    	$descripcion_logro = ucwords(mb_strtolower(trim($this->input->post('descripcion_logro'))));
+    	$descripcion_logro = mb_convert_case(mb_strtolower(trim($this->input->post('descripcion_logro'))),  MB_CASE_TITLE);
         $periodo = $this->input->post('periodo');
         $id_profesor = $this->input->post('id_persona');
         $id_grado = $this->input->post('id_grado');

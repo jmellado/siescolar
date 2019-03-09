@@ -55,8 +55,8 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
-			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
+
 		}
 
 	});
@@ -152,18 +152,18 @@ function inicio(){
        	}
        	else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
 		
        
     });
 
 
-    $("#btn_buscar_profesor").click(function(event){
+    $("#btn_buscar_profesorL").click(function(event){
     	
     	if($("#identificacion_profesor").val()==""){
 
-    		toastr.warning('Favor Digite Un Numero De identificacion', 'Success Alert', {timeOut: 3000});
+    		toastr.warning('Favor Digite Un Número De Identificación.', 'Success Alert', {timeOut: 3000});
 
        	}
        	else{
@@ -181,7 +181,7 @@ function inicio(){
        	if(event.keyCode == 13) {
 
        		if($("#identificacion_profesor").val()==""){
-	        	toastr.warning('Favor Digite Un Numero De identificacion', 'Success Alert', {timeOut: 3000});
+	        	toastr.warning('Favor Digite Un Número De Identificación.', 'Success Alert', {timeOut: 3000});
 	       	}
 	       	else{
 	       		id = $("#identificacion_profesor").val();
@@ -232,22 +232,22 @@ function inicio(){
 
 			id_persona:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+					
 
 			},
 
 			id_grado:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+					
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+					
 
 			},
 
@@ -283,22 +283,22 @@ function inicio(){
 
 			id_persona:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+					
 
 			},
 
 			id_grado:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+					
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+					
 
 			},
 
@@ -489,7 +489,7 @@ function buscar_profesor(valor){
 
 				if(respuesta==="profesornoexiste"){
 
-					toastr.success('Profesor No Registrado', 'Success Alert', {timeOut: 5000});
+					toastr.warning('Profesor No Registrado.', 'Success Alert', {timeOut: 5000});
 					$("#form_logros")[0].reset();
 					$("#id_persona").val("");
 					llenarcombo_grados_profesor("",null);
