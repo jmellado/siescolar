@@ -57,8 +57,8 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
-			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
+
 		}
 
 	});
@@ -149,8 +149,8 @@ function inicio(){
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
-			//alert($("#form_logros_actualizar").validate().numberOfInvalids()+"errores");
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
+
 		}
 		
        
@@ -207,22 +207,22 @@ function inicio(){
 
 			id_persona:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+	
 
 			},
 
 			id_grado:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+	
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+	
 
 			},
 
@@ -258,22 +258,22 @@ function inicio(){
 
 			id_persona:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+	
 
 			},
 
 			id_grado:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+	
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15
-				//lettersonly: true	
+				digits: true
+	
 
 			},
 
@@ -289,7 +289,7 @@ function inicio(){
 
 	});
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
-  	return this.optional(element) || /^[a-záéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/i.test(value););
+  	return this.optional(element) || /^[a-záéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/i.test(value);
 	}, "Solo Valores Alfabeticos");
 
 

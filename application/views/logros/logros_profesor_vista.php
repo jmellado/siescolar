@@ -1,6 +1,10 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
+	    .panel-margen{
+			margin-bottom: 0px;
+		}
 	</style>
 
 
@@ -94,82 +98,80 @@
 
 <!-- Modal  agregar nuev logro -->
 <div id="modal_agregar_logro" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+	<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR LOGROS</h4>
-      </div>
-      <div class="modal-body">
-        
-        <form role="form" action="<?php echo base_url(); ?>logros_controller/insertar" name="" method="post" id="form_logros">
-
-			<input type="hidden" class="form-control" id="id_persona" name="id_persona" value="<?php echo $this->session->userdata('id_persona')?>">
-
-			<div class="row">
-	        	<div class="col-md-12">
-	        		<div class="panel panel-default">
-		        		<div class="panel-body">
-			        		
-			        		<div class="col-md-4">
-								<label for="periodo">PERIODO</label>
-								<select class="form-control" id="periodo" name="periodo">
-										<option value="Primero">Primero</option>
-										<option value="Segundo">Segundo</option>
-										<option value="Tercero">Tercero</option>
-										<option value="Cuarto">Cuarto</option>
-								</select>
-							</div>
-
-							<div class="col-md-4">
-								<label for="id_grado">GRADO</label>
-								<div id="grados_logros1">
-									<select class="form-control" id="id_grado_logros" name="id_grado">
-												    
-									</select>
-								</div>
-							</div>
-
-							<div class="col-md-4">
-								<label for="id_asignatura">ASIGNATURA</label>
-								<div id="asignaturas_logros1">
-									<select class="form-control" id="id_asignatura_logros" name="id_asignatura">
-												    
-									</select>
-								</div>
-							</div>
-
-						</div>
-					</div>
-	        	</div>
-
-	        	<div class="col-md-12">
-	        		<div class="panel panel-default">
-	        			<div class="panel-body">
-	        		
-			        		<div class="form-group">
-								<label for="descripcion_logro">DESCRIPCION LOGRO</label>
-								<textarea class="form-control" name="descripcion_logro" id="descripcion_logro" cols="50" rows="4" placeholder="Describir logro.." style="resize:none"></textarea>
-							</div>
-						</div>
-					</div>		
-	        	</div>
-
-	        	<div class="col-md-offset-4 col-md-4">
-					<button type="submit" name="btn_registrar_logro" id="btn_registrar_logro" class="btn btn-primary btn-lg btn-block">Registrar</button>
-				</div>
+    	<!-- Modal content-->
+    	<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR LOGROS</h4>
 			</div>
-        </form>
 
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
+			<form role="form" action="<?php echo base_url(); ?>logros_controller/insertar" name="" method="post" id="form_logros">
+      			<div class="modal-body">
+        
+					<input type="hidden" class="form-control" id="id_persona" name="id_persona" value="<?php echo $this->session->userdata('id_persona')?>">
 
-  </div>
+					<div class="row">
+			        	<div class="col-md-12">
+			        		<div class="panel panel-default">
+				        		<div class="panel-body">
+					        		
+					        		<div class="col-md-4">
+										<label for="periodo">PERIODO</label>
+										<select class="form-control" id="periodo" name="periodo">
+												<option value="Primero">Primero</option>
+												<option value="Segundo">Segundo</option>
+												<option value="Tercero">Tercero</option>
+												<option value="Cuarto">Cuarto</option>
+										</select>
+									</div>
+
+									<div class="col-md-4">
+										<label for="id_grado">GRADO</label>
+										<div id="grados_logros1">
+											<select class="form-control" id="id_grado_logros" name="id_grado">
+														    
+											</select>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<label for="id_asignatura">ASIGNATURA</label>
+										<div id="asignaturas_logros1">
+											<select class="form-control" id="id_asignatura_logros" name="id_asignatura">
+														    
+											</select>
+										</div>
+									</div>
+
+								</div>
+							</div>
+			        	</div>
+
+			        	<div class="col-md-12">
+			        		<div class="panel panel-default panel-margen">
+			        			<div class="panel-body">
+			        		
+					        		<div class="form-group">
+										<label for="descripcion_logro">DESCRIPCION LOGRO</label>
+										<textarea class="form-control" name="descripcion_logro" id="descripcion_logro" cols="50" rows="4" placeholder="Describir logro.." style="resize:none"></textarea>
+									</div>
+								</div>
+							</div>		
+			        	</div>
+					</div>
+		        
+      			</div>
+      			<div class="modal-footer">
+        			<div class="col-md-offset-4 col-md-4">
+						<button type="submit" name="btn_registrar_logro" id="btn_registrar_logro" class="btn btn-primary btn-lg btn-block">Registrar</button>
+					</div>
+      			</div>
+      		</form>
+		</div>
+
+ 	</div>
 </div>
 
 <!-- Modal  actualizar logro -->
@@ -184,11 +186,9 @@
       </div>
       <div class="modal-body">
         
-
         <form role="form" id="form_logros_actualizar">
 
         	<div class="row">
-
 	        	<div class="col-md-12">
 	        		<div class="panel panel-default">
 	        			<div class="panel-body">
@@ -224,13 +224,13 @@
 									</select>
 								</div>
 							</div>
+
 						</div>
 					</div>	
-
 				</div>
 
 				<div class="col-md-12">
-					<div class="panel panel-default">
+					<div class="panel panel-default panel-margen">
 	        			<div class="panel-body">
 							<div class="form-group">
 								<label for="descripcion_logro">DESCRIPCION LOGRO</label>
@@ -240,22 +240,16 @@
 							<input type="hidden" class="form-control" id="ano_lectivologrossele" name="ano_lectivo">
 						</div>
 					</div>		
-
 				</div>
         	</div>
 
-			
         </form>
-
-        <div class="row">
-	        <div class="col-md-offset-4 col-md-4">
-	        	<button type="submit" name="btn_actualizar_logro" id="btn_actualizar_logro" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-	        </div>
-        </div>
 
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <div class="col-md-offset-4 col-md-4">
+        	<button type="submit" name="btn_actualizar_logro" id="btn_actualizar_logro" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+        </div>
       </div>
     </div>
 
