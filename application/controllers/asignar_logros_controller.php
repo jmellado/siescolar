@@ -124,10 +124,17 @@ class Asignar_logros_controller extends CI_Controller {
 
 	public function insertar(){
 
-		
-		if($this->input->post('id_persona')!=""){
+		$this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
+		$this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
+        $this->form_validation->set_rules('id_asignatura', 'Asignatura', 'required|numeric');
 
-			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
 			$i=0;
 
 			$id_estudiante = $this->input->post('id_persona');
@@ -135,59 +142,66 @@ class Asignar_logros_controller extends CI_Controller {
 			$id_curso = $this->input->post('id_curso');
 			$id_grado = $this->asignar_logros_model->obtener_id_grado($id_curso);
 			$id_asignatura = $this->input->post('id_asignatura');
-			$id_logro1 = $this->input->post('id_logro')[$i];
-			$id_logro2 = $this->input->post('id_logro')[$i+1];
-			$id_logro3 = $this->input->post('id_logro')[$i+2];
-			$id_logro4 = $this->input->post('id_logro')[$i+3];
+			$id_logro = $this->input->post('id_logro');
+
+			$id_logro1 = $id_logro[$i];
+			$id_logro2 = $id_logro[$i+1];
+			$id_logro3 = $id_logro[$i+2];
+			$id_logro4 = $id_logro[$i+3];
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+			if($id_logro != ""){
 
 
-			$data = array(
+				$data = array(
+	        	'ano_lectivo'   => $ano_lectivo,
+	            'id_estudiante' => $id_estudiante,
+	            'periodo'       => $periodo,
+	            'id_grado'      => $id_grado,
+	            'id_asignatura' => $id_asignatura,
+	            'id_logro1'     => $id_logro1,
+	            'id_logro2'     => $id_logro2,
+	            'id_logro3'     => $id_logro3,
+	            'id_logro4'     => $id_logro4);
 
-            	'ano_lectivo' => $ano_lectivo,
-                'id_estudiante' => $id_estudiante,
-                'periodo' => $periodo,
-                'id_grado' => $id_grado,
-                'id_asignatura' => $id_asignatura,
-                'id_logro1' => $id_logro1,
-                'id_logro2' => $id_logro2,
-                'id_logro3' => $id_logro3,
-                'id_logro4' => $id_logro4
-                
-            );
+				$estado = $this->asignar_logros_model->validar_existencia($ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
 
-			$estado = $this->asignar_logros_model->validar_existencia($ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
+				if($estado){
 
-			if($estado){
+					$respuesta = $this->asignar_logros_model->insertar_logros($data);
 
-				$respuesta = $this->asignar_logros_model->insertar_logros($data);
+		            if($respuesta == true){
 
-	            if($respuesta == false){
-					echo "error al ingresar logros";
+			        	echo "registroguardado";
+			        }
+			        else{
+			        	
+			        	echo "registronoguardado";
+			        }
+
 				}
-			}
-			else{
-				
-				$respuesta = $this->asignar_logros_model->modificar_logros($data,$ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
+				else{
+					
+					$respuesta = $this->asignar_logros_model->modificar_logros($data,$ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
 
-	            if($respuesta == false){
-					echo "error al modificar logros";
+		            if($respuesta == true){
+
+			        	echo "registroguardado";
+			        }
+			        else{
+			        	
+			        	echo "registronoguardado";
+			        }
+
 				}
 
-			}
 
+		    }else{
 
-			if($respuesta == true){
+		    	echo "nohayinformacion";
+		    }
 
-	        	echo "registroguardado";
-	        }
-	        else{
-	        	echo "registronoguardado";
-	        }
-
-	    }else{
-
-	    	echo "No Hay Informacion Por Registrar";
-	    }
+		}
 
 	}
 

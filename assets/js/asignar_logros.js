@@ -23,22 +23,22 @@ function inicio(){
 							
 							if (respuesta==="registroguardado") {
 								
-								toastr.success('registro guardado satisfactoriamente', 'Success Alert', {timeOut: 5000});
+								toastr.success('Logros Asignados Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 
 							}
 							else if(respuesta==="registronoguardado"){
 								
-								toastr.success('registro no guardado', 'Success Alert', {timeOut: 5000});
+								toastr.error('Logros No Asignados.', 'Success Alert', {timeOut: 3000});
 
 							}
-							else if(respuesta==="grado ya existe"){
-								
-								toastr.success('ya esta registrado', 'Success Alert', {timeOut: 5000});
-									
+							else if(respuesta==="nohayinformacion"){
+						
+								toastr.warning('No Hay Información Por Registrar.', 'Success Alert', {timeOut: 3000});	
+
 							}
 							else{
 
-								toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+								toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
 								
 							}
 							
@@ -48,12 +48,14 @@ function inicio(){
 						}
 
 					});
+
 				}else{
-					toastr.error('Debe Asignar Cuatro Logros En Total', 'Success Alert', {timeOut: 3000});
+
+					toastr.warning('Debe Asignar Cuatro Logros En Total.', 'Success Alert', {timeOut: 3000});
 				}	
 			}else{
 
-				toastr.error('El Estudiante Seleccionado No Tiene Nota Ingresada', 'Success Alert', {timeOut: 3000});
+				toastr.warning('El Estudiante Seleccionado No Tiene Nota Ingresada.', 'Success Alert', {timeOut: 3000});
 				
 			}
 		}	
@@ -76,7 +78,7 @@ function inicio(){
     	
     	if($("#identificacion_profesorAL").val()==""){
 
-    		toastr.warning('Favor Digite Un Numero De identificacion', 'Success Alert', {timeOut: 3000});
+    		toastr.warning('Favor Digite Un Número De Identificación.', 'Success Alert', {timeOut: 3000});
 
        	}
        	else{
@@ -94,7 +96,7 @@ function inicio(){
        	if(event.keyCode == 13) {
 
        		if($("#identificacion_profesorAL").val()==""){
-	        	toastr.warning('Favor Digite Un Numero De identificacion', 'Success Alert', {timeOut: 3000});
+	        	toastr.warning('Favor Digite Un Número De Identificación.', 'Success Alert', {timeOut: 3000});
 	       	}
 	       	else{
 	       		id = $("#identificacion_profesorAL").val();
@@ -180,19 +182,19 @@ function inicio(){
 
 			id_persona:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			},
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			}
 
@@ -207,7 +209,8 @@ function inicio(){
     	rules:{
 
 			id_persona:{
-				required: true
+				required: true,
+				digits: true
 			}
 
 		}
@@ -236,12 +239,20 @@ function mostrarlogros_profesorAL(periodo,id_persona,id_curso,id_asignatura){
 				registros = JSON.parse(respuesta);  //AQUI PARSEAMOS EN JSON TIPO OBJETO CLAVE-VALOR
 
 				html ="";
-				for (var i = 0; i < registros.logros.length; i++) {
-					html +="<tr><td>"+[i+1]+"</td><td><input type='checkbox' name='id_logro[]' value='"+registros.logros[i].id_logro+"'></td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td><textarea class='form-control' cols='80' rows='3' readonly style='resize:none'>"+registros.logros[i].descripcion_logro+"</textarea></td><td style='display:none'>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td style='display:none'>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td style='display:none'>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td style='display:none'>"+registros.logros[i].nombre_ano_lectivo+"</td></tr>";
-				};
-				
-				$("#lista_logrosAL tbody").html(html);
- 
+
+				if (registros.logros.length > 0) {
+
+					for (var i = 0; i < registros.logros.length; i++) {
+						html +="<tr><td>"+[i+1]+"</td><td><input type='checkbox' name='id_logro[]' value='"+registros.logros[i].id_logro+"'></td><td style='display:none'>"+registros.logros[i].id_logro+"</td><td>"+registros.logros[i].nombre_logro+"</td><td><textarea class='form-control' cols='80' rows='3' readonly style='resize:none'>"+registros.logros[i].descripcion_logro+"</textarea></td><td style='display:none'>"+registros.logros[i].periodo+"</td><td style='display:none'>"+registros.logros[i].id_profesor+"</td><td style='display:none'>"+registros.logros[i].id_grado+"</td><td style='display:none'>"+registros.logros[i].nombre_grado+"</td><td style='display:none'>"+registros.logros[i].id_asignatura+"</td><td style='display:none'>"+registros.logros[i].nombre_asignatura+"</td><td style='display:none'>"+registros.logros[i].ano_lectivo+"</td><td style='display:none'>"+registros.logros[i].nombre_ano_lectivo+"</td></tr>";
+					};
+					
+					$("#lista_logrosAL tbody").html(html);
+ 				}
+ 				else{
+
+ 					html ="<tr><td colspan='4'><p style='text-align:center'>No Hay Logros Registrados..</p></td></tr>";
+					$("#lista_logrosAL tbody").html(html);
+ 				}
 				
 				
 			}
@@ -262,7 +273,7 @@ function buscar_profesorAL(valor){
 
 				if(respuesta==="profesornoexiste"){
 
-					toastr.success('Profesor No Registrado', 'Success Alert', {timeOut: 5000});
+					toastr.warning('Profesor No Registrado.', 'Success Alert', {timeOut: 5000});
 					$("#form_asignar_logros")[0].reset();
 					$("#id_persona").val("");
 					llenarcombo_cursos_profesorAL("");
@@ -378,8 +389,9 @@ function validar_fechaIngresoLogros(nombre_periodo,fecha_actual){
 				}
 				else{
 					
-					toastr.warning('No Existen Fechas Para La Asignacion De Logros', 'Success Alert', {timeOut: 5000});
+					toastr.warning('No Existen Fechas Para La Asignación De Logros.', 'Success Alert', {timeOut: 3000});
 				}
+
 		}
 
 	});
@@ -469,7 +481,7 @@ function logros_asignados_estudianteAL(id_estudiante,periodo,id_curso,id_asignat
 				
 				if(respuesta==="no"){
 
-					toastr.success('El Estudiante Seleccionado No Tiene Logros Asignados', 'Success Alert', {timeOut: 2000});
+					toastr.info('El Estudiante Seleccionado No Tiene Logros Asignados.', 'Success Alert', {timeOut: 2000});
 				}
 				else{
 
