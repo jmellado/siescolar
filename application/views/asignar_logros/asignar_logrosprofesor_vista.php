@@ -23,20 +23,17 @@
     <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="<?php echo $this->session->userdata('id_persona')?>">
 
     <div class="row">
-
     	<div class="col-md-12">
-
     		<div class="panel panel-default">
-                
                 <div class="panel-body">
 
 					<form role="form" action="<?php echo base_url(); ?>logros_controller/ingresar_notas" name="" method="post" id="form_asignar_logros">
 					
 	        			<div class="col-md-12">
-
 	        				<div class="panel panel-default">
 	        					<!--<div class="panel-heading"></div>-->
 	                			<div class="panel-body">
+
 			        				<div class="col-md-offset-1 col-md-3">
 				        				<div class="form-group">
 											<label for="periodo">PERIODO</label>
@@ -73,42 +70,34 @@
 
 								</div>
 							</div>
-
 	        			</div>
 
 	        			<div class="col-sm-offset-9 col-sm-3">
-
 	        				<div class="form-group">
 								<button type="button" name="btn_ingresar_logro" id="btn_ingresar_logro" class="btn btn-primary btn-lg btn-block btn-flat">Asignar</button>
 							</div>
-							
 	        			</div>
 
         			</form>
 
                 </div>
             </div>
-
-
-
     	</div>
-
-    	
     </div>
 
     <div id="div-asignar_logros" class="row" style="display:none;">
-    <form role="form" action="<?php echo base_url(); ?>asignar_logros_controller/insertar" name="" method="post" id="form_logrosAL_insertar">
+	    <form role="form" action="<?php echo base_url(); ?>asignar_logros_controller/insertar" name="" method="post" id="form_logrosAL_insertar">
 
-    	<div class="col-md-12">
-	    	<div class="panel panel-default">
-		    	<div class="panel-body">
-		    		<div class="row">
+	    	<div class="col-md-12">
+		    	<div class="panel panel-default">
+			    	<div class="panel-body">
+			    		<div class="row">
 
-		    			<div class="col-md-4">
-				    		<div class="panel panel-default">
-					    		<div class="panel-heading"><i class='fa fa-check-square'></i>&nbsp;Seleccionar Estudiante:</div>
+			    			<div class="col-md-4">
+					    		<div class="panel panel-default">
+						    		<div class="panel-heading"><i class='fa fa-check-square'></i>&nbsp;Seleccionar Estudiante:</div>
 					    			<div class="panel-body">
-    	
+		
 										<div class="form-group">
 											<input type="hidden" class="form-control" id="periodoseleAL" name="periodo">
 										</div>
@@ -134,47 +123,50 @@
 										</div>
 
 									</div>
-								
-							</div>
-						</div>				
+								</div>
+							</div>				
 
-				    	<div class="col-md-8">
-				    		<div class="panel panel-default">
-				    			<div class="panel-heading"><i class='fa fa-check-square'></i>&nbsp;Seleccionar Logros:</div>
+					    	<div class="col-md-8">
+					    		<div class="panel panel-default">
+					    			<div class="panel-heading"><i class='fa fa-check-square'></i>&nbsp;Seleccionar Logros:</div>
 				    				<div class="panel-body">
 
 										<div class="table-responsive">
-										<table border='1' id="lista_logrosAL" class="table table-bordered table-condensed table-hover table-striped">
-											<thead>
-												<tr>
-													<th><i class='fa fa-sort-amount-asc'></i></th>
-													<th>Seleccionar</th>
-													<th>Código</th>
-													<th>Logro</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
+											<table border='1' id="lista_logrosAL" class="table table-bordered table-condensed table-hover table-striped">
+												<thead>
+													<tr>
+														<th><i class='fa fa-sort-amount-asc'></i></th>
+														<th>Seleccionar</th>
+														<th>Código</th>
+														<th>Logro</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+												<tfoot>
+													<tr>
+														<td colspan='4'></td>
+													</tr>
+												</tfoot>
+											</table>
 										</div>
 
 				    				</div>
+					    		</div>
+					    	</div>
 
-				    		</div>
-				    	</div>
-
-				    	<div class="col-sm-offset-9 col-sm-3">
-							<div class="form-group">
-								<button type="submit" name="btn_registrar_logroAL" id="btn_registrar_logroAL" class="btn btn-success btn-flat btn-lg btn-block">Registrar</button>
+					    	<div class="col-sm-offset-9 col-sm-3">
+								<div class="form-group">
+									<button type="submit" name="btn_registrar_logroAL" id="btn_registrar_logroAL" class="btn btn-success btn-flat btn-lg btn-block">Registrar</button>
+								</div>
 							</div>
-						</div>
 
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-    </form>
+	    </form>
     </div>
     
 </div>
