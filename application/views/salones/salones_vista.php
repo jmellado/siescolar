@@ -1,6 +1,10 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
+	    .panel-margen{
+			margin-bottom: 0px;
+		}
 	</style>
 
 
@@ -16,7 +20,7 @@
 
     	<div class="col-lg-3">
     		<div class="form-group">
-    			<button type="submit" name="btn_agregar_salon" id="btn_agregar_salon" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Salon</button>
+    			<button type="submit" name="btn_agregar_salon" id="btn_agregar_salon" class="btn btn-success"><i class='fa fa-plus'></i>&nbsp;Agregar Salón</button>
     		</div>
     	</div>
 
@@ -85,152 +89,144 @@
     	</div>
     </div>
 
-
-
 </div>
 
 <!-- Modal  agregar nuev salon -->
 <div id="modal_agregar_salon" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+	<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR SALONES</h4>
-      </div>
-      <div class="modal-body">
+    	<!-- Modal content-->
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		<h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR SALONES</h4>
+      		</div>
 
-      	<div class="panel panel-default">
-		    <div class="panel-body">
+      		<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>salones_controller/insertar" name="" method="post" id="form_salones">
+      			<div class="modal-body">
 
-		        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>salones_controller/insertar" name="" method="post" id="form_salones">
+	      			<div class="panel panel-default panel-margen">
+			    		<div class="panel-body">
 
-		        	<div class="form-group">
-						<label class="control-label col-sm-3" for="nombre_salon">NOMBRE</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="nombre_salon" name="nombre_salon"
-								 placeholder="Nombre">
-						</div>		 
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="observacion" name="observacion"
-								 placeholder="Observaciones">
-						</div>		 
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
-						<div class="col-sm-7">
-							<div id="ano_lectivo1">
-								<select class="form-control" id="ano_lectivo" name="ano_lectivo">
-												    
-								</select>
+				        	<div class="form-group">
+								<label class="control-label col-sm-3" for="nombre_salon">NOMBRE</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="nombre_salon" name="nombre_salon"
+										 placeholder="Nombre">
+								</div>		 
 							</div>
-						</div>	
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="observacion" name="observacion"
+										 placeholder="Observaciones">
+								</div>		 
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+								<div class="col-sm-7">
+									<div id="ano_lectivo1">
+										<select class="form-control" id="ano_lectivo" name="ano_lectivo">
+														    
+										</select>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="estado_salon">ESTADO</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="estado_salon" name="estado_salon">
+											<option value="Activo">Activo</option>
+											<option value="Inactivo">Inactivo</option>
+									</select>
+								</div>	
+							</div>		
+
+			    		</div>
+					</div>        
+
+      			</div>
+	      		<div class="modal-footer">
+	        		<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+		        	<div class="col-sm-offset-4 col-sm-4">
+						<button type="submit" name="btn_registrar_salon" id="btn_registrar_salon" class="btn btn-primary btn-lg btn-block">Registrar</button>
 					</div>
+	      		</div>
+      		</form>
+    	</div>
 
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="estado_salon">ESTADO</label>
-						<div class="col-sm-7">
-							<select class="form-control" id="estado_salon" name="estado_salon">
-									<option value="Activo">Activo</option>
-									<option value="Inactivo">Inactivo</option>
-							</select>
-						</div>	
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-offset-4 col-sm-5">
-							<button type="submit" name="btn_registrar_salon" id="btn_registrar_salon" class="btn btn-primary btn-lg btn-block">Registrar</button>
-						</div>
-					</div>		
-
-		        </form>
-		    </div>
-		</div>        
-
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+  	</div>
 </div>
 
 <!-- Modal  actualizar salon -->
 <div id="modal_actualizar_salon" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+	<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR SALON</h4>
-      </div>
-      <div class="modal-body">
+    	<!-- Modal content-->
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		<h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR SALON</h4>
+      		</div>
+      		<div class="modal-body">
 
-      	<div class="panel panel-default">
-		    <div class="panel-body">
+      			<div class="panel panel-default panel-margen">
+				    <div class="panel-body">
 
-		        <form class="form-horizontal" role="form" id="form_salones_actualizar">
-				    
-					<input type="hidden" class="form-control" id="id_salonsele" name="id_salon">
-					
-		        	<div class="form-group">
-						<label class="control-label col-sm-3" for="nombre_salon">NOMBRE</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="nombre_salonsele" name="nombre_salon"
-								 placeholder="Nombre">
-						</div>		 
-					</div>
+				        <form class="form-horizontal" role="form" id="form_salones_actualizar">
+						    
+							<input type="hidden" class="form-control" id="id_salonsele" name="id_salon">
+							
+				        	<div class="form-group">
+								<label class="control-label col-sm-3" for="nombre_salon">NOMBRE</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="nombre_salonsele" name="nombre_salon"
+										 placeholder="Nombre">
+								</div>		 
+							</div>
 
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="observacionsele" name="observacion"
-								 placeholder="Observaciones">
-						</div>		 
-					</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="observacion">OBSERVACIONES</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="observacionsele" name="observacion"
+										 placeholder="Observaciones">
+								</div>		 
+							</div>
 
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="anolectivosele" name="anolectivo" disabled>
-						</div>	
-					</div>
-					<input type="hidden" class="form-control" id="ano_lectivosele" name="ano_lectivo">
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="anolectivosele" name="anolectivo" disabled>
+								</div>	
+							</div>
+							<input type="hidden" class="form-control" id="ano_lectivosele" name="ano_lectivo">
 
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="estado_salon">ESTADO</label>
-						<div class="col-sm-7">
-							<select class="form-control" id="estado_salonsele" name="estado_salon">
-									<option value="Activo">Activo</option>
-									<option value="Inactivo">Inactivo</option>
-							</select>
-						</div>	
-					</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="estado_salon">ESTADO</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="estado_salonsele" name="estado_salon">
+											<option value="Activo">Activo</option>
+											<option value="Inactivo">Inactivo</option>
+									</select>
+								</div>	
+							</div>
 
-		        </form>
+				        </form>		
 
-		        <div class="form-group">
-					<div class="col-sm-offset-4 col-sm-5">
-		        		<button type="submit" name="btn_actualizar_salon" id="btn_actualizar_salon" class="btn btn-primary btn-lg btn-block">Actualizar</button>
-		        	</div>
-		        </div>		
+				    </div>
+				</div>        
 
-		    </div>
-		</div>        
+      		</div>
+      		<div class="modal-footer">
+        		<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        		<div class="col-sm-offset-4 col-sm-4">
+	        		<button type="submit" name="btn_actualizar_salon" id="btn_actualizar_salon" class="btn btn-primary btn-lg btn-block">Actualizar</button>
+	        	</div>
+      		</div>
+    	</div>
 
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+  	</div>
 </div>

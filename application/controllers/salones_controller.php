@@ -38,19 +38,19 @@ class Salones_controller extends CI_Controller {
         	//obtengo el ultimo id de salones + 1 
         	$ultimo_id = $this->salones_model->obtener_ultimo_id();
 
-        	$nombre_salon = ucwords(strtolower(trim($this->input->post('nombre_salon'))));
-	    	$observacion = ucwords(strtolower(trim($this->input->post('observacion'))));
+        	$nombre_salon = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_salon'))), MB_CASE_TITLE);
+	    	$observacion = mb_convert_case(mb_strtolower(trim($this->input->post('observacion'))), MB_CASE_TITLE);
 	    	$ano_lectivo = $this->input->post('ano_lectivo');
 	    	$estado_salon = $this->input->post('estado_salon');
         	$disponibilidad = 'si';
 
         	//array para insertar en la tabla salones----------
         	$salon = array(
-        	'id_salon' =>$ultimo_id,	
-			'nombre_salon' =>ucwords($nombre_salon),
-			'observacion' =>ucwords($observacion),
-			'ano_lectivo' =>$ano_lectivo,
-			'estado_salon' =>$estado_salon,
+        	'id_salon'       =>$ultimo_id,	
+			'nombre_salon'   =>$nombre_salon,
+			'observacion'    =>$observacion,
+			'ano_lectivo'    =>$ano_lectivo,
+			'estado_salon'   =>$estado_salon,
 			'disponibilidad' =>$disponibilidad);
 
 			if ($this->salones_model->validar_existencia($nombre_salon,$ano_lectivo)){
@@ -138,19 +138,19 @@ class Salones_controller extends CI_Controller {
     public function modificar(){
 
     	$id_salon = $this->input->post('id_salon');
-    	$nombre_salon = ucwords(strtolower(trim($this->input->post('nombre_salon'))));
-    	$observacion = ucwords(strtolower(trim($this->input->post('observacion'))));
+    	$nombre_salon = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_salon'))), MB_CASE_TITLE);
+    	$observacion = mb_convert_case(mb_strtolower(trim($this->input->post('observacion'))), MB_CASE_TITLE);
     	$ano_lectivo = $this->input->post('ano_lectivo');
     	$estado_salon = $this->input->post('estado_salon');
     	$disponibilidad = 'si';
 
     	//array para insertar en la tabla salones----------
         $salon = array(
-        'id_salon' =>$id_salon,	
-		'nombre_salon' =>$nombre_salon,
-		'observacion' =>$observacion,
-		'ano_lectivo' =>$ano_lectivo,
-		'estado_salon' =>$estado_salon,
+        'id_salon'       =>$id_salon,	
+		'nombre_salon'   =>$nombre_salon,
+		'observacion'    =>$observacion,
+		'ano_lectivo'    =>$ano_lectivo,
+		'estado_salon'   =>$estado_salon,
 		'disponibilidad' =>$disponibilidad);
 
 		$salo = $this->salones_model->obtener_informacion_salon($id_salon);

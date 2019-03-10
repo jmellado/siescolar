@@ -21,14 +21,14 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+						toastr.success('Salón Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_salones")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
+						toastr.error('Salón No Registrado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
@@ -53,7 +53,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			
 		}
 
@@ -139,7 +139,7 @@ function inicio(){
        	}
        	else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_salones_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
@@ -147,7 +147,16 @@ function inicio(){
     });
 
 
+    $("#modal_agregar_salon").on('hidden.bs.modal', function () {
+        var validator = $("#form_salones").validate();
+        validator.resetForm();
+    });
 
+
+    $("#modal_actualizar_salon").on('hidden.bs.modal', function () {
+        var validator = $("#form_salones_actualizar").validate();
+        validator.resetForm();
+    });
 
 
 
