@@ -64,8 +64,8 @@ class Elecciones_controller extends CI_Controller {
         	//obtengo el ultimo id de elecciones + 1 
         	$id_eleccion = $this->elecciones_model->obtener_ultimo_id();
 
-        	$nombre_eleccion = ucwords(strtolower($this->input->post('nombre_eleccion')));
-        	$descripcion = ucwords(strtolower($this->input->post('descripcion_eleccion')));
+        	$nombre_eleccion = mb_convert_case(mb_strtolower($this->input->post('nombre_eleccion')), MB_CASE_TITLE);
+        	$descripcion = mb_convert_case(mb_strtolower($this->input->post('descripcion_eleccion')), MB_CASE_TITLE);
         	$fecha_inicio = $this->input->post('fecha_inicio');
         	$hora_inicio = $this->input->post('hora_inicio');
         	$fecha_fin = $this->input->post('fecha_fin');
@@ -206,8 +206,8 @@ class Elecciones_controller extends CI_Controller {
 
 
     	$id_eleccion = $this->input->post('id_eleccion');
-    	$nombre_eleccion = ucwords(strtolower($this->input->post('nombre_eleccion')));
-    	$descripcion = ucwords(strtolower($this->input->post('descripcion_eleccion')));
+    	$nombre_eleccion = mb_convert_case(mb_strtolower($this->input->post('nombre_eleccion')), MB_CASE_TITLE);
+    	$descripcion = mb_convert_case(mb_strtolower($this->input->post('descripcion_eleccion')), MB_CASE_TITLE);
     	$fecha_inicio = $this->input->post('fecha_inicio');
     	$hora_inicio = $this->input->post('hora_inicio');
     	$fecha_fin = $this->input->post('fecha_fin');
@@ -309,7 +309,7 @@ class Elecciones_controller extends CI_Controller {
         	$id_candidato_eleccion = $this->elecciones_model->obtener_ultimo_id_candidato_eleccion();
         	$id_eleccion = $this->input->post('id_eleccion');
         	$id_candidato = $this->input->post('id_candidato');
-        	$partido = ucwords(strtolower($this->input->post('partido')));
+        	$partido = mb_convert_case(mb_strtolower($this->input->post('partido')), MB_CASE_TITLE);
         	$numero = $this->input->post('numero');
         	$foto_candidato = "foto_candidato";
         	$estado_candidato = "Activo";
@@ -435,7 +435,7 @@ class Elecciones_controller extends CI_Controller {
 
 
     	$id_candidato_eleccion = $this->input->post('id_candidato_eleccion');
-    	$partido = ucwords(strtolower($this->input->post('partido')));
+    	$partido = mb_convert_case(mb_strtolower($this->input->post('partido')), MB_CASE_TITLE);
         $numero = $this->input->post('numero');
         $foto_candidato = "foto_candidato";
 
@@ -805,7 +805,7 @@ class Elecciones_controller extends CI_Controller {
 		        
 		        $pdf->SetFont('helvetica', 'B', 12);
 		        $pdf->Write(0, '   LISTADO DE VOTANTES', '', 0, 'C', true, 0, false, false, 0);
-		        $pdf->Write(0, '   ELECCIÓN DE '.strtoupper($nombre_eleccion).'', '', 0, 'C', true, 0, false, false, 0);
+		        $pdf->Write(0, '   ELECCIÓN DE '.mb_strtoupper($nombre_eleccion,'UTF-8').'', '', 0, 'C', true, 0, false, false, 0);
 
 		        $pdf->SetFont('helvetica', '', 10, '', true);
 		 
@@ -879,7 +879,7 @@ class Elecciones_controller extends CI_Controller {
 
 			        $pdf->SetFont('helvetica', 'B', 12);
 		        	$pdf->Write(0, '   LISTADO DE VOTANTES', '', 0, 'C', true, 0, false, false, 0);
-		        	$pdf->Write(0, '   ELECCIÓN DE '.strtoupper($nombre_eleccion).'', '', 0, 'C', true, 0, false, false, 0);
+		        	$pdf->Write(0, '   ELECCIÓN DE '.mb_strtoupper($nombre_eleccion,'UTF-8').'', '', 0, 'C', true, 0, false, false, 0);
 		        	$pdf->SetFont('helvetica', '', 10, '', true);
 			        //===================================================================================================================
 
