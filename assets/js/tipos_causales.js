@@ -53,7 +53,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -127,7 +127,7 @@ function inicio(){
        		actualizar_tipo_causal();
       	}
        	else{
-			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
        
     });

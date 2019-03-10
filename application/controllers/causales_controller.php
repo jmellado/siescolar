@@ -35,7 +35,7 @@ class Causales_controller extends CI_Controller {
 
         	//obtengo el ultimo id de tipos de causales + 1 
         	$ultimo_id = $this->causales_model->obtener_ultimo_id_tipo_causal();
-        	$tipo_causal = ucwords(mb_strtolower(trim($this->input->post('tipo_causal'))));
+        	$tipo_causal = mb_convert_case(mb_strtolower(trim($this->input->post('tipo_causal'))), MB_CASE_TITLE);
 
         	//array para insertar en la tabla tipos causales
         	$tipo = array(
@@ -92,7 +92,7 @@ class Causales_controller extends CI_Controller {
 	public function modificar_tipo_causal(){
 
     	$id_tipo = $this->input->post('id_tipo_causal');
-    	$tipo_causal = ucwords(mb_strtolower(trim($this->input->post('tipo_causal'))));
+    	$tipo_causal = mb_convert_case(mb_strtolower(trim($this->input->post('tipo_causal'))), MB_CASE_TITLE);
 
     	//array para insertar en la tabla tipos causales
         $tipo = array(
