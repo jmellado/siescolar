@@ -52,11 +52,11 @@ class Matriculas_controller extends CI_Controller {
         	$jornada = $this->input->post('jornada');
         	$id_acudiente = $this->input->post('id_acudiente');
         	$parentesco = $this->input->post('parentesco');
-        	$observaciones = $this->input->post('observaciones');
+        	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
         	$estado = 'Activo';
         	$situacion_academica = 'No Definida';
 
-        	//array para insertar en la tabla grados----------
+        	//array para insertar en la tabla matriculas----------
         	$matricula = array(
         	'id_matricula' =>$ultimo_id,	
 			'fecha_matricula' =>$fecha_actual,
@@ -66,7 +66,7 @@ class Matriculas_controller extends CI_Controller {
 			'jornada' =>$jornada,
 			'id_acudiente' =>$id_acudiente,
 			'parentesco' =>$parentesco,
-			'observaciones' =>ucwords(strtolower($observaciones)),
+			'observaciones' =>$observaciones,
 			'estado_matricula' =>$estado,
 			'situacion_academica' =>$situacion_academica);
 
@@ -227,7 +227,7 @@ class Matriculas_controller extends CI_Controller {
     	$jornada = $this->input->post('jornada');
     	$id_acudiente = $this->input->post('id_acudiente');
         $parentesco = $this->input->post('parentesco');
-    	$observaciones = $this->input->post('observaciones');
+    	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
         $estado = 'Activo';
 
     	//array para insertar en la tabla matriculas----------
@@ -240,7 +240,7 @@ class Matriculas_controller extends CI_Controller {
 		'jornada' =>$jornada,
 		'id_acudiente' =>$id_acudiente,
 		'parentesco' =>$parentesco,
-		'observaciones' =>ucwords(strtolower($observaciones)),
+		'observaciones' =>$observaciones,
 		'estado_matricula' =>$estado);
 
         //array para insertar en la tabla estudiantes_acudientes
@@ -686,7 +686,7 @@ class Matriculas_controller extends CI_Controller {
 	        				<b>FECHA DE NACIMIENTO:</b> '.$fecha_nacimientoest.'
 	        			</td>
 	        			<td>
-	        				<b>LUGAR DE NACIMIENTO:</b> '.ucfirst(strtolower($nombre_municipioest)).'
+	        				<b>LUGAR DE NACIMIENTO:</b> '.ucfirst(mb_strtolower($nombre_municipioest, 'UTF-8')).'
 	        			</td>
 	        		</tr>';
 	        $tbl .= '<tr>
@@ -961,7 +961,7 @@ class Matriculas_controller extends CI_Controller {
         	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
         	$id_estudiante = $this->input->post('id_estudiante');
         	$id_curso = $this->input->post('id_curso');
-        	$observaciones = ucwords(strtolower(trim($this->input->post('observaciones'))));
+        	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
         	$fecha_retiro = $this->input->post('fecha_retiro');
         	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
