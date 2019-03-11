@@ -11,9 +11,14 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
 
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
 		$this->db->join('cursos', 'cargas_academicas.id_curso = cursos.id_curso');
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('DISTINCT(cargas_academicas.id_curso),grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
 
@@ -30,6 +35,8 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
 		$this->db->where('cargas_academicas.id_curso',$id_curso);
 		$this->db->where('cargas_academicas.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 		
 		$this->db->join('asignaturas', 'cargas_academicas.id_asignatura = asignaturas.id_asignatura');
 

@@ -118,12 +118,12 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
         	$id_estudiante = $this->input->post('id_estudiante');
         	$id_tipo_causal = $this->input->post('id_tipo_causal');
         	$id_causal = $this->input->post('id_causal');
-        	$descripcion_situacion = $this->input->post('descripcion_situacion');
+        	$descripcion_situacion = mb_convert_case(mb_strtolower(trim($this->input->post('descripcion_situacion'))), MB_CASE_TITLE);
         	$fecha_causal = $this->input->post('fecha_causal');
         	$fecha_registro = $fecha;
         	$id_accion_pedagogica = $this->input->post('id_accion_pedagogica');
-        	$descripcion_accion_pedagogica = $this->input->post('descripcion_accion');
-        	$compromiso_estudiante = $this->input->post('compromiso_estudiante');
+        	$descripcion_accion_pedagogica = mb_convert_case(mb_strtolower(trim($this->input->post('descripcion_accion'))), MB_CASE_TITLE);
+        	$compromiso_estudiante = mb_convert_case(mb_strtolower(trim($this->input->post('compromiso_estudiante'))), MB_CASE_TITLE);
         	$observaciones = "";
         	$estado_seguimiento = "Abierto";
 
@@ -137,11 +137,11 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
         	'id_estudiante' =>$id_estudiante,
         	'id_tipo_causal' =>$id_tipo_causal,
         	'id_causal' =>$id_causal,
-        	'descripcion_situacion' =>ucwords(strtolower(trim($descripcion_situacion))),
+        	'descripcion_situacion' =>$descripcion_situacion,
         	'fecha_causal' =>$fecha_causal,
         	'id_accion_pedagogica' =>$id_accion_pedagogica,
-        	'descripcion_accion_pedagogica' =>ucwords(strtolower(trim($descripcion_accion_pedagogica))),
-        	'compromiso_estudiante' =>ucwords(strtolower(trim($compromiso_estudiante))),
+        	'descripcion_accion_pedagogica' =>$descripcion_accion_pedagogica,
+        	'compromiso_estudiante' =>$compromiso_estudiante,
         	'observaciones' =>$observaciones,
         	'estado_seguimiento' =>$estado_seguimiento,
 			'fecha_registro' =>$fecha_registro);
@@ -213,24 +213,24 @@ class Seguimientos_disciplinarios_controller extends CI_Controller {
 	    	$id_seguimiento = $this->input->post('id_seguimiento');
 	    	$id_tipo_causal = $this->input->post('id_tipo_causal');
 	        $id_causal = $this->input->post('id_causal');
-	        $descripcion_situacion = $this->input->post('descripcion_situacion');
+	        $descripcion_situacion = mb_convert_case(mb_strtolower(trim($this->input->post('descripcion_situacion'))), MB_CASE_TITLE);
 	        $fecha_causal = $this->input->post('fecha_causal');
 	        $id_accion_pedagogica = $this->input->post('id_accion_pedagogica');
-        	$descripcion_accion_pedagogica = $this->input->post('descripcion_accion');
-        	$compromiso_estudiante = $this->input->post('compromiso_estudiante');
-        	$observaciones = $this->input->post('observaciones');
+        	$descripcion_accion_pedagogica = mb_convert_case(mb_strtolower(trim($this->input->post('descripcion_accion'))), MB_CASE_TITLE);
+        	$compromiso_estudiante = mb_convert_case(mb_strtolower(trim($this->input->post('compromiso_estudiante'))), MB_CASE_TITLE);
+        	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
 
 	    	//array para actualizar en la tabla seguimientos disciplinarios
 	    	$seguimiento = array(
 	    	'id_seguimiento' =>$id_seguimiento,
 	    	'id_tipo_causal' =>$id_tipo_causal,
 	    	'id_causal' =>$id_causal,
-	    	'descripcion_situacion' =>ucwords(strtolower(trim($descripcion_situacion))),
+	    	'descripcion_situacion' =>$descripcion_situacion,
 	    	'fecha_causal' =>$fecha_causal,
 	    	'id_accion_pedagogica' =>$id_accion_pedagogica,
-        	'descripcion_accion_pedagogica' =>ucwords(strtolower(trim($descripcion_accion_pedagogica))),
-        	'compromiso_estudiante' =>ucwords(strtolower(trim($compromiso_estudiante))),
-        	'observaciones' =>ucwords(strtolower(trim($observaciones))));
+        	'descripcion_accion_pedagogica' =>$descripcion_accion_pedagogica,
+        	'compromiso_estudiante' =>$compromiso_estudiante,
+        	'observaciones' =>$observaciones);
 
 	        if(is_numeric($id_seguimiento)){
 
