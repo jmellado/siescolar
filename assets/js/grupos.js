@@ -21,14 +21,14 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+						toastr.success('Grupo Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_grupos")[0].reset();
 
 
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
+						toastr.error('Grupo No Registrado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
@@ -53,7 +53,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -140,7 +140,7 @@ function inicio(){
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_grupos_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		

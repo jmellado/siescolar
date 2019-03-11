@@ -37,15 +37,18 @@ class Grupos_controller extends CI_Controller {
 
         	//obtengo el ultimo id de grupos + 1 
         	$ultimo_id = $this->grupos_model->obtener_ultimo_id();
+        	$nombre_grupo = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_grupo'))), MB_CASE_TITLE);
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+        	$estado_grupo = $this->input->post('estado_grupo');
 
-        	//array para insertar en la tabla grados----------
+        	//array para insertar en la tabla grupos----------
         	$grupo = array(
-        	'id_grupo' =>$ultimo_id,	
-			'nombre_grupo' =>ucwords(strtolower(trim($this->input->post('nombre_grupo')))),
-			'ano_lectivo' =>$this->input->post('ano_lectivo'),
-			'estado_grupo' =>$this->input->post('estado_grupo'));
+        	'id_grupo'     =>$ultimo_id,	
+			'nombre_grupo' =>$nombre_grupo,
+			'ano_lectivo'  =>$ano_lectivo,
+			'estado_grupo' =>$estado_grupo);
 
-			if ($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
+			if ($this->grupos_model->validar_existencia($nombre_grupo,$ano_lectivo)){
 
 				$respuesta=$this->grupos_model->insertar_grupo($grupo);
 
@@ -129,43 +132,46 @@ class Grupos_controller extends CI_Controller {
 
     public function modificar(){
 
+    	$id_grupo = $this->input->post('id_grupo');
+    	$nombre_grupo = mb_convert_case(mb_strtolower(trim($this->input->post('nombre_grupo'))), MB_CASE_TITLE);
+        $ano_lectivo = $this->input->post('ano_lectivo');
+        $estado_grupo = $this->input->post('estado_grupo');
+
     	//array para insertar en la tabla grupos----------
         $grupo = array(
-        'id_grupo' =>$this->input->post('id_grupo'),	
-		'nombre_grupo' =>ucwords($this->input->post('nombre_grupo')),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'),
-		'estado_grupo' =>$this->input->post('estado_grupo'));
+        'id_grupo'     =>$id_grupo,	
+		'nombre_grupo' =>$nombre_grupo,
+		'ano_lectivo'  =>$ano_lectivo,
+		'estado_grupo' =>$estado_grupo);
         
-		$id = $this->input->post('id_grupo');
-		$ano_lectivo = $this->input->post('ano_lectivo');
-		$nombre_buscado = $this->grupos_model->obtener_nombre_grupo($id);
-		$ano_lectivo_buscado = $this->grupos_model->obtener_ano_lectivo($id);
+		$nombre_buscado = $this->grupos_model->obtener_nombre_grupo($id_grupo);
+		$ano_lectivo_buscado = $this->grupos_model->obtener_ano_lectivo($id_grupo);
 
-        if(is_numeric($id)){
+        if(is_numeric($id_grupo)){
 
         	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id)){
+	        	if ($this->grupos_model->ValidarExistencia_GrupoEnCursos($id_grupo)){
 
-		        	if ($nombre_buscado == $this->input->post('nombre_grupo') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+		        	if ($nombre_buscado == $nombre_grupo && $ano_lectivo_buscado == $ano_lectivo){
 
-			        	$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+			        	$respuesta=$this->grupos_model->modificar_grupo($id_grupo,$grupo);
 
-						 if($respuesta==true){
+						if($respuesta==true){
 
 							echo "registroactualizado";
 
-			             }else{
+			            }else{
 
 							echo "registronoactualizado";
 
-			             }
+			            }
 			        }
 			        else{
 
-			        	if($this->grupos_model->validar_existencia($this->input->post('nombre_grupo'),$this->input->post('ano_lectivo'))){
+			        	if($this->grupos_model->validar_existencia($nombre_grupo,$ano_lectivo)){
 
-			        		$respuesta=$this->grupos_model->modificar_grupo($this->input->post('id_grupo'),$grupo);
+			        		$respuesta=$this->grupos_model->modificar_grupo($id_grupo,$grupo);
 
 			        		if($respuesta==true){
 
