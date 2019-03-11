@@ -78,9 +78,9 @@ class Notificaciones_controller extends CI_Controller {
         	$categoria_notificacion = "Mensajes";
         	//$remitente = $this->input->post('remitente');
             $remitente = "1";
-        	$titulo = ucwords(strtolower($this->input->post('titulo')));
+        	$titulo = mb_convert_case(mb_strtolower($this->input->post('titulo')), MB_CASE_TITLE);
         	$tipo_notificacion = $this->input->post('tipo');
-        	$contenido = ucwords(strtolower($this->input->post('contenido')));
+        	$contenido = mb_convert_case(mb_strtolower($this->input->post('contenido')), MB_CASE_TITLE);
         	$rol_destinatario = $this->input->post('rol_destinatario');
         	$fecha_envio = $fecha;
         	$estado_lectura = "0";
@@ -247,9 +247,9 @@ class Notificaciones_controller extends CI_Controller {
     public function modificar(){
 
     	$codigo_notificacion = $this->input->post('codigo_notificacion');
-    	$titulo = ucwords(strtolower($this->input->post('titulo')));
+    	$titulo = mb_convert_case(mb_strtolower($this->input->post('titulo')), MB_CASE_TITLE);
     	$tipo_notificacion = $this->input->post('tipo');
-    	$contenido = ucwords(strtolower($this->input->post('contenido')));
+    	$contenido = mb_convert_case(mb_strtolower($this->input->post('contenido')), MB_CASE_TITLE);
     	$estado_lectura = "0";
 
     	//array para insertar en la tabla notificaciones----------
