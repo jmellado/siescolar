@@ -66,9 +66,9 @@ class Inbox_controller extends CI_Controller {
         	$ultimo_id = $this->inbox_model->obtener_ultimo_id();
         	$categoria_notificacion = "Mensajes";
         	$remitente = $this->input->post('remitente');
-        	$titulo = ucwords(strtolower($this->input->post('titulo')));
+        	$titulo = mb_convert_case(mb_strtolower($this->input->post('titulo')), MB_CASE_TITLE);
         	$tipo_notificacion = $this->input->post('tipo');
-        	$contenido = ucwords(strtolower($this->input->post('contenido')));
+        	$contenido = mb_convert_case(mb_strtolower($this->input->post('contenido')), MB_CASE_TITLE);
         	$destinatario = $this->input->post('destinatario');
         	$rol_destinatario = "4";
         	$id_asignatura = $this->input->post('id_asignatura_destinatario');
@@ -127,8 +127,8 @@ class Inbox_controller extends CI_Controller {
         	$ultimo_id = $this->inbox_model->obtener_ultimo_id();
         	$categoria_notificacion = "Tareas";
         	$remitente = $this->input->post('remitente');
-        	$titulo = ucwords(strtolower($this->input->post('titulo')));
-        	$contenido = ucwords(strtolower($this->input->post('contenido')));
+        	$titulo = mb_convert_case(mb_strtolower($this->input->post('titulo')), MB_CASE_TITLE);
+        	$contenido = mb_convert_case(mb_strtolower($this->input->post('contenido')), MB_CASE_TITLE);
         	$destinatario = $this->input->post('destinatario');
         	$rol_destinatario = "4";
         	$id_asignatura = $this->input->post('id_asignatura_destinatario');
@@ -191,8 +191,8 @@ class Inbox_controller extends CI_Controller {
         	$ultimo_id = $this->inbox_model->obtener_ultimo_id();
         	$categoria_notificacion = "Eventos";
         	$remitente = $this->input->post('remitente');
-        	$titulo = ucwords(strtolower($this->input->post('titulo')));
-        	$contenido = ucwords(strtolower($this->input->post('contenido')));
+        	$titulo = mb_convert_case(mb_strtolower($this->input->post('titulo')), MB_CASE_TITLE);
+        	$contenido = mb_convert_case(mb_strtolower($this->input->post('contenido')), MB_CASE_TITLE);
         	$destinatario = $this->input->post('destinatario');
         	$rol_destinatario = "4";
         	$id_asignatura = $this->input->post('id_asignatura_destinatario');
