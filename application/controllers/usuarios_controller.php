@@ -29,7 +29,7 @@ class Usuarios_controller extends CI_Controller {
         $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido2', 'Segundo Apellido', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
 
@@ -48,13 +48,13 @@ class Usuarios_controller extends CI_Controller {
 
         	$identificacion = trim($this->input->post('identificacion'));
         	$tipo_id = $this->input->post('tipo_id');
-        	$nombres = ucwords(strtolower(trim($this->input->post('nombres'))));
-        	$apellido1 = ucwords(strtolower(trim($this->input->post('apellido1'))));
-        	$apellido2 = ucwords(strtolower(trim($this->input->post('apellido2'))));
+        	$nombres = mb_convert_case(mb_strtolower(trim($this->input->post('nombres'))), MB_CASE_TITLE);
+        	$apellido1 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido1'))), MB_CASE_TITLE);
+        	$apellido2 = mb_convert_case(mb_strtolower(trim($this->input->post('apellido2'))), MB_CASE_TITLE);
         	$telefono = trim($this->input->post('telefono'));
         	$correo = trim($this->input->post('correo'));
-        	$direccion = ucwords(strtolower(trim($this->input->post('direccion'))));
-        	$barrio = ucwords(strtolower(trim($this->input->post('barrio'))));
+        	$direccion = mb_convert_case(mb_strtolower(trim($this->input->post('direccion'))), MB_CASE_TITLE);
+        	$barrio = mb_convert_case(mb_strtolower(trim($this->input->post('barrio'))), MB_CASE_TITLE);
         	$rol = $this->input->post('rol');
    
 
@@ -76,8 +76,8 @@ class Usuarios_controller extends CI_Controller {
 			'id_persona' =>$ultimo_id);
 
 			//aqui creamos el username de un administrador
-			$user = strtolower(substr($nombres, 0, 2));
-			$name = strtolower($apellido1);
+			$user = mb_strtolower(substr($nombres, 0, 2));
+			$name = mb_strtolower($apellido1);
 			$username = $user.$name."ad".$ultimo_id;
 
 			//array para insertar en la tabla usuarios
@@ -123,8 +123,8 @@ class Usuarios_controller extends CI_Controller {
 							'id_persona' =>$id_persona);
 
 							//aqui creamos el username de un administrador
-							$user = strtolower(substr($nombres, 0, 2));
-							$name = strtolower($apellido1);
+							$user = mb_strtolower(substr($nombres, 0, 2));
+							$name = mb_strtolower($apellido1);
 							$username = $user.$name."ad".$id_persona;
 
 							//array para insertar en la tabla usuarios
@@ -162,8 +162,8 @@ class Usuarios_controller extends CI_Controller {
 						'id_persona' =>$id_persona);
 
 						//aqui creamos el username de un administrador
-						$user = strtolower(substr($nombres, 0, 2));
-						$name = strtolower($apellido1);
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
 						$username = $user.$name."ad".$id_persona;
 
 						//array para insertar en la tabla usuarios
@@ -200,8 +200,8 @@ class Usuarios_controller extends CI_Controller {
 						'id_persona' =>$id_persona);
 
 						//aqui creamos el username de un administrador
-						$user = strtolower(substr($nombres, 0, 2));
-						$name = strtolower($apellido1);
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
 						$username = $user.$name."ad".$id_persona;
 
 						//array para insertar en la tabla usuarios

@@ -58,7 +58,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 2000});
 			
 		}
 
@@ -142,7 +142,7 @@ function inicio(){
 
        	}
        	else{
-			toastr.error('Formulario Incorrecto', 'Success Alert', {timeOut: 2000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 2000});
 		}
 		
        
