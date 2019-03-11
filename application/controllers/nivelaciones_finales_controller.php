@@ -126,7 +126,7 @@ class Nivelaciones_finales_controller extends CI_Controller {
         	$periodo = $this->input->post('periodo');
         	$calificacion = $this->input->post('calificacion');
         	$nivelacion = $this->input->post('nivelacion');
-        	$observaciones = ucwords(strtolower(trim($this->input->post('observaciones'))));
+        	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
         	$fecha_nivelacion = $this->input->post('fecha_nivelacion');
         	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
 
