@@ -176,7 +176,7 @@ class Imprimir_controller extends CI_Controller {
 				        	if($p=="Primero"){
 
 				        		$tbl .= '<tr nobr="true">
-				        					<td width="147">'.strtoupper($notas_logros[$j]['nombre_asignatura']).'</td>
+				        					<td width="147">'.mb_strtoupper($notas_logros[$j]['nombre_asignatura'], 'UTF-8').'</td>
 				        					<td align="center" width="18">'.$notas_logros[$j]['intensidad_horaria'].'</td>
 				        					<td align="center" width="20">'.$notas_logros[$j]['p1'].'</td>
 				        					<td align="center" width="20"></td>
@@ -196,7 +196,7 @@ class Imprimir_controller extends CI_Controller {
 							if($p=="Segundo"){
 
 								$tbl .= '<tr nobr="true">
-											<td width="147">'.strtoupper($notas_logros[$j]['nombre_asignatura']).'</td>
+											<td width="147">'.mb_strtoupper($notas_logros[$j]['nombre_asignatura'], 'UTF-8').'</td>
 											<td align="center" width="18">'.$notas_logros[$j]['intensidad_horaria'].'</td>
 											<td align="center" width="20">'.$notas_logros[$j]['p1'].'</td>
 											<td align="center" width="20"></td>
@@ -216,7 +216,7 @@ class Imprimir_controller extends CI_Controller {
 							if($p=="Tercero"){
 
 								$tbl .= '<tr nobr="true">
-											<td width="147">'.strtoupper($notas_logros[$j]['nombre_asignatura']).'</td>
+											<td width="147">'.mb_strtoupper($notas_logros[$j]['nombre_asignatura'], 'UTF-8').'</td>
 											<td align="center" width="18">'.$notas_logros[$j]['intensidad_horaria'].'</td>
 											<td align="center" width="20">'.$notas_logros[$j]['p1'].'</td>
 											<td align="center" width="20">'.$notas_logros[$j]['p2'].'</td>
@@ -236,7 +236,7 @@ class Imprimir_controller extends CI_Controller {
 							if($p=="Cuarto"){
 
 								$tbl .= '<tr nobr="true">
-											<td width="147">'.strtoupper($notas_logros[$j]['nombre_asignatura']).'</td>
+											<td width="147">'.mb_strtoupper($notas_logros[$j]['nombre_asignatura'], 'UTF-8').'</td>
 											<td align="center" width="18">'.$notas_logros[$j]['intensidad_horaria'].'</td>
 											<td align="center" width="20">'.$notas_logros[$j]['p1'].'</td>
 											<td align="center" width="20">'.$notas_logros[$j]['p2'].'</td>
@@ -849,7 +849,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl = '';
 	        $tbl .= '<br /><br /><br />';
 	        $tbl .= '<p align="center"><b>H A C E &nbsp;&nbsp;C O N S T A R:<br /></b></p>';
-	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.$nombre_ano_lectivo.').<br /></p>';
+	        $tbl .= '<p>Que, <b>'.mb_strtoupper($apellido1, 'UTF-8').' '.mb_strtoupper($apellido2, 'UTF-8').' '.mb_strtoupper($nombres, 'UTF-8').'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b>, se encuentra matriculado (a) en este Centro Educativo en el Grado <b>'.$grado.'</b>, en la jornada de la <b>'.$jornada.'</b>, para el año lectivo ('.$nombre_ano_lectivo.').<br /></p>';
 
 	        if ($corregimiento == "") {
 	        	
@@ -1074,7 +1074,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl = '';
 	        $tbl .= '<br />';
 	        $tbl .= '<p align="center"><b>CERTIFICA:</b><br /></p>';
-	        $tbl .= '<p>Que, <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y '.$situacion.' en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.$nombre_ano_lectivo.') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
+	        $tbl .= '<p>Que, <b>'.mb_strtoupper($apellido1, 'UTF-8').' '.mb_strtoupper($apellido2, 'UTF-8').' '.mb_strtoupper($nombres, 'UTF-8').'</b>, identificado con '.$tipo_id.' número <b>'.$identificacion.'</b> expedido (a) en ____________________, cursó y '.$situacion.' en este Centro Educativo el Grado <b>'.$grado.'</b>, durante el año lectivo ('.$nombre_ano_lectivo.') en la jornada de la <b>'.$jornada.'</b>, obteniendo las siguientes calificaciones.</p>';
 
 	        $tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
 	        $tbl .= '<tr>
@@ -1086,7 +1086,7 @@ class Imprimir_controller extends CI_Controller {
 	        for ($i=0; $i < count($NotasEstudiante); $i++) { 
 	        	
 	        	$tbl .= '<tr nobr="true">
-	        				<td><b>'.strtoupper($NotasEstudiante[$i]['nombre_asignatura']).'</b></td>
+	        				<td><b>'.mb_strtoupper($NotasEstudiante[$i]['nombre_asignatura'], 'UTF-8').'</b></td>
 	        				<td align="center">'.strtoupper($NotasEstudiante[$i]['intensidad_horaria']).'</td>
 	        				<td align="center">'.mb_strtoupper($NotasEstudiante[$i]['nombre_desempeno'],'UTF-8').'</td>
 	        			</tr>';
@@ -1095,7 +1095,7 @@ class Imprimir_controller extends CI_Controller {
 	        $tbl .= '</table>';
 
 	        $tbl .= '<p><b>OBSERVACIONES:</b><br /></p>';
-	        $tbl .= '<p>Este certificado pertenece a: <b>'.strtoupper($apellido1).' '.strtoupper($apellido2).' '.strtoupper($nombres).'</b>.</p>';
+	        $tbl .= '<p>Este certificado pertenece a: <b>'.mb_strtoupper($apellido1, 'UTF-8').' '.mb_strtoupper($apellido2, 'UTF-8').' '.mb_strtoupper($nombres, 'UTF-8').'</b>.</p>';
 	        $tbl .= '<p>El presente no necesita ser autenticado en Notarias, Decreto 1543 de Julio 1978.<br /></p>';
 
 	        if (count($NotasEstudiante) >= 17) {
@@ -1285,10 +1285,10 @@ class Imprimir_controller extends CI_Controller {
 		        			<td style="text-align:center" width="230" height="100" bgcolor="#4286f4"><br /><br /><b>'.$nombre_institucion.'</b><br /><img src="uploads/imagenes/colegio/'.$escudo.'" height="70" width="70" border="1"/></td>
 		        		</tr>';
 		        $tbl .= '<tr>
-		        			<td style="text-align:center" height="200"><br /><br /><img src="uploads/imagenes/elecciones/candidatos/candidato.png" alt="Foto En Blanco" height="110" width="90" border="1"/><br /><b>'.strtoupper($estudiantes[$i]['nombres']).'<br />'.strtoupper($estudiantes[$i]['apellido1']).' '.strtoupper($estudiantes[$i]['apellido2']).'</b><br /><b>'.strtoupper($estudiantes[$i]['tipo_id']).':</b> '.$estudiantes[$i]['identificacion'].'<br /><b>RH:</b> '.strtoupper($estudiantes[$i]['tipo_sangre']).'</td>
+		        			<td style="text-align:center" height="200"><br /><br /><img src="uploads/imagenes/elecciones/candidatos/candidato.png" alt="Foto En Blanco" height="110" width="90" border="1"/><br /><b>'.mb_strtoupper($estudiantes[$i]['nombres'], 'UTF-8').'<br />'.mb_strtoupper($estudiantes[$i]['apellido1'], 'UTF-8').' '.mb_strtoupper($estudiantes[$i]['apellido2'], 'UTF-8').'</b><br /><b>'.mb_strtoupper($estudiantes[$i]['tipo_id'], 'UTF-8').':</b> '.$estudiantes[$i]['identificacion'].'<br /><b>RH:</b> '.mb_strtoupper($estudiantes[$i]['tipo_sangre'], 'UTF-8').'</td>
 		        		</tr>';
 		        $tbl .= '<tr>
-		        			<td style="text-align:center" height="40" bgcolor="#14cc5a"><b>CURSO: '.strtoupper($nombre_curso).'<br />'.$jornada.'</b></td>
+		        			<td style="text-align:center" height="40" bgcolor="#14cc5a"><b>CURSO: '.mb_strtoupper($nombre_curso, 'UTF-8').'<br />'.$jornada.'</b></td>
 		        		</tr>';
 		        $tbl .= '</table>';
 
