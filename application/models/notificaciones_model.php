@@ -437,6 +437,7 @@ class Notificaciones_model extends CI_Model {
     public function obtener_estudiantes(){
 
     	$this->db->where('matriculas.estado_matricula',"Activo");
+    	$this->db->group_by("matriculas.id_estudiante");
 		$this->db->join('matriculas', 'personas.id_persona = matriculas.id_estudiante');
 		$query = $this->db->get('personas');
 		return $query->result_array();
@@ -446,6 +447,7 @@ class Notificaciones_model extends CI_Model {
 	public function obtener_acudientes(){
 
 		$this->db->where('matriculas.estado_matricula',"Activo");
+		$this->db->group_by("matriculas.id_acudiente");
 		$this->db->join('matriculas', 'personas.id_persona = matriculas.id_acudiente');
 		$query = $this->db->get('personas');
 		return $query->result_array();

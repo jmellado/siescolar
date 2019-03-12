@@ -267,11 +267,11 @@ class Notificaciones_controller extends CI_Controller {
 
 			if($respuesta==true){
 
-				echo "Mensaje Actualizado";
+				echo "registroactualizado";
 
             }else{
 
-				echo "El Mensaje No Se Pudo Actualizar";
+				echo "registronoactualizado";
 
             }    
          

@@ -42,37 +42,37 @@ function inicio(){
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.success('Mensaje No Enviado.', 'Success Alert', {timeOut: 3000});
+						toastr.error('Mensaje No Enviado.', 'Success Alert', {timeOut: 3000});
 						
 
 					}
 					else if(respuesta==="no-p"){
 						
-						toastr.success('Mensaje No Enviado; Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
+						toastr.warning('Mensaje No Enviado; Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
 						
 
 					}
 					else if(respuesta==="no-e-a"){
 						
-						toastr.success('Mensaje No Enviado; Estudiantes Y Acudientes No Registrados.', 'Success Alert', {timeOut: 3000});
+						toastr.warning('Mensaje No Enviado; Estudiantes Y Acudientes No Registrados.', 'Success Alert', {timeOut: 3000});
 						
 
 					}
 					else if(respuesta==="no-e-a-p"){
 						
-						toastr.success('Mensaje No Enviado; Estudiantes, Acudientes y Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
+						toastr.warning('Mensaje No Enviado; Estudiantes, Acudientes y Profesores No Registrados.', 'Success Alert', {timeOut: 3000});
 						
 
 					}
 					else if(respuesta==="asunto ya existe"){
 						
-						toastr.success('Ya Fue Enviado Un Mensaje Con El Mismo Asunto.', 'Success Alert', {timeOut: 5000});
+						toastr.warning('Ya Fue Enviado Un Mensaje Con El Mismo Asunto.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
 					else{
 
-						toastr.success('error:'+respuesta, 'Success Alert', {timeOut: 5000});
+						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
 					mostrarnotificaciones("",1,5,id_admin);
@@ -85,7 +85,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -131,7 +131,7 @@ function inicio(){
 		event.preventDefault();
 		idsele = $(this).attr("value");
 		
-		if(confirm("Esta Seguro De Eliminar El Mensaje?")){
+		if(confirm("Esta Seguro De Eliminar El Mensaje.?")){
 			eliminar_notificacion(idsele);
 
 		}
@@ -167,7 +167,7 @@ function inicio(){
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
 		
        
@@ -231,7 +231,7 @@ function inicio(){
 
 			titulo:{
 				required: true,
-				maxlength: 45
+				maxlength: 100
 				//lettersonly: true	
 
 			},
@@ -407,8 +407,22 @@ function actualizar_notificacion(){
 				
 				//alert(respuesta);
 				$("#modal_actualizar_notificacion").modal('hide');
+
+				if (respuesta==="registroactualizado") {
+					
+					toastr.success('Mensaje Actualizado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+
+				}
+				else if(respuesta==="registronoactualizado"){
+					
+					toastr.error('Mensaje No Actualizado.', 'Success Alert', {timeOut: 3000});
+					
+				}
+				else{
+
+					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+				}
 				
-				toastr.success(''+respuesta, 'Success Alert', {timeOut: 5000});
 				$("#form_notificaciones_actualizar")[0].reset();
 
 				mostrarnotificaciones("",1,5,id_admin);
