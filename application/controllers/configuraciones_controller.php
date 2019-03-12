@@ -61,22 +61,22 @@ class Configuraciones_controller extends CI_Controller {
         else{
 
 
-			$nombre_institucion = strtoupper(trim($this->input->post('nombre_institucion')));
-			$niveles_educacion = ucwords(mb_strtolower(trim($this->input->post('niveles_educacion'))));
-			$resolucion = ucwords(mb_strtolower(trim($this->input->post('resolucion'))));
-			$dane = ucwords(trim($this->input->post('dane')));
-			$nit = ucwords(mb_strtolower(trim($this->input->post('nit'))));
+			$nombre_institucion = mb_strtoupper(trim($this->input->post('nombre_institucion')));
+			$niveles_educacion = mb_convert_case(mb_strtolower(trim($this->input->post('niveles_educacion'))), MB_CASE_TITLE);
+			$resolucion = mb_convert_case(mb_strtolower(trim($this->input->post('resolucion'))), MB_CASE_TITLE);
+			$dane = mb_convert_case(mb_strtolower(trim($this->input->post('dane'))), MB_CASE_TITLE);
+			$nit = mb_convert_case(mb_strtolower(trim($this->input->post('nit'))), MB_CASE_TITLE);
 			$ultimo_grado = $this->input->post('ultimo_grado');
 			$telefono = trim($this->input->post('telefono'));
 			$email = trim($this->input->post('email'));
-			$direccion = ucwords(mb_strtolower(trim($this->input->post('direccion'))));
-			$barrio = ucwords(mb_strtolower(trim($this->input->post('barrio'))));
+			$direccion = mb_convert_case(mb_strtolower(trim($this->input->post('direccion'))), MB_CASE_TITLE);
+			$barrio = mb_convert_case(mb_strtolower(trim($this->input->post('barrio'))), MB_CASE_TITLE);
 			$pais_ubicacion = $this->input->post('pais_ubicacion');
 			$departamento_ubicacion = $this->input->post('departamento_ubicacion');
 			$municipio_ubicacion = $this->input->post('municipio_ubicacion');
-			$corregimiento_ubicacion = ucwords(mb_strtolower(trim($this->input->post('corregimiento_ubicacion'))));
-			$responsable = ucwords(mb_strtolower(trim($this->input->post('responsable'))));
-			$cargo_responsable = ucwords($this->input->post('cargo_responsable'));
+			$corregimiento_ubicacion = mb_convert_case(mb_strtolower(trim($this->input->post('corregimiento_ubicacion'))), MB_CASE_TITLE);
+			$responsable = mb_convert_case(mb_strtolower(trim($this->input->post('responsable'))), MB_CASE_TITLE);
+			$cargo_responsable = mb_convert_case($this->input->post('cargo_responsable'), MB_CASE_TITLE);
 
 			//array para insertar en la tabla datos_institucion----------
         	$institucion = array(
