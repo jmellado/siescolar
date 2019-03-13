@@ -34,6 +34,18 @@ class Asistencias_controller extends CI_Controller {
 	}
 
 
+	public function consultar_asistencias()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_profesor_vista', 'asistencias/consultar_asistencias_estudiante_vista');
+	}
+
+
 	public function llenarcombo_cursos_profesor(){
 
 		$id_profesor = $this->input->post('id_persona');
@@ -143,6 +155,36 @@ class Asistencias_controller extends CI_Controller {
 			'asistencias' => $this->asistencias_model->buscar_asistencia($id_profesor,$id_curso,$id_asignatura,$periodo,$fecha),
 
 		    'totalregistros' => count($this->asistencias_model->buscar_asistencia($id_profesor,$id_curso,$id_asignatura,$periodo,$fecha))
+
+
+		);
+	    echo json_encode($data);
+
+	}
+
+
+	public function llenarcombo_estudiantes(){
+
+		$id_curso = $this->input->post('id_curso');
+
+    	$consulta = $this->asistencias_model->EstudiantesMatriculadosPorCurso($id_curso);
+    	echo json_encode($consulta);
+    }
+
+
+	public function mostrarasistencias_estudiante(){
+
+		$id_profesor = $this->input->post('id_profesor'); 
+		$id_curso = $this->input->post('id_curso');
+		$id_asignatura = $this->input->post('id_asignatura');
+		$id_estudiante = $this->input->post('id_estudiante');
+		$periodo = $this->input->post('periodo');  
+		
+		$data = array(
+
+			'asistencias' => $this->asistencias_model->buscar_asistencia_estudiante($id_profesor,$id_curso,$id_asignatura,$id_estudiante,$periodo),
+
+		    'totalregistros' => count($this->asistencias_model->buscar_asistencia_estudiante($id_profesor,$id_curso,$id_asignatura,$id_estudiante,$periodo))
 
 
 		);

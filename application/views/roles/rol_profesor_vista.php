@@ -333,6 +333,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>asistencias_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
             <li><a href="<?php echo base_url(); ?>asistencias_controller/consultar"><i class="fa fa-list-alt"></i>Consultar</a></li>
+            <li><a href="<?php echo base_url(); ?>asistencias_controller/consultar_asistencias"><i class="fa fa-list-alt"></i>Consultar Asistencias<br>Por Estudiante</a></li>
           </ul>
         </li>
 
