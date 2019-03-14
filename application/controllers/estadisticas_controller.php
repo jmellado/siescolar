@@ -727,8 +727,10 @@ class Estadisticas_controller extends CI_Controller {
 
 		if(count($estudiantes) > 0){
 
+			$this->load->library('PdfEr');
+
 			// create new PDF document
-			$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+			$pdf = new PdfEr('P', 'mm', 'A4', true, 'UTF-8', false);
 	        $pdf->SetCreator(PDF_CREATOR);
 	        $pdf->SetAuthor('Siescolar');
 	        $pdf->SetTitle('Listado Estudiantes En Riesgo: Periodo-'.$periodo.' Jornada-'.$jornada.' '.$nombre_ano_lectivo);
@@ -736,14 +738,14 @@ class Estadisticas_controller extends CI_Controller {
 	        $pdf->SetKeywords('SIESCOLAR, PDF, example, test, guide');
 
 	        // remove default header/footer
-	        $pdf->SetPrintHeader(false);
-	 		$pdf->SetPrintFooter(false);
+	        //$pdf->SetPrintHeader(false);
+	 		//$pdf->SetPrintFooter(false);
 
 			// establecer la fuente monoespaciada predeterminada
 	        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 	 
 			// establecer margenes
-	        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	        $pdf->SetMargins(PDF_MARGIN_LEFT, 38, PDF_MARGIN_RIGHT);
 	        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 	        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 	 
@@ -765,7 +767,7 @@ class Estadisticas_controller extends CI_Controller {
 
 	        // Logo
 	        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
-	        $image_file = 'uploads/imagenes/colegio/'.$escudo;
+	        /*$image_file = 'uploads/imagenes/colegio/'.$escudo;
 	        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 	        $pdf->SetFont('helvetica', 'B', 12);
 
@@ -776,7 +778,7 @@ class Estadisticas_controller extends CI_Controller {
 	        $pdf->SetFont('helvetica', '', 12);
 	        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
 	        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->ln(3);
+	        $pdf->ln(3);*/
 	        //====================================================================================
 
 	        
@@ -828,7 +830,7 @@ class Estadisticas_controller extends CI_Controller {
 		    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 
 		    //SI HAY UN SALTO DE PAGINA, CREAMOS EL ENCABEZADO Y LAS 2 PRIMERAS FILAS
-	        if ($pdf->getAutoPageBreak()) {
+	        /*if ($pdf->getAutoPageBreak()) {
 	        	
 	        	$pdf->SetY(-280);
 
@@ -866,7 +868,7 @@ class Estadisticas_controller extends CI_Controller {
 
 		        $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 
-	        }
+	        }*/
 
 
 		    // ==============================================================================================0
