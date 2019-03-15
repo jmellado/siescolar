@@ -56,8 +56,10 @@ class Imprimir_controller extends CI_Controller {
 
 				if($this->imprimir_model->Verificar_LogrosEstudiantesPorCurso($id_curso,$periodo)){
 
+					$this->load->library('PdfBt');
+
 					// create new PDF document
-					$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+					$pdf = new PdfBt('P', 'mm', 'A4', true, 'UTF-8', false);
 			        $pdf->SetCreator(PDF_CREATOR);
 			        $pdf->SetAuthor('Siescolar');
 			        $pdf->SetTitle('Boletines Curso: '.$nombre_curso);
@@ -73,14 +75,14 @@ class Imprimir_controller extends CI_Controller {
 			        //$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 			        // remove default header/footer
-			        $pdf->SetPrintHeader(false);
-			 		$pdf->SetPrintFooter(false);
+			        //$pdf->SetPrintHeader(false);
+			 		//$pdf->SetPrintFooter(false);
 
 					// establecer la fuente monoespaciada predeterminada
 			        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 			 
 					// establecer margenes
-			        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+			        $pdf->SetMargins(PDF_MARGIN_LEFT, 38, PDF_MARGIN_RIGHT);
 			        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 			        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 			 
@@ -107,11 +109,11 @@ class Imprimir_controller extends CI_Controller {
 						// Añadir una página
 				        $pdf->AddPage();
 
-				        //==============================================Page header========================================================
+				        //===============================Page header================================
 
 				        // Logo
 				        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
-				        $image_file = 'uploads/imagenes/colegio/'.$escudo;
+				        /*$image_file = 'uploads/imagenes/colegio/'.$escudo;
 				        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 				        $pdf->SetFont('helvetica', 'B', 12);
 
@@ -122,12 +124,12 @@ class Imprimir_controller extends CI_Controller {
 				        $pdf->SetFont('helvetica', '', 12);
 				        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
 				        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-				        $pdf->ln(3);
-				        //===================================================================================================================
+				        $pdf->ln(3);*/
+				        //==========================================================================
 
 				        
 				        $pdf->SetFont('helvetica', 'B', 12);
-				        $pdf->Write(0, '                   INFORME PERIODICO DE EVALUACIONES', '', 0, 'C', true, 0, false, false, 0);
+				        $pdf->Write(0, 'INFORME PERIODICO DE EVALUACIONES', '', 0, 'C', true, 0, false, false, 0);
 
 				        $pdf->SetFont('helvetica', '', 10, '', true);
 				 
@@ -135,9 +137,9 @@ class Imprimir_controller extends CI_Controller {
 				        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
 				 
 						// Establecemos el contenido para imprimir
-				        //**********************************************************************************************************
+				        //***************************************************************************
 						//preparamos y maquetamos el contenido a crear
-						//**********************************************************************************************************
+						//***************************************************************************
 
 						$tbl = '';
 				        $tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
@@ -268,21 +270,13 @@ class Imprimir_controller extends CI_Controller {
 					    // Imprimimos el texto con writeHTMLCell()
 					    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 
-					    //Page footer======================================================================================================
-				        // Position at 15 mm from bottom
-			        	//$pdf->SetY(-40);
-				        // Set font
-				        //$pdf->SetFont('helvetica', 'I', 8);
-				        // Page number
-				        //$pdf->Cell(0, 0, 'Page '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
-				        //===================================================================================================================
 
 					    //SI HAY UN SALTO DE PAGINA, CREAMOS EL ENCABEZADO Y LAS 2 PRIMERAS FILAS
-				        if ($pdf->getAutoPageBreak()) {
+				        /*if ($pdf->getAutoPageBreak()) {
 				        	
 				        	$pdf->SetY(-280);
 
-				        	//==================================Page header - Salto De Pagina=======================================
+				        	//============================Page header - Salto De Pagina=============================
 					        // Logo
 					        $image_file = 'uploads/imagenes/colegio/'.$escudo;
 					        $pdf->Image($image_file, 10, 10, 25, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -299,7 +293,7 @@ class Imprimir_controller extends CI_Controller {
 					        $pdf->SetFont('helvetica', 'B', 12);
 				        	$pdf->Write(0, '                   INFORME PERIODICO DE EVALUACIONES', '', 0, 'C', true, 0, false, false, 0);
 				        	$pdf->SetFont('helvetica', '', 10, '', true);
-					        //===================================================================================================================
+					        //=======================================================================================
 
 					        $tbl = '';
 					        $tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
@@ -326,7 +320,7 @@ class Imprimir_controller extends CI_Controller {
 
 					        $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 
-				        }
+				        }*/
 				        
 				        
 
@@ -336,7 +330,7 @@ class Imprimir_controller extends CI_Controller {
 					// Cerrar el documento PDF y preparamos la salida
 					// Este método tiene varias opciones, consulte la documentación para más información.
 			        //$nombre_archivo = utf8_decode("Localidades de ".$prov.".pdf");
-			        $nombre_archivo = utf8_decode("Boletines curso ".$nombre_curso.".pdf");
+			        $nombre_archivo = utf8_decode("Boletines curso ".$nombre_curso." ".substr($jornada, 0, 1).".pdf");
 			        $pdf->Output($nombre_archivo, 'I');
 
 			    }
