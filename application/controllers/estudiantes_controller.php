@@ -51,7 +51,7 @@ class Estudiantes_controller extends CI_Controller {
         $this->form_validation->set_rules('tipo_sangre', 'Tipo De Sangre', 'required');
         $this->form_validation->set_rules('eps', 'Eps', 'required|alpha_spaces');
         $this->form_validation->set_rules('poblacion', 'Poblacion', 'required|alpha_spaces');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
@@ -330,7 +330,7 @@ class Estudiantes_controller extends CI_Controller {
         $this->form_validation->set_rules('tipo_sangre', 'Tipo De Sangre', 'required');
         $this->form_validation->set_rules('eps', 'Eps', 'required|alpha_spaces');
         $this->form_validation->set_rules('poblacion', 'Poblacion', 'required|alpha_spaces');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|alpha_spaces');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('direccion', 'Dirección', 'required|alpha_spaces');
         $this->form_validation->set_rules('telefono', 'Telefono', 'required|numeric|max_length[10]');
         $this->form_validation->set_rules('barrio', 'Barrio', 'required|alpha_spaces');
