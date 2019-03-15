@@ -34,6 +34,7 @@ class Grados_model extends CI_Model {
 
 		$this->db->order_by('grados.ano_lectivo', 'desc');
 		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
