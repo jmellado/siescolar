@@ -514,10 +514,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?php echo base_url(); ?>criterios_promocion_controller/index"><i class="fa fa-check-square-o"></i>Criterios De Promocíon</a></li>
+            <li><a href="<?php echo base_url(); ?>criterios_promocion_controller/index"><i class="fa fa-check-square-o"></i>Criterios De Promoción</a></li>
             <li><a href="<?php echo base_url(); ?>promocion_controller/index"><i class="fa fa-play"></i>Procesar Promoción</a></li>
             <li><a href="<?php echo base_url(); ?>situacion_academica_controller/index"><i class="fa fa-shield"></i>Situación Academica</a></li>
             <li><a href="<?php echo base_url(); ?>libro_calificaciones_controller/libro_calificaciones"><i class="fa fa-book"></i>Libro De Calificaciones</a></li>
+            <li><a href="<?php echo base_url(); ?>informes_promocion_controller/index"><i class="fa fa-clipboard"></i>Informes De Promoción</a></li>
           </ul>
         </li>
 
