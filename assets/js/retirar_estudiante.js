@@ -11,49 +11,53 @@ function inicio(){
 		event.preventDefault(); //evita que se ejcute la ccion del boton del formulario
 		if($("#form_retiros").valid()==true){
 
-			$.ajax({
+			if(confirm("Esta Seguro De Retirar Al Estudiante.?")){
 
-				url:$("#form_retiros").attr("action"),
-				type:$("#form_retiros").attr("method"),
-				data:$("#form_retiros").serialize(),   //captura la info de la cajas de texto
-				success:function(respuesta) {
+				$.ajax({
 
-					//alert(""+respuesta);
-					if (respuesta==="registroguardado") {
-						
-						toastr.success('Estudiante Retirado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
-						$("#form_retiros")[0].reset();
-						$("#estudiante_retiros1 select").html("");
+					url:$("#form_retiros").attr("action"),
+					type:$("#form_retiros").attr("method"),
+					data:$("#form_retiros").serialize(),   //captura la info de la cajas de texto
+					success:function(respuesta) {
 
-					}
-					else if(respuesta==="registronoguardado"){
-						
-						toastr.error('Estudiante No Retirado.', 'Success Alert', {timeOut: 3000});
-						
+						//alert(""+respuesta);
+						if (respuesta==="registroguardado") {
+							
+							toastr.success('Estudiante Retirado Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+							$("#form_retiros")[0].reset();
+							$("#estudiante_retiros1 select").html("");
 
-					}
-					else if(respuesta==="retiroyaexiste"){
-						
-						toastr.warning('El Estudiante Ya Se Encuentra Retirado.', 'Success Alert', {timeOut: 3000});
+						}
+						else if(respuesta==="registronoguardado"){
+							
+							toastr.error('Estudiante No Retirado.', 'Success Alert', {timeOut: 3000});
 							
 
+						}
+						else if(respuesta==="retiroyaexiste"){
+							
+							toastr.warning('El Estudiante Ya Se Encuentra Retirado.', 'Success Alert', {timeOut: 3000});
+								
+
+						}
+						else{
+
+							toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
+							
+						}
+						mostrarretiros("",1,5);
+
+							
+							
 					}
-					else{
 
-						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
-						
-					}
-					mostrarretiros("",1,5);
+				});
 
-						
-						
-				}
-
-			});
+			}
 
 		}else{
 
-			toastr.success('Formulario Incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
 
 	});
