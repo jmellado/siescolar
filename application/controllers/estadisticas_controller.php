@@ -231,11 +231,11 @@ class Estadisticas_controller extends CI_Controller {
 
 	        // Title
 	        //$pdf->Cell(0, 0, '<<TCPDF Example 003>>', 1, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $nombre_institucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $niveles_educacion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 	        $pdf->SetFont('helvetica', '', 12);
-	        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $resolucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $dane.' '.$nit, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 	        $pdf->ln(3);
 	        //====================================================================================
 
@@ -299,11 +299,11 @@ class Estadisticas_controller extends CI_Controller {
 		        $pdf->SetFont('helvetica', 'B', 12);
 
 		        // Title
-		        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-		        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $nombre_institucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $niveles_educacion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 		        $pdf->SetFont('helvetica', '', 12);
-		        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-		        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $resolucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $dane.' '.$nit, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 		        $pdf->ln(3);
 
 		        $pdf->SetFont('helvetica', 'B', 12);
@@ -415,11 +415,11 @@ class Estadisticas_controller extends CI_Controller {
 
 	        // Title
 	        //$pdf->Cell(0, 0, '<<TCPDF Example 003>>', 1, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $nombre_institucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $niveles_educacion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 	        $pdf->SetFont('helvetica', '', 12);
-	        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $resolucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $dane.' '.$nit, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 	        $pdf->ln(3);
 	        //====================================================================================
 
@@ -479,11 +479,11 @@ class Estadisticas_controller extends CI_Controller {
 		        $pdf->SetFont('helvetica', 'B', 12);
 
 		        // Title
-		        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-		        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $nombre_institucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $niveles_educacion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 		        $pdf->SetFont('helvetica', '', 12);
-		        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-		        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $resolucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $dane.' '.$nit, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 		        $pdf->ln(3);
 
 		        $pdf->SetFont('helvetica', 'B', 12);
@@ -593,11 +593,11 @@ class Estadisticas_controller extends CI_Controller {
 
 	        // Title
 	        //$pdf->Cell(0, 0, '<<TCPDF Example 003>>', 1, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $nombre_institucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $niveles_educacion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 	        $pdf->SetFont('helvetica', '', 12);
-	        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-	        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $resolucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+	        $pdf->Cell(0, 0, $dane.' '.$nit, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 	        $pdf->ln(3);
 	        //====================================================================================
 
@@ -657,11 +657,11 @@ class Estadisticas_controller extends CI_Controller {
 		        $pdf->SetFont('helvetica', 'B', 12);
 
 		        // Title
-		        $pdf->Cell(0, 0, $nombre_institucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-		        $pdf->Cell(0, 0, '                 '.$niveles_educacion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $nombre_institucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $niveles_educacion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 		        $pdf->SetFont('helvetica', '', 12);
-		        $pdf->Cell(0, 0, '                 '.$resolucion, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-		        $pdf->Cell(0, 0, '                 '.$dane.' '.$nit, 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $resolucion, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
+		        $pdf->Cell(0, 0, $dane.' '.$nit, 0, 2, 'C', 0, '', 1, false, 'T', 'M');
 		        $pdf->ln(3);
 
 		        $pdf->SetFont('helvetica', 'B', 12);
