@@ -35,9 +35,19 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->or_like('grupos.nombre_grupo',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('cursos.jornada',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido1,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido2,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo)',$id,'after');
 
 		$this->db->order_by('cargas_academicas.ano_lectivo', 'desc');
 		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
 		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 		$this->db->order_by('cursos.jornada', 'asc');
 		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
