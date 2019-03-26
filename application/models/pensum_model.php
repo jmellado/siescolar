@@ -33,8 +33,12 @@ class Pensum_model extends CI_Model {
 		$this->db->or_like('pensum.intensidad_horaria',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
 		$this->db->or_like('pensum.estado_pensum',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo)',$id,'after');
 
 		$this->db->order_by('pensum.ano_lectivo', 'desc');
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
 		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 		$this->db->order_by('pensum.estado_pensum', 'asc');
