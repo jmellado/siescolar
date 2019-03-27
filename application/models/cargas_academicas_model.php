@@ -49,6 +49,7 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->order_by('personas.nombres', 'asc');
 		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
 		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
 		$this->db->order_by('cursos.jornada', 'asc');
 		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
 
@@ -164,7 +165,9 @@ class Cargas_academicas_model extends CI_Model {
 		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
 
 		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
 		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
 
 		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
 		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
