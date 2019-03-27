@@ -35,12 +35,28 @@ class Logros_model extends CI_Model {
 		$this->db->or_like('personas.apellido1',$id,'after');
 		$this->db->or_like('asignaturas.nombre_asignatura',$id,'after');
 		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido1,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido2,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,personas.apellido2,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,grados.nombre_grado,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,grados.nombre_grado,asignaturas.nombre_asignatura,logros.periodo,anos_lectivos.nombre_ano_lectivo)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",grados.nombre_grado,asignaturas.nombre_asignatura,anos_lectivos.nombre_ano_lectivo)',$id,'after');
 
 		$this->db->order_by('logros.ano_lectivo', 'desc');
 		$this->db->order_by('personas.apellido1', 'asc');
 		$this->db->order_by('personas.apellido2', 'asc');
 		$this->db->order_by('personas.nombres', 'asc');
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
+		$this->db->_protect_identifiers = FALSE;
+		$this->db->order_by('FIELD(logros.periodo, "Primero","Segundo","Tercero","Cuarto")');
+		$this->db->_protect_identifiers = TRUE;
+
+		$this->db->order_by('logros.secuencia', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
@@ -50,6 +66,7 @@ class Logros_model extends CI_Model {
 		$this->db->join('personas', 'logros.id_profesor = personas.id_persona');
 		$this->db->join('grados', 'logros.id_grado = grados.id_grado');
 		$this->db->join('asignaturas', 'logros.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('logros.id_logro,logros.nombre_logro,logros.descripcion_logro,logros.periodo,logros.id_profesor,personas.nombres,personas.apellido1,logros.id_grado,grados.nombre_grado,logros.id_asignatura,asignaturas.nombre_asignatura,logros.ano_lectivo,anos_lectivos.nombre_ano_lectivo');
 		
@@ -68,7 +85,17 @@ class Logros_model extends CI_Model {
 		$this->db->where('id_profesor',$id_profesor);
 		$this->db->where('logros.ano_lectivo',$ano_lectivo);
 
-		$this->db->where("(logros.nombre_logro LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR logros.periodo LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%' OR anos_lectivos.nombre_ano_lectivo LIKE '".$id."%')", NULL, FALSE);
+		$this->db->where("(logros.nombre_logro LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR logros.periodo LIKE '".$id."%' OR asignaturas.nombre_asignatura LIKE '".$id."%' OR anos_lectivos.nombre_ano_lectivo LIKE '".$id."%' OR CONCAT_WS(' ',grados.nombre_grado,asignaturas.nombre_asignatura,logros.periodo) LIKE '".$id."%')", NULL, FALSE);
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
+		$this->db->_protect_identifiers = FALSE;
+		$this->db->order_by('FIELD(logros.periodo, "Primero","Segundo","Tercero","Cuarto")');
+		$this->db->_protect_identifiers = TRUE;
+
+		$this->db->order_by('logros.secuencia', 'asc');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
@@ -78,6 +105,7 @@ class Logros_model extends CI_Model {
 		$this->db->join('personas', 'logros.id_profesor = personas.id_persona');
 		$this->db->join('grados', 'logros.id_grado = grados.id_grado');
 		$this->db->join('asignaturas', 'logros.id_asignatura = asignaturas.id_asignatura');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
 		$this->db->select('logros.id_logro,logros.nombre_logro,logros.descripcion_logro,logros.periodo,logros.id_profesor,personas.nombres,personas.apellido1,logros.id_grado,grados.nombre_grado,logros.id_asignatura,asignaturas.nombre_asignatura,logros.ano_lectivo,anos_lectivos.nombre_ano_lectivo');
 		
