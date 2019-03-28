@@ -444,7 +444,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?php echo base_url(); ?>matriculas_controller/index"><i class="fa fa-clipboard"></i> Matricular</a></li>
+            <li><a href="<?php echo base_url(); ?>matriculas_controller/index"><i class="fa fa-clipboard"></i>Matricular</a></li>
             <li><a href="<?php echo base_url(); ?>matriculas_controller/retirar_estudiante"><i class="fa fa-clipboard"></i>Retirar</a></li>
           </ul>
         </li>
@@ -488,6 +488,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>notas_controller/index"><i class="fa fa-clipboard"></i>Registrar Notas</a></li>
             <li><a href="<?php echo base_url(); ?>notas_finales_controller/notas_finales"><i class="fa fa-list-alt"></i>Consultar Notas Finales</a></li>
+            <li><a href="<?php echo base_url(); ?>notas_progreso_controller/notas_progreso"><i class="fa fa-align-left"></i>Progreso Registro Notas</a></li>
           </ul>
         </li>
 
