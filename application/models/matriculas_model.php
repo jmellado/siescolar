@@ -1072,12 +1072,12 @@ class Matriculas_model extends CI_Model {
 		$this->db->update('estudiantes', $estado);
 
 		$this->db->insert('historial_estados', $historial);
-		$this->db->trans_complete();
 
 		$this->db->where('id_estudiante',$id_estudiante);
 		$this->db->where('id_curso',$id_curso);
 		$this->db->where('ano_lectivo',$ano_lectivo);
 		$this->db->update('matriculas', $estado_matricula);
+		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE){
 

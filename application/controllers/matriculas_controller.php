@@ -7,7 +7,7 @@ class Matriculas_controller extends CI_Controller {
 		$this->load->model('matriculas_model');
 		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
-		$this->load->library('Pdf');
+		//$this->load->library('Pdf');
 		//$this->load->database('default');
 	}
 
@@ -589,7 +589,8 @@ class Matriculas_controller extends CI_Controller {
 
 		if($this->matriculas_model->validar_existencia_matricula($id_matricula)){
 
-
+			$this->load->library('Pdf');
+			
 			// create new PDF document
 			$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 	        $pdf->SetCreator(PDF_CREATOR);
