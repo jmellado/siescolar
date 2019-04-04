@@ -7,7 +7,7 @@ class Elecciones_controller extends CI_Controller {
 		$this->load->model('elecciones_model');
 		$this->load->model('funciones_globales_model');
 		$this->load->library('form_validation');
-		$this->load->library('Pdf');
+		//$this->load->library('Pdf');
 	}
 
 	
@@ -735,6 +735,8 @@ class Elecciones_controller extends CI_Controller {
 
 			$cursos_votantes = $this->elecciones_model->cursos_votantes_eleccion($id_eleccion);
 			$total_cursos_votantes = count($this->elecciones_model->cursos_votantes_eleccion($id_eleccion));
+
+			$this->load->library('Pdf');
 
 			// create new PDF document
 			$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
