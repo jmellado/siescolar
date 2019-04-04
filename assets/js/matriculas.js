@@ -142,6 +142,7 @@ function inicio(){
 		
 		//alert(""+observacionessele+fecha_matriculasele+ano_lectivosele);
 		
+		llenarcombo_anos_lectivos_actualizar(ano_lectivosele);
 		llenarcombo_cursos_actualizar(jornadasele,ano_lectivosele,id_cursosele);
 		llenarcombo_acudientes(id_acudientesele);
 		$("#id_matriculasele").val(id_matriculasele);
@@ -769,6 +770,35 @@ function llenarcombo_cursos_actualizar(jornada,ano_lectivo,id_cursosele){
 		}
 
 	});
+}
+
+
+function llenarcombo_anos_lectivos_actualizar(ano_lectivosele){
+
+    $.ajax({
+        url:base_url+"matriculas_controller/llenarcombo_anos_lectivos_actualizar",
+        type:"post",
+        success:function(respuesta) {
+
+                var registros = eval(respuesta);
+
+                html = "<option value=''></option>";
+                for (var i = 0; i < registros.length; i++) {
+
+                	if(registros[i]["id_ano_lectivo"]==ano_lectivosele){
+                    
+                    	html +="<option value="+registros[i]["id_ano_lectivo"]+" selected>"+registros[i]["nombre_ano_lectivo"]+"</option>";
+                    }
+                    else{
+
+                    	html +="<option value="+registros[i]["id_ano_lectivo"]+">"+registros[i]["nombre_ano_lectivo"]+"</option>";
+                    }
+                };
+                
+                $("#ano_lectivo_actualizar1 select").html(html);
+        }
+
+    });
 }
 
 

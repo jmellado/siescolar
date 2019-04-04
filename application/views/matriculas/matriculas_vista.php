@@ -418,7 +418,7 @@
 		  			<div class="form-group">
 						<label class="control-label col-sm-3" for="año_lectivo">AÑO LECTIVO</label>
 						<div class="col-sm-4">
-							<div id="ano_lectivo1">
+							<div id="ano_lectivo_actualizar1">
 								<select class="form-control" id="ano_lectivosele" name="ano_lectivo" disabled>
 												    
 								</select>

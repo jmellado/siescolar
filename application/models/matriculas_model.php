@@ -438,6 +438,13 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	public function llenar_anos_lectivos_actualizar(){
+
+		$query = $this->db->get('anos_lectivos');
+		return $query->result();
+	}
+
+
 	//****************************************** FUNCIONES PARA MATRICULAR ESTUDIANTES ANTIGUOS ***************************************
 
 	//Esta Funcion Permite Comprobar Si El Estudiante Es Nuevo O Antiguo.

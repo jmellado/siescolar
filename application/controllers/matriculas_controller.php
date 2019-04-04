@@ -357,6 +357,13 @@ class Matriculas_controller extends CI_Controller {
     }
 
 
+    public function llenarcombo_anos_lectivos_actualizar(){
+
+    	$consulta = $this->matriculas_model->llenar_anos_lectivos_actualizar();
+    	echo json_encode($consulta);
+    }
+
+
     //****************************************** FUNCIONES PARA MATRICULAR ESTUDIANTES ANTIGUOS ***************************************
 
     public function buscar_estudianteA(){
@@ -590,7 +597,7 @@ class Matriculas_controller extends CI_Controller {
 		if($this->matriculas_model->validar_existencia_matricula($id_matricula)){
 
 			$this->load->library('Pdf');
-			
+
 			// create new PDF document
 			$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 	        $pdf->SetCreator(PDF_CREATOR);
