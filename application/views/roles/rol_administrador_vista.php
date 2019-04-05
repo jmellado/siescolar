@@ -446,6 +446,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>matriculas_controller/index"><i class="fa fa-clipboard"></i>Matricular</a></li>
             <li><a href="<?php echo base_url(); ?>matriculas_controller/retirar_estudiante"><i class="fa fa-clipboard"></i>Retirar</a></li>
+            <li><a href="<?php echo base_url(); ?>matriculas_controller/reingresar_estudiante"><i class="fa fa-clipboard"></i>Reingresar</a></li>
           </ul>
         </li>
         <li class="header">MAIN PROFESORES</li>

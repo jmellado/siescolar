@@ -1130,4 +1130,236 @@ class Matriculas_model extends CI_Model {
 		
 	}
 
+
+
+	//******************* FUNCIONES PARA REINGRESAR ESTUDIANTES *********************
+
+
+	//1). Reingreso Estudiantes - Retirados En Años Anteriores
+
+	public function buscar_reingreso($id,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->db->like('est.identificacion',$id,'after');
+		$this->db->or_like('est.nombres',$id,'after');
+		$this->db->or_like('est.apellido1',$id,'after');
+		$this->db->or_like('est.apellido2',$id,'after');
+		$this->db->or_like('grados.nombre_grado',$id,'after');
+		$this->db->or_like('grupos.nombre_grupo',$id,'after');
+		$this->db->or_like('cursos.jornada',$id,'after');
+		$this->db->or_like('reingresos.fecha_reingreso',$id,'after');
+		$this->db->or_like('anos_lectivos.nombre_ano_lectivo',$id,'after');
+
+		$this->db->order_by('reingresos.ano_lectivo', 'desc');
+		$this->db->order_by('reingresos.fecha_registro', 'desc');
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->join('cursos', 'reingresos.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('personas as est', 'reingresos.id_estudiante = est.id_persona');
+		$this->db->join('anos_lectivos', 'reingresos.ano_lectivo = anos_lectivos.id_ano_lectivo');
+
+		$this->db->select('reingresos.id_reingreso,reingresos.ano_lectivo,reingresos.id_estudiante,reingresos.id_curso,reingresos.observaciones,reingresos.fecha_reingreso,reingresos.fecha_registro,est.identificacion as identificacionest,est.nombres as nombresest,est.apellido1 as apellido1est,est.apellido2 as apellido2est,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,anos_lectivos.nombre_ano_lectivo');
+		
+		$query = $this->db->get('reingresos');
+
+		return $query->result();
+		
+	}
+
+
+	public function validar_estado_retirado($identificacion){
+
+		$this->db->where('personas.identificacion',$identificacion);
+		$this->db->where('estudiantes.estado_estudiante',"Retirado");
+
+		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function validar_existencia_matriculaRI($identificacion,$ano_lectivo){
+
+		$this->db->where('personas.identificacion',$identificacion);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	public function obtener_ultimo_idreingreso(){
+
+		$this->db->select_max('id_reingreso');
+		$query = $this->db->get('reingresos');
+
+    	$row = $query->result_array();
+        $data['query'] = 1 + $row[0]['id_reingreso'];
+        return $data['query'];
+	}
+
+
+	public function insertar_reingreso($reingreso,$matricula,$est_acud,$estado,$historial,$promocion,$id_estudiante){
+
+		$this->db->trans_start();
+		$this->db->insert('reingresos', $reingreso);
+		$this->db->insert('matriculas', $matricula);
+		$this->db->insert('estudiantes_acudientes', $est_acud);
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->update('estudiantes', $estado);
+
+		$this->db->insert('historial_estados', $historial);
+
+		$this->db->insert('promocion', $promocion);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
+
+	public function Matricular_AsignaturasPorEstudiante($ano_lectivo,$id_estudiante,$id_curso){
+
+		$id_grado = $this->matriculas_model->obtener_gradoDelcurso($id_curso);
+		$asignaturas = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
+
+		if ($asignaturas != false) {
+			
+			$this->db->trans_start();
+
+				for ($i=0; $i < count($asignaturas); $i++) {
+
+					$id_asignatura = $asignaturas[$i]['id_asignatura']; 
+
+					$asignatura = array(
+		        	'ano_lectivo' 	=>$ano_lectivo,
+		        	'id_estudiante' =>$id_estudiante,
+		        	'id_grado' 		=>$id_grado,
+		        	'id_asignatura' =>$id_asignatura);
+
+					$this->db->insert('notas', $asignatura);
+				}
+			
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+		}
+		else{
+
+			return false;
+		}
+
+	}
+
+
+	//2). Reingreso Estudiantes - Retirados En El Año Actual
+
+
+	public function validar_existencia_matriculaRI2($identificacion,$ano_lectivo){
+
+		$this->db->where('personas.identificacion',$identificacion);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function consultar_matricula_estudianteRI2($identificacion,$ano_lectivo){
+
+		$this->db->where('personas.identificacion',$identificacion);
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+		$this->db->join('cursos', 'matriculas.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+		$this->db->select('matriculas.id_matricula,matriculas.ano_lectivo,matriculas.id_estudiante,matriculas.id_curso,matriculas.jornada,matriculas.id_acudiente,matriculas.parentesco,personas.id_persona,personas.nombres,personas.apellido1,personas.apellido2,grados.nombre_grado,grupos.nombre_grupo');
+
+		$query = $this->db->get('matriculas');
+
+		if ($query->num_rows() > 0) {
+
+			return $query->result_array();
+		}
+		else{
+
+			return false;
+		}
+
+	}
+
+
+	public function insertar_reingreso2($reingreso,$matricula,$est_acud,$estado,$historial,$id_matricula,$id_estudiante,$ano_lectivo){
+
+		$this->db->trans_start();
+		$this->db->insert('reingresos',$reingreso);
+
+		$this->db->where('id_matricula',$id_matricula);
+		$this->db->update('matriculas',$matricula);
+
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->update('estudiantes_acudientes',$est_acud);
+
+		$this->db->where('id_persona',$id_estudiante);
+		$this->db->update('estudiantes',$estado);
+
+		$this->db->insert('historial_estados',$historial);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
 }

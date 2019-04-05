@@ -1039,4 +1039,364 @@ class Matriculas_controller extends CI_Controller {
 
 	}
 
+
+
+	//******************* FUNCIONES PARA REINGRESAR ESTUDIANTES *********************
+
+
+	//1). Reingreso Estudiantes - Retirados En Años Anteriores
+
+	public function reingresar_estudiante()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'matriculas/reingresar_estudiante_vista');
+	}
+
+
+	public function mostrarreingresos(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'reingresos' => $this->matriculas_model->buscar_reingreso($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->matriculas_model->buscar_reingreso($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function buscar_estudianteRI(){
+
+		$identificacion = $this->input->post('identificacion'); 
+       	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		
+		$consulta = $this->matriculas_model->buscar_estudiante($identificacion);
+
+		if($consulta == false){
+
+			echo "estudiantenoexiste";
+		}
+		else{
+
+			if ($ano_lectivo !=""){
+
+				if($this->matriculas_model->validar_estado_retirado($identificacion)){
+
+					if($this->matriculas_model->validar_existencia_matriculaRI($identificacion,$ano_lectivo)){
+
+						echo json_encode($consulta);
+					}
+					else{
+
+						echo "matriculaexiste";
+					}	
+							
+				}
+				else{
+
+					echo "estudiantenoretirado";
+				}
+
+			}
+			else{
+
+				echo "anionoexiste";
+			}
+			
+		}
+	    
+	}
+
+
+	public function insertar_reingreso(){
+
+        $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
+        $this->form_validation->set_rules('jornada', 'jornada', 'required|alpha_spaces');
+        $this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
+        $this->form_validation->set_rules('id_acudiente', 'Acudiente', 'required|numeric');
+        $this->form_validation->set_rules('parentesco', 'Parentesco', 'required');
+        $this->form_validation->set_rules('observaciones', 'Observaciones', 'required|alpha_spaces|min_length[1]|max_length[500]');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$fecha_actual = $this->funciones_globales_model->obtener_fecha_actual_corta();
+
+        	//obtengo el ultimo id de reingresos + 1 
+        	$id_reingreso = $this->matriculas_model->obtener_ultimo_idreingreso();
+        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	$id_estudiante = $this->input->post('id_estudiante');
+        	$id_curso = $this->input->post('id_curso');
+        	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
+        	$fecha_reingreso = $fecha_actual;
+        	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
+
+        	$id_matricula = $this->matriculas_model->obtener_ultimo_id();
+        	//$ano_lectivo
+        	$fecha_matricula = $fecha_actual;
+        	//$id_estudiante
+        	//$id_curso
+        	$jornada = $this->input->post('jornada');
+        	$id_acudiente = $this->input->post('id_acudiente');
+        	$parentesco = $this->input->post('parentesco');
+        	$observaciones2 = 'Ninguna';
+        	$estado = 'Activo';
+        	$situacion_academica = 'No Definida';
+
+
+        	//array para insertar en la tabla reingresos
+        	$reingreso = array(
+        	'id_reingreso'    =>$id_reingreso,	
+			'ano_lectivo'     =>$ano_lectivo,
+			'id_estudiante'   =>$id_estudiante,
+			'id_curso' 		  =>$id_curso,
+			'observaciones'   =>$observaciones,
+			'fecha_reingreso' =>$fecha_reingreso,
+			'fecha_registro'  =>$fecha_registro);
+
+			//array para insertar en la tabla matriculas
+        	$matricula = array(
+        	'id_matricula'        =>$id_matricula,	
+			'fecha_matricula'     =>$fecha_actual,
+			'ano_lectivo'         =>$ano_lectivo,
+			'id_estudiante'       =>$id_estudiante,
+			'id_curso'            =>$id_curso,
+			'jornada'             =>$jornada,
+			'id_acudiente'        =>$id_acudiente,
+			'parentesco'          =>$parentesco,
+			'observaciones'       =>$observaciones2,
+			'estado_matricula' 	  =>$estado,
+			'situacion_academica' =>$situacion_academica);
+
+			//array para insertar en la tabla estudiantes_acudientes
+			$est_acud = array(
+        	'id_estudiante' =>$id_estudiante,	
+			'id_acudiente'  =>$id_acudiente,
+			'parentesco'    =>$parentesco,
+			'ano_lectivo'   =>$ano_lectivo);
+
+			//array para actualizar el estado del estudiante en la tabla estudiantes
+			$estado = array(
+        	'id_persona'        =>$id_estudiante,	
+			'estado_estudiante' =>"Matriculado",
+			'fecha_estado'      =>$fecha_actual);
+
+			//array para insertar en la tabla historial estados
+			$historial = array(
+        	'id_persona'    =>$id_estudiante,	
+			'estado'        =>"Matriculado",
+			'observaciones' =>"Estudiante Matriculado.",
+			'fecha_estado'  =>$fecha_actual,
+			'ano_lectivo'   =>$ano_lectivo);
+
+			//array para insertar en la tabla promocion
+			$promocion = array(
+			'ano_lectivo' 			  =>$ano_lectivo,
+        	'id_estudiante'           =>$id_estudiante,
+        	'id_curso' 		          =>$id_curso,	
+			'asignaturas_reprobadas'  =>"0",
+			'areas_reprobadas' 		  =>"0",
+			'areas_reprobadas' 		  =>"0",
+			'inasistencias' 		  =>"0",
+			'porcentaje_inasistencias'=>"0",
+			'situacion_academica' 	  =>"No Definida");
+
+			
+			if ($this->matriculas_model->validar_existencia_pensum($id_curso,$ano_lectivo)){
+
+				$respuesta = $this->matriculas_model->insertar_reingreso($reingreso,$matricula,$est_acud,$estado,$historial,$promocion,$id_estudiante);
+
+				if($respuesta == true){
+
+					echo "registroguardado";
+
+					$asig_mat = $this->matriculas_model->Matricular_AsignaturasPorEstudiante($ano_lectivo,$id_estudiante,$id_curso);
+					
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
+			}
+			else{
+
+				echo "pensumnoexiste";
+			}
+
+        }
+
+	}
+
+
+	//2). Reingreso Estudiantes - Retirados En El Año Actual
+
+
+	public function buscar_estudianteRI2(){
+
+		$identificacion = $this->input->post('identificacion'); 
+       	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		
+		$consulta = $this->matriculas_model->buscar_estudiante($identificacion);
+
+		if($consulta == false){
+
+			echo "estudiantenoexiste";
+		}
+		else{
+
+			if ($ano_lectivo !=""){
+
+				if($this->matriculas_model->validar_estado_retirado($identificacion)){
+
+					if($this->matriculas_model->validar_existencia_matriculaRI2($identificacion,$ano_lectivo)){
+
+						$matricula = $this->matriculas_model->consultar_matricula_estudianteRI2($identificacion,$ano_lectivo);
+
+						echo json_encode($matricula);
+					}
+					else{
+
+						echo "matriculanoexiste";
+					}	
+							
+				}
+				else{
+
+					echo "estudiantenoretirado";
+				}
+
+			}
+			else{
+
+				echo "anionoexiste";
+			}
+			
+		}
+	    
+	}
+
+
+	public function insertar_reingreso2(){
+
+		$this->form_validation->set_rules('id_matricula', 'Matricula', 'required|numeric');
+        $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
+        $this->form_validation->set_rules('jornada', 'jornada', 'required|alpha_spaces');
+        $this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
+        $this->form_validation->set_rules('id_acudiente', 'Acudiente', 'required|numeric');
+        $this->form_validation->set_rules('parentesco', 'Parentesco', 'required');
+        $this->form_validation->set_rules('observaciones', 'Observaciones', 'required|alpha_spaces|min_length[1]|max_length[500]');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$fecha_actual = $this->funciones_globales_model->obtener_fecha_actual_corta();
+
+        	//obtengo el ultimo id de reingresos + 1 
+        	$id_reingreso = $this->matriculas_model->obtener_ultimo_idreingreso();
+        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+        	$id_estudiante = $this->input->post('id_estudiante');
+        	$id_curso = $this->input->post('id_curso');
+        	$observaciones = mb_convert_case(mb_strtolower(trim($this->input->post('observaciones'))), MB_CASE_TITLE);
+        	$fecha_reingreso = $fecha_actual;
+        	$fecha_registro = $this->funciones_globales_model->obtener_fecha_actual2();
+
+        	$id_matricula = $this->input->post('id_matricula');
+        	//$ano_lectivo
+        	$fecha_matricula = $fecha_actual;
+        	//$id_estudiante
+        	//$id_curso
+        	$jornada = $this->input->post('jornada');
+        	$id_acudiente = $this->input->post('id_acudiente');
+        	$parentesco = $this->input->post('parentesco');
+        	$observaciones2 = 'Ninguna';
+        	$estado = 'Activo';
+        	$situacion_academica = 'No Definida';
+
+
+        	//array para insertar en la tabla reingresos
+        	$reingreso = array(
+        	'id_reingreso'    =>$id_reingreso,	
+			'ano_lectivo'     =>$ano_lectivo,
+			'id_estudiante'   =>$id_estudiante,
+			'id_curso' 		  =>$id_curso,
+			'observaciones'   =>$observaciones,
+			'fecha_reingreso' =>$fecha_reingreso,
+			'fecha_registro'  =>$fecha_registro);
+
+			//array para actualizar en la tabla matriculas
+        	$matricula = array(
+        	'id_matricula'        =>$id_matricula,	
+			'fecha_matricula'     =>$fecha_actual,
+			'ano_lectivo'         =>$ano_lectivo,
+			'id_estudiante'       =>$id_estudiante,
+			'id_curso'            =>$id_curso,
+			'jornada'             =>$jornada,
+			'id_acudiente'        =>$id_acudiente,
+			'parentesco'          =>$parentesco,
+			'observaciones'       =>$observaciones2,
+			'estado_matricula' 	  =>$estado,
+			'situacion_academica' =>$situacion_academica);
+
+			//array para actualizar en la tabla estudiantes_acudientes
+			$est_acud = array(
+        	'id_estudiante' =>$id_estudiante,	
+			'id_acudiente'  =>$id_acudiente,
+			'parentesco'    =>$parentesco,
+			'ano_lectivo'   =>$ano_lectivo);
+
+			//array para actualizar el estado del estudiante en la tabla estudiantes
+			$estado = array(
+        	'id_persona'        =>$id_estudiante,	
+			'estado_estudiante' =>"Matriculado",
+			'fecha_estado'      =>$fecha_actual);
+
+			//array para insertar en la tabla historial estados
+			$historial = array(
+        	'id_persona'    =>$id_estudiante,	
+			'estado'        =>"Matriculado",
+			'observaciones' =>"Estudiante Matriculado.",
+			'fecha_estado'  =>$fecha_actual,
+			'ano_lectivo'   =>$ano_lectivo);
+
+			
+			$respuesta = $this->matriculas_model->insertar_reingreso2($reingreso,$matricula,$est_acud,$estado,$historial,$id_matricula,$id_estudiante,$ano_lectivo);
+
+			if($respuesta == true){
+
+				echo "registroguardado";
+				
+			}
+			else{
+
+				echo "registronoguardado";
+			}
+
+        }
+
+	}
+
 }

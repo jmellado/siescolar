@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-02-2019 a las 03:00:37
+-- Tiempo de generación: 05-04-2019 a las 21:17:11
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -319,7 +319,8 @@ CREATE TABLE `causales` (
 
 INSERT INTO `causales` (`id_causal`, `causal`, `id_tipo_causal`) VALUES
 (1, 'Asistir puntualmente a clases y demás actividades programadas por el Centro Educativo.', 1),
-(2, 'Permanecer dentro del plantel durante la jornada escolar y en los sitios    programados por cada actividad.', 2);
+(2, 'Permanecer dentro del plantel durante la jornada escolar y en los sitios    programados por cada actividad.', 2),
+(3, 'Ñato Ñoño Ácción', 1);
 
 -- --------------------------------------------------------
 
@@ -374,6 +375,14 @@ CREATE TABLE `criterios_asignados` (
   `asignatura_especifica` int(11) DEFAULT NULL,
   `promedio_general` decimal(11,1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `criterios_asignados`
+--
+
+INSERT INTO `criterios_asignados` (`id_criterio_asignado`, `ano_lectivo`, `id_grado`, `id_criterio`, `numero_areas_asignaturas`, `porcentaje_inasistencias`, `asignatura_especifica`, `promedio_general`) VALUES
+(1, 1, 7, 3, NULL, NULL, 2, NULL),
+(2, 1, 7, 3, NULL, NULL, 11, NULL);
 
 -- --------------------------------------------------------
 
@@ -754,7 +763,8 @@ CREATE TABLE `documentos` (
 --
 
 INSERT INTO `documentos` (`id_documento`, `descripcion_documento`, `nombre_documento`, `fecha_subida`) VALUES
-(1, 'Proyecto Educativo Institucional', 'PROYECTO_EDUCATIVO_INSTITUCIONAL.docx', '2018-10-16');
+(1, 'Proyecto Educativo Institucional', 'PROYECTO_EDUCATIVO_INSTITUCIONAL.docx', '2018-10-16'),
+(2, 'Manual De Convivencia Escolar', 'ManualConvivenciaEscolar.pdf', '2019-02-24');
 
 -- --------------------------------------------------------
 
@@ -4552,24 +4562,6 @@ INSERT INTO `notas` (`id_nota`, `ano_lectivo`, `id_estudiante`, `id_grado`, `id_
 (874, 1, 95, 8, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (875, 1, 95, 8, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (876, 1, 95, 8, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(877, 1, 60, 7, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(878, 1, 60, 7, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(879, 1, 60, 7, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(880, 1, 60, 7, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(881, 1, 60, 7, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(882, 1, 60, 7, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(883, 1, 60, 7, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(884, 1, 60, 7, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(885, 1, 60, 7, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(886, 1, 60, 7, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(887, 1, 60, 7, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(888, 1, 60, 7, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(889, 1, 60, 7, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(890, 1, 60, 7, 15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(891, 1, 60, 7, 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(892, 1, 60, 7, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(893, 1, 60, 7, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(894, 1, 60, 7, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (895, 1, 61, 7, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (896, 1, 61, 7, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (897, 1, 61, 7, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
@@ -5006,7 +4998,25 @@ INSERT INTO `notas` (`id_nota`, `ano_lectivo`, `id_estudiante`, `id_grado`, `id_
 (1364, 1, 26, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (1365, 1, 28, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
 (1366, 1, 29, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(1367, 1, 30, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
+(1367, 1, 30, 10, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1404, 1, 60, 7, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1405, 1, 60, 7, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1406, 1, 60, 7, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1407, 1, 60, 7, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1408, 1, 60, 7, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1409, 1, 60, 7, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1410, 1, 60, 7, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1411, 1, 60, 7, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1412, 1, 60, 7, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1413, 1, 60, 7, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1414, 1, 60, 7, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1415, 1, 60, 7, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1416, 1, 60, 7, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1417, 1, 60, 7, 15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1418, 1, 60, 7, 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1419, 1, 60, 7, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1420, 1, 60, 7, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(1421, 1, 60, 7, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
 
 -- --------------------------------------------------------
 
@@ -5127,11 +5137,11 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (28, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '28', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (29, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '29', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (30, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '30', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(31, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(31, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
 (32, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '53', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (33, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(34, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(35, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(34, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
+(35, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
 (36, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (37, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (38, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
@@ -5140,12 +5150,12 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (41, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (42, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (43, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '54', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(44, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(44, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
 (45, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(46, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(46, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
 (47, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '57', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(48, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
-(49, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
+(48, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
+(49, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '55', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '1'),
 (50, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '56', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (51, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
 (52, 1, 'Mensajes', 1, 'Bienvenida', 'Mensaje General', 'Bievenidos Estudiantes', '58', '1', 1, NULL, NULL, NULL, NULL, NULL, '2018-10-24 11:53:25', '0'),
@@ -5175,7 +5185,7 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (136, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (137, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (138, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
-(139, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(139, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '1'),
 (140, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (141, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (142, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
@@ -5184,12 +5194,12 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (145, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (146, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (147, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
-(148, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(148, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '1'),
 (149, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
-(150, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(150, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '1'),
 (151, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
 (152, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
-(153, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '0'),
+(153, 3, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:21', '1'),
 (154, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (155, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (156, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
@@ -5203,12 +5213,12 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (164, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 50, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (165, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (166, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
-(167, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(167, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '1'),
 (168, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (169, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (170, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
 (171, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
-(172, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '0'),
+(172, 4, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:34', '1'),
 (173, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
 (174, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
 (175, 5, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:39', '0'),
@@ -5269,8 +5279,8 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (230, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
 (231, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
 (232, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
-(233, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
-(234, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(233, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '1'),
+(234, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '1'),
 (235, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
 (236, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
 (237, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 45, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
@@ -5284,7 +5294,7 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (245, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
 (246, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
 (247, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
-(248, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '0'),
+(248, 8, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:10:49', '1'),
 (249, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (250, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '56', '4', 34, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (251, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '53', '4', 35, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
@@ -5292,9 +5302,9 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (253, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (254, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 37, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (255, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(256, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(257, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(258, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(256, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
+(257, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
+(258, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 40, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
 (259, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (260, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 42, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (261, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 43, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
@@ -5311,18 +5321,36 @@ INSERT INTO `notificaciones` (`id_notificacion`, `codigo_notificacion`, `categor
 (272, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 51, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (273, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (274, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '54', '4', 52, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(275, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(276, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(275, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
+(276, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 49, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
 (277, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (278, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '58', '4', 46, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (279, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
-(280, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(280, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 44, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
 (281, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (282, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '57', '4', 41, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(283, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(283, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '1'),
 (284, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 39, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
 (285, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
-(286, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0');
+(286, 9, 'Mensajes', 3, 'Reunion Urgente', 'Importante', 'Reunion Sobre El Paro Academico', '55', '4', 36, 11, NULL, NULL, NULL, NULL, '2018-10-24 03:12:48', '0'),
+(287, 10, 'Tareas', 3, 'Tarea Dallanis', '', 'Prueba De Tarea Para Dallanis.', '55', '4', 38, 11, NULL, NULL, '2019-03-02', NULL, '2019-03-02 12:03:15', '0'),
+(288, 11, 'Eventos', 3, 'Evento Dallanis', '', 'Prueba Evento Dallanis.', '55', '4', 38, 11, '2019-03-02', '01:00:00', '2019-03-06', '13:00:00', '2019-03-02 12:05:03', '0'),
+(289, 12, 'Eventos', 3, 'Evento 2 Dallanis', '', 'Prueba Evento 2 Dallnis', '55', '4', 38, 11, '2019-03-02', '13:00:00', '2019-03-08', '16:00:00', '2019-03-02 12:06:44', '0'),
+(290, 13, 'Mensajes', 3, 'Prueba Mensaje', 'Mensaje General', 'Mensaj Para Dallanis', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-03 16:45:22', '1'),
+(291, 14, 'Mensajes', 3, 'Rf', 'Mensaje General', 'Rf Dalla', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-03 16:47:12', '0'),
+(292, 15, 'Mensajes', 3, 'Rf2', 'Mensaje General', 'Rf2', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-03 16:50:01', '1'),
+(439, 16, 'Mensajes', 3, 'Prueba Msg Dalla', 'Mensaje General', 'Prueba Msg Dalla 2019', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-18 23:41:47', '0'),
+(440, 17, 'Mensajes', 3, 'Pp', 'Mensaje General', 'Pp', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-18 23:42:39', '1'),
+(441, 18, 'Mensajes', 3, 'H', 'Circular', 'H', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-18 23:43:47', '1'),
+(442, 19, 'Mensajes', 3, 'Prueb Mensaje', 'Mensaje General', 'Prueba Mensaje Hoy', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-19 12:20:18', '0'),
+(443, 20, 'Mensajes', 3, 'Prueb Mensaje', 'Noticia', 'Prueba Mensaje 21', '55', '4', 38, 11, NULL, NULL, NULL, NULL, '2019-03-19 12:21:33', '1'),
+(444, 21, 'Tareas', 3, 'Tarea De Lengua Castellana', '', 'Trabajo Escrito', '55', '4', 38, 11, NULL, NULL, '2019-03-19', NULL, '2019-03-19 19:54:04', '0'),
+(445, 22, 'Tareas', 3, 'Tarea De Prueba', '', 'Se Agrego Una Tarea De Prueba.', '56', '4', 34, 11, NULL, NULL, '2019-03-19', NULL, '2019-03-19 19:59:30', '0'),
+(446, 22, 'Tareas', 3, 'Tarea De Prueba', '', 'Se Agrego Una Tarea De Prueba.', '55', '4', 38, 11, NULL, NULL, '2019-03-19', NULL, '2019-03-19 19:59:30', '0'),
+(447, 23, 'Tareas', 3, 'Trabajo Escrito ', '', 'Los Estudiantes Deben Presentar Un Trabajo Escrito Sobre El Origen De La Lengua Española.', '56', '4', 34, 11, NULL, NULL, '2019-03-19', NULL, '2019-03-19 20:07:44', '0'),
+(448, 23, 'Tareas', 3, 'Trabajo Escrito ', '', 'Los Estudiantes Deben Presentar Un Trabajo Escrito Sobre El Origen De La Lengua Española.', '55', '4', 38, 11, NULL, NULL, '2019-03-19', NULL, '2019-03-19 20:07:44', '0'),
+(449, 24, 'Tareas', 3, 'Prueba Tarea 03', '', 'Prueba Tarea 03', '56', '4', 34, 11, NULL, NULL, '2019-03-15', NULL, '2019-03-19 20:09:54', '0'),
+(450, 24, 'Tareas', 3, 'Prueba Tarea 03', '', 'Prueba Tarea 03', '55', '4', 38, 11, NULL, NULL, '2019-03-15', NULL, '2019-03-19 20:09:54', '0');
 
 -- --------------------------------------------------------
 
@@ -6277,6 +6305,22 @@ INSERT INTO `promocion` (`id_promocion`, `ano_lectivo`, `id_estudiante`, `id_cur
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `reingresos`
+--
+
+CREATE TABLE `reingresos` (
+  `id_reingreso` int(11) NOT NULL,
+  `ano_lectivo` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `observaciones` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `fecha_reingreso` date NOT NULL,
+  `fecha_registro` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `retiros`
 --
 
@@ -6382,7 +6426,8 @@ INSERT INTO `seguimientos_disciplinarios` (`id_seguimiento`, `ano_lectivo`, `id_
 (4, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:22'),
 (5, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:25'),
 (6, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:20:26'),
-(7, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:21:01');
+(7, 1, 3, '2', 11, 15, 1, 1, 'El Estudiante Frecuentemente Sale De Clases', '2018-10-24', 1, 'Se Dialoga Con El Estudiante', 'Se Compromete Asistir A Clases Normalmente', '', 'Abierto', '2018-10-24 03:21:01'),
+(8, 1, 3, '1', 11, 38, 1, 1, 'Lola', '2019-03-02', 1, 'Lola', 'Lola', '', 'Abierto', '2019-03-02 12:30:56');
 
 -- --------------------------------------------------------
 
@@ -6981,6 +7026,12 @@ ALTER TABLE `promocion`
   ADD PRIMARY KEY (`id_promocion`);
 
 --
+-- Indices de la tabla `reingresos`
+--
+ALTER TABLE `reingresos`
+  ADD PRIMARY KEY (`id_reingreso`);
+
+--
 -- Indices de la tabla `retiros`
 --
 ALTER TABLE `retiros`
@@ -7060,7 +7111,7 @@ ALTER TABLE `asignaturas`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT de la tabla `candidatos_eleccion`
 --
@@ -7080,7 +7131,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `causales`
 --
 ALTER TABLE `causales`
-  MODIFY `id_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_causal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `criterios`
 --
@@ -7115,7 +7166,7 @@ ALTER TABLE `desempenos`
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
@@ -7205,7 +7256,7 @@ ALTER TABLE `niveles_educacion`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1368;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1422;
 --
 -- AUTO_INCREMENT de la tabla `notas_actividades`
 --
@@ -7215,7 +7266,7 @@ ALTER TABLE `notas_actividades`
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
+  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=451;
 --
 -- AUTO_INCREMENT de la tabla `padres`
 --
@@ -7247,6 +7298,11 @@ ALTER TABLE `personas`
 ALTER TABLE `promocion`
   MODIFY `id_promocion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
+-- AUTO_INCREMENT de la tabla `reingresos`
+--
+ALTER TABLE `reingresos`
+  MODIFY `id_reingreso` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `retiros`
 --
 ALTER TABLE `retiros`
@@ -7265,7 +7321,7 @@ ALTER TABLE `salones`
 -- AUTO_INCREMENT de la tabla `seguimientos_disciplinarios`
 --
 ALTER TABLE `seguimientos_disciplinarios`
-  MODIFY `id_seguimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_seguimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `tipos_causales`
 --
