@@ -609,6 +609,11 @@ function actualizar_matricula(){
 					toastr.error('Matrícula No Actualizada.', 'Success Alert', {timeOut: 3000});
 					
 				}
+				else if(respuesta==="anolectivocerrado"){
+					
+					toastr.warning('No Se Puede Modificar La Información De Esta Matrícula; El Año Lectivo En La Que Fue Registrada, Se Encuentra Cerrado.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});

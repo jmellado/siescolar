@@ -193,6 +193,27 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	//Permite validar si un estudiante tiene notas registradas
+	public function validar_existencia_notas_estudiante($id_estudiante,$ano_lectivo){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('nota_final IS NOT NULL');
+
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
+
 	public function buscar_estudiante($id){
 
 		$this->db->where('personas.identificacion',$id);

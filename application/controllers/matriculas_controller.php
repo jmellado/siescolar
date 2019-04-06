@@ -182,34 +182,49 @@ class Matriculas_controller extends CI_Controller {
 
         if(is_numeric($id)){
 
-        	//Obtenemos id_estudiante y ano_lectivo con ese id de matricula********************************************
+        	//************Obtenemos id_estudiante y ano_lectivo con ese id de matricula************
 			$matri=$this->matriculas_model->obtener_informacion_matricula($id);
 			$id_estudiante = $matri[0]['id_estudiante'];
 			$ano_lectivo = $matri[0]['ano_lectivo'];
 
-			$fecha_estado = $this->matriculas_model->obtener_fecha_estado($id_estudiante,$ano_lectivo);
+			if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-			//array para actualizar el estado de (Matriculado a Inscrito) del estudiante en la tabla estudiantes
-			$estado = array(
-        	'id_persona' =>$id_estudiante,	
-			'estado_estudiante' =>"Inscrito",
-			'fecha_estado' =>$fecha_estado);
+				if($this->matriculas_model->validar_existencia_notas_estudiante($id_estudiante,$ano_lectivo)){
 
-			//eliminanos las materias registradas de ese estudiante en la tabla notas********************************************
-			if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
-				echo "No se pudo eliminar en la tabla notas";
-			}
+					$fecha_estado = $this->matriculas_model->obtener_fecha_estado($id_estudiante,$ano_lectivo);
+
+					//array para actualizar el estado de (Matriculado a Inscrito) del estudiante en la tabla estudiantes
+					$estado = array(
+		        	'id_persona' 		=>$id_estudiante,	
+					'estado_estudiante' =>"Inscrito",
+					'fecha_estado' 		=>$fecha_estado);
+
+					//***********eliminanos las materias registradas de ese estudiante en la tabla notas************
+					if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
+						echo "No se pudo eliminar en la tabla notas";
+					}
 
 
-	        $respuesta=$this->matriculas_model->eliminar_matricula($id,$id_estudiante,$ano_lectivo,$estado);
-	        
-          	if($respuesta==true){
-              
-              	echo "Matrícula Eliminada Correctamente.";
-          	}else{
-              
-              	echo "No Se Pudo Eliminar.";
-          	}
+			        $respuesta=$this->matriculas_model->eliminar_matricula($id,$id_estudiante,$ano_lectivo,$estado);
+			        
+		          	if($respuesta==true){
+		              
+		              	echo "Matrícula Eliminada Correctamente.";
+		          	}else{
+		              
+		              	echo "No Se Pudo Eliminar.";
+		          	}
+
+		        }
+		        else{
+
+		        	echo "No Se Puede Eliminar Esta Matrícula; El Estudiante Tiene Notas Registradas.";
+		        }
+		    }
+		    else{
+
+		    	echo "No Se Puede Eliminar Esta Matrícula; El Año Lectivo En La Que Fue Registrada, Se Encuentra Cerrado.";
+		    }
           
         }else{
           
@@ -252,41 +267,48 @@ class Matriculas_controller extends CI_Controller {
 
         if(is_numeric($id_matricula)){
 
-	    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula,$est_acud,$id_estudiante,$ano_lectivo);
+        	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        if($respuesta==true){
+		    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula,$est_acud,$id_estudiante,$ano_lectivo);
 
-	        	echo "registroactualizado";
+		        if($respuesta==true){
 
-	        	//******************************eliminar materias********************************************
-				if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
-					echo "No se pudo eliminar en la tabla notas";
-				}
+		        	echo "registroactualizado";
 
-				//*******************************matricular materias********************************************
-				$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
-
-				$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
-
-				if ($asignaturas_grados != false) {
-					
-					for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
-
-						$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
-
-						if($resp == false){
-							echo "no se pudo registrar en la tabla notas";
-						}
-							
+		        	//******************************eliminar materias********************************************
+					if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
+						echo "No se pudo eliminar en la tabla notas";
 					}
-				}	
-				//*************************************************************************************************
 
-	        }else{
+					//*******************************matricular materias********************************************
+					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
 
-	        	echo "registronoactualizado";
-	        }
+					$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
 
+					if ($asignaturas_grados != false) {
+						
+						for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+
+							$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
+
+							if($resp == false){
+								echo "no se pudo registrar en la tabla notas";
+							}
+								
+						}
+					}	
+					//*************************************************************************************************
+
+		        }else{
+
+		        	echo "registronoactualizado";
+		        }
+
+		    }
+		    else{
+
+		    	echo "anolectivocerrado";
+		    }
          
         }else{
             
