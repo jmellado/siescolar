@@ -382,45 +382,52 @@ class Matriculas_controller extends CI_Controller {
 
 				if(!$this->matriculas_model->comprobar_NuevoAntiguo($id)){
 
-					//echo json_encode($consulta);
+					if($this->matriculas_model->validar_EstadoRetirado($id)){
 
-					$ultima_matricula = $this->matriculas_model->UltimaMatricula($id);
-					$matricula = $this->matriculas_model->obtener_informacion_matricula($ultima_matricula);
-					$id_curso = $matricula[0]['id_curso'];
-					$estado_matricula = $matricula[0]['estado_matricula'];
-					$situacion_academica = $matricula[0]['situacion_academica'];
+						//echo json_encode($consulta);
 
-					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
-					$grado = $this->matriculas_model->obtener_informacion_grado($id_grado);
-					$nombre_grado = $grado[0]['nombre_grado'];
+						$ultima_matricula = $this->matriculas_model->UltimaMatricula($id);
+						$matricula = $this->matriculas_model->obtener_informacion_matricula($ultima_matricula);
+						$id_curso = $matricula[0]['id_curso'];
+						$estado_matricula = $matricula[0]['estado_matricula'];
+						$situacion_academica = $matricula[0]['situacion_academica'];
 
-					if ($situacion_academica == "Aprobado") {
+						$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
+						$grado = $this->matriculas_model->obtener_informacion_grado($id_grado);
+						$nombre_grado = $grado[0]['nombre_grado'];
 
-						$data = array(
+						if ($situacion_academica == "Aprobado") {
 
-							'datos' => $consulta,
+							$data = array(
 
-							'proximo_grado' => $this->matriculas_model->obtener_proximo_grado($nombre_grado),
+								'datos' => $consulta,
 
-						    'estadomatricula' => $estado_matricula
-						);
+								'proximo_grado' => $this->matriculas_model->obtener_proximo_grado($nombre_grado),
 
-						echo json_encode($data);
-						
+							    'estadomatricula' => $estado_matricula
+							);
+
+							echo json_encode($data);
+							
+						}
+						else{
+
+							$data = array(
+
+								'datos' => $consulta,
+
+								'proximo_grado' => $nombre_grado,
+
+							    'estadomatricula' => $estado_matricula
+							);
+
+							echo json_encode($data);
+
+						}
 					}
 					else{
 
-						$data = array(
-
-							'datos' => $consulta,
-
-							'proximo_grado' => $nombre_grado,
-
-						    'estadomatricula' => $estado_matricula
-						);
-
-						echo json_encode($data);
-
+						echo "estudianteretirado";
 					}
 				}
 				else{

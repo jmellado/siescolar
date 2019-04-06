@@ -603,6 +603,24 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	public function validar_EstadoRetirado($identificacion){
+
+		$this->db->where('personas.identificacion',$identificacion);
+		$this->db->where('estudiantes.estado_estudiante',"Retirado");
+
+		$this->db->join('estudiantes', 'personas.id_persona = estudiantes.id_persona');
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
 	//********************************* FUNCIONES PARA EL CONSOLIDADO DE MATRICULAS ****************************************
 
 

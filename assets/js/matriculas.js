@@ -668,7 +668,7 @@ function buscar_estudiante(valor){
 
 				if(respuesta==="estudiantenoexiste"){
 
-					toastr.error('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
+					toastr.warning('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculas")[0].reset();
 					$("#id_persona").val("");
 					bloquear_cajas_texto();
@@ -869,7 +869,7 @@ function buscar_estudianteA(valor){
 
 				if(respuesta==="estudiantenoexiste"){
 
-					toastr.error('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
+					toastr.warning('Estudiante No Registrado.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculasA")[0].reset();
 					$("#id_personaA").val("");
 					$("#nombre_gradoA").val("");
@@ -885,7 +885,15 @@ function buscar_estudianteA(valor){
 				}
 				else if(respuesta==="estudiantenuevo"){
 
-					toastr.error('El N° De Identificación No Corresponde A Un Estudiante Antiguo.', 'Success Alert', {timeOut: 3000});
+					toastr.info('El N° De Identificación No Corresponde A Un Estudiante Antiguo.', 'Success Alert', {timeOut: 3000});
+					$("#form_matriculasA")[0].reset();
+					$("#id_personaA").val("");
+					$("#nombre_gradoA").val("");
+					bloquear_cajas_textoA();
+				}
+				else if(respuesta==="estudianteretirado"){
+
+					toastr.info('El N° De Identificación Corresponde A Un Estudiante Retirado.', 'Success Alert', {timeOut: 3000});
 					$("#form_matriculasA")[0].reset();
 					$("#id_personaA").val("");
 					$("#nombre_gradoA").val("");
