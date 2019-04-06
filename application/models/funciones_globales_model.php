@@ -32,6 +32,7 @@ class Funciones_globales_model extends CI_Model {
 		$this->db->where('estado_grado','Activo');
 
 		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
 
 		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
 
