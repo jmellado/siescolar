@@ -139,7 +139,7 @@ class Seguimientos_disciplinarios_model extends CI_Model {
 		$this->db->where('seguimientos_disciplinarios.id_profesor',$id_profesor);
 		$this->db->where('seguimientos_disciplinarios.ano_lectivo',$ano_lectivo);
 		
-		$this->db->where("(personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR tipos_causales.tipo_causal LIKE '".$id."%' OR seguimientos_disciplinarios.fecha_causal LIKE '".$id."%' OR seguimientos_disciplinarios.estado_seguimiento LIKE '".$id."%')", NULL, FALSE);
+		$this->db->where("(personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR grados.nombre_grado LIKE '".$id."%' OR tipos_causales.tipo_causal LIKE '".$id."%' OR seguimientos_disciplinarios.fecha_causal LIKE '".$id."%' OR seguimientos_disciplinarios.estado_seguimiento LIKE '".$id."%' OR CONCAT_WS(' ',grados.nombre_grado,grupos.nombre_grupo,cursos.jornada) LIKE '".$id."%' OR CONCAT_WS(' ',personas.nombres,personas.apellido1,personas.apellido2) LIKE '".$id."%')", NULL, FALSE);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
