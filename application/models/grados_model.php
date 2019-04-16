@@ -172,7 +172,7 @@ class Grados_model extends CI_Model {
 	public function obtener_anio_grado($id_grado){
 
 		$this->db->where('id_grado',$id_grado);
-		$query = $this->db->get('cursos');
+		$query = $this->db->get('grados');
 
 		if ($query->num_rows() > 0) {
 		

@@ -38,16 +38,20 @@ class Grados_controller extends CI_Controller {
 
         	//obtengo el ultimo id de grados + 1 
         	$ultimo_id = $this->grados_model->obtener_ultimo_id();
+        	$nombre_grado = ucwords($this->input->post('nombre_grado'));
+        	$nivel_educacion = $this->input->post('nivel_educacion');
+        	$ano_lectivo = $this->input->post('ano_lectivo');
+        	$estado_grado = $this->input->post('estado_grado');
 
         	//array para insertar en la tabla grados----------
         	$grado = array(
-        	'id_grado' =>$ultimo_id,	
-			'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
-			'nivel_educacion' =>$this->input->post('nivel_educacion'),
-			'ano_lectivo' =>$this->input->post('ano_lectivo'),
-			'estado_grado' =>$this->input->post('estado_grado'));
+        	'id_grado'        =>$ultimo_id,	
+			'nombre_grado'    =>$nombre_grado,
+			'nivel_educacion' =>$nivel_educacion,
+			'ano_lectivo' 	  =>$ano_lectivo,
+			'estado_grado'    =>$estado_grado);
 
-			if ($this->grados_model->validar_existencia($this->input->post('nombre_grado'),$this->input->post('ano_lectivo'))){
+			if ($this->grados_model->validar_existencia($nombre_grado,$ano_lectivo)){
 
 				$respuesta=$this->grados_model->insertar_grado($grado);
 
@@ -137,46 +141,50 @@ class Grados_controller extends CI_Controller {
 
     public function modificar(){
 
+    	$id_grado = $this->input->post('id_grado');
+    	$nombre_grado = ucwords($this->input->post('nombre_grado'));
+    	$nivel_educacion = $this->input->post('nivel_educacion');
+    	$ano_lectivo = $this->input->post('ano_lectivo');
+    	$estado_grado = $this->input->post('estado_grado');
+
     	//array para insertar en la tabla grados----------
         $grado = array(
-        'id_grado' =>$this->input->post('id_grado'),	
-		'nombre_grado' =>ucwords($this->input->post('nombre_grado')),
-		'nivel_educacion' =>$this->input->post('nivel_educacion'),
-		'ano_lectivo' =>$this->input->post('ano_lectivo'),
-		'estado_grado' =>$this->input->post('estado_grado'));
+        'id_grado'        =>$id_grado,	
+		'nombre_grado'    =>$nombre_grado,
+		'nivel_educacion' =>$nivel_educacion,
+		'ano_lectivo'     =>$ano_lectivo,
+		'estado_grado'    =>$estado_grado);
 
-		$id = $this->input->post('id_grado');
-		$ano_lectivo = $this->input->post('ano_lectivo');
-		$nombre_buscado = $this->grados_model->obtener_nombre_grado($id);
-		$ano_lectivo_buscado = $this->grados_model->obtener_ano_lectivo($id);
+		$nombre_buscado = $this->grados_model->obtener_nombre_grado($id_grado);
+		$ano_lectivo_buscado = $this->grados_model->obtener_ano_lectivo($id_grado);
 
-        if(is_numeric($id)){
+        if(is_numeric($id_grado)){
 
         	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-	        	if ($this->grados_model->ValidarExistencia_GradoEnCursos($id)){
+	        	if ($this->grados_model->ValidarExistencia_GradoEnCursos($id_grado)){
 
-	        		if ($this->grados_model->ValidarExistencia_GradoEnPensum($id)){
+	        		if ($this->grados_model->ValidarExistencia_GradoEnPensum($id_grado)){
 
-			        	if ($nombre_buscado == $this->input->post('nombre_grado') && $ano_lectivo_buscado == $this->input->post('ano_lectivo')){
+			        	if ($nombre_buscado == $nombre_grado && $ano_lectivo_buscado == $ano_lectivo){
 
-				        	$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
+				        	$respuesta=$this->grados_model->modificar_grado($id_grado,$grado);
 
-							 if($respuesta==true){
+							if($respuesta==true){
 
 								echo "registroactualizado";
 
-				             }else{
+				            }else{
 
 								echo "registronoactualizado";
 
-				             }
+				            }
 				        }
 				        else{
 
-				        	if($this->grados_model->validar_existencia($this->input->post('nombre_grado'),$this->input->post('ano_lectivo'))){
+				        	if($this->grados_model->validar_existencia($nombre_grado,$ano_lectivo)){
 
-				        		$respuesta=$this->grados_model->modificar_grado($this->input->post('id_grado'),$grado);
+				        		$respuesta=$this->grados_model->modificar_grado($id_grado,$grado);
 
 				        		if($respuesta==true){
 
@@ -186,7 +194,6 @@ class Grados_controller extends CI_Controller {
 
 				        			echo "registronoactualizado";
 				        		}
-
 
 
 				        	}else{

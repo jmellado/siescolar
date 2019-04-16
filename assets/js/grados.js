@@ -21,7 +21,7 @@ function inicio(){
 					//alert(""+respuesta);
 					if (respuesta==="registroguardado") {
 						
-						toastr.success('Registro Guardado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+						toastr.success('Grado Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_grados")[0].reset();
 						llenarcombo_niveles_educacion("","");
 						llenarcombo_grados_educacion("","");
@@ -29,7 +29,7 @@ function inicio(){
 					}
 					else if(respuesta==="registronoguardado"){
 						
-						toastr.error('Registro No Guardado.', 'Success Alert', {timeOut: 5000});
+						toastr.error('Grado No Registrado.', 'Success Alert', {timeOut: 5000});
 						
 
 					}
@@ -54,7 +54,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 5000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 5000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -144,7 +144,7 @@ function inicio(){
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_grados_actualizar").validate().numberOfInvalids()+"errores");
 		}
 		
