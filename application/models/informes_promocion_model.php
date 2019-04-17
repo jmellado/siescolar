@@ -173,4 +173,96 @@ class Informes_promocion_model extends CI_Model {
 	}
 
 
+	//============ Por Estudiantes =============
+
+
+	public function llenar_cursos2($ano_lectivo){
+
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->order_by('cursos.jornada', 'asc');
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
+	}
+
+
+	public function buscar_porestudiantes($ano_lectivo,$id_curso){
+
+		if ($id_curso == "0") {
+
+			$this->db->where('promocion.ano_lectivo',$ano_lectivo);
+		}
+		else{
+
+			$this->db->where('promocion.ano_lectivo',$ano_lectivo);
+			$this->db->where('promocion.id_curso',$id_curso);
+		}
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->order_by('cursos.jornada', 'asc');
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('cursos', 'promocion.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('personas', 'promocion.id_estudiante = personas.id_persona');
+		$this->db->join('anos_lectivos', 'promocion.ano_lectivo = anos_lectivos.id_ano_lectivo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('promocion.id_promocion,promocion.ano_lectivo,promocion.id_curso,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada,promocion.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2,promocion.situacion_academica');
+
+		$query = $this->db->get('promocion');
+
+		return $query->result_array();
+
+	}
+
+
+	public function consultar_cursos($ano_lectivo,$id_curso){
+
+		if ($id_curso == "0") {
+
+			$this->db->where('promocion.ano_lectivo',$ano_lectivo);
+		}
+		else{
+
+			$this->db->where('promocion.ano_lectivo',$ano_lectivo);
+			$this->db->where('promocion.id_curso',$id_curso);
+		}
+
+		$this->db->group_by("promocion.id_curso");
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+		$this->db->order_by('cursos.jornada', 'asc');
+
+		$this->db->join('cursos', 'promocion.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('promocion.id_curso,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+
+		$query = $this->db->get('promocion');
+
+		return $query->result_array();
+
+	}
+
+
 }

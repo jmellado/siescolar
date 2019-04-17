@@ -476,4 +476,162 @@ class Informes_promocion_controller extends CI_Controller {
 	}
 
 
+	//============ Por Estudiantes =============
+
+
+	public function PorEstudiantes()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'informes_promocion/porestudiantes_vista');
+	}
+
+
+	public function llenarcombo_cursos2(){
+
+		$ano_lectivo =$this->input->post('ano_lectivo');
+
+    	$consulta = $this->informes_promocion_model->llenar_cursos2($ano_lectivo);
+    	echo json_encode($consulta);
+    }
+
+
+	public function mostrarporestudiantes(){
+
+		$ano_lectivo = $this->input->post('ano_lectivo');
+		$id_curso = $this->input->post('id_curso'); 
+		
+		$data = array(
+
+			'porestudiantes' => $this->informes_promocion_model->buscar_porestudiantes($ano_lectivo,$id_curso),
+
+		    'totalregistros' => count($this->informes_promocion_model->buscar_porestudiantes($ano_lectivo,$id_curso))
+
+		);
+	    echo json_encode($data);
+
+	}
+
+
+	public function generar_porestudiantes(){
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+
+		$ano_lectivo = $this->input->get('ano_lectivo');
+		$id_curso = $this->input->get('id_curso');
+
+		$anio = $this->informes_promocion_model->obtener_informacion_anolectivo($ano_lectivo);
+		$nombre_ano_lectivo = $anio[0]['nombre_ano_lectivo'];
+
+		$cursos = $this->informes_promocion_model->consultar_cursos($ano_lectivo,$id_curso);
+
+		if(count($cursos) > 0){
+
+			// create new PDF document
+			$pdf = new PdfEr('P', 'mm', 'A4', true, 'UTF-8', false);
+	        $pdf->SetCreator(PDF_CREATOR);
+	        $pdf->SetAuthor('Siescolar');
+	        $pdf->SetTitle('Informe De Promoción Por Estudiantes '.$nombre_ano_lectivo);
+	        $pdf->SetSubject('Listados SIESCOLAR');
+	        $pdf->SetKeywords('SIESCOLAR, PDF, example, test, guide');
+
+	        // remove default header/footer
+	        //$pdf->SetPrintHeader(false);
+	 		//$pdf->SetPrintFooter(false);
+
+			// establecer la fuente monoespaciada predeterminada
+	        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+	 
+			// establecer margenes
+	        $pdf->SetMargins(PDF_MARGIN_LEFT, 38, PDF_MARGIN_RIGHT);
+	        //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+	        //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+	 
+			// establecer saltos automáticos de página
+	        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	 
+			// relación utilizada para ajustar la conversión de los píxeles, establecer el factor de escala de la imagen
+	        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+	        // ---------------------------------------------------------
+			// establecer el modo de fuente por defecto
+	        $pdf->setFontSubsetting(true);
+
+
+	        for ($i=0; $i < count($cursos); $i++) { 
+
+		        // Añadir una página
+		        $pdf->AddPage();
+
+		        $pdf->SetFont('helvetica', 'B', 12);
+		        $pdf->Write(0, 'INFORME DE PROMOCIÓN POR ESTUDIANTES', '', 0, 'C', true, 0, false, false, 0);
+		        $pdf->SetFont('helvetica', '', 10, '', true);
+		 
+				//fijar efecto de sombra en el texto
+		        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+
+
+		        // Establecemos el contenido para imprimir
+		        //**********************************************************************************************************
+				//preparamos y maquetamos el contenido a crear
+				//**********************************************************************************************************
+
+				$tbl = '';
+				$tbl .= '<p align="center"><b>AÑO LECTIVO '.$nombre_ano_lectivo.'</b></p>';
+				$tbl .= '<table cellspacing="0" cellpadding="1" border="1">';
+		        $tbl .= '<tr>
+		        			<td align="center" width="30" height="30"><b>#</b></td>
+		        			<td align="center" width="170" height="30"><b>CURSO</b></td>
+		        			<td align="center" width="230" height="30"><b>ESTUDIANTE</b></td>
+		        			<td align="center" width="200" height="30"><b>SITUACIÓN ACADÉMICA</b></td>
+		        		</tr>';
+
+		        $id_curs = $cursos[$i]['id_curso']; 
+		        $porestudiantes = $this->informes_promocion_model->buscar_porestudiantes($ano_lectivo,$id_curs);
+
+		        for ($j=0; $j < count($porestudiantes); $j++) {
+
+					$cont = $j + 1;
+
+					$tbl .= '<tr nobr="true">
+
+								<td align="center" width="30">'.$cont.'</td>
+								<td align="center" width="170">'.$porestudiantes[$j]['nombre_grado'].' '.$porestudiantes[$j]['nombre_grupo'].' '.$porestudiantes[$j]['jornada'].'</td>
+								<td align="center" width="230">'.$porestudiantes[$j]['apellido1'].' '.$porestudiantes[$j]['apellido2'].' '.$porestudiantes[$j]['nombres'].'</td>
+			        			<td align="center" width="200">'.$porestudiantes[$j]['situacion_academica'].'</td>
+
+							</tr>';
+				}
+
+				$tbl .= '</table>';
+
+
+				// Imprimimos el texto con writeHTMLCell()
+			    $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $tbl, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+
+			}
+
+
+		    // ==============================================================================================0
+			// Cerrar el documento PDF y preparamos la salida
+			// Este método tiene varias opciones, consulte la documentación para más información.
+	        //$nombre_archivo = utf8_decode("Localidades de ".$prov.".pdf");
+	        $nombre_archivo = utf8_decode("Informe De Promocion Por Estudiantes ".$nombre_ano_lectivo.".pdf");
+	        $pdf->Output($nombre_archivo, 'I');
+
+		}
+		else{
+
+			echo "<h1>No Se Encontraron Resultados..</h1>";
+		}
+
+	}
+
+
 }
