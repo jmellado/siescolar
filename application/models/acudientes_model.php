@@ -304,4 +304,104 @@ class Acudientes_model extends CI_Model {
 
 	}
 
+
+	public function validar_existencia($identificacion){
+
+		$this->db->where('identificacion',$identificacion);
+		$query = $this->db->get('personas');
+
+		if ($query->num_rows() > 0) {
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+
+
+	//Funcion para actualizar los usuarios que tenga creados una persona
+	public function actualizar_usuarios_persona($id_persona,$identificacion,$nombres,$apellido1,$apellido2){
+
+		$usuarios = $this->acudientes_model->obtener_usuarios_persona($id_persona);
+
+		if ($usuarios != false) {
+
+			//NUEVA TRANSACCION
+			$this->db->trans_start();
+
+				for ($i=0; $i < count($usuarios); $i++) {
+
+					$id_usuario = $usuarios[$i]['id_usuario'];
+					$id_rol = $usuarios[$i]['id_rol'];
+
+					if ($id_rol == "1") {
+						
+						//aqui creamos el username de un administrador
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
+						$username = $user.$name."ad".$id_persona;
+					}
+					elseif ($id_rol == "2") {
+						
+						//aqui creamos el username de un estudiante
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
+						$username = $user.$name."es".$id_persona;
+					}
+					elseif ($id_rol == "3") {
+						
+						//aqui creamos el username de un profesor
+						$user = mb_strtolower(substr($nombres, 0, 2));
+						$name = mb_strtolower($apellido1);
+						$username = $user.$name.$id_persona;
+					}
+
+					//array para actualizar en la tabla usuarios
+					$usuario = array(
+					'username'   =>$username,
+					'password'   =>sha1($identificacion));
+
+					$this->db->where('id_usuario',$id_usuario);
+					$this->db->update('usuarios', $usuario);
+					
+				}
+
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+
+				return false;
+			}
+			else{
+
+				return true;
+			}
+
+		}
+		else{
+
+			return false;
+		}
+
+	}
+
+
+	//Funcion para obtener los usuarios que tenga creados una persona
+	public function obtener_usuarios_persona($id_persona){
+
+		$this->db->where('id_persona',$id_persona);
+		$this->db->where("id_rol != '4'");
+		$query = $this->db->get('usuarios');
+
+		if ($query->num_rows() > 0) {
+		
+			return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
+	}
+
 }

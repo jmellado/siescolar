@@ -430,7 +430,7 @@ class Acudientes_controller extends CI_Controller {
 			$row = $this->acudientes_model->obtener_informacion_persona($id_persona,"2");
 			$identificacion_buscada = $row[0]['identificacion'];
 
-	        if(is_numeric($identificacion)){
+	        if(is_numeric($id_persona)){
 
 	        	if ($identificacion_buscada == $identificacion){
 
@@ -440,11 +440,37 @@ class Acudientes_controller extends CI_Controller {
 
 						echo "registroactualizado";
 
+						$act_usu = $this->acudientes_model->actualizar_usuarios_persona($id_persona,$identificacion,$nombres,$apellido1,$apellido2);
+
 		            }else{
 
 						echo "registronoactualizado";
-
 		            }
+
+		        }
+		        else{
+
+		        	if($this->acudientes_model->validar_existencia($identificacion)){
+
+		        		$respuesta=$this->acudientes_model->modificar_acudiente($id_persona,$acudiente,$acudiente2,$usuario);
+
+		        		if($respuesta==true){
+
+							echo "registroactualizado";
+
+							$act_usu = $this->acudientes_model->actualizar_usuarios_persona($id_persona,$identificacion,$nombres,$apellido1,$apellido2);
+
+			            }else{
+
+							echo "registronoactualizado";
+			            }
+
+		        	}
+		        	else{
+
+		        		echo "acudienteyaexiste";
+		        	}
+
 		        }          
 	         
 	        }else{

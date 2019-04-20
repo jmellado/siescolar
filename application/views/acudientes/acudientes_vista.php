@@ -285,20 +285,20 @@
 				    					<div class="panel-body">
 
 				    						<input type="hidden" class="form-control" id="id_personasele" name="id_persona">
-				    						<input type="hidden" class="form-control" id="identificacionsele2" name="identificacion">
+				    						<!--<input type="hidden" class="form-control" id="identificacionsele2" name="identificacion">-->
 
 				    						<div class="form-group">
 										    	<label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="identificacionsele" name="identificacion"
-										           placeholder="Identificación" disabled>
+										           placeholder="Identificación">
 										        </div>   
 										  	</div>
 
 										  	<div class="form-group">
 											  	<label class="control-label col-md-4" for="tipo_id">TIPO DE IDENTIFICACIÓN</label>
 											  	<div class="col-md-7">
-												  	<select class="form-control" id="tipo_idsele" name="tipo_id" readonly>
+												  	<select class="form-control" id="tipo_idsele" name="tipo_id">
 												  		<option value=""></option>
 													    <option value="rc">RC</option>
 														<option value="ti">TI</option>
@@ -312,7 +312,7 @@
 										    	<label class="control-label col-md-4" for="nombres">NOMBRES</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="nombressele" name="nombres"
-										           placeholder="Nombres" readonly>
+										           placeholder="Nombres">
 										        </div>   
 										  	</div>
 
@@ -320,7 +320,7 @@
 										    	<label class="control-label col-md-4" for="apellido1">1° APELLIDO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="apellido1sele" name="apellido1"
-										           placeholder="Primer Apellido" readonly>
+										           placeholder="Primer Apellido">
 										        </div>   
 										  	</div>
 
@@ -328,7 +328,7 @@
 										    	<label class="control-label col-md-4" for="apellido2">2° APELLIDO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="apellido2sele" name="apellido2"
-										           placeholder="Segundo Apellido" readonly>
+										           placeholder="Segundo Apellido">
 										        </div>   
 										  	</div>
 
@@ -336,7 +336,7 @@
 										    	<label class="control-label col-md-4" for="telefono">TELÉFONO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="telefonosele" name="telefono"
-										           placeholder="Teléfono" readonly>
+										           placeholder="Teléfono">
 										        </div>   
 										  	</div>
 
@@ -344,7 +344,7 @@
 										    	<label class="control-label col-md-4" for="direccion">DIRECCIÓN</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="direccionsele" name="direccion"
-										           placeholder="Dirección" readonly>
+										           placeholder="Dirección">
 										        </div>   
 										  	</div>
 
@@ -360,7 +360,7 @@
 										    	<label class="control-label col-md-4" for="correo">CORREO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="correosele" name="correo"
-										           placeholder="Correo" readonly>
+										           placeholder="Correo">
 										        </div>   
 										  	</div>
 
@@ -368,7 +368,7 @@
 										    	<label class="control-label col-md-4" for="barrio">BARRIO</label>
 										    	<div class="col-md-7">
 										    		<input type="text" class="form-control" id="barriosele" name="barrio"
-										           placeholder="Barrio" readonly>
+										           placeholder="Barrio">
 										        </div>   
 										  	</div>
 

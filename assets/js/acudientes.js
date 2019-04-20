@@ -135,7 +135,7 @@ function inicio(){
 		
 		$("#id_personasele").val(id_personasele);
 		$("#identificacionsele").val(identificacionsele);
-		$("#identificacionsele2").val(identificacionsele);
+		//$("#identificacionsele2").val(identificacionsele);
 		$("#tipo_idsele").val(tipo_idsele);
         $("#nombressele").val(nombressele);
         $("#apellido1sele").val(apellido1sele);
@@ -148,7 +148,7 @@ function inicio(){
         $("#telefono_trabajosele").val(telefono_trabajosele);
         $("#direccion_trabajosele").val(direccion_trabajosele);
         $("#estado_acudientesele").val(estado_acudientesele);
-        validar_rol(identificacionsele);
+        //validar_rol(identificacionsele);
 
 	});
 
@@ -512,6 +512,11 @@ function actualizar_acudiente(){
 				else if(respuesta==="registronoactualizado"){
 					
 					toastr.error('Información Del Acudiente No Actualizada.', 'Success Alert', {timeOut: 3000});	
+
+				}
+				else if(respuesta==="acudienteyaexiste"){
+					
+					toastr.warning('Acudiente Ya Registrado.', 'Success Alert', {timeOut: 3000});	
 
 				}
 				else{
