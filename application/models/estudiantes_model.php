@@ -87,6 +87,7 @@ class Estudiantes_model extends CI_Model {
 		$this->db->update('estudiantes', $estudiante2);
 
 		$this->db->where('id_persona',$id_persona);
+		$this->db->where('id_rol','2');
 		$this->db->update('usuarios', $usuario);
 
 		$this->db->where('id_padre',$id_padre);
@@ -111,6 +112,7 @@ class Estudiantes_model extends CI_Model {
 
        	$this->db->trans_start();
        	$this->db->where('id_persona',$id_persona);
+       	$this->db->where('id_rol','2');
 		$this->db->delete('usuarios');
 
 		$this->db->where('id_persona',$id_persona);

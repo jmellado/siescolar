@@ -201,7 +201,7 @@ class Estudiantes_controller extends CI_Controller {
 			//aqui creamos el username de un estudiante
 			$user = mb_strtolower(substr($nombres, 0, 2));
 			$name = mb_strtolower($apellido1);
-			$username = $user.$name.$ultimo_id;
+			$username = $user.$name."es".$ultimo_id;
 
 			//array para insertar en la tabla usuarios
 			$usuario = array(
@@ -469,16 +469,14 @@ class Estudiantes_controller extends CI_Controller {
 			//aqui creamos el username de un estudiante
 			$user = mb_strtolower(substr($nombres, 0, 2));
 			$name = mb_strtolower($apellido1);
-			$username = $user.$name.$id_persona;
+			$username = $user.$name."es".$id_persona;
 
 			//array para actualizar en la tabla usuarios	
 			$usuario = array(
-			'id_usuario' =>$id_persona,
 			'id_persona' =>$id_persona,
 			'id_rol'     =>2,
 			'username'   =>$username,
-			'password'   =>sha1($identificacion),
-			'acceso'     =>0);
+			'password'   =>sha1($identificacion));
 
 			//array del padre - para actualizar en la tabla padres
 			$padre = array(
@@ -510,7 +508,7 @@ class Estudiantes_controller extends CI_Controller {
 			
 	    	$identificacion_buscada = $this->estudiantes_model->obtener_identificacion($id_persona);
 
-	        if(is_numeric($identificacion)){
+	        if(is_numeric($id_persona)){
 
 	        	if ($identificacion_buscada == $identificacion) {
 
@@ -553,7 +551,7 @@ class Estudiantes_controller extends CI_Controller {
 	         
 	        }else{
 	            
-	            echo "digite valor numerico para la Identificacion";
+	            echo "digite valor numerico para identificar un estudiante";
 	        }
 
 	    }
@@ -590,7 +588,7 @@ class Estudiantes_controller extends CI_Controller {
           //redirect(base_url());
         }else{
           
-          	echo "digite valor numerico para la cedula";
+          	echo "digite valor numerico para identificar un estudiante";
         }
     }
 
