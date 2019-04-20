@@ -794,17 +794,17 @@ function actualizar_profesor(){
 				
 				if (respuesta==="registroactualizado") {
 					
-					toastr.success('Información Actualizada Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
+					toastr.success('Información Del Profesor Actualizada Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else if(respuesta==="registronoactualizado"){
 					
-					toastr.error('Información No Actualizada.', 'Success Alert', {timeOut: 3000});
+					toastr.error('Información Del Profesor No Actualizada.', 'Success Alert', {timeOut: 3000});
 					
 				}
 				else if(respuesta==="profesoryaexiste"){
 					
-					toastr.warning('Profesor Ya Registrado.', 'Success Alert', {timeOut: 3000});
+					toastr.warning('El Profesor Ya Se Encuentra Registrado.', 'Success Alert', {timeOut: 3000});
 
 				}
 				else{

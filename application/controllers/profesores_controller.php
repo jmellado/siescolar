@@ -346,8 +346,7 @@ class Profesores_controller extends CI_Controller {
 			'id_persona' =>$id_persona,
 			'id_rol'     =>3,
 			'username'   =>$username,
-			'password'   =>sha1($identificacion),
-			'acceso'     =>1);
+			'password'   =>sha1($identificacion));
 
 
 	    	$identificacion_buscada = $this->profesores_model->obtener_identificacion($id_persona);
@@ -399,7 +398,7 @@ class Profesores_controller extends CI_Controller {
 	         
 	        }else{
 	            
-	            echo "digite valor numerico para identificar una persona";
+	            echo "digite valor numerico para identificar un profesor";
 	        }
 
 	    }

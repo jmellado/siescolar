@@ -429,8 +429,7 @@ class Profesores_model extends CI_Model {
 					//array para actualizar en la tabla usuarios
 					$usuario = array(
 					'username'   =>$username,
-					'password'   =>sha1($identificacion),
-					'acceso'     =>1);
+					'password'   =>sha1($identificacion));
 
 					$this->db->where('id_usuario',$id_usuario);
 					$this->db->update('usuarios', $usuario);
