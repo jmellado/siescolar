@@ -26,6 +26,8 @@ function inicio(){
 						
 						toastr.success('Profesor Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_profesores")[0].reset();
+						desbloquear_cajas_texto_p();
+						desbloquear_boton_registrar_p();
 
 					}
 					else if(respuesta==="registronoguardado"){
@@ -271,6 +273,8 @@ function inicio(){
    $("#modal_agregar_profesor").on('hidden.bs.modal', function () {
         $("#form_profesores")[0].reset();
         $("#form_profesores").valid()==true;
+        desbloquear_cajas_texto_p();
+        desbloquear_boton_registrar_p();
     });
 
 
@@ -285,6 +289,21 @@ function inicio(){
         $("#municipio_expedicionP1 select").html("");
         $("#municipio_nacimientoP1 select").html("");
         $("#municipio_residenciaP1 select").html("");
+    });
+
+
+    $("#identificacion").blur(function(){
+
+    	identificacion = $(this).val();
+
+    	if(identificacion==""){
+			
+		}
+		else{
+
+			validar_identificacion_personaP(identificacion);
+		}
+       
     });
 
    	
@@ -1037,5 +1056,144 @@ function llenarcombo_municipiosRP(valor,valor2){
 
 	});
 
+
+}
+
+
+//======================= FUNCIONES PARA VALIDAR PERSONA EXISTENTE ==========================
+
+
+function validar_identificacion_personaP(valor){
+
+	$.ajax({
+		url:base_url+"profesores_controller/validar_identificacion",
+		type:"post",
+		data:{identificacion:valor},
+		success:function(respuesta) {
+				
+				
+				if (respuesta==="ok") {
+						
+					desbloquear_cajas_texto_p();
+					desbloquear_boton_registrar_p();
+					limpiar_cajas_texto_p();
+
+				}
+				else if(respuesta==="profesoryaexiste"){
+					desbloquear_cajas_texto_p();
+					bloquear_boton_registrar_p();
+					limpiar_cajas_texto_p();
+					toastr.warning('El N° De Identificación Corresponde A Un Profesor Ya Registrado.', 'Success Alert', {timeOut: 3000});
+						
+				}
+				else if(respuesta==="estudianteactivo"){
+					desbloquear_cajas_texto_p();
+					bloquear_boton_registrar_p();
+					limpiar_cajas_texto_p();
+					toastr.warning('El N° De Identificación Corresponde A Un Estudiante Activo.', 'Success Alert', {timeOut: 3000});
+						
+				}
+				else{
+					
+					var registros = eval(respuesta);
+					for (var i = 0; i < registros.length; i++) {
+
+						tipo_id = registros[i]["tipo_id"];
+						nombres = registros[i]["nombres"];
+						apellido1 = registros[i]["apellido1"];
+						apellido2 = registros[i]["apellido2"];
+						telefono = registros[i]["telefono"];
+						correo = registros[i]["email"];
+						direccion = registros[i]["direccion"];
+						barrio = registros[i]["barrio"];
+
+						$("#tipo_id").val(tipo_id);
+	        			$("#nombres").val(nombres);
+	        			$("#apellido1").val(apellido1);
+	        			$("#apellido2").val(apellido2);
+	        			$("#telefono").val(telefono);
+	        			$("#correo").val(correo);
+	        			$("#direccion").val(direccion);
+	        			$("#barrio").val(barrio);
+	        			bloquear_cajas_texto_p();
+	        			desbloquear_boton_registrar_p();
+	        			
+					};
+
+				}
+
+		
+		}
+
+	});
+}
+
+
+function validar_solonumerosP(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+
+
+//Cajas De Texto Del Fomulario Registrar Profesores
+function bloquear_cajas_texto_p(){
+
+	$("#tipo_id").attr("readonly", "readonly");
+	$("#nombres").attr("readonly", "readonly");
+    $("#apellido1").attr("readonly", "readonly");
+    $("#apellido2").attr("readonly", "readonly");
+    $("#telefono").attr("readonly", "readonly");
+    $("#correo").attr("readonly", "readonly");
+    $("#direccion").attr("readonly", "readonly");
+    $("#barrio").attr("readonly", "readonly");
+}
+
+//Cajas De Texto Del Fomulario Registrar Profesores
+function desbloquear_cajas_texto_p(){
+
+	$("#tipo_id").removeAttr("readonly");
+	$("#nombres").removeAttr("readonly");
+    $("#apellido1").removeAttr("readonly");
+    $("#apellido2").removeAttr("readonly");
+    $("#telefono").removeAttr("readonly");
+    $("#correo").removeAttr("readonly");
+    $("#direccion").removeAttr("readonly");
+    $("#barrio").removeAttr("readonly");
+}
+
+
+function limpiar_cajas_texto_p(){
+
+	$("#tipo_id").val("");
+	$("#nombres").val("");
+    $("#apellido1").val("");
+    $("#apellido2").val("");
+    $("#telefono").val("");
+    $("#correo").val("");
+    $("#direccion").val("");
+    $("#barrio").val("");
+
+}
+
+
+function bloquear_boton_registrar_p(){
+
+	$("#btn_registrar_profesor").attr("disabled", "disabled");
+
+}
+
+
+function desbloquear_boton_registrar_p(){
+
+	$("#btn_registrar_profesor").removeAttr("disabled");
 
 }

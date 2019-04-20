@@ -139,32 +139,70 @@ class Profesores_controller extends CI_Controller {
 			'acceso'     =>1);
 
 			
-			if ($this->profesores_model->validar_existencia($identificacion)){
+			if ($this->profesores_model->validar_existencia_rol($identificacion,"profesores")){
 
-				$respuesta=$this->profesores_model->insertar_profesor($profesor,$profesor2,$usuario);
-				
+				if ($this->profesores_model->validar_existencia_rol($identificacion,"estudiantes")){
 
-				if($respuesta==true){
+					if ($this->profesores_model->validar_existencia_rol($identificacion,"acudientes")){
 
-					echo "registroguardado";
+						if ($this->profesores_model->validar_existencia_rol($identificacion,"administradores")){
 
-					if(!copy("./uploads/imagenes/fotos/foto.jpg","./uploads/imagenes/fotos/".$ultimo_id.".jpg")){
-						echo "Error Al Copiar La Imagen.";
+							$respuesta=$this->profesores_model->insertar_profesor($profesor,$profesor2,$usuario);
+							
+							if($respuesta==true){
+
+								echo "registroguardado";
+
+								if(!copy("./uploads/imagenes/fotos/foto.jpg","./uploads/imagenes/fotos/".$ultimo_id.".jpg")){
+									echo "Error Al Copiar La Imagen.";
+								}
+
+							}
+							else{
+								echo "registronoguardado";
+							}
+
+						}
+						else{
+
+							$resultado = $this->procesar_registro($identificacion,$nombres,$apellido1,$apellido2,$fecha_expedicion,$pais_expedicion,$departamento_expedicion,$municipio_expedicion,$sexo,$fecha_nacimiento,$pais_nacimiento,$departamento_nacimiento,$municipio_nacimiento,$pais_residencia,$departamento_residencia,$municipio_residencia,$estrato,$titulo,$escalafon,$fecha_vinculacion,$tipo_vinculacion,$decreto_nombramiento);
+
+							echo $resultado;
+
+						}
+
+					}
+					else{
+
+						$resultado = $this->procesar_registro($identificacion,$nombres,$apellido1,$apellido2,$fecha_expedicion,$pais_expedicion,$departamento_expedicion,$municipio_expedicion,$sexo,$fecha_nacimiento,$pais_nacimiento,$departamento_nacimiento,$municipio_nacimiento,$pais_residencia,$departamento_residencia,$municipio_residencia,$estrato,$titulo,$escalafon,$fecha_vinculacion,$tipo_vinculacion,$decreto_nombramiento);
+
+						echo $resultado;
+
 					}
 
 				}
 				else{
-					echo "registronoguardado";
-				}
 
+					//COMPROBAMOS QUE EL ESTADO DE ESE ESTUDIANTE NO SEA ACTIVO.
+					if ($this->profesores_model->comprobar_estado_rol($identificacion,"estudiantes")) {
+
+						$resultado = $this->procesar_registro($identificacion,$nombres,$apellido1,$apellido2,$fecha_expedicion,$pais_expedicion,$departamento_expedicion,$municipio_expedicion,$sexo,$fecha_nacimiento,$pais_nacimiento,$departamento_nacimiento,$municipio_nacimiento,$pais_residencia,$departamento_residencia,$municipio_residencia,$estrato,$titulo,$escalafon,$fecha_vinculacion,$tipo_vinculacion,$decreto_nombramiento);
+
+						echo $resultado;
+
+					}
+					else{
+
+						echo "estudianteactivo";
+					}
+
+				}
 
 			}
 			else{
 
 				echo "profesoryaexiste";
 			}
-
-
 
         }
         
@@ -305,7 +343,6 @@ class Profesores_controller extends CI_Controller {
 
 			//array para actualizar en la tabla usuarios	
 			$usuario = array(
-			'id_usuario' =>$id_persona,
 			'id_persona' =>$id_persona,
 			'id_rol'     =>3,
 			'username'   =>$username,
@@ -324,6 +361,9 @@ class Profesores_controller extends CI_Controller {
 	                if($respuesta==true){
 	                    
 	                    echo "registroactualizado";
+
+	                    $act_usu = $this->profesores_model->actualizar_usuarios_persona($id_persona,$identificacion,$nombres,$apellido1,$apellido2);
+
 	                }else{
 	                   
 	                	echo "registronoactualizado";
@@ -339,6 +379,9 @@ class Profesores_controller extends CI_Controller {
 	                	if($respuesta==true){
 	                    
 	                    	echo "registroactualizado";
+
+	                    	$act_usu = $this->profesores_model->actualizar_usuarios_persona($id_persona,$identificacion,$nombres,$apellido1,$apellido2);
+	                    	
 	                	}else{
 	                   
 	                		echo "registronoactualizado";
@@ -364,42 +407,70 @@ class Profesores_controller extends CI_Controller {
 
     public function eliminar(){
 
-	  	$id =$this->input->post('id'); 
+	  	$id_persona =$this->input->post('id'); 
 
-        if(is_numeric($id)){
+        if(is_numeric($id_persona)){
 
-        	if ($this->profesores_model->ValidarExistencia_ProfesorEnCargasAcademicas($id)){
+        	if ($this->profesores_model->ValidarExistencia_ProfesorEnCargasAcademicas($id_persona)){
 
-				if ($this->profesores_model->EsAcudiente($id)) {
+        		$persona = $this->profesores_model->obtener_informacion_persona($id_persona,"2");
+				$identificacion = $persona[0]['identificacion'];
 
-			        $respuesta=$this->profesores_model->eliminar_profesor($id);
-			        	
+				if (!$this->profesores_model->validar_existencia_rol($identificacion,"estudiantes")) {
+					
+					$respuesta=$this->profesores_model->eliminar_profesor($id_persona,"2");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Profesor Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+				}
+				elseif (!$this->profesores_model->validar_existencia_rol($identificacion,"acudientes")) {
+					
+					$respuesta=$this->profesores_model->eliminar_profesor($id_persona,"2");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Profesor Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+				}
+				elseif (!$this->profesores_model->validar_existencia_rol($identificacion,"administradores")) {
+					
+					$respuesta=$this->profesores_model->eliminar_profesor($id_persona,"2");
+		        
+		          	if($respuesta==true){
+		              
+		              	echo "Profesor Eliminado Correctamente.";
+		          	}else{
+		              
+		              	echo "No se Pudo Eliminar";
+		          	}
+				}
+				else{
+
+					$respuesta=$this->profesores_model->eliminar_profesor($id_persona);
+		        
 		          	if($respuesta==true){
 		              
 		              	echo "Profesor Eliminado Correctamente.";
 
-		              	if (!unlink("./uploads/imagenes/fotos/".$id.".jpg")) {
+		              	if (!unlink("./uploads/imagenes/fotos/".$id_persona.".jpg")) {
 		              		echo "Error Al Borrar La Imagen.";
 		              	}
-		              	
+
 		          	}else{
 		              
-		              	echo "No Se Pudo Eliminar.";
-		          	}
-		        }
-		        else{
-
-		        	$respuesta=$this->profesores_model->eliminar_profesor($id,"2");
-			        	
-		          	if($respuesta==true){
-		              
-		              	echo "Profesor Eliminado Correctamente.";
-		          	}else{
-		              
-		              	echo "No Se Pudo Eliminar.";
+		              	echo "No se Pudo Eliminar";
 		          	}
 
-		        }
+				}
+
 		    }
 		    else{
 		    	echo "No Se Puede Eliminar Este Profesor; Actualmente Tiene Asociadas Cargas Académicas.";
@@ -407,7 +478,7 @@ class Profesores_controller extends CI_Controller {
          
         }else{
           
-          	echo "digite valor numerico para la cedula";
+          	echo "digite valor numerico para identificar un profesor";
         }
     }
 
@@ -431,6 +502,115 @@ class Profesores_controller extends CI_Controller {
     	$consulta = $this->profesores_model->llenar_municipios($id);
     	echo json_encode($consulta);
     }
+
+
+
+    //================== FUNCIONES PARA VALIDAR PERSONA EXISTENTE ===================
+
+
+    public function validar_identificacion(){
+
+		$identificacion = $this->input->post('identificacion'); 
+
+		if ($this->profesores_model->validar_existencia_rol($identificacion,"profesores")){
+
+			if ($this->profesores_model->validar_existencia_rol($identificacion,"estudiantes")){
+
+				if ($this->profesores_model->validar_existencia_rol($identificacion,"acudientes")){
+
+					if ($this->profesores_model->validar_existencia_rol($identificacion,"administradores")){
+
+						echo "ok";
+					}
+					else{
+
+						$consulta = $this->profesores_model->obtener_informacion_persona($identificacion);
+						echo json_encode($consulta);
+					}	
+				}
+				else{
+
+					$consulta = $this->profesores_model->obtener_informacion_persona($identificacion);
+					echo json_encode($consulta);
+				}	
+			}
+			else{
+
+				if ($this->profesores_model->comprobar_estado_rol($identificacion,"estudiantes")) {
+
+					$consulta = $this->profesores_model->obtener_informacion_persona($identificacion);
+					echo json_encode($consulta);
+					
+				}
+				else{
+					echo "estudianteactivo";
+				}
+
+			}
+		}
+		else{
+			echo "profesoryaexiste";
+		}	
+	    
+	}
+
+
+	public function procesar_registro($identificacion,$nombres,$apellido1,$apellido2,$fecha_expedicion,$pais_expedicion,$departamento_expedicion,$municipio_expedicion,$sexo,$fecha_nacimiento,$pais_nacimiento,$departamento_nacimiento,$municipio_nacimiento,$pais_residencia,$departamento_residencia,$municipio_residencia,$estrato,$titulo,$escalafon,$fecha_vinculacion,$tipo_vinculacion,$decreto_nombramiento){
+
+		$persona = $this->profesores_model->obtener_informacion_persona($identificacion);
+		$id_persona = $persona[0]['id_persona'];
+
+		//array para actualizar en la tabla personas
+		$profesor = array(
+		'fecha_expedicion' =>$fecha_expedicion,
+		'pais_expedicion'  =>$pais_expedicion,
+		'departamento_expedicion' =>$departamento_expedicion,
+		'municipio_expedicion'    =>$municipio_expedicion,
+		'sexo'             =>$sexo,
+		'fecha_nacimiento' =>$fecha_nacimiento,
+		'pais_nacimiento'  =>$pais_nacimiento,
+		'departamento_nacimiento' =>$departamento_nacimiento,
+		'municipio_nacimiento'    =>$municipio_nacimiento,
+		'pais_residencia'  =>$pais_residencia,
+		'departamento_residencia' =>$departamento_residencia,
+		'municipio_residencia'    =>$municipio_residencia,
+		'estrato'          =>$estrato);
+
+		//array para insertar en la tabla profesores
+		$profesor2 = array(
+		'id_persona'           =>$id_persona,
+		'titulo'               =>$titulo,
+		'escalafon'            =>$escalafon,
+		'fecha_vinculacion'    =>$fecha_vinculacion,
+		'tipo_vinculacion'     =>$tipo_vinculacion,
+		'decreto_nombramiento' =>$decreto_nombramiento);
+
+		//aqui creamos el username de un profesor
+		$user = mb_strtolower(substr($nombres, 0, 2));
+		$name = mb_strtolower($apellido1);
+		$username = $user.$name.$id_persona;
+
+		//array para insertar en la tabla usuarios
+		$usuario = array(
+		'id_persona' =>$id_persona,
+		'id_rol'     =>3,
+		'username'   =>$username,
+		'password'   =>sha1($identificacion),
+		'acceso'     =>1);
+
+		$respuesta=$this->profesores_model->insertar_profesor_rol($id_persona,$profesor,$profesor2,$usuario);
+
+		if($respuesta==true){
+
+			return "registroguardado";
+		}
+		else{
+
+			return "registronoguardado";
+		}
+
+
+	}
 
 
 	
