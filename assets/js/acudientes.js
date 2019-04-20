@@ -516,7 +516,7 @@ function actualizar_acudiente(){
 				}
 				else if(respuesta==="acudienteyaexiste"){
 					
-					toastr.warning('Acudiente Ya Registrado.', 'Success Alert', {timeOut: 3000});	
+					toastr.warning('El Acudiente Ya Se Encuentra Registrado.', 'Success Alert', {timeOut: 3000});	
 
 				}
 				else{

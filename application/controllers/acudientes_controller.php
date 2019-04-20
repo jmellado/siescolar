@@ -424,8 +424,7 @@ class Acudientes_controller extends CI_Controller {
 			'id_persona' =>$id_persona,
 			'id_rol' => 4,
 			'username' =>$username,
-			'password' =>sha1($identificacion),
-			'acceso' =>0);
+			'password' =>sha1($identificacion));
 
 			$row = $this->acudientes_model->obtener_informacion_persona($id_persona,"2");
 			$identificacion_buscada = $row[0]['identificacion'];
