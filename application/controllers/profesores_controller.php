@@ -126,7 +126,7 @@ class Profesores_controller extends CI_Controller {
 
 			//aqui creamos el username de un profesor
 			$user = mb_strtolower(substr($nombres, 0, 2));
-			$name = mb_strtolower($apellido1);
+			$name = mb_strtolower(str_replace(" ", "", $apellido1));
 			$username = $user.$name.$ultimo_id;
 
 			//array para insertar en la tabla usuarios
@@ -338,7 +338,7 @@ class Profesores_controller extends CI_Controller {
 
 			//aqui creamos el username de un profesor
 			$user = mb_strtolower(substr($nombres, 0, 2));
-			$name = mb_strtolower($apellido1);
+			$name = mb_strtolower(str_replace(" ", "", $apellido1));
 			$username = $user.$name.$id_persona;
 
 			//array para actualizar en la tabla usuarios	
@@ -586,7 +586,7 @@ class Profesores_controller extends CI_Controller {
 
 		//aqui creamos el username de un profesor
 		$user = mb_strtolower(substr($nombres, 0, 2));
-		$name = mb_strtolower($apellido1);
+		$name = mb_strtolower(str_replace(" ", "", $apellido1));
 		$username = $user.$name.$id_persona;
 
 		//array para insertar en la tabla usuarios
