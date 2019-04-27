@@ -252,6 +252,12 @@
             <span>Asistencias</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url(); ?>consultas_controller/consultar_tareasA">
+            <i class="fa fa-pencil"></i>
+            <span>Tareas</span>
+          </a>
+        </li>
       	<li><a href="<?php echo base_url(); ?>documentos_controller/documentosAC"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
       </ul>
     </section>
