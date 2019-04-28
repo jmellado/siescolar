@@ -82,7 +82,7 @@ class Acudientes_controller extends CI_Controller {
 
 			//aqui creamos el username de un estudiante
 			$user = mb_strtolower(substr($nombres, 0, 2));
-			$name = mb_strtolower($apellido1);
+			$name = mb_strtolower(str_replace(" ", "", $apellido1));
 			$username = $user.$name."ac".$ultimo_id;
 
 			//array para insertar en la tabla usuarios
@@ -132,7 +132,7 @@ class Acudientes_controller extends CI_Controller {
 
 							//aqui creamos el username de un estudiante
 							$user = mb_strtolower(substr($nombres, 0, 2));
-							$name = mb_strtolower($apellido1);
+							$name = mb_strtolower(str_replace(" ", "", $apellido1));
 							$username = $user.$name."ac".$id_persona;
 
 							//array para insertar en la tabla usuarios
@@ -170,7 +170,7 @@ class Acudientes_controller extends CI_Controller {
 
 						//aqui creamos el username de un estudiante
 						$user = mb_strtolower(substr($nombres, 0, 2));
-						$name = mb_strtolower($apellido1);
+						$name = mb_strtolower(str_replace(" ", "", $apellido1));
 						$username = $user.$name."ac".$id_persona;
 
 						//array para insertar en la tabla usuarios
@@ -213,7 +213,7 @@ class Acudientes_controller extends CI_Controller {
 
 						//aqui creamos el username de un estudiante
 						$user = mb_strtolower(substr($nombres, 0, 2));
-						$name = mb_strtolower($apellido1);
+						$name = mb_strtolower(str_replace(" ", "", $apellido1));
 						$username = $user.$name."ac".$id_persona;
 
 						//array para insertar en la tabla usuarios
@@ -416,7 +416,7 @@ class Acudientes_controller extends CI_Controller {
 
 			//aqui creamos el username de un estudiante
 			$user = mb_strtolower(substr($nombres, 0, 2));
-			$name = mb_strtolower($apellido1);
+			$name = mb_strtolower(str_replace(" ", "", $apellido1));
 			$username = $user.$name."ac".$id_persona;
 
 			//array para insertar en la tabla usuarios

@@ -339,21 +339,21 @@ class Acudientes_model extends CI_Model {
 						
 						//aqui creamos el username de un administrador
 						$user = mb_strtolower(substr($nombres, 0, 2));
-						$name = mb_strtolower($apellido1);
+						$name = mb_strtolower(str_replace(" ", "", $apellido1));
 						$username = $user.$name."ad".$id_persona;
 					}
 					elseif ($id_rol == "2") {
 						
 						//aqui creamos el username de un estudiante
 						$user = mb_strtolower(substr($nombres, 0, 2));
-						$name = mb_strtolower($apellido1);
+						$name = mb_strtolower(str_replace(" ", "", $apellido1));
 						$username = $user.$name."es".$id_persona;
 					}
 					elseif ($id_rol == "3") {
 						
 						//aqui creamos el username de un profesor
 						$user = mb_strtolower(substr($nombres, 0, 2));
-						$name = mb_strtolower($apellido1);
+						$name = mb_strtolower(str_replace(" ", "", $apellido1));
 						$username = $user.$name.$id_persona;
 					}
 
