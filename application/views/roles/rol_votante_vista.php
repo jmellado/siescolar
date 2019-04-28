@@ -76,7 +76,7 @@
 
                 <p>
                   Siescolar 
-                  <small>Miembro desde Nov. 2017</small>
+                  <small>Votante</small>
                 </p>
               </li>
               <!-- Menu Body -->

@@ -167,8 +167,8 @@
                 <img src="<?php echo base_url(); ?>uploads/imagenes/fotos/<?php echo $this->session->userdata('id_persona')?>.jpg" class="img-circle" alt="Foto">
 
                 <p>
-                  <?php echo $this->session->userdata('nombres')?> <?php echo $this->session->userdata('apellido1')?> <?php echo $this->session->userdata('apellido2')?> - Profesor
-                  <small>Miembro desde Nov. 2017</small>
+                  <?php echo $this->session->userdata('nombres')?> <?php echo $this->session->userdata('apellido1')?> <?php echo $this->session->userdata('apellido2')?>
+                  <small>Profesor</small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -218,7 +218,7 @@
           <img src="<?php echo base_url(); ?>uploads/imagenes/fotos/<?php echo $this->session->userdata('id_persona')?>.jpg" class="img-circle" alt="Foto">
         </div>
         <div class="pull-left info">
-          <p><?php echo $this->session->userdata('nombres')?> <?php echo $this->session->userdata('apellido1')?> <?php echo $this->session->userdata('apellido2')?></p>
+          <p><?php echo $this->session->userdata('nombres')?><br><?php echo $this->session->userdata('apellido1')?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
