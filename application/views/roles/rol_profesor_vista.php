@@ -265,10 +265,8 @@
         </li>
         <li>
           <a href="<?php echo base_url(); ?>notas_controller/index_profesor">
-            <i class="fa fa-sticky-note"></i> <span>Gestionar Notas</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">4</small>
-            </span>
+            <i class="fa fa-sticky-note"></i>
+            <span>Gestionar Notas</span>
           </a>
         </li>
 
@@ -284,6 +282,21 @@
             <li><a href="<?php echo base_url(); ?>actividades_controller/index"><i class="fa fa-clipboard"></i>Gestionar Actividades</a></li>
             <li><a href="<?php echo base_url(); ?>actividades_controller/calificar_actividades"><i class="fa fa-clipboard"></i>Calificar Actividades</a></li>
             <li><a href="<?php echo base_url(); ?>actividades_controller/consultar_notas"><i class="fa fa-list-alt"></i>Consultar Notas</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-check-square-o"></i>
+            <span>Asistencias</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>asistencias_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
+            <li><a href="<?php echo base_url(); ?>asistencias_controller/consultar"><i class="fa fa-list-alt"></i>Consultar</a></li>
+            <li><a href="<?php echo base_url(); ?>asistencias_controller/consultar_asistencias"><i class="fa fa-list-alt"></i>Consultar Asistencias<br>Por Estudiante</a></li>
           </ul>
         </li>
 
@@ -319,21 +332,6 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>inbox_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
             <li><a href="<?php echo base_url(); ?>inbox_controller/consultar"><i class="fa fa-list-alt"></i>Consultar</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-check-square-o"></i>
-            <span>Asistencias</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url(); ?>asistencias_controller/index"><i class="fa fa-clipboard"></i>Registrar</a></li>
-            <li><a href="<?php echo base_url(); ?>asistencias_controller/consultar"><i class="fa fa-list-alt"></i>Consultar</a></li>
-            <li><a href="<?php echo base_url(); ?>asistencias_controller/consultar_asistencias"><i class="fa fa-list-alt"></i>Consultar Asistencias<br>Por Estudiante</a></li>
           </ul>
         </li>
 
