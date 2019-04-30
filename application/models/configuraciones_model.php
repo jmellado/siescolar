@@ -126,6 +126,10 @@ class Configuraciones_model extends CI_Model {
 
 		$this->db->where("(cronogramas.nombre_actividad LIKE '".$id."%' OR cronogramas.estado_actividad LIKE '".$id."%')", NULL, FALSE);
 
+		$this->db->_protect_identifiers = FALSE;
+		$this->db->order_by('FIELD(cronogramas.nombre_actividad, "Primero","Segundo","Tercero","Cuarto")');
+		$this->db->_protect_identifiers = TRUE;
+
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
 		}
