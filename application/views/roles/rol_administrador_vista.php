@@ -509,6 +509,19 @@
 
         <li class="treeview">
           <a href="#">
+            <i class="fa fa-check-square-o"></i>
+            <span>Gestionar Asistencias</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>asistenciasA_controller/consultar_asistencias_estudiante"><i class="fa fa-list-alt"></i>Consultar Por Estudiante</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-sliders"></i>
             <span>Gestionar Nivelaciones</span>
             <span class="pull-right-container">
