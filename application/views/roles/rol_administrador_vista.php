@@ -213,9 +213,9 @@
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-          <li>
+          <!--<li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>-->
         </ul>
       </div>
     </nav>
@@ -466,10 +466,8 @@
         <li class="header">MAIN PROFESORES</li>
         <li>
           <a href="<?php echo base_url(); ?>profesores_controller/index">
-            <i class="fa fa-user"></i><span>Gestionar Profesores</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
+            <i class="fa fa-user"></i>
+            <span>Gestionar Profesores</span>
           </a>
         </li>
         <li>
