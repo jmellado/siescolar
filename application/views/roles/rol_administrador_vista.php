@@ -337,6 +337,13 @@
           </ul>
         </li>
 
+        <li>
+          <a href="<?php echo base_url(); ?>acciones_pedagogicas_controller/index">
+            <i class="fa fa-buysellads"></i>
+            <span>Gestionar Acciones Pedag.</span>
+          </a>
+        </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-retweet"></i>
