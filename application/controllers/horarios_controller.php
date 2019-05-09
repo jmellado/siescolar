@@ -85,30 +85,48 @@ class Horarios_controller extends CI_Controller {
         	$id_asignatura = $this->input->post('id_asignatura');
         	$dias = $this->input->post('dia');
 
-			if ($this->horarios_model->validar_intensidad_horaria($id_curso,$id_asignatura,$dias)){
+        	if ($id_asignatura != 1) {
+        		
+				if ($this->horarios_model->validar_intensidad_horaria($id_curso,$id_asignatura,$dias)){
 
-				if ($this->horarios_model->validar_horas_registradas($id_curso,$id_asignatura,$dias)){
+					if ($this->horarios_model->validar_horas_registradas($id_curso,$id_asignatura,$dias)){
 
-					$respuesta = $this->horarios_model->modificar_horario($id_curso,$id_asignatura,$dias);
+						$respuesta = $this->horarios_model->modificar_horario($id_curso,$id_asignatura,$dias);
 
-					if($respuesta == true){
+						if($respuesta == true){
 
-						echo "registroguardado";
+							echo "registroguardado";
 
+						}
+						else{
+
+							echo "registronoguardado";
+						}
 					}
 					else{
-
-						echo "registronoguardado";
+						echo "errorhoras_registradas";
 					}
 				}
 				else{
-					echo "errorhoras_registradas";
+					echo "errorintensidad_horaria";
 				}
+
 			}
 			else{
-				echo "errorintensidad_horaria";
-			}
 
+				$respuesta = $this->horarios_model->modificar_horario($id_curso,$id_asignatura,$dias);
+
+				if($respuesta == true){
+
+					echo "registroguardado";
+
+				}
+				else{
+
+					echo "registronoguardado";
+				}
+
+			}
 
         }
 

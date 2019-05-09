@@ -75,12 +75,12 @@ function inicio(){
 				});
 			}
 			else{
-				toastr.error('Debe Seleccionar Mínimo Un Dia De La Semana.', 'Success Alert', {timeOut: 3000});
+				toastr.warning('Debe Seleccionar Mínimo Un Dia De La Semana.', 'Success Alert', {timeOut: 3000});
 			}
 
 		}else{
 
-			toastr.success('Formulario incorrecto.', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			
 		}
 
@@ -99,13 +99,13 @@ function inicio(){
 
 			id_curso:{
 				required: true,
-				maxlength: 15
+				digits: true
 
 			},
 
 			id_asignatura:{
 				required: true,
-				maxlength: 15	
+				digits: true	
 
 			}
 
@@ -158,6 +158,7 @@ function llenarcombo_asignaturas_pensum(id_curso){
 				var registros = eval(respuesta);
 			
 				html = "<option value=''></option>";
+				html += "<option value='1'>--- Borrar Asignatura ---</option>";
 				for (var i = 0; i < registros.length; i++) {
 
 					html +="<option value="+registros[i]["id_asignatura"]+">"+registros[i]["nombre_asignatura"]+"</option>";
