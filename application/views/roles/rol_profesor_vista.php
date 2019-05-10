@@ -250,6 +250,12 @@
             <span>Carga Academica</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url(); ?>horarios_controller/horario_profesor">
+            <i class="fa fa-calendar"></i>
+            <span>Mi Horario</span>
+          </a>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-line-chart"></i>

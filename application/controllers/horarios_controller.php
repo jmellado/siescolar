@@ -170,5 +170,39 @@ class Horarios_controller extends CI_Controller {
 	}
 
 
+	//================== FUNCIONES PARA MOSTRAR EL HORARIO DE UN PROFESOR ==================
+
+
+	public function horario_profesor()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'profesor')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_profesor_vista', 'horarios/horarios_profesor_vista');
+	}
+
+
+	public function mostrarhorarios_profesor(){
+
+		$id_profesor = $this->input->post('id_profesor');
+		$jornada = $this->input->post('jornada');  
+        $ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+		
+		$data = array(
+
+			'horarios' => $this->horarios_model->buscar_horario_profesor($ano_lectivo,$jornada,$id_profesor),
+
+		    'totalregistros' => count($this->horarios_model->buscar_horario_profesor($ano_lectivo,$jornada,$id_profesor))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
 
 }

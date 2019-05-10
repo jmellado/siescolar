@@ -310,4 +310,121 @@ class Horarios_model extends CI_Model {
 	}
 
 
+	//================== FUNCIONES PARA MOSTRAR EL HORARIO DE UN PROFESOR ==================
+
+
+	public function buscar_horario_profesor($ano_lectivo,$jornada,$id_profesor){
+
+		$listado_horario = array();
+
+		for ($i=0; $i < 10; $i++) {
+
+			$hora = $i + 1;
+
+			$lunes = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"lunes");
+			$martes = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"martes");
+			$miercoles = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"miercoles");
+			$jueves = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"jueves");
+			$viernes = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"viernes");
+			$sabado = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"sabado");
+			$domingo = $this->obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,"domingo");
+			
+			$clases = array(
+
+				'hora'            => $hora, 
+				'lunes_asig'      => $lunes[0],
+				'lunes_curso'     => $lunes[1],
+				'martes_asig'     => $martes[0],
+				'martes_curso'    => $martes[1],
+				'miercoles_asig'  => $miercoles[0],
+				'miercoles_curso' => $miercoles[1],
+				'jueves_asig'     => $jueves[0],
+				'jueves_curso'    => $jueves[1],
+				'viernes_asig' 	  => $viernes[0],
+				'viernes_curso'   => $viernes[1],
+				'sabado_asig' 	  => $sabado[0],
+				'sabado_curso'    => $sabado[1],
+				'domingo_asig' 	  => $domingo[0],
+				'domingo_curso'   => $domingo[1]
+			);
+
+			$listado_horario[] = $clases;
+
+		}
+
+		return $listado_horario;
+	
+	}
+
+
+	//Esta funcion me permite obtener las clases de un profesor (hora x dia)
+	public function obtener_clases($ano_lectivo,$jornada,$id_profesor,$hora,$dia){
+
+		$this->db->where('horarios.ano_lectivo',$ano_lectivo);
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('horarios.hora',$hora);
+		$this->db->where('cargas_academicas.id_profesor',$id_profesor);
+
+		if ($dia == "lunes") {
+			
+			$this->db->join('asignaturas', 'horarios.lunes = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.lunes = cargas_academicas.id_asignatura');
+		}
+		if ($dia == "martes") {
+			
+			$this->db->join('asignaturas', 'horarios.martes = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.martes = cargas_academicas.id_asignatura');
+		}
+		if ($dia == "miercoles") {
+			
+			$this->db->join('asignaturas', 'horarios.miercoles = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.miercoles = cargas_academicas.id_asignatura');
+		}
+		if ($dia == "jueves") {
+			
+			$this->db->join('asignaturas', 'horarios.jueves = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.jueves = cargas_academicas.id_asignatura');
+		}
+		if ($dia == "viernes") {
+			
+			$this->db->join('asignaturas', 'horarios.viernes = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.viernes = cargas_academicas.id_asignatura');
+		}
+		if ($dia == "sabado") {
+			
+			$this->db->join('asignaturas', 'horarios.sabado = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.sabado = cargas_academicas.id_asignatura');
+		}
+		if ($dia == "domingo") {
+			
+			$this->db->join('asignaturas', 'horarios.domingo = asignaturas.id_asignatura');
+			$this->db->join('cargas_academicas', 'horarios.id_curso = cargas_academicas.id_curso AND horarios.domingo = cargas_academicas.id_asignatura');
+		}
+
+		$this->db->join('cursos', 'horarios.id_curso = cursos.id_curso');
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+
+		$this->db->select('asignaturas.nombre_asignatura,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+
+		$query = $this->db->get('horarios');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+			$asignatura = $row[0]['nombre_asignatura'];
+			$curso = $row[0]['nombre_grado']." ".$row[0]['nombre_grupo']." ".$row[0]['jornada'];
+
+			$asignatura_curso = array($asignatura,$curso);
+        	return $asignatura_curso;
+		}
+		else{
+			
+			$asignatura_curso = array("","");
+        	return $asignatura_curso;
+		}
+
+	}
+
+
 }
