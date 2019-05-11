@@ -659,5 +659,103 @@ class Configuraciones_controller extends CI_Controller {
           
           	echo "Digite valor numerico para identificar un Ano lectivo";
         }
-    }	
+    }
+
+
+
+    //**************************** FUNCIONES ESCALA DE DESEMPEÑO ****************************************
+
+
+    public function escala_desempeno()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_administrador_vista', 'configuraciones/escala_desempeno_vista');
+	}
+
+
+	public function mostrardesempenos(){
+
+		$id =$this->input->post('id_buscar'); 
+		$numero_pagina =$this->input->post('numero_pagina'); 
+		$cantidad =$this->input->post('cantidad'); 
+		$inicio = ($numero_pagina -1)*$cantidad;
+		
+		$data = array(
+
+			'desempenos' => $this->configuraciones_model->buscar_desempeno($id,$inicio,$cantidad),
+
+		    'totalregistros' => count($this->configuraciones_model->buscar_desempeno($id)),
+
+		    'cantidad' => $cantidad
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+	public function modificar_desempeno(){
+
+		$this->form_validation->set_rules('id_desempeno', 'Id Desempeño', 'required');
+        $this->form_validation->set_rules('rango_inicial', 'Minimo', 'required|numeric');
+        $this->form_validation->set_rules('rango_final', 'Maximo', 'required|numeric');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$id_desempeno = $this->input->post('id_desempeno');
+        	$rango_inicial = $this->input->post('rango_inicial');
+        	$rango_final = $this->input->post('rango_final');
+        	$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+        	//array para actualizar en la tabla desempenos
+        	$desempeno = array(	
+			'rango_inicial' =>$rango_inicial,
+			'rango_final' 	=>$rango_final);
+
+			if($this->configuraciones_model->validar_existencia_notas($ano_lectivo)){
+
+				if($this->configuraciones_model->validar_existencia_notas_actividades($ano_lectivo)){
+
+					$respuesta=$this->configuraciones_model->modificar_desempeno($id_desempeno,$desempeno);
+
+					if($respuesta==true){
+
+						echo "registroactualizado";
+					}
+					else{
+
+						echo "registronoactualizado";
+					}
+				}
+				else{
+
+					echo "notasactividadesregistradas";
+				}
+			}
+			else{
+
+				echo "notasregistradas";
+			}
+
+        }
+
+	}
+
+
+
+
+
+
 }

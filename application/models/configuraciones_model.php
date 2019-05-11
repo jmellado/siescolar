@@ -690,4 +690,82 @@ class Configuraciones_model extends CI_Model {
 		}
 
 	}
+
+
+	//**************************** FUNCIONES ESCALA DE DESEMPEÑO ****************************************
+
+
+	public function buscar_desempeno($id,$inicio = FALSE,$cantidad = FALSE){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+
+		if ($inicio !== FALSE && $cantidad !== FALSE) {
+			$this->db->limit($cantidad,$inicio);
+		}
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final');
+		
+		$query = $this->db->get('desempenos');
+
+		return $query->result();
+		
+	}
+
+
+	public function modificar_desempeno($id_desempeno,$desempeno){
+
+		$this->db->where('id_desempeno',$id_desempeno);
+
+		if ($this->db->update('desempenos', $desempeno))
+
+			return true;
+		else
+			return false;
+	}
+
+
+	//Permite validar si existen notas registradas en la tabla notas
+	public function validar_existencia_notas($ano_lectivo){
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('nota_final IS NOT NULL');
+
+		$query = $this->db->get('notas');
+
+		if ($query->num_rows() > 0) {
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
+
+	//Permite validar si existen notas registradas en la tabla notas_actividades
+	public function validar_existencia_notas_actividades($ano_lectivo){
+
+		$this->db->where('actividades.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas_actividades.nota IS NOT NULL');
+
+		$this->db->join('notas_actividades', 'actividades.id_actividad = notas_actividades.id_actividad');
+
+		$query = $this->db->get('actividades');
+
+		if ($query->num_rows() > 0) {
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+
+	}
+
 }

@@ -433,6 +433,7 @@
             <li><a href="<?php echo base_url(); ?>configuraciones_controller/datos_institucion"><i class="fa fa-clipboard"></i>Datos Institución</a></li>
             <li><a href="<?php echo base_url(); ?>configuraciones_controller/anio_lectivo"><i class="fa fa-calendar-times-o"></i>Año Lectivo</a></li>
             <li><a href="<?php echo base_url(); ?>configuraciones_controller/periodos_evaluacion"><i class="fa fa-calendar"></i>Períodos Evaluación</a></li>
+            <li><a href="<?php echo base_url(); ?>configuraciones_controller/escala_desempeno"><i class="fa fa-signal"></i>Escala Desempeño</a></li>
           </ul>
         </li>
 
