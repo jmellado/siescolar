@@ -320,6 +320,12 @@ class Estadisticas_model extends CI_Model {
 	// Calculando su promedio general, el numero de asignaturas aprobadas y reprobadas
 	public function calcular_estado_matricula($ano_lectivo,$id_estudiante,$periodo){
 
+		$desempenos = $this->estadisticas_model->obtener_Desempenos($ano_lectivo);
+		$superior_i = $desempenos[0]['rango_inicial'];
+		$superior_f = $desempenos[0]['rango_final'];
+		$basico_i = $desempenos[2]['rango_inicial'];
+		$basico_f = $desempenos[2]['rango_final'];
+
 		//array sencillo para las asignaturas aprobadas y reprobadas
 		$asignaturas_aprobadas = array();
 		$asignaturas_reprobadas = array();
@@ -340,7 +346,7 @@ class Estadisticas_model extends CI_Model {
 
 				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p1'];
 
-				if ($NotasAsignaturas[$i]['p1'] >= 3.0 && $NotasAsignaturas[$i]['p1'] <= 5.0) {
+				if ($NotasAsignaturas[$i]['p1'] >= $basico_i && $NotasAsignaturas[$i]['p1'] <= $superior_f) {
 					
 					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p1'];
 				}
@@ -355,7 +361,7 @@ class Estadisticas_model extends CI_Model {
 
 				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p2'];
 
-				if ($NotasAsignaturas[$i]['p2'] >= 3.0 && $NotasAsignaturas[$i]['p2'] <= 5.0) {
+				if ($NotasAsignaturas[$i]['p2'] >= $basico_i && $NotasAsignaturas[$i]['p2'] <= $superior_f) {
 					
 					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p2'];
 				}
@@ -370,7 +376,7 @@ class Estadisticas_model extends CI_Model {
 
 				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p3'];
 
-				if ($NotasAsignaturas[$i]['p3'] >= 3.0 && $NotasAsignaturas[$i]['p3'] <= 5.0) {
+				if ($NotasAsignaturas[$i]['p3'] >= $basico_i && $NotasAsignaturas[$i]['p3'] <= $superior_f) {
 					
 					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p3'];
 				}
@@ -385,7 +391,7 @@ class Estadisticas_model extends CI_Model {
 
 				$totalnotas = $totalnotas + $NotasAsignaturas[$i]['p4'];
 
-				if ($NotasAsignaturas[$i]['p4'] >= 3.0 && $NotasAsignaturas[$i]['p4'] <= 5.0) {
+				if ($NotasAsignaturas[$i]['p4'] >= $basico_i && $NotasAsignaturas[$i]['p4'] <= $superior_f) {
 					
 					$asignaturas_aprobadas[] = $NotasAsignaturas[$i]['p4'];
 				}
@@ -400,7 +406,7 @@ class Estadisticas_model extends CI_Model {
 
 		$promedio = $totalnotas / count($NotasAsignaturas);
 
-		if ($promedio >= 3.0 && $promedio <= 5.0) {
+		if ($promedio >= $basico_i && $promedio <= $superior_f) {
 
 			return "Aprobado";
 		}
@@ -415,6 +421,25 @@ class Estadisticas_model extends CI_Model {
 				return "Nivelacion";
 			}
 		}
+	}
+
+
+	public function obtener_Desempenos($ano_lectivo){
+
+		$this->db->where('desempenos.ano_lectivo',$ano_lectivo);
+
+		$this->db->select('desempenos.id_desempeno,desempenos.nombre_desempeno,desempenos.rango_inicial,desempenos.rango_final,desempenos.ano_lectivo');
+
+		$query = $this->db->get('desempenos');
+
+		if ($query->num_rows() > 0) {
+		
+        	return $query->result_array();
+		}
+		else{
+			return false;
+		}
+
 	}
 
 
