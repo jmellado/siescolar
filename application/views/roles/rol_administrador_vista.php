@@ -323,6 +323,13 @@
           </a>
         </li>
 
+        <li>
+          <a href="<?php echo base_url(); ?>administradores_controller/index">
+            <i class="fa fa-group"></i>
+            <span>Gestionar Administradores</span>
+          </a>
+        </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-contao"></i>
