@@ -55,6 +55,7 @@
         
         <?php 
         	$this->db->where('roles.nombre_rol','administrador');
+          $this->db->where('usuarios.id_persona != 1');
         	$this->db->join('roles', 'usuarios.id_rol = roles.id_rol');
         	$query = $this->db->get('usuarios');
 			    $total_admin = count($query->result());
@@ -70,7 +71,7 @@
             	<div class="icon">
               		<i class="ion ion-person-stalker"></i>
             	</div>
-            	<a href="<?php echo base_url(); ?>usuarios_controller/index" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+            	<a href="<?php echo base_url(); ?>administradores_controller/index" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
         	</div>
         </div>
         
