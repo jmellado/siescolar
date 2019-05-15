@@ -41,11 +41,11 @@ class Usuarios_model extends CI_Model {
 
 	public function buscar_usuario($id,$inicio = FALSE,$cantidad = FALSE){
 
-		$this->db->like('personas.identificacion',$id,'after');
-		$this->db->or_like('personas.nombres',$id,'after');
-		$this->db->or_like('personas.apellido1',$id,'after');
-		$this->db->or_like('personas.apellido2',$id,'after');
-		$this->db->or_like('roles.nombre_rol',$id,'after');
+		$this->db->where('personas.id_persona != 1');
+
+		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' 
+			OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR roles.nombre_rol LIKE '".$id."%'
+			OR CONCAT_WS(' ',personas.nombres,personas.apellido1,personas.apellido2) LIKE '".$id."%')", NULL, FALSE);
 
 		$this->db->order_by('roles.nombre_rol', 'asc');
 
