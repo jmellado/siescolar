@@ -241,6 +241,63 @@ class Consultas_controller extends CI_Controller {
 	}
 
 
+	//===== Funciones para consultar los seguimientos de un estudiante desde el rol acudiente =====
+
+
+	public function consultar_seguimientosA()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'acudiente')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_acudiente_vista', 'consultas/consultar_seguimientosA_vista');
+	}
+
+
+	public function llenarcombo_acudidosSA(){
+
+		$id_acudiente =$this->input->post('id_acudiente');
+
+    	$consulta = $this->consultas_model->llenar_acudidosSA($id_acudiente);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_asignaturasSA(){
+
+		$id_estudiante = $this->input->post('id_acudido');
+
+    	$consulta = $this->consultas_model->llenar_asignaturasSA($id_estudiante);
+    	echo json_encode($consulta);
+    }
+
+
+    // Esta funcion me permite obtener los seguimientos de un estudiante en una asignatura
+	public function mostrarseguimientosA(){
+
+		$buscar = $this->input->post('buscar');
+		$id_estudiante = $this->input->post('id_acudido');
+		$id_asignatura = $this->input->post('id_asignatura'); 
+		
+		$data = array(
+
+			'seguimientos' => $this->consultas_model->buscar_seguimientosA($buscar,$id_estudiante,$id_asignatura),
+
+		    'totalregistros' => count($this->consultas_model->buscar_seguimientosA($buscar,$id_estudiante,$id_asignatura))
+
+
+		);
+	    echo json_encode($data);
+
+
+	}
+
+
+    
+
+
 
 
 }
