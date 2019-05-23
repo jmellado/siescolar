@@ -129,7 +129,7 @@ class Pensum_controller extends CI_Controller {
 		          	}
 		        }
 		        else{
-		        	echo "No Se Puede Eliminar Este Pensum; Actualmente Se Encuentra Asociado A Un Estudiante.";
+		        	echo "No Se Pueden Eliminar Asignaturas De Este Pensum; Actualmente El Pensum Se Encuentra Asociado A Un Estudiante.";
 		        }
 		    }
 		    else{
