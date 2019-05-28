@@ -131,7 +131,6 @@ class Profesores_controller extends CI_Controller {
 
 			//array para insertar en la tabla usuarios
 			$usuario = array(
-			'id_usuario' =>$ultimo_id,
 			'id_persona' =>$ultimo_id,
 			'id_rol'     =>3,
 			'username'   =>$username,
