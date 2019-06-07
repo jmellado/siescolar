@@ -137,7 +137,7 @@
 				      	<div class="col-sm-offset-4 col-sm-4">
 				      		<div class="form-group">
 						        <div class="input-group custom-search-form">
-						            <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Identificación Estudiante" onkeypress="return valida(event)">
+						            <input type="text" class="form-control" id="identificacionN" name="identificacion" placeholder="Identificación Estudiante" onkeypress="return valida(event)">
 						                <span class="input-group-btn">
 						                    <button class="btn btn-primary" type="button" name="btn_buscar_estudiante" id="btn_buscar_estudiante">
 						                        <i class="fa fa-search"></i>

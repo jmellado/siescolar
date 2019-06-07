@@ -23,7 +23,7 @@ function inicio(){
 						
 						toastr.success('Estudiante Matriculado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_matriculas")[0].reset();
-						$("#identificacion").val("");
+						$("#identificacionN").val("");
 						bloquear_cajas_texto();
 						llenarcombo_cursos($("#jornadaMT").val(),null);
 						llenarcombo_acudientes("");
@@ -177,14 +177,14 @@ function inicio(){
 
     $("#btn_buscar_estudiante").click(function(event){
     	
-    	if($("#identificacion").val()==""){
+    	if($("#identificacionN").val()==""){
 
     		toastr.warning('Favor Digite Un Numero De Identificación', 'Success Alert', {timeOut: 3000});
 
        	}
        	else{
 
-       		id = $("#identificacion").val();
+       		id = $("#identificacionN").val();
        		buscar_estudiante(id);
 		}
 		
@@ -192,15 +192,15 @@ function inicio(){
     });
 
 
-    $("#identificacion").keyup(function(event){
+    $("#identificacionN").keyup(function(event){
 
        	if(event.keyCode == 13) {
 
-       		if($("#identificacion").val()==""){
+       		if($("#identificacionN").val()==""){
 	        	toastr.warning('Favor Digite Un Numero De Identificación', 'Success Alert', {timeOut: 3000});
 	       	}
 	       	else{
-	       		id = $("#identificacion").val();
+	       		id = $("#identificacionN").val();
        			buscar_estudiante(id);
 	       	}
     	}
@@ -224,7 +224,7 @@ function inicio(){
     $("#modal_agregar_matricula").on('hidden.bs.modal', function () {
         $("#form_matriculas")[0].reset();
         $("#form_matriculas").valid()==true;
-        $("#identificacion").val("");
+        $("#identificacionN").val("");
         bloquear_cajas_texto();
 
         $("#form_matriculasA")[0].reset();
