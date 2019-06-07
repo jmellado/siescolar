@@ -100,6 +100,9 @@ class Notas_model extends CI_Model {
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
 		$this->db->where('matriculas.estado_matricula',"Activo");
 		
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
 
 		/*if ($inicio !== FALSE && $cantidad !== FALSE && $id_curso !== FALSE && $id_asignatura != FALSE) {
 			$this->db->limit($cantidad,$inicio);
