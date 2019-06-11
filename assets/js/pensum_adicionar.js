@@ -87,6 +87,7 @@ function inicio(){
 
 			intensidad_horaria:{
 				required: true,
+				digits: true,
 				maxlength: 2	
 
 			},

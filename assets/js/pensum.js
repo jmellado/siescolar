@@ -203,6 +203,7 @@ function inicio(){
 
 			intensidad_horaria:{
 				required: true,
+				digits: true,
 				maxlength: 2
 				//lettersonly: true	
 
@@ -247,6 +248,7 @@ function inicio(){
 
 			intensidad_horaria:{
 				required: true,
+				digits: true,
 				maxlength: 2
 				//lettersonly: true	
 

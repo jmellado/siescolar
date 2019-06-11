@@ -48,6 +48,8 @@
 										<div class="form-group">
 											<label for="intensidad_horaria">HORAS</label>
 											<select class="form-control" id="intensidad_horaria" name="intensidad_horaria">
+												<option value=""></option>
+												<option value="0">0</option>
 												<option value="1">1</option>
 												<option value="2">2</option>
 												<option value="3">3</option>

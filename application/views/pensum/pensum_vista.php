@@ -138,6 +138,8 @@
 								<label class="control-label col-sm-3" for="intensidad_horaria">HORAS</label>
 								<div class="col-sm-2">
 									<select class="form-control" id="intensidad_horaria" name="intensidad_horaria">
+											<option value=""></option>
+											<option value="0">0</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
@@ -248,6 +250,8 @@
 								<label class="control-label col-sm-3" for="intensidad_horaria">HORAS</label>
 								<div class="col-sm-2">
 									<select class="form-control" id="intensidad_horariasele" name="intensidad_horaria">
+											<option value=""></option>
+											<option value="0">0</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
