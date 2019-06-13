@@ -210,7 +210,7 @@
 											<label class="control-label col-sm-4" for="id_acudiente">ACUDIENTE</label>
 											<div class="col-sm-7">
 												<div id="acudiente1">
-													<select class="form-control" id="id_acudiente" name="id_acudiente" disabled>
+													<select class="form-control select2" id="id_acudiente" name="id_acudiente" style="width: 100%;" disabled>
 																	    
 													</select>
 												</div>
@@ -333,7 +333,7 @@
 											<label class="control-label col-sm-4" for="id_acudiente">ACUDIENTE</label>
 											<div class="col-sm-7">
 												<div id="acudiente1">
-													<select class="form-control" id="id_acudienteA" name="id_acudiente" disabled>
+													<select class="form-control select2" id="id_acudienteA" name="id_acudiente" style="width: 100%;" disabled>
 																	    
 													</select>
 												</div>
@@ -455,7 +455,8 @@
 						<label class="control-label col-sm-3" for="id_acudiente">ACUDIENTE</label>
 						<div class="col-sm-6">
 							<div id="acudiente1">
-								<select class="form-control" id="id_acudientesele" name="id_acudiente">
+								<select class="form-control select2" id="id_acudientesele" name="id_acudiente" 
+								style="width: 100%;">
 												    
 								</select>
 							</div>

@@ -225,11 +225,13 @@ function inicio(){
         $("#form_matriculas")[0].reset();
         $("#form_matriculas").valid()==true;
         $("#identificacionN").val("");
+        $("#acudiente1 select").html("");
         bloquear_cajas_texto();
 
         $("#form_matriculasA")[0].reset();
         $("#form_matriculasA").valid()==true;
         $("#identificacionA").val("");
+        $("#acudiente1 select").html("");
         bloquear_cajas_textoA();
     });
 
