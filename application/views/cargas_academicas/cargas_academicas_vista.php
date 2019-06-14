@@ -1,6 +1,11 @@
 	<style type="text/css">
 	    
 	    label.error{color:red;}
+
+	    .panel-margen{
+			margin-bottom: 0px;
+		}
+
 	</style>
 
 
@@ -91,21 +96,19 @@
 
 <!-- Modal  agregar nueva cargas academicas -->
 <div id="modal_agregar_cargas_academicas" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+	<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR CARGAS ACADEMICAS</h4>
-      </div>
-      <div class="modal-body">
+    	<!-- Modal content-->
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		<h4 class="modal-title"><i class='fa fa-plus'></i>&nbsp;REGISTRAR CARGAS ACADEMICAS</h4>
+      		</div>
 
-        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>cargas_academicas_controller/insertar" name="" method="post" id="form_cargas_academicas">
+      		<form class="form-horizontal" role="form" action="<?php echo base_url(); ?>cargas_academicas_controller/insertar" name="" method="post" id="form_cargas_academicas">
+	      		<div class="modal-body">
 
-        	<div class="row">
-	        	<div class="col-md-12">
-	        		<div class="panel panel-default">
+	        		<div class="panel panel-default panel-margen">
 		        		<div class="panel-body">
 
 				        	<div class="form-group">
@@ -151,50 +154,41 @@
 									</div>
 								</div>	
 							</div>
+
 						</div>
 					</div>
-				</div>			
+			
+	      		</div>
+      			<div class="modal-footer">
+        			<div class="col-md-offset-4 col-md-4">
+						<button type="submit" name="btn_registrar_cargas_academicas" id="btn_registrar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Registrar</button>
+					</div>
+      			</div>
+      		</form>
+    	</div>
 
-				<div class="col-md-offset-4 col-md-5">
-					<button type="submit" name="btn_registrar_cargas_academicas" id="btn_registrar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Registrar</button>
-				</div>
-			</div>		
-
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+  	</div>
 </div>
 
 <!-- Modal  actualizar cargas academicas -->
 <div id="modal_actualizar_cargas_academicas" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+	<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR CARGAS ACADEMICAS</h4>
-      </div>
-      <div class="modal-body">
-        
+    	<!-- Modal content-->
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		<h4 class="modal-title"><i class='fa fa-refresh'></i>&nbsp;ACTUALIZAR CARGAS ACADEMICAS</h4>
+      		</div>
+      		<div class="modal-body">
+        		
+        		<div class="panel panel-default panel-margen">
+				    <div class="panel-body">
 
-        <form class="form-horizontal" role="form" id="form_cargas_academicas_actualizar">
-
-        	<div class="row">
-	        	<div class="col-md-12">
-	        		<div class="panel panel-default">
-		        		<div class="panel-body">
-
-				        	<div class="form-group">				    
-								<input type="hidden" class="form-control" id="id_carga_academicasele" name="id_carga_academica">
-							</div>
-
+				        <form class="form-horizontal" role="form" id="form_cargas_academicas_actualizar">
+			    
+							<input type="hidden" class="form-control" id="id_carga_academicasele" name="id_carga_academica">
+							
 							<div class="form-group">
 								<label class="control-label col-md-3" for="id_profesor">PROFESOR</label>
 								<div class="col-md-7">
@@ -243,25 +237,19 @@
 								</div>	
 							</div>
 							<input type="hidden" class="form-control" id="ano_lectivosele" name="ano_lectivo">
-						</div>
-					</div>
-				</div>
-			</div>				
-        </form>
+													
+				        </form>
 
-        <div class="row">
-        	<div class="form-group">
-	        	<div class="col-md-offset-4 col-md-5">
+				    </div>
+				</div>    
+
+      		</div>
+      		<div class="modal-footer">
+        		<div class="col-md-offset-4 col-md-4">
 	        		<button type="submit" name="btn_actualizar_cargas_academicas" id="btn_actualizar_cargas_academicas" class="btn btn-primary btn-lg btn-block">Actualizar</button>
 	        	</div>
-	        </div>	
-        </div>		
+      		</div>
+    	</div>
 
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      </div>
-    </div>
-
-  </div>
+	</div>
 </div>
