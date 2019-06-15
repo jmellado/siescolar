@@ -22,7 +22,7 @@ class Acudientes_controller extends CI_Controller {
 
 	public function insertar(){
 
-		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[11]');
 		$this->form_validation->set_rules('tipo_id', 'Tipo Identificación', 'required|max_length[2]');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
@@ -357,7 +357,7 @@ class Acudientes_controller extends CI_Controller {
 
     public function modificar(){
 
-    	$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+    	$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[11]');
 		$this->form_validation->set_rules('tipo_id', 'Tipo Identificación', 'required|max_length[2]');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required|alpha_spaces');
         $this->form_validation->set_rules('apellido1', 'Primer Apellido', 'required|alpha_spaces');
