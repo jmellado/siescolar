@@ -191,7 +191,7 @@ function inicio(){
 
 			identificacion:{
 				required: true,
-				maxlength: 10,
+				maxlength: 11,
 				digits: true
 
 			},
@@ -261,7 +261,7 @@ function inicio(){
 
 			identificacion:{
 				required: true,
-				maxlength: 10,
+				maxlength: 11,
 				digits: true
 
 			},
