@@ -34,7 +34,7 @@ class Estudiantes_controller extends CI_Controller {
 
 	public function insertar(){
 
-		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[11]');
 		$this->form_validation->set_rules('tipo_id', 'Tipo De Identificación', 'required');
 		$this->form_validation->set_rules('fecha_expedicion', 'Fecha De Expedicion', 'required');
 		$this->form_validation->set_rules('pais_expedicion', 'Pais De Expedicion', 'required');
@@ -312,7 +312,7 @@ class Estudiantes_controller extends CI_Controller {
 
 	public function modificar(){
 
-		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[10]');
+		$this->form_validation->set_rules('identificacion', 'Identificación', 'required|numeric|max_length[11]');
 		$this->form_validation->set_rules('tipo_id', 'Tipo De Identificación', 'required');
 		$this->form_validation->set_rules('fecha_expedicion', 'Fecha De Expedicion', 'required');
 		$this->form_validation->set_rules('pais_expedicion', 'Pais De Expedicion', 'required');
