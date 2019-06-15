@@ -24,7 +24,7 @@ function inicio(){
 					if (respuesta==="registroguardado") {
 						
 						toastr.success('Asignatura Registrada En El Pensum Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
-						$("#form_pensum")[0].reset();
+						//$("#form_pensum")[0].reset();
 
 
 					}
