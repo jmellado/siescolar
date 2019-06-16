@@ -292,7 +292,7 @@ function inicio(){
     });
 
 
-    $("#identificacion").blur(function(){
+    $("#identificacion_p").blur(function(){
 
     	identificacion = $(this).val();
 

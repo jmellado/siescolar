@@ -145,7 +145,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4" for="identificacion">IDENTIFICACIÓN</label>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Identificación" onkeypress="return validar_solonumerosP(event)">
+                                                    <input type="text" class="form-control" id="identificacion_p" name="identificacion" placeholder="Identificación" onkeypress="return validar_solonumerosP(event)">
                                                 </div>
                                             </div>
 
