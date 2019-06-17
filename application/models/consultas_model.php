@@ -377,4 +377,84 @@ class Consultas_model extends CI_Model {
 	}
 
 
+	//===== Funciones para consultar los eventos de un estudiante desde el rol acudiente =====
+
+
+	public function llenar_acudidosEA($id_acudiente){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_acudiente',$id_acudiente);
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select('matriculas.id_estudiante,personas.nombres,personas.apellido1,personas.apellido2');
+		
+		$query = $this->db->get('matriculas');
+		return $query->result();
+	}
+
+
+	public function llenar_asignaturasEA($id_estudiante){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
+		$this->db->where('matriculas.id_estudiante',$id_estudiante);
+		$this->db->where('notas.ano_lectivo',$ano_lectivo);
+		$this->db->where('notas.id_estudiante',$id_estudiante);
+
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
+		$this->db->join('notas', 'matriculas.id_estudiante = notas.id_estudiante');
+		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('matriculas.id_estudiante,notas.id_asignatura,asignaturas.nombre_asignatura');
+
+		$query = $this->db->get('matriculas');
+		return $query->result();
+		
+	}
+
+
+	public function buscar_eventosA($buscar,$id_estudiante,$id_asignatura){
+
+		if ($id_asignatura == "0") {
+
+			$this->db->where('notificaciones.categoria_notificacion',"Eventos");
+			$this->db->where('notificaciones.id_estudiante',$id_estudiante);
+
+			$this->db->where("(notificaciones.titulo LIKE '".$buscar."%' OR notificaciones.fecha_fin LIKE '".$buscar."%' OR notificaciones.fecha_envio LIKE '".$buscar."%' OR asignaturas.nombre_asignatura LIKE '".$buscar."%')", NULL, FALSE);
+		}
+		else{
+
+			$this->db->where('notificaciones.categoria_notificacion',"Eventos");
+			$this->db->where('notificaciones.id_estudiante',$id_estudiante);
+			$this->db->where('notificaciones.id_asignatura',$id_asignatura);
+
+			$this->db->where("(notificaciones.titulo LIKE '".$buscar."%' OR notificaciones.fecha_fin LIKE '".$buscar."%' OR notificaciones.fecha_envio LIKE '".$buscar."%' OR asignaturas.nombre_asignatura LIKE '".$buscar."%')", NULL, FALSE);
+		}
+
+		$this->db->order_by('notificaciones.fecha_envio', 'desc');
+		$this->db->order_by('asignaturas.nombre_asignatura', 'asc');
+
+		$this->db->join('personas', 'notificaciones.id_estudiante = personas.id_persona');
+		$this->db->join('asignaturas', 'notificaciones.id_asignatura = asignaturas.id_asignatura');
+
+		$this->db->select('notificaciones.id_notificacion,notificaciones.codigo_notificacion,notificaciones.categoria_notificacion,notificaciones.remitente,notificaciones.titulo,notificaciones.tipo_notificacion,notificaciones.contenido,notificaciones.destinatario,notificaciones.rol_destinatario,notificaciones.id_estudiante,notificaciones.id_asignatura,notificaciones.fecha_inicio,notificaciones.hora_inicio,notificaciones.fecha_fin,notificaciones.hora_fin,notificaciones.fecha_envio,notificaciones.estado_lectura,personas.nombres,personas.apellido1,personas.apellido2,asignaturas.nombre_asignatura');
+		
+		$query = $this->db->get('notificaciones');
+
+		return $query->result_array();
+		
+	}
+
+
 }

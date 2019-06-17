@@ -247,6 +247,12 @@
           </a>
         </li>
         <li>
+          <a href="<?php echo base_url(); ?>consultas_controller/consultar_eventosA">
+            <i class="fa fa-calendar-plus-o"></i>
+            <span>Eventos</span>
+          </a>
+        </li>
+        <li>
           <a href="<?php echo base_url(); ?>consultas_controller/consultar_notasA">
             <i class="fa fa-bar-chart"></i>
             <span>Calificaciones</span>
