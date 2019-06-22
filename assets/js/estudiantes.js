@@ -50,7 +50,10 @@ function inicio(){
 						//$("#mensajes-error").show();
 						//$("#mensajes-error").html(respuesta);
 					}
-					mostrarestudiantes("",1,5);
+
+					buscar = $("#id_buscar").val();
+					valorcantidad = $("#cantidad").val();
+					mostrarestudiantes(buscar,1,valorcantidad);
 
 						
 						
@@ -59,7 +62,7 @@ function inicio(){
 			});
 		}else{
 
-			toastr.success('Formulario incorrecto.', 'Success Alert', {timeOut: 2000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 2000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -225,7 +228,7 @@ function inicio(){
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 2000});
 		}
        
     });
@@ -324,7 +327,9 @@ function inicio(){
 
     $("#myModal").on('hidden.bs.modal', function () {
         $("#form_estudiantes_actualizar")[0].reset();
-        $("#form_estudiantes_actualizar").valid()==true;
+        //$("#form_estudiantes_actualizar").valid()==true;
+        var validator = $("#form_estudiantes_actualizar").validate();
+        validator.resetForm();
     });
 
     
@@ -1131,7 +1136,9 @@ function actualizar(){
 
 				$("#form_estudiantes_actualizar")[0].reset();
 
-				mostrarestudiantes("",1,5);
+				buscar = $("#id_buscar").val();
+				valorcantidad = $("#cantidad").val();
+				mostrarestudiantes(buscar,1,valorcantidad);
 
 		}
 
@@ -1150,7 +1157,10 @@ function eliminar(valor){
 				
 				//alert(respuesta);
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostrarestudiantes("",1,5);
+
+				buscar = $("#id_buscar").val();
+				valorcantidad = $("#cantidad").val();
+				mostrarestudiantes(buscar,1,valorcantidad);
 
 				
 
