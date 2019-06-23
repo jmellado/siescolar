@@ -43,7 +43,10 @@ class Administradores_model extends CI_Model {
 
 		$this->db->where('personas.id_persona != 1');
 
-		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
+		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' 
+			OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%'
+		    OR CONCAT_WS(' ',personas.apellido1,personas.apellido2) LIKE '".$id."%'
+		    OR CONCAT_WS(' ',personas.nombres,personas.apellido1,personas.apellido2) LIKE '".$id."%')", NULL, FALSE);
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);

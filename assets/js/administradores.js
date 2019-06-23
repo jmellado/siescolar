@@ -48,7 +48,9 @@ function inicio(){
 						
 					}
 					
-					mostraradministradores("",1,5);
+					buscar = $("#buscar_administrador").val();
+					valorcantidad = $("#cantidad_administrador").val();
+					mostraradministradores(buscar,1,valorcantidad);
 
 						
 						
@@ -204,21 +206,21 @@ function inicio(){
 
 			nombres:{
 				required: true,
-				maxlength: 50,
+				maxlength: 40,
 				lettersonly: true	
 
 			},
 
 			apellido1:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
 
 			apellido2:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
@@ -239,13 +241,13 @@ function inicio(){
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			}
 
@@ -274,21 +276,21 @@ function inicio(){
 
 			nombres:{
 				required: true,
-				maxlength: 50,
+				maxlength: 40,
 				lettersonly: true	
 
 			},
 
 			apellido1:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
 
 			apellido2:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
@@ -309,13 +311,13 @@ function inicio(){
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			}
 
@@ -435,7 +437,10 @@ function eliminar_administrador(valor){
 				
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostraradministradores("",1,5);
+
+				buscar = $("#buscar_administrador").val();
+				valorcantidad = $("#cantidad_administrador").val();
+				mostraradministradores(buscar,1,valorcantidad);
 
 		}
 
@@ -479,7 +484,9 @@ function actualizar_administrador(){
 				
 				$("#form_administradores_actualizar")[0].reset();
 
-				mostraradministradores("",1,5);
+				buscar = $("#buscar_administrador").val();
+				valorcantidad = $("#cantidad_administrador").val();
+				mostraradministradores(buscar,1,valorcantidad);
 
 		}
 
