@@ -45,7 +45,8 @@ class Usuarios_model extends CI_Model {
 
 		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' 
 			OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%' OR roles.nombre_rol LIKE '".$id."%'
-			OR CONCAT_WS(' ',personas.nombres,personas.apellido1,personas.apellido2) LIKE '".$id."%')", NULL, FALSE);
+			OR CONCAT_WS(' ',personas.nombres,personas.apellido1,personas.apellido2) LIKE '".$id."%'
+			OR CONCAT_WS(' ',personas.apellido1,personas.apellido2) LIKE '".$id."%')", NULL, FALSE);
 
 		$this->db->order_by('roles.nombre_rol', 'asc');
 

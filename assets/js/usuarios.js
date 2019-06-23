@@ -48,7 +48,9 @@ function inicio(){
 						
 					}
 					
-					mostrarusuarios("",1,5);
+					buscar = $("#buscar_usuario").val();
+					valorcantidad = $("#cantidad_usuario").val();
+					mostrarusuarios(buscar,1,valorcantidad);
 
 						
 						
@@ -153,7 +155,8 @@ function inicio(){
         $("#form_usuarios")[0].reset();
         bloquear_cajas_texto_u();
         $("#btn_registrar_usuario").removeAttr("disabled");
-        $("#form_usuarios").valid()==true;
+        var validator = $("#form_usuarios").validate();
+        validator.resetForm();
     });
 
 
@@ -189,21 +192,21 @@ function inicio(){
 
 			nombres:{
 				required: true,
-				maxlength: 50,
+				maxlength: 40,
 				lettersonly: true	
 
 			},
 
 			apellido1:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
 
 			apellido2:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
@@ -224,13 +227,13 @@ function inicio(){
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
@@ -401,7 +404,9 @@ function actualizar_usuario(){
 				
 				$("#form_usuarios_actualizar")[0].reset();
 
-				mostrarusuarios("",1,5);
+				buscar = $("#buscar_usuario").val();
+				valorcantidad = $("#cantidad_usuario").val();
+				mostrarusuarios(buscar,1,valorcantidad);
 
 		}
 
@@ -435,7 +440,9 @@ function reestablecer_contrasena(id_usuario){
 				toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
 			}
 
-			mostrarusuarios("",1,5);
+			buscar = $("#buscar_usuario").val();
+			valorcantidad = $("#cantidad_usuario").val();
+			mostrarusuarios(buscar,1,valorcantidad);
 
 		}
 
