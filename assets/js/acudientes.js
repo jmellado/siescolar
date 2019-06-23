@@ -49,7 +49,9 @@ function inicio(){
 						
 					}
 					
-					mostraracudientes("",1,5);
+					buscar = $("#buscar_acudiente").val();
+					valorcantidad = $("#cantidad_acudiente").val();
+					mostraracudientes(buscar,1,valorcantidad);
 
 						
 						
@@ -159,7 +161,7 @@ function inicio(){
 
        	}
        	else{
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 2000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 2000});
 		}
 		
        
@@ -167,18 +169,19 @@ function inicio(){
 
     //Resetear Formulario Al Cerrar El Modal
     $("#modal_agregar_acudiente").on('hidden.bs.modal', function () {
-        //alert("Esta accion se ejecuta al cerrar el modal")
         $("#form_acudientes")[0].reset();
+        var validator = $("#form_acudientes").validate();
+        validator.resetForm();
         bloquear_cajas_texto_a();
         $("#btn_registrar_acudiente").removeAttr("disabled");
-        $("#form_acudientes").valid()==true;
     });
 
 
     //Resetear Formulario Al Cerrar El Modal
     $("#modal_actualizar_acudiente").on('hidden.bs.modal', function () {
         $("#form_acudientes_actualizar")[0].reset();
-        $("#form_acudientes_actualizar").valid()==true;
+        var validator = $("#form_acudientes_actualizar").validate();
+        validator.resetForm();
     });
 
 
@@ -215,21 +218,21 @@ function inicio(){
 
 			nombres:{
 				required: true,
-				maxlength: 50,
+				maxlength: 40,
 				lettersonly: true	
 
 			},
 
 			apellido1:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
 
 			apellido2:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
@@ -250,19 +253,19 @@ function inicio(){
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
 			ocupacion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -275,7 +278,7 @@ function inicio(){
 
 			direccion_trabajo:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			}
 
@@ -303,21 +306,21 @@ function inicio(){
 
 			nombres:{
 				required: true,
-				maxlength: 50,
+				maxlength: 40,
 				lettersonly: true	
 
 			},
 
 			apellido1:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
 
 			apellido2:{
 				required: true,
-				maxlength: 50,
+				maxlength: 15,
 				lettersonly: true	
 
 			},
@@ -338,19 +341,19 @@ function inicio(){
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
 			ocupacion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -363,7 +366,7 @@ function inicio(){
 
 			direccion_trabajo:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			}
 
@@ -483,7 +486,10 @@ function eliminar_acudiente(valor){
 				
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostraracudientes("",1,5);
+
+				buscar = $("#buscar_acudiente").val();
+				valorcantidad = $("#cantidad_acudiente").val();
+				mostraracudientes(buscar,1,valorcantidad);
 
 		}
 
@@ -526,7 +532,9 @@ function actualizar_acudiente(){
 				
 				$("#form_acudientes_actualizar")[0].reset();
 
-				mostraracudientes("",1,5);
+				buscar = $("#buscar_acudiente").val();
+				valorcantidad = $("#cantidad_acudiente").val();
+				mostraracudientes(buscar,1,valorcantidad);
 
 		}
 

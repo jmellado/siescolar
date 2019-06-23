@@ -109,9 +109,12 @@ class Acudientes_model extends CI_Model {
 	
 	public function buscar_acudiente($id,$inicio = FALSE,$cantidad = FALSE){
 
-		//$this->db->where('acudientes.estado_acudiente',"Activo");
-
-		$this->db->where("(personas.identificacion LIKE '".$id."%' OR personas.nombres LIKE '".$id."%' OR personas.apellido1 LIKE '".$id."%' OR personas.apellido2 LIKE '".$id."%')", NULL, FALSE);
+		$this->db->like('personas.identificacion',$id,'after');
+		$this->db->or_like('personas.nombres',$id,'after');
+		$this->db->or_like('personas.apellido1',$id,'after');
+		$this->db->or_like('personas.apellido2',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido1,personas.apellido2)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,personas.apellido2)',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);
