@@ -42,6 +42,8 @@ class Profesores_model extends CI_Model {
 		$this->db->or_like('personas.apellido2',$id,'after');
 		$this->db->or_like('personas.nombres',$id,'after');
 		$this->db->or_like('personas.sexo',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.apellido1,personas.apellido2)',$id,'after');
+		$this->db->or_like('CONCAT_WS(" ",personas.nombres,personas.apellido1,personas.apellido2)',$id,'after');
 
 		if ($inicio !== FALSE && $cantidad !== FALSE) {
 			$this->db->limit($cantidad,$inicio);

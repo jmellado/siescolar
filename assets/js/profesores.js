@@ -47,7 +47,10 @@ function inicio(){
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
-					mostrarprofesores("",1,5);
+
+					buscar = $("#buscar_profesor").val();
+					valorcantidad = $("#cantidad_profesor").val();
+					mostrarprofesores(buscar,1,valorcantidad);
 
 						
 						
@@ -55,7 +58,7 @@ function inicio(){
 
 			});
 		}else{
-			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 5000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_profesores").validate().numberOfInvalids()+"errores");
 		}
 
@@ -272,7 +275,8 @@ function inicio(){
 
    $("#modal_agregar_profesor").on('hidden.bs.modal', function () {
         $("#form_profesores")[0].reset();
-        $("#form_profesores").valid()==true;
+        var validator = $("#form_profesores").validate();
+        validator.resetForm();
         desbloquear_cajas_texto_p();
         desbloquear_boton_registrar_p();
     });
@@ -280,7 +284,8 @@ function inicio(){
 
     $("#modal_actualizar_profesor").on('hidden.bs.modal', function () {
         $("#form_profesores_actualizar")[0].reset();
-        $("#form_profesores_actualizar").valid()==true;
+        var validator = $("#form_profesores_actualizar").validate();
+        validator.resetForm();
 
         $("#departamento_expedicionP1 select").html("");
         $("#departamento_nacimientoP1 select").html("");
@@ -770,7 +775,10 @@ function eliminar_profesor(valor){
 				
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostrarprofesores("",1,5);
+
+				buscar = $("#buscar_profesor").val();
+				valorcantidad = $("#cantidad_profesor").val();
+				mostrarprofesores(buscar,1,valorcantidad);
 
 		}
 
@@ -814,7 +822,9 @@ function actualizar_profesor(){
 
 				$("#form_profesores_actualizar")[0].reset();
 
-				mostrarprofesores("",1,5);
+				buscar = $("#buscar_profesor").val();
+				valorcantidad = $("#cantidad_profesor").val();
+				mostrarprofesores(buscar,1,valorcantidad);
 
 		}
 
