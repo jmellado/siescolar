@@ -376,7 +376,7 @@ function inicio(){
 
 			sexo:{
 				required: true,
-				maxlength: 15
+				maxlength: 1
 				
 			},
 
@@ -414,19 +414,19 @@ function inicio(){
 			correo:{
 				required: true,
 				email: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -548,7 +548,7 @@ function inicio(){
 
 			sexo:{
 				required: true,
-				maxlength: 15
+				maxlength: 1
 				
 			},
 
@@ -586,19 +586,19 @@ function inicio(){
 			correo:{
 				required: true,
 				email: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 

@@ -397,7 +397,7 @@ function inicio(){
 
 			sexo:{
 				required: true,
-				maxlength: 15
+				maxlength: 1
 				
 			},
 
@@ -435,13 +435,13 @@ function inicio(){
 
 			eps:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			poblacion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -455,19 +455,19 @@ function inicio(){
 			correo:{
 				required: true,
 				email: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
@@ -503,7 +503,7 @@ function inicio(){
 
 			discapacidad:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -543,7 +543,7 @@ function inicio(){
 
 			apellido2_padre:{
 				required: true,
-				maxlength: 50,
+				maxlength: 45,
 				lettersonly: true	
 
 			},
@@ -557,19 +557,19 @@ function inicio(){
 
 			direccion_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio_padre:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
 			ocupacion_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -582,7 +582,7 @@ function inicio(){
 
 			direccion_trabajo_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -609,7 +609,7 @@ function inicio(){
 
 			apellido2_madre:{
 				required: true,
-				maxlength: 50,
+				maxlength: 45,
 				lettersonly: true	
 
 			},
@@ -623,19 +623,19 @@ function inicio(){
 
 			direccion_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio_madre:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
 			ocupacion_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -648,7 +648,7 @@ function inicio(){
 
 			direccion_trabajo_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			}
 
@@ -723,7 +723,7 @@ function inicio(){
 
 			sexo:{
 				required: true,
-				maxlength: 15
+				maxlength: 1
 				
 			},
 
@@ -761,13 +761,13 @@ function inicio(){
 
 			eps:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			poblacion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -781,19 +781,19 @@ function inicio(){
 			correo:{
 				required: true,
 				email: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			direccion:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
@@ -829,7 +829,7 @@ function inicio(){
 
 			discapacidad:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -869,7 +869,7 @@ function inicio(){
 
 			apellido2_padre:{
 				required: true,
-				maxlength: 50,
+				maxlength: 45,
 				lettersonly: true	
 
 			},
@@ -883,19 +883,19 @@ function inicio(){
 
 			direccion_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio_padre:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
 			ocupacion_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -908,7 +908,7 @@ function inicio(){
 
 			direccion_trabajo_padre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -935,7 +935,7 @@ function inicio(){
 
 			apellido2_madre:{
 				required: true,
-				maxlength: 50,
+				maxlength: 45,
 				lettersonly: true	
 
 			},
@@ -949,19 +949,19 @@ function inicio(){
 
 			direccion_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
 			barrio_madre:{
 				required: true,
-				maxlength: 40	
+				maxlength: 45	
 
 			},
 
 			ocupacion_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			},
 
@@ -974,7 +974,7 @@ function inicio(){
 
 			direccion_trabajo_madre:{
 				required: true,
-				maxlength: 50	
+				maxlength: 45	
 
 			}
 
