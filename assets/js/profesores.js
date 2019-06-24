@@ -26,6 +26,7 @@ function inicio(){
 						
 						toastr.success('Profesor Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#form_profesores")[0].reset();
+						limpiar_campos_select_p();
 						desbloquear_cajas_texto_p();
 						desbloquear_boton_registrar_p();
 
@@ -277,6 +278,7 @@ function inicio(){
         $("#form_profesores")[0].reset();
         var validator = $("#form_profesores").validate();
         validator.resetForm();
+        limpiar_campos_select_p();
         desbloquear_cajas_texto_p();
         desbloquear_boton_registrar_p();
     });
@@ -286,14 +288,7 @@ function inicio(){
         $("#form_profesores_actualizar")[0].reset();
         var validator = $("#form_profesores_actualizar").validate();
         validator.resetForm();
-
-        $("#departamento_expedicionP1 select").html("");
-        $("#departamento_nacimientoP1 select").html("");
-        $("#departamento_residenciaP1 select").html("");
-
-        $("#municipio_expedicionP1 select").html("");
-        $("#municipio_nacimientoP1 select").html("");
-        $("#municipio_residenciaP1 select").html("");
+        limpiar_campos_select_p();
     });
 
 
@@ -1206,4 +1201,16 @@ function desbloquear_boton_registrar_p(){
 
 	$("#btn_registrar_profesor").removeAttr("disabled");
 
+}
+
+
+function limpiar_campos_select_p(){
+
+	$("#departamento_expedicionP1 select").html("");
+    $("#departamento_nacimientoP1 select").html("");
+    $("#departamento_residenciaP1 select").html("");
+
+    $("#municipio_expedicionP1 select").html("");
+    $("#municipio_nacimientoP1 select").html("");
+    $("#municipio_residenciaP1 select").html("");
 }

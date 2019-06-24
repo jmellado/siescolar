@@ -340,7 +340,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4" for="pais_residencia">PAIS DE RESIDENCIA</label>
                                                 <div class="col-md-7">
-                                                    <div id="pais_residencia1">
+                                                    <div id="pais_residenciaP1">
                                                         <select class="form-control" id="pais_residenciaP" name="pais_residencia">
                                     
                                                         </select>
