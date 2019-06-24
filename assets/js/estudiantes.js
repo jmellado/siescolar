@@ -27,8 +27,9 @@ function inicio(){
 						toastr.success('Estudiante Registrado Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
 						$("#mensajes-error").hide();
 						$("#form_estudiantes")[0].reset();
-						llenarcombo_municipios("","");
-						llenarcombo_municipiosN("","");
+						limpiar_campos_select();
+						//llenarcombo_municipios("","");
+						//llenarcombo_municipiosN("","");
 
 					}
 					else if(respuesta==="registronoguardado"){
@@ -1455,4 +1456,15 @@ function desbloquear_cajas_texto(){
     $("#discapacidadsele").removeAttr("disabled");
     $("#btn_actualizar").removeAttr("disabled");
 
+}
+
+function limpiar_campos_select(){
+
+	$("#departamento_expedicion1 select").html("");
+    $("#departamento_nacimiento1 select").html("");
+    $("#departamento_residencia1 select").html("");
+
+	$("#municipio_expedicion1 select").html("");
+	$("#municipio_nacimiento1 select").html("");
+	$("#municipio_residencia1 select").html("");
 }
