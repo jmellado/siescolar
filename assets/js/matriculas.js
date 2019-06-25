@@ -52,7 +52,10 @@ function inicio(){
 						toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 5000});
 						
 					}
-					mostrarmatriculas("",1,5);
+
+					buscar = $("#buscar_matricula").val();
+					valorcantidad = $("#cantidad_matricula").val();
+					mostrarmatriculas(buscar,1,valorcantidad);
 					//llenarcombo_cursos($("#jornadaMT").val(),null);
 					//llenarcombo_acudientes("");
 						
@@ -62,7 +65,7 @@ function inicio(){
 
 		}else{
 
-			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 5000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 			//alert($("#form_estudiantes").validate().numberOfInvalids()+"errores");
 		}
 
@@ -223,13 +226,15 @@ function inicio(){
     //Resetear Formulario Al Cerrar El Modal
     $("#modal_agregar_matricula").on('hidden.bs.modal', function () {
         $("#form_matriculas")[0].reset();
-        $("#form_matriculas").valid()==true;
+        var validator = $("#form_matriculas").validate();
+        validator.resetForm();
         $("#identificacionN").val("");
         $("#acudiente1 select").html("");
         bloquear_cajas_texto();
 
         $("#form_matriculasA")[0].reset();
-        $("#form_matriculasA").valid()==true;
+        var validator = $("#form_matriculasA").validate();
+        validator.resetForm();
         $("#identificacionA").val("");
         $("#acudiente1 select").html("");
         bloquear_cajas_textoA();
@@ -238,7 +243,8 @@ function inicio(){
 
     $("#modal_actualizar_matricula").on('hidden.bs.modal', function () {
         $("#form_matriculas_actualizar")[0].reset();
-        $("#form_matriculas_actualizar").valid()==true;
+        var validator = $("#form_matriculas_actualizar").validate();
+        validator.resetForm();
         llenarcombo_acudientes("");
     });
 
@@ -276,8 +282,8 @@ function inicio(){
 
 			observaciones:{
 				required: true,
-				maxlength: 80,
-				minlength: 1	
+				maxlength: 500
+					
 
 			}
 
@@ -318,7 +324,7 @@ function inicio(){
 
 			observaciones:{
 				required: true,
-				maxlength: 80
+				maxlength: 500
 					
 
 			}
@@ -383,7 +389,7 @@ function inicio(){
 
 		}else{
 
-			toastr.success('Formulario incorrecto', 'Success Alert', {timeOut: 3000});
+			toastr.warning('Formulario Incorrecto.', 'Success Alert', {timeOut: 3000});
 		}
 
 	});
@@ -578,7 +584,11 @@ function eliminar_matricula(valor){
 				
 				
 				toastr.error(''+respuesta, 'Success Alert', {timeOut: 5000});
-				mostrarmatriculas("",1,5);
+
+				buscar = $("#buscar_matricula").val();
+				valorcantidad = $("#cantidad_matricula").val();
+				mostrarmatriculas(buscar,1,valorcantidad);
+
 				llenarcombo_cursos($("#jornadaMT").val(),null);
 				
 		}
@@ -624,7 +634,11 @@ function actualizar_matricula(){
 				$("#form_matriculas_actualizar")[0].reset();
 
 				bloquear_cajas_texto_actualizar();
-				mostrarmatriculas("",1,5);
+
+				buscar = $("#buscar_matricula").val();
+				valorcantidad = $("#cantidad_matricula").val();
+				mostrarmatriculas(buscar,1,valorcantidad);
+
 				llenarcombo_cursos($("#jornadaMT").val(),null);
 
 		}
