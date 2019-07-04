@@ -147,7 +147,7 @@ function inicio(){
 		
 		llenarcombo_anos_lectivos_actualizar(ano_lectivosele);
 		llenarcombo_cursos_actualizar(jornadasele,ano_lectivosele,id_cursosele);
-		llenarcombo_acudientes(id_acudientesele);
+		llenarcombo_acudientes_actualizar(id_acudientesele);
 		$("#id_matriculasele").val(id_matriculasele);
         $("#fecha_matriculasele").val(fecha_matriculasele);
         $("#ano_lectivosele").val(ano_lectivosele);
@@ -626,6 +626,11 @@ function actualizar_matricula(){
 					toastr.warning('No Se Puede Modificar La Información De Esta Matrícula; El Año Lectivo En La Que Fue Registrada, Se Encuentra Cerrado.', 'Success Alert', {timeOut: 3000});
 
 				}
+				else if(respuesta==="acudientenoactivo"){
+					
+					toastr.warning('El Acudiente Seleccionado No Se Encuentra Activo.', 'Success Alert', {timeOut: 3000});
+
+				}
 				else{
 
 					toastr.error('error:'+respuesta, 'Success Alert', {timeOut: 3000});
@@ -820,6 +825,34 @@ function llenarcombo_anos_lectivos_actualizar(ano_lectivosele){
         }
 
     });
+}
+
+
+function llenarcombo_acudientes_actualizar(id_acudientesele){
+
+	$.ajax({
+		url:base_url+"matriculas_controller/llenarcombo_acudientes_actualizar",
+		type:"post",
+		success:function(respuesta) {
+
+				var registros = eval(respuesta);
+
+				html = "<option value=''></option>";
+				for (var i = 0; i < registros.length; i++) {
+
+					if(registros[i]["id_persona"]==id_acudientesele){
+
+						html +="<option value="+registros[i]["id_persona"]+" selected>"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
+					}
+					else{
+						html +="<option value="+registros[i]["id_persona"]+">"+registros[i]["nombres"]+[" "]+registros[i]["apellido1"]+[" "]+registros[i]["apellido2"]+"</option>";
+					}
+				};
+				
+				$("#acudiente_actualizar1 select").html(html);
+		}
+
+	});
 }
 
 

@@ -454,7 +454,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="id_acudiente">ACUDIENTE</label>
 						<div class="col-sm-6">
-							<div id="acudiente1">
+							<div id="acudiente_actualizar1">
 								<select class="form-control select2" id="id_acudientesele" name="id_acudiente" 
 								style="width: 100%;">
 												    

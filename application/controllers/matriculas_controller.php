@@ -269,40 +269,48 @@ class Matriculas_controller extends CI_Controller {
 
         	if ($this->funciones_globales_model->ValidarEstado_AnoLectivo($ano_lectivo)){
 
-		    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula,$est_acud,$id_estudiante,$ano_lectivo);
+        		if ($this->matriculas_model->ValidarEstado_Acudiente($id_acudiente)){
 
-		        if($respuesta==true){
+			    	$respuesta=$this->matriculas_model->modificar_matricula($id_matricula,$matricula,$est_acud,$id_estudiante,$ano_lectivo);
 
-		        	echo "registroactualizado";
+			        if($respuesta==true){
 
-		        	//******************************eliminar materias********************************************
-					if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
-						echo "No se pudo eliminar en la tabla notas";
-					}
+			        	echo "registroactualizado";
 
-					//*******************************matricular materias********************************************
-					$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
-
-					$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
-
-					if ($asignaturas_grados != false) {
-						
-						for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
-
-							$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
-
-							if($resp == false){
-								echo "no se pudo registrar en la tabla notas";
-							}
-								
+			        	//******************************eliminar materias********************************************
+						if(!$this->matriculas_model->eliminar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante)){
+							echo "No se pudo eliminar en la tabla notas";
 						}
-					}	
-					//*************************************************************************************************
 
-		        }else{
+						//*******************************matricular materias********************************************
+						$id_grado = $this->matriculas_model->obtener_gradoPorcurso($id_curso);
 
-		        	echo "registronoactualizado";
-		        }
+						$asignaturas_grados = $this->matriculas_model->obtener_asignaturasPorgrados($id_grado);
+
+						if ($asignaturas_grados != false) {
+							
+							for ($i=0; $i < count($asignaturas_grados) ; $i++) { 
+
+								$resp = $this->matriculas_model->insertar_asignaturasPorestudiantes($ano_lectivo,$id_estudiante,$id_grado,$asignaturas_grados[$i]['id_asignatura']);
+
+								if($resp == false){
+									echo "no se pudo registrar en la tabla notas";
+								}
+									
+							}
+						}	
+						//*************************************************************************************************
+
+			        }else{
+
+			        	echo "registronoactualizado";
+			        }
+
+			    }
+			    else{
+
+			    	echo "acudientenoactivo";
+			    }
 
 		    }
 		    else{
@@ -382,6 +390,13 @@ class Matriculas_controller extends CI_Controller {
     public function llenarcombo_anos_lectivos_actualizar(){
 
     	$consulta = $this->matriculas_model->llenar_anos_lectivos_actualizar();
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_acudientes_actualizar(){
+
+    	$consulta = $this->matriculas_model->llenar_acudientes_actualizar();
     	echo json_encode($consulta);
     }
 

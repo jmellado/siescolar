@@ -466,6 +466,34 @@ class Matriculas_model extends CI_Model {
 	}
 
 
+	public function llenar_acudientes_actualizar(){
+
+    	$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('acudientes', 'personas.id_persona = acudientes.id_persona');
+		$query = $this->db->get('personas');
+		return $query->result();
+	}
+
+
+	public function ValidarEstado_Acudiente($id_acudiente){
+
+		$this->db->where('id_persona',$id_acudiente);
+		$this->db->where('estado_acudiente',"Activo");
+		$query = $this->db->get('acudientes');
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
 	//****************************************** FUNCIONES PARA MATRICULAR ESTUDIANTES ANTIGUOS ***************************************
 
 	//Esta Funcion Permite Comprobar Si El Estudiante Es Nuevo O Antiguo.
