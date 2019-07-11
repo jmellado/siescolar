@@ -218,7 +218,7 @@ function inicio(){
 
 			descripcion_logro:{
 				required: true,
-				maxlength: 200
+				maxlength: 400
 				//lettersonly: true	
 
 			},
@@ -269,7 +269,7 @@ function inicio(){
 
 			descripcion_logro:{
 				required: true,
-				maxlength: 200
+				maxlength: 400
 				//lettersonly: true	
 
 			},

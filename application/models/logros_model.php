@@ -18,7 +18,7 @@ class Logros_model extends CI_Model {
 		$query = $this->db->get('logros');
 
 		if ($query->num_rows() > 0) {
-			return false;
+			return true;
 		}
 		else{
 			return true;

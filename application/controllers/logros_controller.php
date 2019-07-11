@@ -36,7 +36,7 @@ class Logros_controller extends CI_Controller {
 
 	public function insertar(){
 
-        $this->form_validation->set_rules('descripcion_logro', 'Descripcion', 'required|alpha_spaces|max_length[200]');
+        $this->form_validation->set_rules('descripcion_logro', 'Descripcion', 'required|alpha_spaces|max_length[400]');
         $this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
         $this->form_validation->set_rules('id_persona', 'Persona', 'required|numeric');
         $this->form_validation->set_rules('id_grado', 'Grado', 'required|numeric');
