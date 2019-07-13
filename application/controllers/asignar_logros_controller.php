@@ -127,6 +127,7 @@ class Asignar_logros_controller extends CI_Controller {
 		$this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
 		$this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
         $this->form_validation->set_rules('id_asignatura', 'Asignatura', 'required|numeric');
+        $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -135,34 +136,70 @@ class Asignar_logros_controller extends CI_Controller {
         }
         else{
 
-			$i=0;
-
-			$id_estudiante = $this->input->post('id_persona');
+			$id_estudiante = $this->input->post('id_estudiante');
 			$periodo = $this->input->post('periodo');
 			$id_curso = $this->input->post('id_curso');
 			$id_grado = $this->asignar_logros_model->obtener_id_grado($id_curso);
 			$id_asignatura = $this->input->post('id_asignatura');
 			$id_logro = $this->input->post('id_logro');
-
-			$id_logro1 = $id_logro[$i];
-			$id_logro2 = $id_logro[$i+1];
-			$id_logro3 = $id_logro[$i+2];
-			$id_logro4 = $id_logro[$i+3];
 			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
 			if($id_logro != ""){
 
+				$TotalLogros = count($id_logro);
 
-				$data = array(
-	        	'ano_lectivo'   => $ano_lectivo,
-	            'id_estudiante' => $id_estudiante,
-	            'periodo'       => $periodo,
-	            'id_grado'      => $id_grado,
-	            'id_asignatura' => $id_asignatura,
-	            'id_logro1'     => $id_logro1,
-	            'id_logro2'     => $id_logro2,
-	            'id_logro3'     => $id_logro3,
-	            'id_logro4'     => $id_logro4);
+				switch ($TotalLogros) {
+					//case 0:
+					case 1:
+						$data = array(
+			        	'ano_lectivo'   => $ano_lectivo,
+			            'id_estudiante' => $id_estudiante,
+			            'periodo'       => $periodo,
+			            'id_grado'      => $id_grado,
+			            'id_asignatura' => $id_asignatura,
+			            'id_logro1'     => $id_logro[0],
+			        	'id_logro2'     => NULL,
+			        	'id_logro3'     => NULL,
+			        	'id_logro4'     => NULL);
+						break;
+					case 2:
+						$data = array(
+			        	'ano_lectivo'   => $ano_lectivo,
+			            'id_estudiante' => $id_estudiante,
+			            'periodo'       => $periodo,
+			            'id_grado'      => $id_grado,
+			            'id_asignatura' => $id_asignatura,
+			            'id_logro1'     => $id_logro[0],
+			            'id_logro2'     => $id_logro[1],
+			        	'id_logro3'     => NULL,
+			        	'id_logro4'     => NULL);
+						break;
+					case 3:
+						$data = array(
+			        	'ano_lectivo'   => $ano_lectivo,
+			            'id_estudiante' => $id_estudiante,
+			            'periodo'       => $periodo,
+			            'id_grado'      => $id_grado,
+			            'id_asignatura' => $id_asignatura,
+			            'id_logro1'     => $id_logro[0],
+			            'id_logro2'     => $id_logro[1],
+			            'id_logro3'     => $id_logro[2],
+			        	'id_logro4'     => NULL);
+						break;
+					
+					default:
+						$data = array(
+			        	'ano_lectivo'   => $ano_lectivo,
+			            'id_estudiante' => $id_estudiante,
+			            'periodo'       => $periodo,
+			            'id_grado'      => $id_grado,
+			            'id_asignatura' => $id_asignatura,
+			            'id_logro1'     => $id_logro[0],
+			            'id_logro2'     => $id_logro[1],
+			            'id_logro3'     => $id_logro[2],
+			            'id_logro4'     => $id_logro[3]);
+						break;
+				}
 
 				$estado = $this->asignar_logros_model->validar_existencia($ano_lectivo,$id_estudiante,$periodo,$id_grado,$id_asignatura);
 

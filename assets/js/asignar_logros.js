@@ -18,12 +18,16 @@ function inicio(){
 						url:$("#form_logrosAL_insertar").attr("action"),
 						type:$("#form_logrosAL_insertar").attr("method"),
 						data:$("#form_logrosAL_insertar").serialize(),   //captura la info de la cajas de texto
+						beforeSend:function() {
+
+							bloquear_boton_registrar_logrosAL();
+						},
 						success:function(respuesta) {
 
 							
 							if (respuesta==="registroguardado") {
 								
-								toastr.success('Logros Asignados Satisfactoriamente.', 'Success Alert', {timeOut: 5000});
+								toastr.success('Logros Asignados Satisfactoriamente.', 'Success Alert', {timeOut: 3000});
 
 							}
 							else if(respuesta==="registronoguardado"){
@@ -43,7 +47,7 @@ function inicio(){
 							}
 							
 
-								
+							desbloquear_boton_registrar_logrosAL();		
 								
 						}
 
@@ -51,7 +55,7 @@ function inicio(){
 
 				}else{
 
-					toastr.warning('Debe Asignar Cuatro Logros En Total.', 'Success Alert', {timeOut: 3000});
+					toastr.warning('Debe Asignar Mínimo Un Logro Y Máximo Cuatro Logros.', 'Success Alert', {timeOut: 3000});
 				}	
 			}else{
 
@@ -208,7 +212,7 @@ function inicio(){
 
     	rules:{
 
-			id_persona:{
+			id_estudiante:{
 				required: true,
 				digits: true
 			}
@@ -481,7 +485,7 @@ function logros_asignados_estudianteAL(id_estudiante,periodo,id_curso,id_asignat
 				
 				if(respuesta==="no"){
 
-					toastr.info('El Estudiante Seleccionado No Tiene Logros Asignados.', 'Success Alert', {timeOut: 2000});
+					//toastr.info('El Estudiante Seleccionado No Tiene Logros Asignados.', 'Success Alert', {timeOut: 2000});
 				}
 				else{
 
@@ -596,7 +600,7 @@ function validarLogros(){
 
    	//alert("total chek:"+cont);
 
-   	if(cont == 4){
+   	if(cont >= 1 && cont <= 4){
 
 		return true;
 	}
@@ -638,6 +642,16 @@ function limpiarcampo_calificacion(){
 
 	$("#calificacion").val("");
 
+}
+
+function bloquear_boton_registrar_logrosAL(){
+
+	$("#btn_registrar_logroAL").attr("disabled", "disabled");
+}
+
+function desbloquear_boton_registrar_logrosAL(){
+
+	$("#btn_registrar_logroAL").removeAttr("disabled");
 }
 
 

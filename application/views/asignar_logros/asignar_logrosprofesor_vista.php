@@ -111,7 +111,7 @@
 										<div class="form-group">
 											<label for="id_estudiante"><i class='fa fa-group'></i>&nbsp;Estudiantes:</label>
 											<div id="estudiantesAL1">
-												<select class="form-control" id="id_estudianteAL" name="id_persona" size="8">
+												<select class="form-control" id="id_estudianteAL" name="id_estudiante" size="8">
 															    
 												</select>
 											</div>

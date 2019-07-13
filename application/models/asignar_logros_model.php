@@ -155,6 +155,10 @@ class asignar_logros_model extends CI_Model {
 		$this->db->where('matriculas.ano_lectivo',$ano_lectivo);
 		$this->db->where('matriculas.estado_matricula',"Activo");
 
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
 		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
 		$this->db->join('estudiantes', 'matriculas.id_estudiante = estudiantes.id_persona');
 
