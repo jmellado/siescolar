@@ -185,14 +185,26 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p1'].'</td>
-				        					<td align="center" width="18">'.$inasistencias.'</td>
-				        					<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
-				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl3'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl4'].'<br />
-				        					</td>
-				        				</tr>';
+				        					<td align="center" width="18">'.$inasistencias.'</td>';
+
+				        			$tbl .= '<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />';
+
+				        			if ($notas_logros[$j]['dl1'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl1'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl2'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl2'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl3'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl3'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl4'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl4'].'<br />';
+				        			}
+
+				        			$tbl .= '</td>';
+
+				        		$tbl .=	'</tr>';
 									
 							}
 							if($p=="Segundo"){
@@ -205,14 +217,26 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p2'].'</td>
-				        					<td align="center" width="18">'.$inasistencias.'</td>
-											<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
-				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl3'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl4'].'<br />
-											</td>
-										</tr>';
+				        					<td align="center" width="18">'.$inasistencias.'</td>';
+
+				        			$tbl .= '<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />';
+
+				        			if ($notas_logros[$j]['dl1'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl1'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl2'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl2'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl3'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl3'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl4'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl4'].'<br />';
+				        			}
+
+				        			$tbl .= '</td>';
+
+				        		$tbl .=	'</tr>';			
 									
 							}
 							if($p=="Tercero"){
@@ -225,14 +249,26 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p3'].'</td>
-				        					<td align="center" width="18">'.$inasistencias.'</td>
-											<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
-				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl3'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl4'].'<br />
-											</td>
-										</tr>';
+				        					<td align="center" width="18">'.$inasistencias.'</td>';
+
+									$tbl .= '<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />';
+
+				        			if ($notas_logros[$j]['dl1'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl1'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl2'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl2'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl3'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl3'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl4'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl4'].'<br />';
+				        			}
+
+				        			$tbl .= '</td>';
+
+				        		$tbl .=	'</tr>';
 									
 							}
 							if($p=="Cuarto"){
@@ -245,14 +281,26 @@ class Imprimir_controller extends CI_Controller {
 				        					<td align="center" width="20">'.$notas_logros[$j]['p3'].'</td>
 				        					<td align="center" width="20"></td>
 				        					<td align="center" width="34">'.$notas_logros[$j]['p4'].'</td>
-				        					<td align="center" width="18">'.$inasistencias.'</td>
-											<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />&nbsp;
-				        												   '.$notas_logros[$j]['dl1'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl2'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl3'].'<br />&nbsp;
-				        												   '.$notas_logros[$j]['dl4'].'<br />
-											</td>
-										</tr>';
+				        					<td align="center" width="18">'.$inasistencias.'</td>';
+
+									$tbl .= '<td align="justify" width="333" style="font-size:10px;"><p align="center">Desempeño Periodo: '.$notas_logros[$j]['nombre_desempeno'].'</p><br /><br />';
+
+				        			if ($notas_logros[$j]['dl1'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl1'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl2'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl2'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl3'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl3'].'<br />';
+				        			}
+				        			if ($notas_logros[$j]['dl4'] != NULL) {
+				        				$tbl .= '&#8226;'.$notas_logros[$j]['dl4'].'<br />';
+				        			}
+
+				        			$tbl .= '</td>';
+
+				        		$tbl .=	'</tr>';
 									
 							}
 				        	

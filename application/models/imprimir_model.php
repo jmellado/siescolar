@@ -94,10 +94,10 @@ class Imprimir_model extends CI_Model {
 		$this->db->join('asignaturas', 'notas.id_asignatura = asignaturas.id_asignatura');
 		$this->db->join('logros_asignados', 'notas.id_asignatura = logros_asignados.id_asignatura');
 
-		$this->db->join('logros as l1', 'logros_asignados.id_logro1 = l1.id_logro');
-		$this->db->join('logros as l2', 'logros_asignados.id_logro2 = l2.id_logro');
-		$this->db->join('logros as l3', 'logros_asignados.id_logro3 = l3.id_logro');
-		$this->db->join('logros as l4', 'logros_asignados.id_logro4 = l4.id_logro');
+		$this->db->join('logros as l1', 'logros_asignados.id_logro1 = l1.id_logro','left');
+		$this->db->join('logros as l2', 'logros_asignados.id_logro2 = l2.id_logro','left');
+		$this->db->join('logros as l3', 'logros_asignados.id_logro3 = l3.id_logro','left');
+		$this->db->join('logros as l4', 'logros_asignados.id_logro4 = l4.id_logro','left');
 	
 		$this->db->join('pensum', 'notas.id_asignatura = pensum.id_asignatura');
 		$this->db->join('desempenos', 'notas.id_desempeno = desempenos.id_desempeno');
