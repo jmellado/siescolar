@@ -1,18 +1,23 @@
 <div class="container-fluid">
 
 	<div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header"><i class='fa fa-dashboard'></i>&nbsp;DASHBOARD</h1>
-        </div>
-    </div>
+      <div class="col-lg-12">
+          <h1 class="page-header"><i class='fa fa-dashboard'></i>&nbsp;DASHBOARD</h1>
+      </div>
+  </div>
 
 	<div class="row">
 
-		<div class="col-lg-3 col-xs-6">
+        <?php 
+          $this->db->where('ano_lectivo',$ano_lectivo);
+          $query = $this->db->get('matriculas');
+          $total_estud = count($query->result());
+        ?>
+		    <div class="col-lg-3 col-xs-6">
           <!-- small box -->
         	<div class="small-box bg-aqua">
             	<div class="inner">
-              		<h3><?php echo $this->db->count_all('estudiantes');?></h3>
+              		<h3><?php echo $total_estud?></h3>
 
               		<p>Estudiantes</p>
             	</div>
@@ -75,8 +80,6 @@
         	</div>
         </div>
         
-
 	</div>
-
 
 </div>
