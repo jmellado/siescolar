@@ -564,6 +564,19 @@
           </ul>
         </li>
 
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-upload"></i>
+            <span>Importación</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>importar_notas_controller/index"><i class="fa fa-circle-o"></i>Importar Notas</a></li>
+          </ul>
+        </li>
+
         <li><a href="<?php echo base_url(); ?>copias_seguridad_controller/index"><i class="fa fa-database"></i> <span>Copia De Seguridad</span></a></li>
         <li><a href="<?php echo base_url(); ?>documentos_controller/documentosA"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
       </ul>
