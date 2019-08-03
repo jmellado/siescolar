@@ -153,8 +153,8 @@ function inicio(){
 
     		causal:{
 				required: true,
-				maxlength: 500,
-				lettersonly: true
+				maxlength: 500
+				//lettersonly: true
 
 			},
 
@@ -174,8 +174,8 @@ function inicio(){
 
     		causal:{
 				required: true,
-				maxlength: 500,
-				lettersonly: true
+				maxlength: 500
+				//lettersonly: true
 
 			},
 
