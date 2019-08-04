@@ -29,6 +29,7 @@ class Importar_notas_controller extends CI_Controller {
 		$this->form_validation->set_rules('id_curso', 'Curso', 'required|numeric');
         $this->form_validation->set_rules('id_asignatura', 'Asignatura', 'required|numeric');
         $this->form_validation->set_rules('periodo', 'Periodo', 'required|max_length[8]');
+        $this->form_validation->set_rules('separador', 'Separador', 'required|max_length[1]');
 
         if ($this->form_validation->run() == FALSE){
 
@@ -45,17 +46,18 @@ class Importar_notas_controller extends CI_Controller {
 			$id_curso = $this->input->post('id_curso');
 			$id_grado = $this->importar_notas_model->obtener_gradoPorcurso($id_curso);
 			$id_asignatura = $this->input->post('id_asignatura');
+			$separador = $this->input->post('separador');
 			$estado_nota = "activo";
 			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
 
 			if($nombre_archivotmp != ""){
 
-				if ($this->importar_notas_model->validar_estructura($nombre_archivotmp)){
+				if ($this->importar_notas_model->validar_estructura($nombre_archivotmp,$separador)){
 
-					if ($this->importar_notas_model->validar_archivo_vacio($nombre_archivotmp)){
+					if ($this->importar_notas_model->validar_archivo_vacio($nombre_archivotmp,$separador)){
 
 
-						$file_data = $this->csvimport->get_array($nombre_archivotmp);
+						$file_data = $this->csvimport->get_array($nombre_archivotmp,FALSE,FALSE,FALSE,$separador);
 
 
 						if ($this->importar_notas_model->validar_archivo($file_data,$id_curso,$id_asignatura,$periodo)){

@@ -270,11 +270,11 @@ class Importar_notas_model extends CI_Model {
 
 
 	//Esta funcion permite validar si el archivo cuenta con la estructura indicada(nombres de columnas).
-	public function validar_estructura($nombre_archivotmp){
+	public function validar_estructura($nombre_archivotmp,$separador){
 
 		$file = fopen($nombre_archivotmp, "r");
 
-		while (($datos = fgetcsv($file, 1000, ",")) !== FALSE) {
+		while (($datos = fgetcsv($file, 1000, $separador)) !== FALSE) {
 	
 			if ($datos[0] == "id_curso" && $datos[2] == "id_estudiante" && $datos[4] == "id_asignatura" && 
 				$datos[6] == "periodo" && $datos[7] == "nota") {
@@ -294,12 +294,12 @@ class Importar_notas_model extends CI_Model {
 
 
 	// Esta funcion permite validar si el archivo se encuentra vacio, sin contar los nombres de las columnas
-	public function validar_archivo_vacio($nombre_archivotmp){
+	public function validar_archivo_vacio($nombre_archivotmp,$separador){
 
 		$file = fopen($nombre_archivotmp, "r");
 		$i = 0;
 
-		while (($datos = fgetcsv($file, 1000, ",")) !== FALSE) {
+		while (($datos = fgetcsv($file, 1000, $separador)) !== FALSE) {
 
 			if ($i != 0) {
 				

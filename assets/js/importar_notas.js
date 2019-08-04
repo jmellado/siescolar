@@ -129,6 +129,12 @@ function inicio(){
 				maxlength: 8,
 				lettersonly: true	
 
+			},
+
+			separador:{
+				required: true,
+				maxlength: 1,
+
 			}
 
 		}

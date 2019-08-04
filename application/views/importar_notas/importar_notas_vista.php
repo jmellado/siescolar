@@ -20,66 +20,81 @@
                 <div class="panel-body">
                 	<form role="form" action="<?php echo base_url(); ?>importar_notas_controller/importar" name="" method="post" id="form_importar_notas" enctype="multipart/form-data">
 
-						<div class="col-md-3">
-							<div class="form-group">
-								<label for="jornada">JORNADA</label>
-								<select class="form-control" id="jornadaI" name="jornada">
-									<option value="Mañana">Mañana</option>
-									<option value="Tarde">Tarde</option>
-									<option value="Noche">Noche</option>
-									<option value="Unica">Única</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="col-md-4">
-							<div class="form-group">
-								<label for="id_curso">CURSO</label>
-								<div id="cursos_importar1">
-									<select class="form-control" id="id_cursoI" name="id_curso">
-													    
+                		<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="jornada">JORNADA</label>
+									<select class="form-control" id="jornadaI" name="jornada">
+										<option value="Mañana">Mañana</option>
+										<option value="Tarde">Tarde</option>
+										<option value="Noche">Noche</option>
+										<option value="Unica">Única</option>
 									</select>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="id_curso">CURSO</label>
+									<div id="cursos_importar1">
+										<select class="form-control" id="id_cursoI" name="id_curso">
+														    
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="id_asignatura">ASIGNATURA</label>
+									<div id="asignaturas_importar1">
+										<select class="form-control" id="id_asignaturaI" name="id_asignatura">
+														    
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-md-5">
-							<div class="form-group">
-								<label for="id_asignatura">ASIGNATURA</label>
-								<div id="asignaturas_importar1">
-									<select class="form-control" id="id_asignaturaI" name="id_asignatura">
-													    
+						<div class="row">
+							<div class="col-md-3">
+		        				<div class="form-group">
+									<label for="periodo">PERIODO</label>
+									<select class="form-control" id="periodoI" name="periodo">
+										<option></option>
+										<option value="Primero">Primero</option>
+										<option value="Segundo">Segundo</option>
+										<option value="Tercero">Tercero</option>
+										<option value="Cuarto">Cuarto</option>
 									</select>
 								</div>
 							</div>
-						</div>
 
-						<div class="col-md-3">
-	        				<div class="form-group">
-								<label for="periodo">PERIODO</label>
-								<select class="form-control" id="periodoI" name="periodo">
-									<option></option>
-									<option value="Primero">Primero</option>
-									<option value="Segundo">Segundo</option>
-									<option value="Tercero">Tercero</option>
-									<option value="Cuarto">Cuarto</option>
-								</select>
-							</div>
-						</div>
+							<div class="col-md-4">
+		        				<div class="form-group">
+		        					<label for="archivo">ARCHIVO CSV</label>
+									<input class="btn btn-default btn-block" type="file" name="archivo" accept=".csv" required>
+								</div>
+		        			</div>
 
-						<div class="col-md-4">
-	        				<div class="form-group">
-	        					<label for="archivo">ARCHIVO CSV</label>
-								<input class="btn btn-default btn-block" type="file" name="archivo" accept=".csv" required>
+		        			<div class="col-md-2">
+		        				<div class="form-group">
+									<label for="separador">SEPARADOR</label>
+									<select class="form-control" id="separadorI" name="separador">
+										<option></option>
+										<option value=",">Coma</option>
+										<option value=";">Punto y Coma</option>
+									</select>
+								</div>
 							</div>
-	        			</div>
 
-						<div class="col-md-3">
-	        				<div class="form-group">
-	        					<label for=""></label>
-								<button type="submit" name="btn_importar_archivo" id="btn_importar_archivo" class="btn btn-primary btn-lg btn-block"><i class='fa fa-upload'></i>&nbsp;Importar</button>
-							</div>
-	        			</div>
+							<div class="col-md-3">
+		        				<div class="form-group">
+		        					<label for=""></label>
+									<button type="submit" name="btn_importar_archivo" id="btn_importar_archivo" class="btn btn-primary btn-lg btn-block"><i class='fa fa-upload'></i>&nbsp;Importar</button>
+								</div>
+		        			</div>
+		        		</div>
 
                 	</form>
                 </div>
