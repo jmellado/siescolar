@@ -276,8 +276,8 @@ class Importar_notas_model extends CI_Model {
 
 		while (($datos = fgetcsv($file, 1000, ",")) !== FALSE) {
 	
-			if ($datos[0] == "id_curso" && $datos[1] == "id_estudiante" && $datos[2] == "id_asignatura" && 
-				$datos[3] == "periodo" && $datos[4] == "nota") {
+			if ($datos[0] == "id_curso" && $datos[2] == "id_estudiante" && $datos[4] == "id_asignatura" && 
+				$datos[6] == "periodo" && $datos[7] == "nota") {
 			
 				return true;
 			}
