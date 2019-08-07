@@ -529,7 +529,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?php echo base_url(); ?>asistenciasA_controller/consultar_asistencias_estudiante"><i class="fa fa-list-alt"></i>Consultar Por Estudiante</a></li>
+            <li><a href="<?php echo base_url(); ?>asistencias_a_controller/consultar_asistencias_estudiante"><i class="fa fa-list-alt"></i>Consultar Por Estudiante</a></li>
           </ul>
         </li>
 

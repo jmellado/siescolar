@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class AsistenciasA_model extends CI_Model {
+class Asistencias_a_model extends CI_Model {
 
 
 	public function llenar_anos_lectivos(){

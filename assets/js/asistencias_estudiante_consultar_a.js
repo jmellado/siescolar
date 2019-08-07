@@ -125,7 +125,7 @@ function inicio(){
 function llenarcombo_anos_lectivosAST(){
 
 	$.ajax({
-		url:base_url+"asistenciasA_controller/llenarcombo_anos_lectivos",
+		url:base_url+"asistencias_a_controller/llenarcombo_anos_lectivos",
 		type:"post",
 		success:function(respuesta) {
 
@@ -147,7 +147,7 @@ function llenarcombo_anos_lectivosAST(){
 function llenarcombo_cursosAST(ano_lectivo){
 
 	$.ajax({
-		url:base_url+"asistenciasA_controller/llenarcombo_cursos",
+		url:base_url+"asistencias_a_controller/llenarcombo_cursos",
 		type:"post",
 		data:{ano_lectivo:ano_lectivo},
 		success:function(respuesta) {
@@ -171,7 +171,7 @@ function llenarcombo_cursosAST(ano_lectivo){
 function llenarcombo_asignaturasAST(id_curso,ano_lectivo){
 
 	$.ajax({
-		url:base_url+"asistenciasA_controller/llenarcombo_asignaturas",
+		url:base_url+"asistencias_a_controller/llenarcombo_asignaturas",
 		type:"post",
 		data:{id_curso:id_curso,ano_lectivo:ano_lectivo},
 		success:function(respuesta) {
@@ -195,7 +195,7 @@ function llenarcombo_asignaturasAST(id_curso,ano_lectivo){
 function llenarcombo_estudiantesAST(id_curso){
 
 	$.ajax({
-		url:base_url+"asistenciasA_controller/llenarcombo_estudiantes",
+		url:base_url+"asistencias_a_controller/llenarcombo_estudiantes",
 		type:"post",
 		data:{id_curso:id_curso},
 		success:function(respuesta) {
@@ -219,7 +219,7 @@ function llenarcombo_estudiantesAST(id_curso){
 function mostrarasistencias(valor,pagina,cantidad,ano_lectivo,id_curso,id_asignatura,id_estudiante,periodo){
 
 	$.ajax({
-		url:base_url+"asistenciasA_controller/mostrarasistencias_estudiante",
+		url:base_url+"asistencias_a_controller/mostrarasistencias_estudiante",
 		type:"post",
 		data:{id_buscar:valor,numero_pagina:pagina,cantidad:cantidad,ano_lectivo:ano_lectivo,id_curso:id_curso,id_asignatura:id_asignatura,id_estudiante:id_estudiante,periodo:periodo},
 		success:function(respuesta) {

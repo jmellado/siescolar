@@ -7,7 +7,7 @@
 		}
 	</style>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asistencias_estudiante_consultarA.js" defer></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/asistencias_estudiante_consultar_a.js" defer></script>
 
 <div class="container-fluid">
 
