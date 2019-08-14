@@ -1443,4 +1443,113 @@ class Matriculas_controller extends CI_Controller {
 
 	}
 
+
+	//******************* FUNCIONES PARA CAMBIAR DE CURSO A ESTUDIANTES *********************
+
+
+	public function cambio_curso()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		$this->template->load('roles/rol_administrador_vista', 'matriculas/cambio_curso_vista');
+	}
+
+
+	public function llenarcombo_cursosCC(){
+
+    	$jornada = $this->input->post('jornada');
+
+    	$consulta = $this->matriculas_model->llenar_cursosCC($jornada);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_estudiantesCC(){
+
+    	$id_curso = $this->input->post('id_curso');
+
+    	$consulta = $this->matriculas_model->llenar_estudiantesCC($id_curso);
+    	echo json_encode($consulta);
+    }
+
+
+    public function llenarcombo_cursos_destinoCC(){
+
+    	$jornada = $this->input->post('jornada');
+    	$id_curso =$this->input->post('id_curso');
+    	$id_grado = $this->matriculas_model->obtener_gradoPorcursoCC($id_curso);
+
+    	$consulta = $this->matriculas_model->llenar_cursos_destinoCC($jornada,$id_grado,$id_curso);
+    	echo json_encode($consulta);
+    }
+
+
+    public function cambiar_curso(){
+
+        $this->form_validation->set_rules('jornada', 'Jornada Origen', 'required|max_length[6]');
+        $this->form_validation->set_rules('id_curso', 'Curso Origen', 'required|numeric');
+        $this->form_validation->set_rules('id_estudiante', 'Estudiante', 'required|numeric');
+        $this->form_validation->set_rules('jornada_destino', 'Jornada Destino', 'required|max_length[6]');
+        $this->form_validation->set_rules('id_curso_destino', 'Curso Destino', 'required|numeric');
+
+        if ($this->form_validation->run() == FALSE){
+
+        	echo validation_errors();
+
+        }
+        else{
+
+        	$jornada = $this->input->post('jornada');
+			$id_curso = $this->input->post('id_curso');
+			$id_grado = $this->matriculas_model->obtener_gradoPorcursoCC($id_curso);
+			$id_estudiante = $this->input->post('id_estudiante');
+			$jornada_destino = $this->input->post('jornada_destino');
+			$id_curso_destino = $this->input->post('id_curso_destino');
+			$id_grado_destino = $this->matriculas_model->obtener_gradoPorcursoCC($id_curso_destino);
+			$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+			//array para actualizar en la tabla matriculas
+        	$matricula = array(
+			'id_curso' =>$id_curso_destino,
+			'jornada'  =>$jornada_destino);
+
+        	//array para actualizar en la tabla asistencias
+			$asistencias = array(
+			'id_curso' =>$id_curso_destino);
+
+			//array para actualizar en la tabla seguimientos
+			$seguimientos = array(
+			'id_curso' =>$id_curso_destino);
+
+			//array para actualizar en la tabla promocion
+			$promocion = array(
+			'id_curso' =>$id_curso_destino);
+
+
+			if ($this->matriculas_model->validar_cupo_maximo_curso($id_curso_destino)) {
+				
+				$respuesta = $this->matriculas_model->realizar_cambio_curso($matricula,$asistencias,$seguimientos,$promocion,$id_curso,$id_grado,$id_estudiante,$ano_lectivo);
+
+				if($respuesta == true){
+
+		        	echo "cambiocursorealizado";
+		        }
+		        else{
+
+		        	echo "cambiocursonorealizado";
+		        }
+
+		    }
+		    else{
+
+		    	echo "cursosincupo";
+		    }
+
+        }
+
+    }
+
 }

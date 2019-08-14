@@ -1429,4 +1429,189 @@ class Matriculas_model extends CI_Model {
 
 	}
 
+
+	//******************* FUNCIONES PARA CAMBIAR DE CURSO A ESTUDIANTES *********************
+
+
+	//llenar el combo con todos los cursos de una respectiva jornada
+	public function llenar_cursosCC($jornada){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
+	}
+
+
+	public function llenar_estudiantesCC($id_curso){
+
+		$this->db->where('matriculas.id_curso',$id_curso);
+		$this->db->where('matriculas.estado_matricula',"Activo");
+
+		$this->db->order_by('personas.apellido1', 'asc');
+		$this->db->order_by('personas.apellido2', 'asc');
+		$this->db->order_by('personas.nombres', 'asc');
+
+		$this->db->join('personas', 'matriculas.id_estudiante = personas.id_persona');
+
+		$this->db->select('matriculas.id_estudiante,personas.identificacion,personas.nombres,personas.apellido1,personas.apellido2');
+
+		$query = $this->db->get('matriculas');
+		return $query->result();
+
+	}
+
+
+	//Esta Funcion me permite obtener el id_grado del curso seleccionado
+	public function obtener_gradoPorcursoCC($id_curso){
+
+		$this->db->where('cursos.id_curso',$id_curso);
+
+		$this->db->select('cursos.id_grado');
+
+		$query = $this->db->get('cursos');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['id_grado'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	public function llenar_cursos_destinoCC($jornada,$id_grado,$id_curso){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('cursos.jornada',$jornada);
+		$this->db->where('cursos.id_grado',$id_grado);
+		$this->db->where('cursos.ano_lectivo',$ano_lectivo);
+		$this->db->where('cursos.id_curso !=',$id_curso);
+
+		$this->db->order_by('grados_educacion.nivel_educacion', 'asc');
+		$this->db->order_by('grados_educacion.id_grado_educacion', 'asc');
+		$this->db->order_by('grupos.nombre_grupo', 'asc');
+
+		$this->db->join('grados', 'cursos.id_grado = grados.id_grado');
+		$this->db->join('grupos', 'cursos.id_grupo = grupos.id_grupo');
+		$this->db->join('grados_educacion', 'grados.nombre_grado = grados_educacion.nombre_grado');//para organizar grados
+
+		$this->db->select('cursos.id_curso,cursos.id_grado,cursos.id_grupo,grados.nombre_grado,grupos.nombre_grupo,cursos.jornada');
+		
+		$query = $this->db->get('cursos');
+		return $query->result();
+	}
+
+
+	public function realizar_cambio_curso($matricula,$asistencias,$seguimientos,$promocion,$id_curso_origen,
+		$id_grado_origen,$id_estudiante,$ano_lectivo){
+
+		$this->db->trans_start();
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('id_curso',$id_curso_origen);
+		$this->db->update('matriculas', $matricula);
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_curso',$id_curso_origen);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->update('asistencias', $asistencias);
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_curso',$id_curso_origen);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->update('seguimientos_disciplinarios', $seguimientos);
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_estudiante',$id_estudiante);
+		$this->db->where('id_curso',$id_curso_origen);
+		$this->db->update('promocion', $promocion);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE){
+
+			return false;
+		}
+		else{
+
+			return true;
+		}
+		
+	}
+
+
+	//Esta funcion permite validar si el curso de destino tiene cupo disponible
+	public function validar_cupo_maximo_curso($id_curso){
+
+		$cupo_maximo = $this->matriculas_model->obtener_cupoPorcursoCC($id_curso);
+		$total_matriculas = $this->matriculas_model->total_matriculas_cursoCC($id_curso);
+
+		if ($total_matriculas < $cupo_maximo) {
+
+			return true;
+		}
+		else{
+
+			return false;
+		}
+
+	}
+
+
+	//Esta Funcion me permite obtener el cupo_maximo del curso seleccionado
+	public function obtener_cupoPorcursoCC($id_curso){
+
+		$this->db->where('cursos.id_curso',$id_curso);
+
+		$this->db->select('cursos.cupo_maximo');
+
+		$query = $this->db->get('cursos');
+
+		if ($query->num_rows() > 0) {
+		
+			$row = $query->result_array();
+        	return $row[0]['cupo_maximo'];
+		}
+		else{
+			return false;
+		}
+
+	}
+
+
+	//Esta funcion me permite obtener el total de matriculas por curso en un respectivo año
+	public function total_matriculas_cursoCC($id_curso){
+
+		$this->load->model('funciones_globales_model');
+		$ano_lectivo = $this->funciones_globales_model->obtener_anio_actual();
+
+		$this->db->where('ano_lectivo',$ano_lectivo);
+		$this->db->where('id_curso',$id_curso);
+		$this->db->where('estado_matricula',"Activo");
+
+		$query = $this->db->get('matriculas');
+
+		return count($query->result());
+
+	}
+
 }
