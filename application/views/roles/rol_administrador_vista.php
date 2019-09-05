@@ -575,6 +575,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>importar_notas_controller/index"><i class="fa fa-circle-o"></i>Importar Notas</a></li>
+            <li><a href="<?php echo base_url(); ?>importar_logros_controller/index"><i class="fa fa-circle-o"></i>Importar Logros</a></li>
           </ul>
         </li>
 
