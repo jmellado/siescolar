@@ -588,6 +588,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>exportar_notas_controller/index"><i class="fa fa-circle-o"></i>Exportar Planilla De Notas</a></li>
+            <li><a href="<?php echo base_url(); ?>exportar_logros_controller/index"><i class="fa fa-circle-o"></i>Exportar Planilla De Logros</a></li>
           </ul>
         </li>
 
