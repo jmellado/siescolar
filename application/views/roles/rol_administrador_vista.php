@@ -531,6 +531,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>asistencias_a_controller/consultar_asistencias_estudiante"><i class="fa fa-list-alt"></i>Consultar Por Estudiante</a></li>
+            <li><a href="<?php echo base_url(); ?>asistencias_a_controller/consultar_consolidado_asistencias_mes"><i class="fa fa-list-alt"></i>Consultar Consolidado De<br>Asistencias Por Mes</a></li>
           </ul>
         </li>
 

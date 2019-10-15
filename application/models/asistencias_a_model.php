@@ -113,4 +113,42 @@ class Asistencias_a_model extends CI_Model {
 		
 	}
 
+
+	//FUNCIONES PARA CONSULTAR CONSOLIDADO DE ASISTENCIAS POR MES
+
+
+	public function buscar_consolidado_asistencias_mes($ano_lectivo,$mes,$asistencia){
+
+		if ($mes == "00" && $asistencia == "Todas") {
+
+			$this->db->where('asistencias.ano_lectivo',$ano_lectivo);
+		}
+		elseif ($mes == "00" && $asistencia != "Todas") {
+			
+			$this->db->where('asistencias.ano_lectivo',$ano_lectivo);
+			$this->db->where('asistencias.asistencia',$asistencia);
+		}
+		elseif ($mes != "00" && $asistencia == "Todas") {
+			
+			$this->db->where('asistencias.ano_lectivo',$ano_lectivo);
+			$this->db->where('MONTH(asistencias.fecha)',$mes);
+		}
+		else{
+
+			$this->db->where('asistencias.ano_lectivo',$ano_lectivo);
+			$this->db->where('MONTH(asistencias.fecha)',$mes);
+			$this->db->where('asistencias.asistencia',$asistencia);
+		}
+
+		$this->db->group_by("MONTH(asistencias.fecha)");
+		$this->db->group_by("asistencias.asistencia");
+
+		$this->db->select('asistencias.id_asistencia,asistencias.ano_lectivo,ELT(DATE_FORMAT(asistencias.fecha, "%c"), "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre") as mes,asistencias.asistencia,COUNT(*) as total',false);
+		
+		$query = $this->db->get('asistencias');
+
+		return $query->result_array();
+		
+	}
+
 }

@@ -79,4 +79,39 @@ class Asistencias_a_controller extends CI_Controller {
 	}
 
 
+	//FUNCIONES PARA CONSULTAR EL CONSOLIDADO DE ASISTENCIAS POR MES
+
+
+	public function consultar_consolidado_asistencias_mes()
+	{
+
+		if($this->session->userdata('rol') == FALSE || $this->session->userdata('rol') != 'administrador')
+		{
+			redirect(base_url().'login_controller');
+		}
+		
+		$this->template->load('roles/rol_administrador_vista', 'asistencias_a/consultar_consolidado_asistencias_mes_a_vista');
+	}
+
+
+	public function mostrar_consolidado_asistencias_mes(){
+
+		$ano_lectivo = $this->input->post('ano_lectivo');
+		$mes = $this->input->post('mes');
+		$asistencia = $this->input->post('asistencia');  
+		
+		$data = array(
+
+			'asistencias' => $this->asistencias_a_model->buscar_consolidado_asistencias_mes($ano_lectivo,$mes
+				,$asistencia),
+
+		    'totalregistros' => count($this->asistencias_a_model->buscar_consolidado_asistencias_mes($ano_lectivo,$mes,$asistencia))
+
+
+		);
+	    echo json_encode($data);
+
+	}
+
+
 }
